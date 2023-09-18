@@ -2,10 +2,7 @@
 #include <tuple>
 #include <tump/null.hpp>
 #include <tump/list.hpp>
-#include <tump/algorithm/copy.hpp>
-#include <tump/algorithm/map.hpp>
-#include <tump/algorithm/fold.hpp>
-
+#include <tump/algorithm.hpp>
 
 TEST(TumpAlgorithmTest, HasTypeParametersTest)
 {
@@ -120,8 +117,88 @@ TEST(TumpAlgorithmTest, FoldTest)
 
 TEST(TumpAlgorithmTest, ConcatTest)
 {
+    using type_list1 = tump::list<int, short, long long>;
+    using type_list2 = tump::list<float, double, char>;
+    using empty_list = tump::empty<tump::list>;
+
+    // 2つのリストの結合
+    constexpr auto case1 = std::is_same_v<
+        tump::concat_t<type_list1, type_list2>,
+        tump::list<int, short, long long, float, double, char>
+    >;
+    ASSERT_TRUE(case1);
+
+    // 3つ以上のリストの結合
+    constexpr auto case2 = std::is_same_v<
+        tump::concat_t<type_list1, type_list2, type_list1, type_list2>,
+        tump::list<int, short, long long, float, double, char, int, short, long long, float, double, char>
+    >;
+    ASSERT_TRUE(case2);
+
+    // 空リストとリストの結合(空リストは無視されること)
+    constexpr auto case3 = std::is_same_v<
+        tump::concat_t<type_list1, empty_list>,
+        type_list1
+    >;
+    ASSERT_TRUE(case3);
+    constexpr auto case4 = std::is_same_v<
+        tump::concat_t<empty_list, type_list2>,
+        type_list2
+    >;
+    ASSERT_TRUE(case4);
+    constexpr auto case5 = std::is_same_v<
+        tump::concat_t<type_list1, empty_list, type_list2>,
+        tump::list<int, short, long long, float, double, char>
+    >;
+    ASSERT_TRUE(case5);
+
+    // 一つのリストだけ渡された場合
+    constexpr auto case6 = std::is_same_v<
+        tump::concat_t<type_list1>,
+        type_list1
+    >;
+    ASSERT_TRUE(case6);
+    constexpr auto case7 = std::is_same_v<
+        tump::concat_t<empty_list>,
+        empty_list
+    >;
+    ASSERT_TRUE(case7);
 }
 
 TEST(TumpAlgorithmTest, PushTest)
 {
+    using type_list1 = tump::list<int, short, long long>;
+    using empty_list = tump::empty<tump::list>;
+
+    constexpr auto case1 = std::is_same_v<
+        tump::push_back_t<type_list1, float>,
+        tump::list<int, short, long long, float>
+    >;
+    ASSERT_TRUE(case1);
+    constexpr auto case2 = std::is_same_v<
+        tump::push_back_t<type_list1, float, double>,
+        tump::list<int, short, long long, float, double>
+    >;
+    ASSERT_TRUE(case2);
+    constexpr auto case3 = std::is_same_v<
+        tump::push_back_t<empty_list, int>,
+        tump::list<int>
+    >;
+    ASSERT_TRUE(case3);
+
+    constexpr auto case4 = std::is_same_v<
+        tump::push_front_t<type_list1, float>,
+        tump::list<float, int, short, long long>
+    >;    
+    ASSERT_TRUE(case4);
+    constexpr auto case5 = std::is_same_v<
+        tump::push_front_t<type_list1, float, double>,
+        tump::list<float, double, int, short, long long>
+    >;
+    ASSERT_TRUE(case5);
+    constexpr auto case6 = std::is_same_v<
+        tump::push_front_t<empty_list, int>,
+        tump::list<int>
+    >;
+    ASSERT_TRUE(case6);
 }
