@@ -8,20 +8,20 @@ namespace tump {
     /**
      * 型リストに含まれるすべての要素に対して、メタ関数を適用する
     */
-    template <InvocableArg1 F, TypeList List>
+    template <InvocableArgN<1> F, TypeList List>
     struct map;
     
-    template <InvocableArg1 F, TypeList List>
+    template <InvocableArgN<1> F, TypeList List>
     requires (is_empty_v<List>)
     struct map<F, List> : public std::type_identity<List> {};
 
-    template <InvocableArg1 F, template <class...> class Outer, class... Types>
+    template <InvocableArgN<1> F, template <class...> class Outer, class... Types>
     struct map<F, Outer<Types...>> : public std::type_identity<Outer<apply_t<F, Types>...>> {};
 
     /**
      * 型リストに含まれるすべての要素に対して、メタ関数を適用する
     */
-    template <InvocableArg1 F, TypeList List>
+    template <InvocableArgN<1> F, TypeList List>
     using map_t = map<F, List>::type;
 }
 

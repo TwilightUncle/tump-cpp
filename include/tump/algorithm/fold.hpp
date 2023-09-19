@@ -8,37 +8,37 @@ namespace tump {
     /**
      * 左畳み込みを実施
     */
-    template <InvocableArg2 F, class Init, TypeList List>
+    template <InvocableArgN<2> F, class Init, TypeList List>
     struct foldl;
 
-    template <InvocableArg2 F, class Init, template <class...> class Outer, class Head, class... Types>
+    template <InvocableArgN<2> F, class Init, template <class...> class Outer, class Head, class... Types>
     struct foldl<F, Init, Outer<Head, Types...>> : public foldl<F, apply_t<F, Init, Head>, Outer<Types...>> {};
 
-    template <InvocableArg2 F, class Init, template <class...> class Outer, class Head>
+    template <InvocableArgN<2> F, class Init, template <class...> class Outer, class Head>
     struct foldl<F, Init, Outer<Head>> : public std::type_identity<apply_t<F, Init, Head>> {};
 
     /**
      * 左畳み込みを実施
     */
-    template <InvocableArg2 F, class Init, TypeList List>
+    template <InvocableArgN<2> F, class Init, TypeList List>
     using foldl_t = foldl<F, Init, List>::type;
 
     /**
      * 右畳み込みを実施
     */
-    template <InvocableArg2 F, class Init, TypeList List>
+    template <InvocableArgN<2> F, class Init, TypeList List>
     struct foldr;
 
-    template <InvocableArg2 F, class Init, template <class...> class Outer, class Head, class... Types>
+    template <InvocableArgN<2> F, class Init, template <class...> class Outer, class Head, class... Types>
     struct foldr<F, Init, Outer<Head, Types...>> : public apply<F, Head, typename foldr<F, Init, Outer<Types...>>::type> {};
 
-    template <InvocableArg2 F, class Init, template <class...> class Outer, class Head>
+    template <InvocableArgN<2> F, class Init, template <class...> class Outer, class Head>
     struct foldr<F, Init, Outer<Head>> : public std::type_identity<apply_t<F, Head, Init>> {};
 
     /**
      * 右畳み込みを実施
     */
-    template <InvocableArg2 F, class Init, TypeList List>
+    template <InvocableArgN<2> F, class Init, TypeList List>
     using foldr_t = foldr<F, Init, List>::type;
 }
 

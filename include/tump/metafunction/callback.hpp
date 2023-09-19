@@ -17,6 +17,22 @@ namespace tump {
         { T::is_check_args_size } -> std::convertible_to<bool>;
         { T::args_size } -> std::convertible_to<unsigned int>;
     };
+    
+    template <unsigned int ArgsSize, class F>
+    struct _is_allowed_args_size : public std::false_type {};
+
+    template <unsigned int ArgsSize, _DerivedAsArgSizeMembers F>
+    struct _is_allowed_args_size<ArgsSize, F> : public std::bool_constant<
+        !F::is_check_args_size || F::args_size >= ArgsSize
+    > {};
+
+    template <unsigned int ArgsSize, class F>
+    struct _eq_args_size : public std::false_type {};
+
+    template <unsigned int ArgsSize, _DerivedAsArgSizeMembers F>
+    struct _eq_args_size<ArgsSize, F> : public std::bool_constant<
+        !F::is_check_args_size || F::args_size == ArgsSize
+    > {};
 
     /**
      * @class
@@ -28,32 +44,62 @@ namespace tump {
     struct callback : public _args_size_members<ArgsSize, bool(ArgsSize)> {};
 
     /**
+     * callback のエイリアス
+    */
+    template <template <class...> class MetaFunc, unsigned int ArgsSize = 0>
+    using cbk = callback<MetaFunc, ArgsSize>;
+
+    template <unsigned int ArgsSize, bool IsCheckArgsSize = bool(ArgsSize)>
+    struct optional_args_for_is_callback {};
+
+    /**
      * @fn
      * @brief コールバック化したか、コールバック化したメタ関数の引数を部分適用したものか判定
     */
-    template <class F> struct is_callback : public std::false_type {};
+    template <class F, class OptionalArgs = optional_args_for_is_callback<0>> struct is_callback : public std::false_type {};
 
-    template <template <class...> class MetaFunc, unsigned int ArgsSize>
-    struct is_callback<callback<MetaFunc, ArgsSize>> : public std::true_type {};
+    template <template <class...> class MetaFunc, unsigned int ArgsSize, unsigned int CheckArgsSize, bool IsCheckArgsSize>
+    struct is_callback<callback<MetaFunc, ArgsSize>, optional_args_for_is_callback<CheckArgsSize, IsCheckArgsSize>> : public std::disjunction<
+        std::bool_constant<!IsCheckArgsSize>,
+        _eq_args_size<CheckArgsSize, callback<MetaFunc, ArgsSize>>
+    > {};
 
-    template <template <class...> class OuterF, _DerivedAsArgSizeMembers InnerF, class... PartialArgs>
-    struct is_callback<OuterF<InnerF, PartialArgs...>> : public is_callback<InnerF> {};
+    template <template <class...> class OuterF, _DerivedAsArgSizeMembers InnerF, class... PartialArgs, unsigned int ArgsSize, bool IsCheckArgsSize>
+    requires _DerivedAsArgSizeMembers<OuterF<InnerF, PartialArgs...>>
+    struct is_callback<OuterF<InnerF, PartialArgs...>, optional_args_for_is_callback<ArgsSize, IsCheckArgsSize>> : public std::conjunction<
+        is_callback<
+            InnerF,
+            optional_args_for_is_callback<
+                OuterF<InnerF, PartialArgs...>::args_size + ArgsSize,
+                IsCheckArgsSize
+            >
+        >,
+        std::disjunction<
+            std::bool_constant<!IsCheckArgsSize>,
+            _eq_args_size<ArgsSize, OuterF<InnerF, PartialArgs...>>
+        >
+    > {};
 
     /**
      * @fn
      * @brief コールバック化したメタ関数であるか、またはコールバック化したメタ関数の引数を部分適用したものか判定
     */
-    template <class F>
-    constexpr auto is_callback_v = is_callback<F>::value;
+    template <class F, class OptionalArgs = optional_args_for_is_callback<0>>
+    constexpr auto is_callback_v = is_callback<F, OptionalArgs>::value;
 
+    /**
+     * コールバック化したメタ関数であるか判定
+     * 引数の数の検査を行わない
+    */
     template <class F>
-    concept Invocable = is_callback_v<F> && _DerivedAsArgSizeMembers<F>;
+    concept Invocable = is_callback_v<F>;
 
-    template <class F>
-    concept InvocableArg1 = Invocable<F> && (F::args_size == 1 || !F::is_check_args_size);
-
-    template <class F>
-    concept InvocableArg2 = Invocable<F> && (F::args_size == 2 || !F::is_check_args_size);
+    /**
+     * コールバック化したメタ関数であるか判定
+     * 該当のメタ関数に指定する引数がArgsSizeと一致するかの確認も実施
+    */
+    template <class F, unsigned int ArgsSize>
+    concept InvocableArgN = is_callback_v<F, optional_args_for_is_callback<ArgsSize, true>>;
 }
 
 #endif

@@ -75,3 +75,20 @@ TEST(TumpMetafunctionTest, FlipTest)
     ASSERT_FALSE(case3);
     ASSERT_TRUE(case4);
 }
+
+TEST(TumpMetafunctionTest, RelayTest)
+{
+    constexpr auto case1 = tump::InvocableList<std::tuple<
+        F1,
+        F3
+    >>;
+    constexpr auto case2 = tump::InvocableList<std::tuple<
+        F1,
+        int
+    >>;
+    constexpr auto case3 = tump::InvocableList<int>;
+
+    ASSERT_TRUE(case1);
+    ASSERT_FALSE(case2);
+    ASSERT_FALSE(case3);
+}

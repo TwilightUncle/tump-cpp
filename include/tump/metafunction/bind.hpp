@@ -6,14 +6,6 @@
 
 namespace tump
 {
-    template <unsigned int ArgsSize, class F>
-    struct _is_allowed_args_size : public std::false_type {};
-
-    template <unsigned int ArgsSize, _DerivedAsArgSizeMembers F>
-    struct _is_allowed_args_size<ArgsSize, F> : public std::bool_constant<
-        !F::is_check_args_size || F::args_size >= ArgsSize
-    > {};
-
     /**
      * @class
      * @brief コールバック化したメタ関数に対して、引数の部分適用を行う
