@@ -22,6 +22,24 @@ TEST(TumpMetafunctionTest, InvocableTest)
     ASSERT_TRUE(case1);
     ASSERT_TRUE(case2);
     ASSERT_TRUE(case3);
+
+    constexpr auto case4 = tump::InvocableArgN<F1, 2>;
+    constexpr auto case5 = tump::InvocableArgN<F1, 1>;
+    constexpr auto case6 = tump::InvocableArgN<F2, 1>;
+    constexpr auto case7 = tump::InvocableArgN<F3, 1>;
+    constexpr auto case8 = tump::InvocableArgN<F3, 0>;
+    constexpr auto case9 = tump::InvocableArgN<F4, 1>;
+    constexpr auto case10 = tump::InvocableArgN<F5, 0>;
+    constexpr auto case11 = tump::InvocableArgN<F5, 1>;
+
+    ASSERT_TRUE(case4);
+    ASSERT_FALSE(case5);
+    ASSERT_TRUE(case6);
+    ASSERT_TRUE(case7);
+    ASSERT_FALSE(case8);
+    ASSERT_TRUE(case9);
+    ASSERT_TRUE(case10);
+    ASSERT_FALSE(case11);
 }
 
 TEST(TumpMetafunctionTest, ApplyTest)
@@ -91,4 +109,36 @@ TEST(TumpMetafunctionTest, RelayTest)
     ASSERT_TRUE(case1);
     ASSERT_FALSE(case2);
     ASSERT_FALSE(case3);
+
+    constexpr auto case4 = tump::InvocableArgNList<std::tuple<
+        F1,
+        F1,
+        F2
+    >, 2>;
+    constexpr auto case5 = tump::InvocableArgNList<std::tuple<
+        F1,
+        F3
+    >, 2>;
+    constexpr auto case6 = tump::InvocableArgNList<std::tuple<
+        F3,
+        F3,
+        F4
+    >, 1>;
+
+    ASSERT_TRUE(case4);
+    ASSERT_FALSE(case5);
+    ASSERT_TRUE(case6);
+
+    constexpr auto case7 = std::is_same_v<
+        tump::relay_t<
+            decltype([]() -> double { return 1.; }),
+            std::tuple<
+                tump::cbk<std::invoke_result, 1>,
+                tump::cbk<std::add_const, 1>
+            >
+        >,
+        const double
+    >;
+
+    ASSERT_TRUE(case7);
 }

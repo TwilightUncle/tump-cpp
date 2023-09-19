@@ -70,7 +70,7 @@ namespace tump {
         is_callback<
             InnerF,
             optional_args_for_is_callback<
-                OuterF<InnerF, PartialArgs...>::args_size + ArgsSize,
+                sizeof...(PartialArgs) + ArgsSize,
                 IsCheckArgsSize
             >
         >,
