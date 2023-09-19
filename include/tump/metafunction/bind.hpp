@@ -20,6 +20,16 @@ namespace tump
             : 0,
         F::is_check_args_size
     > {};
+
+    template <_DerivedAsArgSizeMembers InnerF, class... PartialArgs, unsigned int ArgsSize, bool IsCheckArgsSize>
+    requires (_is_callback_impl<bind<InnerF, PartialArgs...>, ArgsSize, IsCheckArgsSize>::value)
+    struct is_callback<bind<InnerF, PartialArgs...>, optional_args_for_is_callback<ArgsSize, IsCheckArgsSize>> : public is_callback<
+        InnerF,
+        optional_args_for_is_callback<
+            sizeof...(PartialArgs) + ArgsSize,
+            IsCheckArgsSize
+        >
+    > {};
 }
 
 #endif

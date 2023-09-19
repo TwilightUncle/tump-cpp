@@ -1,53 +1,27 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_APPLY_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_APPLY_HPP
 
-#include <tump/metafunction/bind.hpp>
+#include <tump/metafunction/invoke.hpp>
 
 namespace tump
 {
-    template <class F>
-    concept VFunctional = requires {
-        F::value;
-    };
-
-    template <class F>
-    concept TFunctional = requires {
-        typename F::type;
-    };
-
-    template <class F>
-    concept Functional = VFunctional<F> || TFunctional<F>;
-
     /**
-     * コールバック化したメタ関数を実行
+     * @class
+     * @brief 引数に対して、コールバック化したメタ関数の適用を行う。引数がすべて埋まっている or 引数の数が不明な場合はメタ関数を実行し、少ない場合は部分適用をする
     */
     template <Invocable F, class... Args>
     requires (_is_allowed_args_size<sizeof...(Args), F>::value)
-    struct apply;
+    struct apply : public invoke_t<F, Args...> {};
 
-    template <template <class...> class MetaFunc, unsigned int ArgsSize, class... Args>
-    requires (
-        (!ArgsSize || ArgsSize == sizeof...(Args))
-        && Functional<MetaFunc<Args...>>
-    )
-    struct apply<callback<MetaFunc, ArgsSize>, Args...> : public MetaFunc<Args...> {};
-
-    template <template <class...> class OuterF, Invocable InnerF, class... Args1, class... Args2>
-    struct apply<OuterF<InnerF, Args1...>, Args2...> : public apply<InnerF, Args1..., Args2...> {};
-
-    /**
-     * コールバック化したメタ関数を実行
-    */
     template <Invocable F, class... Args>
-    requires TFunctional<apply<F, Args...>>
-    using apply_t = apply<F, Args...>::type;
+    requires (!_eq_args_size<sizeof...(Args), F>::value)
+    struct apply<F, Args...> : public bind<F, Args...> {};
 
-    /**
-     * コールバック化したメタ関数を実行
-    */
-    template <Invocable F, class... Args>
-    requires VFunctional<apply<F, Args...>>
-    constexpr auto apply_v = apply<F, Args...>::value;
+    template <Invocable F, class... Args, unsigned int CheckArgsSize, bool IsCheckArgsSize>
+    requires (std::is_base_of_v<bind<F, Args...>, apply<F, Args...>>)
+    struct is_callback<apply<F, Args...>, optional_args_for_is_callback<CheckArgsSize, IsCheckArgsSize>>
+        : public is_callback<bind<F, Args...>>
+    {};
 }
 
 #endif

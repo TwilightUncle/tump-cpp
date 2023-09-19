@@ -142,3 +142,29 @@ TEST(TumpMetafunctionTest, ComposeTest)
 
     ASSERT_TRUE(case7);
 }
+
+TEST(TumpMetafunctionTest, ApplyTest)
+{
+    using type1 = tump::apply<
+        tump::cbk<std::conjunction>,
+        std::true_type,
+        std::true_type
+    >;
+
+    constexpr auto case1 = tump::VFunctional<type1>;
+    constexpr auto case2 = tump::Invocable<type1>;
+    ASSERT_TRUE(case1);
+    ASSERT_FALSE(case2);
+
+    using type2 = tump::apply<F1, int>;
+    constexpr auto case4 = tump::Invocable<type2>;
+    constexpr auto case5 = tump::Functional<type2>;
+    ASSERT_TRUE(case4);
+    ASSERT_FALSE(case5);
+
+    using type3 = tump::apply<F3, int>;
+    constexpr auto case6 = tump::VFunctional<type3>;
+    constexpr auto case7 = tump::Invocable<type3>;
+    ASSERT_TRUE(case6);
+    ASSERT_FALSE(case7);
+}

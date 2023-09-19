@@ -48,6 +48,11 @@ namespace tump
     template <Invocable F, class... Args>
     requires VFunctional<invoke<F, Args...>>
     constexpr auto invoke_v = invoke<F, Args...>::value;
+
+    template <Invocable F, class... Args, unsigned int CheckArgsSize, bool IsCheckArgsSize>
+    struct is_callback<invoke<F, Args...>, optional_args_for_is_callback<CheckArgsSize, IsCheckArgsSize>>
+        : public std::false_type
+    {};
 }
 
 #endif

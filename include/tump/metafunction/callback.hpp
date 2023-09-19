@@ -69,16 +69,6 @@ namespace tump {
         : public _is_callback_impl<callback<MetaFunc, ArgsSize>, CheckArgsSize, IsCheckArgsSize>
     {};
 
-    template <template <class...> class OuterF, _DerivedAsArgSizeMembers InnerF, class... PartialArgs, unsigned int ArgsSize, bool IsCheckArgsSize>
-    requires (_is_callback_impl<OuterF<InnerF, PartialArgs...>, ArgsSize, IsCheckArgsSize>::value)
-    struct is_callback<OuterF<InnerF, PartialArgs...>, optional_args_for_is_callback<ArgsSize, IsCheckArgsSize>> : public is_callback<
-        InnerF,
-        optional_args_for_is_callback<
-            sizeof...(PartialArgs) + ArgsSize,
-            IsCheckArgsSize
-        >
-    > {};
-
     /**
      * @fn
      * @brief コールバック化したメタ関数であるか、またはコールバック化したメタ関数の引数を部分適用したものか判定
