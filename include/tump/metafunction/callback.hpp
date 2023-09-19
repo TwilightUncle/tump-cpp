@@ -52,6 +52,12 @@ namespace tump {
     template <unsigned int ArgsSize, bool IsCheckArgsSize = bool(ArgsSize)>
     struct optional_args_for_is_callback {};
 
+    template <class F, unsigned int CheckArgsSize, bool IsCheckArgsSize>
+    using _is_callback_impl = std::disjunction<
+        std::bool_constant<!IsCheckArgsSize>,
+        _eq_args_size<CheckArgsSize, F>
+    >;
+
     /**
      * @fn
      * @brief コールバック化したか、コールバック化したメタ関数の引数を部分適用したものか判定
@@ -59,24 +65,17 @@ namespace tump {
     template <class F, class OptionalArgs = optional_args_for_is_callback<0>> struct is_callback : public std::false_type {};
 
     template <template <class...> class MetaFunc, unsigned int ArgsSize, unsigned int CheckArgsSize, bool IsCheckArgsSize>
-    struct is_callback<callback<MetaFunc, ArgsSize>, optional_args_for_is_callback<CheckArgsSize, IsCheckArgsSize>> : public std::disjunction<
-        std::bool_constant<!IsCheckArgsSize>,
-        _eq_args_size<CheckArgsSize, callback<MetaFunc, ArgsSize>>
-    > {};
+    struct is_callback<callback<MetaFunc, ArgsSize>, optional_args_for_is_callback<CheckArgsSize, IsCheckArgsSize>>
+        : public _is_callback_impl<callback<MetaFunc, ArgsSize>, CheckArgsSize, IsCheckArgsSize>
+    {};
 
     template <template <class...> class OuterF, _DerivedAsArgSizeMembers InnerF, class... PartialArgs, unsigned int ArgsSize, bool IsCheckArgsSize>
-    requires _DerivedAsArgSizeMembers<OuterF<InnerF, PartialArgs...>>
-    struct is_callback<OuterF<InnerF, PartialArgs...>, optional_args_for_is_callback<ArgsSize, IsCheckArgsSize>> : public std::conjunction<
-        is_callback<
-            InnerF,
-            optional_args_for_is_callback<
-                sizeof...(PartialArgs) + ArgsSize,
-                IsCheckArgsSize
-            >
-        >,
-        std::disjunction<
-            std::bool_constant<!IsCheckArgsSize>,
-            _eq_args_size<ArgsSize, OuterF<InnerF, PartialArgs...>>
+    requires (_is_callback_impl<OuterF<InnerF, PartialArgs...>, ArgsSize, IsCheckArgsSize>::value)
+    struct is_callback<OuterF<InnerF, PartialArgs...>, optional_args_for_is_callback<ArgsSize, IsCheckArgsSize>> : public is_callback<
+        InnerF,
+        optional_args_for_is_callback<
+            sizeof...(PartialArgs) + ArgsSize,
+            IsCheckArgsSize
         >
     > {};
 

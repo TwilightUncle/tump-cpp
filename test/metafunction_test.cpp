@@ -42,7 +42,7 @@ TEST(TumpMetafunctionTest, InvocableTest)
     ASSERT_FALSE(case11);
 }
 
-TEST(TumpMetafunctionTest, ApplyTest)
+TEST(TumpMetafunctionTest, InvokeTest)
 {
     constexpr auto case1 = tump::Functional<std::vector<int>>;
     constexpr auto case2 = tump::TFunctional<std::add_const<int>>;
@@ -54,11 +54,11 @@ TEST(TumpMetafunctionTest, ApplyTest)
     ASSERT_FALSE(case3);
     ASSERT_TRUE(case4);
 
-    constexpr auto case5 = tump::apply<F1, int, int>::value;
-    constexpr auto case6 = tump::apply_v<F2, int, float>;
-    constexpr auto case7 = std::is_same_v<tump::apply_t<F3, int>, std::true_type>;
-    constexpr auto case8 = std::is_same_v<tump::apply_t<F3, float>, std::false_type>;
-    constexpr auto case9 = tump::apply_v<F5>;
+    constexpr auto case5 = tump::invoke<F1, int, int>::value;
+    constexpr auto case6 = tump::invoke_v<F2, int, float>;
+    constexpr auto case7 = std::is_same_v<tump::invoke_t<F3, int>, std::true_type>;
+    constexpr auto case8 = std::is_same_v<tump::invoke_t<F3, float>, std::false_type>;
+    constexpr auto case9 = tump::invoke_v<F5>;
     
     ASSERT_TRUE(case5);
     ASSERT_FALSE(case6);
@@ -67,10 +67,10 @@ TEST(TumpMetafunctionTest, ApplyTest)
     ASSERT_TRUE(case9);
 }
 
-TEST(TumpMetafunctionTest, ApplyListTest)
+TEST(TumpMetafunctionTest, InvokeListTest)
 {
-    constexpr auto case1 = tump::apply_list_v<F1, std::tuple<int, int>>;
-    constexpr auto case2 = tump::apply_list_v<F1, std::tuple<int, float>>;
+    constexpr auto case1 = tump::invoke_list_v<F1, std::tuple<int, int>>;
+    constexpr auto case2 = tump::invoke_list_v<F1, std::tuple<int, float>>;
 
     ASSERT_TRUE(case1);
     ASSERT_FALSE(case2);
@@ -83,8 +83,8 @@ TEST(TumpMetafunctionTest, FlipTest)
 {
     using F = tump::callback<std::is_base_of>;
 
-    constexpr auto case1 = tump::apply_v<F, A, B>;
-    constexpr auto case2 = tump::apply_v<F, B, A>;
+    constexpr auto case1 = tump::invoke_v<F, A, B>;
+    constexpr auto case2 = tump::invoke_v<F, B, A>;
     constexpr auto case3 = tump::flip_v<F, A, B>;
     constexpr auto case4 = tump::flip_v<F, B, A>;
 
@@ -94,7 +94,7 @@ TEST(TumpMetafunctionTest, FlipTest)
     ASSERT_TRUE(case4);
 }
 
-TEST(TumpMetafunctionTest, RelayTest)
+TEST(TumpMetafunctionTest, ComposeTest)
 {
     constexpr auto case1 = tump::InvocableList<std::tuple<
         F1,
@@ -130,12 +130,12 @@ TEST(TumpMetafunctionTest, RelayTest)
     ASSERT_TRUE(case6);
 
     constexpr auto case7 = std::is_same_v<
-        tump::relay_t<
-            decltype([]() -> double { return 1.; }),
-            std::tuple<
-                tump::cbk<std::invoke_result, 1>,
-                tump::cbk<std::add_const, 1>
-            >
+        tump::invoke_t<
+            tump::compose<
+                tump::cbk<std::add_const, 1>,
+                tump::cbk<std::invoke_result, 1>
+            >,
+            decltype([]() -> double { return 1.; })
         >,
         const double
     >;

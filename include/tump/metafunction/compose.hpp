@@ -2,7 +2,7 @@
 #define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_RELAY_HPP
 
 #include <tump/metafunction/flip.hpp>
-#include <tump/metafunction/apply_list.hpp>
+#include <tump/metafunction/invoke_list.hpp>
 #include <tump/algorithm/map.hpp>
 #include <tump/algorithm/fold.hpp>
 
@@ -12,7 +12,7 @@ namespace tump
     struct is_invocable_list : public std::false_type {};
 
     template <TypeList List, class OptionalArgs>
-    struct is_invocable_list<List, OptionalArgs> : public apply_list<
+    struct is_invocable_list<List, OptionalArgs> : public invoke_list<
         cbk<std::conjunction>,
         map_t<
             bind<
@@ -40,25 +40,33 @@ namespace tump
     concept InvocableArgNList = is_invocable_list_v<T, optional_args_for_is_callback<ArgsSize, true>>;
 
     /**
-     * @fn
-     * @brief T に対してFListで渡したメタ関数リストの関数を順番に適用していく
+     * 関数の合成
     */
-    template <class T, InvocableArgNList<1> FList>
-    struct relay : public foldl<
-        bind<
-            cbk<flip, 3>,
-            cbk<apply, 2>
-        >,
-        T,
-        FList
-    > {};
+    template <InvocableArgN<1>... Funcs>
+    struct compose : public _args_size_members<1, true> {};
+
+    template <class T>
+    struct is_compose : public std::false_type {};
+
+    template <InvocableArgN<1>... Funcs>
+    struct is_compose<compose<Funcs...>> : public std::true_type {};
+    
+    template <class F, unsigned int CheckArgsSize, bool IsCheckArgsSize>
+    requires (is_compose<F>::value)
+    struct is_callback<F, optional_args_for_is_callback<CheckArgsSize, IsCheckArgsSize>>
+        : public _is_callback_impl<F, CheckArgsSize, IsCheckArgsSize>
+    {};
 
     /**
      * @fn
-     * @brief T に対してFListで渡したメタ関数リストの関数を順番に適用していく
+     * @brief 合成済み関数用のオーバーロード
     */
-    template <class T, InvocableArgNList<1> FList>
-    using relay_t = relay<T, FList>::type;
+    template <InvocableArgN<1>... Funcs, class Arg>
+    struct invoke<compose<Funcs...>, Arg> : public foldr<
+        cbk<invoke, 2>,
+        Arg,
+        compose<Funcs...>
+    > {};
 }
 
 #endif

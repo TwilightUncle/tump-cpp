@@ -2,7 +2,7 @@
 #define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_COPY_HPP
 
 #include <tump/algorithm/make_type_list.hpp>
-#include <tump/metafunction/apply_list.hpp>
+#include <tump/metafunction/invoke_list.hpp>
 
 namespace tump {
     /**
@@ -10,7 +10,7 @@ namespace tump {
     */
     template <TypeList Src, TypeList Dest>
     requires (!is_empty_v<Src>)
-    using copy = apply_list<bind<callback<make_type_list>, Dest>, Src>;
+    using copy = invoke_list<bind<callback<make_type_list>, Dest>, Src>;
 
     /**
      * リストの中身をDestにコピーする

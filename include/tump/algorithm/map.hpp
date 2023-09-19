@@ -2,7 +2,7 @@
 #define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_MAP_HPP
 
 #include <tump/algorithm/has_type_parameters.hpp>
-#include <tump/metafunction/apply.hpp>
+#include <tump/metafunction/invoke.hpp>
 
 namespace tump {
     /**
@@ -16,7 +16,7 @@ namespace tump {
     struct map<F, List> : public std::type_identity<List> {};
 
     template <InvocableArgN<1> F, template <class...> class Outer, class... Types>
-    struct map<F, Outer<Types...>> : public std::type_identity<Outer<apply_t<F, Types>...>> {};
+    struct map<F, Outer<Types...>> : public std::type_identity<Outer<invoke_t<F, Types>...>> {};
 
     /**
      * 型リストに含まれるすべての要素に対して、メタ関数を適用する
