@@ -50,9 +50,12 @@ namespace tump
 
     template <InvocableArgN<1>... Funcs>
     struct is_compose<compose<Funcs...>> : public std::true_type {};
+
+    template <class T>
+    constexpr auto is_compose_v = is_compose<T>::value;
     
     template <class F, unsigned int CheckArgsSize, bool IsCheckArgsSize>
-    requires (is_compose<F>::value)
+    requires (is_compose_v<F>)
     struct is_callback<F, optional_args_for_is_callback<CheckArgsSize, IsCheckArgsSize>>
         : public _is_callback_impl<F, CheckArgsSize, IsCheckArgsSize>
     {};
