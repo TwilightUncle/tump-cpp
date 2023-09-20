@@ -4,7 +4,8 @@
 #include <tump/algorithm/has_type_parameters.hpp>
 #include <tump/metafunction/invoke.hpp>
 
-namespace tump {
+namespace tump
+{
     /**
      * 型リストに含まれるすべての要素に対して、メタ関数を適用する
     */

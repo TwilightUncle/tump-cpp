@@ -4,7 +4,8 @@
 #include <tump/algorithm/has_type_parameters.hpp>
 #include <tump/metafunction/invoke.hpp>
 
-namespace tump {
+namespace tump
+{
     /**
      * 左畳み込みを実施
     */

@@ -3,7 +3,8 @@
 
 #include <tump/empty.hpp>
 
-namespace tump {
+namespace tump
+{
     /**
      * 型のテンプレートパラメータを保持持つか判定
     */

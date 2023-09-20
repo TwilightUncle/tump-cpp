@@ -4,7 +4,8 @@
 #include <tump/list.hpp>
 #include <tump/algorithm/fold.hpp>
 
-namespace tump {
+namespace tump
+{
     /**
      * 複数のリストを結合する
      * ただし、リストの側として利用されているテンプレート型は共通でなければいけない

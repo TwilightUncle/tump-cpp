@@ -4,7 +4,8 @@
 #include <tump/algorithm/make_type_list.hpp>
 #include <tump/metafunction/invoke_list.hpp>
 
-namespace tump {
+namespace tump
+{
     /**
      * リストの中身をDestにコピーする
     */

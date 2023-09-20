@@ -3,7 +3,8 @@
 
 #include <type_traits>
 
-namespace tump {
+namespace tump
+{
     /**
      * 空のリスト
     */

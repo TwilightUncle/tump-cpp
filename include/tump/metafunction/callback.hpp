@@ -4,7 +4,8 @@
 #include <type_traits>
 #include <concepts>
 
-namespace tump {
+namespace tump
+{
     template <unsigned int ArgsSize, bool IsCheckArgsSize>
     struct _args_size_members
     {

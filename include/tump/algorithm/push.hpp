@@ -4,7 +4,8 @@
 #include <tump/algorithm/make_type_list.hpp>
 #include <tump/algorithm/concat.hpp>
 
-namespace tump {
+namespace tump
+{
     /**
      * 型リストの最後尾に指定されたパラメータパックを挿入する
     */

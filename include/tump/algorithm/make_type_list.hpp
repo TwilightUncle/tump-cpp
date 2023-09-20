@@ -3,7 +3,8 @@
 
 #include <tump/algorithm/has_type_parameters.hpp>
 
-namespace tump {
+namespace tump
+{
     /**
      * リストの中身を指定の要素に置き換える
     */
