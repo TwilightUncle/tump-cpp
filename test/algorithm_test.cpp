@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <tuple>
 #include <tump/null.hpp>
-#include <tump/list.hpp>
+#include <tump/containers/list.hpp>
 #include <tump/algorithm.hpp>
 
 TEST(TumpAlgorithmTest, HasTypeParametersTest)
@@ -201,4 +201,100 @@ TEST(TumpAlgorithmTest, PushTest)
         tump::list<int>
     >;
     ASSERT_TRUE(case6);
+}
+
+TEST(TumpAlgorithmTest, LenTest)
+{
+    constexpr auto case1 = tump::len_v<tump::list<int, short, long long>>;
+    constexpr auto case2 = tump::len_v<tump::empty<tump::list>>;
+    ASSERT_EQ(case1, 3);
+    ASSERT_EQ(case2, 0);
+}
+
+TEST(TumpAlgorithmTest, GetTest)
+{
+    using type_list1 = tump::list<int, short, char, long long>;
+
+    constexpr auto case1 = std::is_same_v<tump::get_front_t<type_list1>, int>;
+    constexpr auto case2 = std::is_same_v<tump::get_t<0, type_list1>, int>;
+    constexpr auto case3 = std::is_same_v<tump::get_t<1, type_list1>, short>;
+    constexpr auto case4 = std::is_same_v<tump::get_t<2, type_list1>, char>;
+    constexpr auto case5 = std::is_same_v<tump::get_t<3, type_list1>, long long>;
+    constexpr auto case6 = std::is_same_v<tump::get_back_t<type_list1>, long long>;
+
+    ASSERT_TRUE(case1);
+    ASSERT_TRUE(case2);
+    ASSERT_TRUE(case3);
+    ASSERT_TRUE(case4);
+    ASSERT_TRUE(case5);
+    ASSERT_TRUE(case6);
+}
+
+TEST(TumpAlgorithmTest, PopTest)
+{
+    using type_list1 = tump::list<int, short, char, long long>;
+    using type_list2 = tump::list<int>;
+
+    constexpr auto case1 = std::is_same_v<
+        tump::pop_front_t<type_list1>,
+        tump::list<short, char, long long>
+    >;
+    constexpr auto case2 = std::is_same_v<
+        tump::pop_back_t<type_list1>,
+        tump::list<int, short, char>
+    >;
+    constexpr auto case3 = std::is_same_v<tump::pop_front_t<type_list2>, tump::empty<tump::list>>;
+    constexpr auto case4 = std::is_same_v<tump::pop_back_t<type_list2>, tump::empty<tump::list>>;
+
+    ASSERT_TRUE(case1);
+    ASSERT_TRUE(case2);
+    ASSERT_TRUE(case3);
+    ASSERT_TRUE(case4);
+}
+
+TEST(TumpAlgorithmTest, SliceTest)
+{
+    using type_list1 = tump::list<int, short, char, long long, float, double>;
+
+    constexpr auto case1 = std::is_same_v<
+        tump::slice_t<type_list1, 4>,
+        tump::list<float, double>
+    >;
+    constexpr auto case2 = std::is_same_v<
+        tump::slice_t<type_list1, 5>,
+        tump::list<double>
+    >;
+    constexpr auto case3 = std::is_same_v<
+        tump::slice_t<type_list1, 6>,
+        tump::empty<tump::list>
+    >;
+    constexpr auto case4 = std::is_same_v<
+        tump::slice_t<type_list1, 0, 4>,
+        tump::list<int, short, char, long long>
+    >;
+    constexpr auto case5 = std::is_same_v<
+        tump::slice_t<type_list1, 2, 3>,
+        tump::list<char, long long, float>
+    >;
+    constexpr auto case6 = std::is_same_v<
+        tump::slice_t<type_list1, 2, 0>,
+        tump::empty<tump::list>
+    >;
+    constexpr auto case7 = std::is_same_v<
+        tump::slice_t<type_list1, 1, 3, 1>,
+        tump::list<short, long long, double>
+    >;
+    constexpr auto case8 = std::is_same_v<
+        tump::slice_t<type_list1, 1, 3, 2>,
+        tump::list<short, float>
+    >;
+
+    ASSERT_TRUE(case1);
+    ASSERT_TRUE(case2);
+    ASSERT_TRUE(case3);
+    ASSERT_TRUE(case4);
+    ASSERT_TRUE(case5);
+    ASSERT_TRUE(case6);
+    ASSERT_TRUE(case7);
+    ASSERT_TRUE(case8);
 }
