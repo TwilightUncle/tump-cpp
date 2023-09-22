@@ -168,3 +168,22 @@ TEST(TumpMetafunctionTest, ApplyTest)
     ASSERT_TRUE(case6);
     ASSERT_FALSE(case7);
 }
+
+TEST(TumpMetafunctionTest, InvokeResultTest)
+{
+    using type1 = tump::invoke_result_t<tump::compose<tump::bind<tump::cbk<tump::invoke_result>>>>;
+    constexpr auto case1 = tump::invoke_v<type1, tump::cbk<std::is_integral, 1>>;
+    constexpr auto case2 = tump::invoke_v<type1, tump::cbk<std::is_same, 2>>;
+
+    ASSERT_TRUE(case1);
+    ASSERT_FALSE(case2);
+
+    using type2 = tump::invoke_result_t<tump::cbk<std::is_same, 2>>;
+    constexpr auto case3 = tump::invoke_v<type2, std::true_type>;
+    constexpr auto case4 = tump::invoke_v<type2, std::false_type>;
+    constexpr auto case5 = tump::invoke_v<type2, int>;
+
+    ASSERT_TRUE(case3);
+    ASSERT_TRUE(case4);
+    ASSERT_FALSE(case5);
+}

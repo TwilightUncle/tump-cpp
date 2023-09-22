@@ -1,7 +1,6 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_BIND_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_BIND_HPP
 
-#include <concepts>
 #include <tump/metafunction/callback.hpp>
 
 namespace tump

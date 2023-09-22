@@ -3,6 +3,7 @@
 
 #include <tump/metafunction/flip.hpp>
 #include <tump/metafunction/invoke_list.hpp>
+#include <tump/metafunction/invoke_result.hpp>
 #include <tump/algorithm/map.hpp>
 #include <tump/algorithm/fold.hpp>
 
@@ -43,6 +44,7 @@ namespace tump
      * 関数の合成
     */
     template <InvocableArgN<1>... Funcs>
+    requires (sizeof...(Funcs) > 0)
     struct compose : public _args_size_members<1, true> {};
 
     template <class T>
@@ -70,6 +72,9 @@ namespace tump
         Arg,
         compose<Funcs...>
     > {};
+
+    template <InvocableArgN<1> F, InvocableArgN<1>... Funcs, class... Args>
+    struct invoke_result<compose<F, Funcs...>, Args...> : public invoke_result<F, Args...> {};
 }
 
 #endif
