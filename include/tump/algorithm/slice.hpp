@@ -39,6 +39,8 @@ namespace tump
     */
     template <TypeList List, std::size_t Start, std::size_t Size = len_v<List>, std::size_t Stride = 0>
     using slice_t = slice<List, Start, Size, Stride>::type;
+
+    // TODO: 戻り値制約についても考える(本メタ関数を格納可能なcallbackを定義か？)
 }
 
 #endif
