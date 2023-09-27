@@ -263,6 +263,7 @@ TEST(TumpAlgorithmTest, ConcatTest)
 TEST(TumpAlgorithmTest, PushTest)
 {
     using type_list1 = tump::list<int, short, long long>;
+    using type_list2 = tump::st_list<tump::cbk<std::is_integral, 1>, int, short, long long>;
     using empty_list = tump::list<>;
 
     constexpr auto case1 = std::is_same_v<
@@ -296,6 +297,26 @@ TEST(TumpAlgorithmTest, PushTest)
         tump::list<int>
     >;
     ASSERT_TRUE(case6);
+    constexpr auto case7 = std::is_same_v<
+        tump::push_back_if_t<tump::cbk<std::is_integral, 1>, empty_list, double, float>,
+        empty_list
+    >;
+    ASSERT_TRUE(case7);
+    constexpr auto case8 = std::is_same_v<
+        tump::push_back_if_t<tump::cbk<std::is_integral, 1>, type_list2, unsigned long, double, char, float>,
+        tump::st_list<tump::cbk<std::is_integral, 1>, int, short, long long, unsigned long, char>
+    >;
+    ASSERT_TRUE(case8);
+    constexpr auto case9 = std::is_same_v<
+        tump::push_front_if_t<tump::cbk<std::is_integral, 1>, empty_list, double, float>,
+        empty_list
+    >;
+    ASSERT_TRUE(case9);
+    constexpr auto case10 = std::is_same_v<
+        tump::push_front_if_t<tump::cbk<std::is_integral, 1>, type_list2, unsigned long, double, char, float>,
+        tump::st_list<tump::cbk<std::is_integral, 1>, unsigned long, char, int, short, long long>
+    >;
+    ASSERT_TRUE(case10);
 }
 
 TEST(TumpAlgorithmTest, LenTest)
