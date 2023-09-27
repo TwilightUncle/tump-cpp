@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_FOLD_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_FOLD_HPP
 
-#include <tump/algorithm/has_type_parameters.hpp>
+#include <tump/algorithm/get.hpp>
 #include <tump/metafunction/invoke.hpp>
 
 namespace tump
@@ -10,13 +10,13 @@ namespace tump
      * 左畳み込みを実施
     */
     template <InvocableArgN<2> F, class Init, TypeList List>
-    struct foldl;
+    struct foldl : public foldl<F, Init, to_norm_li_t<List>> {};
 
-    template <InvocableArgN<2> F, class Init, template <class...> class Outer, class Head, class... Types>
-    struct foldl<F, Init, Outer<Head, Types...>> : public foldl<F, invoke_t<F, Init, Head>, Outer<Types...>> {};
+    template <InvocableArgN<2> F, class Init, class Head, class... Types>
+    struct foldl<F, Init, list<Head, Types...>> : public foldl<F, invoke_t<F, Init, Head>, list<Types...>> {};
 
-    template <InvocableArgN<2> F, class Init, template <class...> class Outer, class Head>
-    struct foldl<F, Init, Outer<Head>> : public std::type_identity<invoke_t<F, Init, Head>> {};
+    template <InvocableArgN<2> F, class Init, class Head>
+    struct foldl<F, Init, list<Head>> : public std::type_identity<invoke_t<F, Init, Head>> {};
 
     /**
      * 左畳み込みを実施
@@ -28,19 +28,25 @@ namespace tump
      * 右畳み込みを実施
     */
     template <InvocableArgN<2> F, class Init, TypeList List>
-    struct foldr;
+    struct foldr : public foldr<F, Init, to_norm_li_t<List>> {};
 
-    template <InvocableArgN<2> F, class Init, template <class...> class Outer, class Head, class... Types>
-    struct foldr<F, Init, Outer<Head, Types...>> : public invoke<F, Head, typename foldr<F, Init, Outer<Types...>>::type> {};
+    template <InvocableArgN<2> F, class Init, class Head, class... Types>
+    struct foldr<F, Init, list<Head, Types...>> : public invoke<F, Head, typename foldr<F, Init, list<Types...>>::type> {};
 
-    template <InvocableArgN<2> F, class Init, template <class...> class Outer, class Head>
-    struct foldr<F, Init, Outer<Head>> : public std::type_identity<invoke_t<F, Head, Init>> {};
+    template <InvocableArgN<2> F, class Init, class Head>
+    struct foldr<F, Init, list<Head>> : public std::type_identity<invoke_t<F, Head, Init>> {};
 
     /**
      * 右畳み込みを実施
     */
     template <InvocableArgN<2> F, class Init, TypeList List>
     using foldr_t = foldr<F, Init, List>::type;
+
+    template <unsigned int ArgsSize, InvocableArgN<2> F, class Init, TypeList List>
+    struct invoke_result<callback<foldl, ArgsSize>, F, Init, List> : public invoke_result<F, Init, get_front_t<List>> {};
+
+    template <unsigned int ArgsSize, InvocableArgN<2> F, class Init, TypeList List>
+    struct invoke_result<callback<foldr, ArgsSize>, F, Init, List> : public invoke_result<F, get_back_t<List>, Init> {};
 }
 
 #endif

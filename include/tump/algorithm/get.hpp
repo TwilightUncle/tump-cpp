@@ -10,10 +10,10 @@ namespace tump
     */
     template <TypeList List>
     requires (!is_empty_v<List>)
-    struct get_front;
+    struct get_front : public get_front<to_norm_li_t<List>> {};
 
-    template <template <class...> class Outer, class Head, class... Types>
-    struct get_front<Outer<Head, Types...>> : public std::type_identity<Head> {};
+    template <class Head, class... Types>
+    struct get_front<list<Head, Types...>> : public std::type_identity<Head> {};
 
     /**
      * リストの先頭要素を取得
@@ -26,13 +26,13 @@ namespace tump
     */
     template <std::size_t N, TypeList List>
     requires (N < len_v<List>)
-    struct get;
+    struct get : public get<N, to_norm_li_t<List>> {};
 
     template <TypeList List>
     struct get<0, List> : public get_front<List> {};
 
-    template <std::size_t N, template <class...> class Outer, class Head, class... Types>
-    struct get<N, Outer<Head, Types...>> : public get<N - 1, Outer<Types...>> {};
+    template <std::size_t N, class Head, class... Types>
+    struct get<N, list<Head, Types...>> : public get<N - 1, list<Types...>> {};
 
     /**
      * リストの N 番目の要素を取得
@@ -52,6 +52,14 @@ namespace tump
     */
     template <TypeList List>
     using get_back_t = get_back<List>::type;
+
+    template <unsigned int ArgsSize, TypeList List>
+    struct invoke_result<callback<get_front, ArgsSize>, List> : public get_container_constraint<List> {};
+
+    // TODO: get の戻り値制約についても考える(本メタ関数を格納可能なcallbackを定義か？)
+
+    template <unsigned int ArgsSize, TypeList List>
+    struct invoke_result<callback<get_back, ArgsSize>, List> : public get_container_constraint<List> {}; 
 }
 
 #endif

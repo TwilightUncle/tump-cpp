@@ -34,11 +34,21 @@ namespace tump
 
     using constraint_type_list = std::type_identity<cbk<_constraint_type_list_impl, 1>>;
 
-    template <TypeList T>
-    using constraint_st_type_list = std::type_identity<bind<cbk<std::is_same, 2>, make_empty_t<T>>>;
+    template <class T1, class T2>
+    struct is_same_container : public std::false_type {};
 
-    template <unsigned int ArgsSize>
-    struct invoke_result<callback<has_type_parameters, ArgsSize>> : public constraint_bool_constant {};
+    template <TypeList List1, TypeList List2>
+    struct is_same_container<List1, List2> : public std::is_same<
+        make_empty_t<List1>, make_empty_t<List2>
+    > {};
+
+    template <TypeList T>
+    using constraint_st_type_list = std::type_identity<
+        bind<cbk<is_same_container, 2>, T>
+    >;
+
+    template <unsigned int ArgsSize, class T>
+    struct invoke_result<callback<has_type_parameters, ArgsSize>, T> : public constraint_bool_constant {};
 }
 
 #endif

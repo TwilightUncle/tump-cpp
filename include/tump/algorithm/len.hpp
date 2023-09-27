@@ -9,10 +9,10 @@ namespace tump
      * リストの長さを取得
     */
     template <TypeList List>
-    struct len;
+    struct len : public len<to_norm_li_t<List>> {};
 
-    template <template <class...> class Outer, class... Types>
-    struct len<Outer<Types...>>
+    template <class... Types>
+    struct len<list<Types...>>
         : public std::integral_constant<std::size_t, sizeof...(Types)>
     {};
 
@@ -24,6 +24,9 @@ namespace tump
 
     template <TypeList List>
     constexpr auto len_v = len<List>::value;
+
+    template <unsigned int ArgsSize, class T>
+    struct invoke_result<callback<len, ArgsSize>, T> : public constraint_size_constant {};
 }
 
 #endif

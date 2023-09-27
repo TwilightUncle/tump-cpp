@@ -3,15 +3,23 @@
 
 #include <tump/null.hpp>
 #include <tump/empty.hpp>
+#include <tump/metafunction/callback.hpp>
+#include <tump/algorithm/to_true.hpp>
 
 namespace tump
 {
+    /**
+     * 処理を共通化するため、構造を一般化する
+    */
     template <class T>
     struct to_norm_li : public std::type_identity<mp_null_t> {};
 
     template <class T>
     using to_norm_li_t = to_norm_li<T>::type;
 
+    /**
+     * コンテナのガワを置き換える
+    */
     template <class Container, class NormalizedList>
     struct unnorm_li;
 
@@ -19,22 +27,32 @@ namespace tump
     using unnorm_li_t = unnorm_li<Container, NormalizedList>::type;
 
     /**
-     * 指定したリストの側だけ取り出し、空のリストを作成する
+     * コンテナが持つ要素の制約を取得
     */
-    template <class List>
+    template <class T>
+    struct get_container_constraint : public std::type_identity<cbk<to_true, 1>> {};
+
+    template <class T>
+    using get_container_constraint_t = get_container_constraint<T>::type;
+
+    /**
+     * 指定したリストの側だけ取り出し、空のリストを作成する
+     * 制約を持つコンテナに対して、任意の制約に置き換えることも可能
+    */
+    template <class List, class Constraint = get_container_constraint_t<List>>
     struct make_empty;
 
-    template <template <class...> class Outer, class... Types>
-    struct make_empty<Outer<Types...>> : public std::type_identity<empty<Outer>> {};
+    template <template <class...> class Outer, class... Types, class Constraint>
+    struct make_empty<Outer<Types...>, Constraint> : public std::type_identity<empty<Outer>> {};
 
-    template <template <class...> class Outer>
-    struct make_empty<empty<Outer>> : public std::type_identity<empty<Outer>> {};
+    template <template <class...> class Outer, class Constraint>
+    struct make_empty<empty<Outer>, Constraint> : public std::type_identity<empty<Outer>> {};
 
     /**
      * 指定したリストの側だけ取り出し、空のリストを作成する
     */
-    template <class List>
-    using make_empty_t = make_empty<List>::type;
+    template <class List, class Constraint = get_container_constraint_t<List>>
+    using make_empty_t = make_empty<List, Constraint>::type;
 
     /**
      * 空のリストかどうか判定する

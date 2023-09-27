@@ -178,7 +178,7 @@ TEST(TumpMetafunctionTest, InvokeResultTest)
     ASSERT_TRUE(case1);
     ASSERT_FALSE(case2);
 
-    using type2 = tump::invoke_result_t<tump::cbk<std::is_same, 2>>;
+    using type2 = tump::invoke_result_t<tump::cbk<std::is_same, 2>, int, int>;
     constexpr auto case3 = tump::invoke_v<type2, std::true_type>;
     constexpr auto case4 = tump::invoke_v<type2, std::false_type>;
     constexpr auto case5 = tump::invoke_v<type2, int>;

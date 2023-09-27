@@ -13,6 +13,11 @@ namespace tump
     requires (bool(invoke_v<Constraint, Types>) && ...)
     struct st_list {};
 
+    // ---------------------------------------------------------
+    // 下記メソッドの実装定義
+    // 宣言については tump/containers/methods.hpp を参照されたし
+    // ---------------------------------------------------------
+
     template <InvocableArgN<1> Constraint, class... Types>
     struct to_norm_li<st_list<Constraint, Types...>> : public std::type_identity<list<Types...>> {};
 
@@ -20,7 +25,10 @@ namespace tump
     struct unnorm_li<st_list<Constraint, OldTypes...>, list<Types...>> : public std::type_identity<st_list<Constraint, Types...>> {};
 
     template <InvocableArgN<1> Constraint, class... Types>
-    struct make_empty<st_list<Constraint, Types...>> : public std::type_identity<st_list<Constraint>> {};
+    struct get_container_constraint<st_list<Constraint, Types...>> : public std::type_identity<Constraint> {};
+
+    template <InvocableArgN<1> Constraint, class... Types, InvocableArgN<1> NewConstraint>
+    struct make_empty<st_list<Constraint, Types...>, NewConstraint> : public std::type_identity<st_list<NewConstraint>> {};
 
     template <InvocableArgN<1> Constraint>
     struct is_empty<st_list<Constraint>> : public std::true_type {};

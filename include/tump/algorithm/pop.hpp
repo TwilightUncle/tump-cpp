@@ -11,15 +11,18 @@ namespace tump
     */
     template <TypeList List>
     requires (!is_empty_v<List>)
-    struct pop_front;
+    struct pop_front : public unnorm_li<
+        List,
+        typename pop_front<to_norm_li_t<List>>::type
+    > {};
 
     template <TypeList List>
     requires (len_v<List> == 1)
     struct pop_front<List> : public make_empty<List> {};
 
-    template <template <class...> class Outer, class Head, class... Types>
+    template <class Head, class... Types>
     requires (sizeof...(Types) > 0)
-    struct pop_front<Outer<Head, Types...>> : public std::type_identity<Outer<Types...>> {};
+    struct pop_front<list<Head, Types...>> : public std::type_identity<list<Types...>> {};
 
     /**
      * リストの先頭要素を除去
@@ -54,6 +57,12 @@ namespace tump
     */
     template <TypeList List>
     using pop_back_t = pop_back<List>::type;
+
+    template <unsigned int ArgsSize, TypeList List>
+    struct invoke_result<callback<pop_front, ArgsSize>, List> : public constraint_st_type_list<List> {};
+
+    template <unsigned int ArgsSize, TypeList List>
+    struct invoke_result<callback<pop_back, ArgsSize>, List> : public constraint_st_type_list<List> {};
 }
 
 #endif

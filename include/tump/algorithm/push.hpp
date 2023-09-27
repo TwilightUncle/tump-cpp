@@ -29,6 +29,12 @@ namespace tump
     */
     template <TypeList List, class... Types>
     using push_front_t = push_front<List, Types...>::type;
+
+    template <std::size_t ArgsSize, TypeList List, class... Types>
+    struct invoke_result<callback<push_back, ArgsSize>, List, Types...> : public constraint_st_type_list<List> {};
+
+    template <std::size_t ArgsSize, TypeList List, class... Types>
+    struct invoke_result<callback<push_front, ArgsSize>, List, Types...> : public constraint_st_type_list<List> {};
 }
 
 #endif
