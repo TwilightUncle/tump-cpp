@@ -7,6 +7,7 @@ namespace tump
 {
     /**
      * 要素数固定で、制約に合致する型しか要素として保持できないコンテナ
+     * 現在、要素数を変更するようなalgorithm配下の関数は未実装(制約エラーとなる)
     */
     template <InvocableArgN<1> Constraint, std::size_t N, class... Types>
     requires (sizeof...(Types) == N || sizeof...(Types) == 0)
