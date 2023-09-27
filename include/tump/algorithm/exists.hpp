@@ -27,6 +27,11 @@ namespace tump
     template <class Search, TypeList List>
     constexpr auto exists_v = exists<Search, List>::value;
 
+    template <class... Types>
+    using constraint_or_types = std::type_identity<
+        bind<cbk<flip, 3>, cbk<exists, 2>, list<Types...>>
+    >;
+
     template <std::size_t ArgsSize, class Search, TypeList List>
     struct invoke_result<callback<exists, ArgsSize>, Search, List> : public constraint_bool_constant {}; 
 }
