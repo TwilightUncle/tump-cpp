@@ -5,5 +5,6 @@
 #include <tump/algorithm/map.hpp>
 #include <tump/algorithm/slice.hpp>
 #include <tump/algorithm/reverse.hpp>
+#include <tump/algorithm/mp_if.hpp>
 
 #endif

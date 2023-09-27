@@ -422,3 +422,37 @@ TEST(TumpAlgorithmTest, ReverseTest)
     ASSERT_TRUE(case2);
     ASSERT_TRUE(case3);
 }
+
+TEST(TumpAlgorithmTest, ExistsTest)
+{
+    constexpr auto case1 = tump::exists_v<int, tump::list<float, int, double>>;
+    constexpr auto case2 = tump::exists_v<int, tump::list<>>;
+    constexpr auto case3 = tump::exists_v<int, tump::array<tump::cbk<std::is_arithmetic, 1>, 3, float, int, double>>;
+    constexpr auto case4 = tump::exists_v<tump::cbk<std::is_arithmetic, 1>, tump::array<tump::cbk<std::is_arithmetic, 1>, 3, float, int, double>>;
+    ASSERT_TRUE(case1);
+    ASSERT_FALSE(case2);
+    ASSERT_TRUE(case3);
+    ASSERT_FALSE(case4);
+}
+
+TEST(TumpAlgorithmTest, MpIfTest)
+{
+    constexpr auto case1 = std::is_same_v<tump::mp_if_t<std::true_type, int, double>, int>;
+    constexpr auto case2 = std::is_same_v<tump::mp_if_t<std::false_type, int, double>, double>;
+    ASSERT_TRUE(case1);
+    ASSERT_TRUE(case2);
+
+    using constraint1 = tump::invoke_result_t<
+        tump::cbk<tump::mp_if, 3>,
+        std::true_type,
+        int,
+        double
+    >;
+
+    constexpr auto case3 = tump::invoke_v<constraint1, int>;
+    constexpr auto case4 = tump::invoke_v<constraint1, double>;
+    constexpr auto case5 = tump::invoke_v<constraint1, char>;
+    ASSERT_TRUE(case3);
+    ASSERT_TRUE(case4);
+    ASSERT_FALSE(case5);
+}
