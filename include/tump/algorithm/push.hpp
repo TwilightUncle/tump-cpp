@@ -63,7 +63,10 @@ namespace tump
     */
     template <InvocableArgN<1> F, TypeList List, class... Types>
     struct push_front_if : public foldr<
-        bind<cbk<flip, 3>, bind<cbk<push_front_if, 3>, F>>,
+        bind<
+            cbk<flip, 3>,
+            bind<cbk<push_front_if, 3>, F>
+        >,
         List,
         list<Types...>
     > {};
