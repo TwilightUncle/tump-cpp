@@ -508,3 +508,36 @@ TEST(TumpAlgorithmTest, FilterTest)
     ASSERT_TRUE(case1);
     ASSERT_TRUE(case2);
 }
+
+TEST(TumpAlgorithmTest, RemoveIfTest)
+{
+    using list1 = tump::st_list<tump::cbk<std::is_arithmetic, 1>, int, float, double, char, unsigned long>;
+
+    constexpr auto case1 = std::is_same_v<
+        tump::remove_if_t<tump::cbk<std::is_integral, 1>, list1>,
+        tump::st_list<tump::cbk<std::is_arithmetic, 1>, float, double>
+    >;
+    constexpr auto case2 = std::is_same_v<
+        tump::remove_if_t<tump::cbk<std::is_floating_point, 1>, list1>,
+        tump::st_list<tump::cbk<std::is_arithmetic, 1>, int, char, unsigned long>
+    >;
+    ASSERT_TRUE(case1);
+    ASSERT_TRUE(case2);
+}
+
+TEST(TumpAlgorithmTest, UniqueTest)
+{
+    using list1 = tump::st_list<tump::cbk<std::is_arithmetic, 1>, int, float, int, char, float, int>;
+    using list2 = tump::array<tump::cbk<std::is_arithmetic, 1>, 3, int, float, char>;
+
+    constexpr auto case1 = std::is_same_v<
+        tump::unique_t<list1>,
+        tump::st_list<tump::cbk<std::is_arithmetic, 1>, int, float, char>
+    >;
+    ASSERT_TRUE(case1);
+
+    constexpr auto case2 = tump::is_unique_v<list1>;
+    constexpr auto case3 = tump::is_unique_v<list2>;
+    ASSERT_FALSE(case2);
+    ASSERT_TRUE(case3);
+}
