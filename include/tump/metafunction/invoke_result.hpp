@@ -52,6 +52,8 @@ namespace tump
     template <unsigned int ArgsSize, class L, class R>
     struct invoke_result<callback<std::is_same, ArgsSize>, L, R> : public constraint_bool_constant {};
     template <unsigned int ArgsSize, class T>
+    struct invoke_result<callback<std::is_arithmetic, ArgsSize>, T> : public constraint_bool_constant {};
+    template <unsigned int ArgsSize, class T>
     struct invoke_result<callback<std::is_integral, ArgsSize>, T> : public constraint_bool_constant {};
     template <unsigned int ArgsSize, class T>
     struct invoke_result<callback<std::is_floating_point, ArgsSize>, T> : public constraint_bool_constant {};

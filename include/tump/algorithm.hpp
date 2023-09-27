@@ -3,7 +3,7 @@
 
 #include <tump/algorithm/copy.hpp>
 #include <tump/algorithm/map.hpp>
-#include <tump/algorithm/push.hpp>
 #include <tump/algorithm/slice.hpp>
+#include <tump/algorithm/reverse.hpp>
 
 #endif
