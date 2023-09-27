@@ -7,5 +7,6 @@
 #include <tump/algorithm/reverse.hpp>
 #include <tump/algorithm/mp_if.hpp>
 #include <tump/algorithm/remove_if.hpp>
+#include <tump/algorithm/unique.hpp>
 
 #endif

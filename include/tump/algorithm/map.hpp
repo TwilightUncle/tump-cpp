@@ -28,26 +28,28 @@ namespace tump
     template <InvocableArgN<1> F, TypeList List>
     using map_t = map<F, List>::type;
 
-    template <class F, class List, class Target>
-    struct _map_result_impl : public std::false_type {};
+    namespace _ {
+        template <class F, class List, class Target>
+        struct map_result_impl : public std::false_type {};
 
-    template <InvocableArgN<1> F, TypeList List, TypeList Target>
-    requires (!is_empty_v<List>)
-    struct _map_result_impl<F, List, Target> : public std::is_same<
-        make_empty_t<List, invoke_result_t<F, get_front_t<List>>>,
-        make_empty_t<Target>
-    > {}; 
+        template <InvocableArgN<1> F, TypeList List, TypeList Target>
+        requires (!is_empty_v<List>)
+        struct map_result_impl<F, List, Target> : public std::is_same<
+            make_empty_t<List, invoke_result_t<F, get_front_t<List>>>,
+            make_empty_t<Target>
+        > {}; 
 
-    template <InvocableArgN<1> F, TypeList List, TypeList Target>
-    requires (is_empty_v<List>)
-    struct _map_result_impl<F, List, Target> : public std::is_same<
-        make_empty_t<List>,
-        make_empty_t<Target>
-    > {}; 
+        template <InvocableArgN<1> F, TypeList List, TypeList Target>
+        requires (is_empty_v<List>)
+        struct map_result_impl<F, List, Target> : public std::is_same<
+            make_empty_t<List>,
+            make_empty_t<Target>
+        > {};
+    }
 
     template <unsigned int ArgsSize, InvocableArgN<1> F, TypeList List>
     struct invoke_result<callback<map, ArgsSize>, F, List> : public std::type_identity<
-        bind<cbk<_map_result_impl, 3>, F, List>
+        bind<cbk<_::map_result_impl, 3>, F, List>
     > {};
 }
 

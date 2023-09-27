@@ -7,22 +7,25 @@
 
 namespace tump
 {
-    template <TypeList Acc, class Cur>
-    using unique_impl = push_back_if<
-        compose<
-            cbk<std::negation, 1>,
-            bind<cbk<flip, 3>, cbk<exists, 2>, Acc>
-        >,
-        Acc,
-        Cur
-    >;
+    namespace _
+    {
+        template <TypeList Acc, class Cur>
+        using unique_impl = push_back_if<
+            compose<
+                cbk<std::negation, 1>,
+                bind<cbk<flip, 3>, cbk<exists, 2>, Acc>
+            >,
+            Acc,
+            Cur
+        >;
+    }
 
     /**
      * リストの重複を除去する
     */
     template <TypeList List>
     using unique = foldl<
-        cbk<unique_impl, 2>,
+        cbk<_::unique_impl, 2>,
         make_empty_t<List>,
         to_norm_li_t<List>
     >;
