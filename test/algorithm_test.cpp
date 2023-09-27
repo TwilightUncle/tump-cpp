@@ -492,3 +492,19 @@ TEST(TumpAlgorithmTest, MpIfTest)
     ASSERT_TRUE(case9);
     ASSERT_FALSE(case10);
 }
+
+TEST(TumpAlgorithmTest, FilterTest)
+{
+    using list1 = tump::st_list<tump::cbk<std::is_arithmetic, 1>, int, float, double, char, unsigned long>;
+
+    constexpr auto case1 = std::is_same_v<
+        tump::filter_t<tump::cbk<std::is_integral, 1>, list1>,
+        tump::st_list<tump::cbk<std::is_arithmetic, 1>, int, char, unsigned long>
+    >;
+    constexpr auto case2 = std::is_same_v<
+        tump::filter_t<tump::cbk<std::is_floating_point, 1>, list1>,
+        tump::st_list<tump::cbk<std::is_arithmetic, 1>, float, double>
+    >;
+    ASSERT_TRUE(case1);
+    ASSERT_TRUE(case2);
+}
