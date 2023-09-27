@@ -15,8 +15,9 @@ namespace tump
     template <InvocableArgN<2> F, class Init, class Head, class... Types>
     struct foldl<F, Init, list<Head, Types...>> : public foldl<F, invoke_t<F, Init, Head>, list<Types...>> {};
 
-    template <InvocableArgN<2> F, class Init, class Head>
-    struct foldl<F, Init, list<Head>> : public std::type_identity<invoke_t<F, Init, Head>> {};
+    template <InvocableArgN<2> F, class Init, TypeList List>
+    requires (is_empty_v<List>)
+    struct foldl<F, Init, List> : public std::type_identity<Init> {};
 
     /**
      * 左畳み込みを実施
@@ -33,8 +34,9 @@ namespace tump
     template <InvocableArgN<2> F, class Init, class Head, class... Types>
     struct foldr<F, Init, list<Head, Types...>> : public invoke<F, Head, typename foldr<F, Init, list<Types...>>::type> {};
 
-    template <InvocableArgN<2> F, class Init, class Head>
-    struct foldr<F, Init, list<Head>> : public std::type_identity<invoke_t<F, Head, Init>> {};
+    template <InvocableArgN<2> F, class Init, TypeList List>
+    requires (is_empty_v<List>)
+    struct foldr<F, Init, List> : public std::type_identity<Init> {};
 
     /**
      * 右畳み込みを実施
