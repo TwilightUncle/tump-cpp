@@ -541,3 +541,25 @@ TEST(TumpAlgorithmTest, UniqueTest)
     ASSERT_FALSE(case2);
     ASSERT_TRUE(case3);
 }
+
+TEST(TumpAlgorithmTest, FindIfTest)
+{
+    using list1 = tump::array<tump::cbk<std::is_arithmetic, 1>, 5, int, float, double, char, unsigned long>;
+    
+    constexpr auto case1 = std::is_same_v<tump::find_if_t<tump::cbk<std::is_floating_point, 1>, list1>, float>;
+    constexpr auto case2 = tump::find_if_v<tump::cbk<std::is_floating_point, 1>, list1>;
+    constexpr auto case3 = std::is_same_v<tump::find_if_t<tump::cbk<std::is_pointer, 1>, list1>, tump::mp_null_t>;
+    constexpr auto case4 = tump::find_if_v<tump::cbk<std::is_pointer, 1>, list1>;
+    constexpr auto case5 = std::is_same_v<tump::find_t<double, list1>, double>;
+    constexpr auto case6 = tump::find_v<double, list1>;
+    constexpr auto case7 = std::is_same_v<tump::find_t<long long, list1>, tump::mp_null_t>;
+    constexpr auto case8 = tump::find_v<long long, list1>;
+    ASSERT_TRUE(case1);
+    ASSERT_EQ(case2, 1);
+    ASSERT_TRUE(case3);
+    ASSERT_EQ(case4, -1);
+    ASSERT_TRUE(case5);
+    ASSERT_EQ(case6, 2);
+    ASSERT_TRUE(case7);
+    ASSERT_EQ(case8, -1);
+}
