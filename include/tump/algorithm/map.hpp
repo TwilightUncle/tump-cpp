@@ -26,7 +26,7 @@ namespace tump
      * 型リストに含まれるすべての要素に対して、メタ関数を適用する
     */
     template <InvocableArgN<1> F, TypeList List>
-    using map_t = map<F, List>::type;
+    using map_t = typename map<F, List>::type;
 
     namespace _ {
         template <class F, class List, class Target>

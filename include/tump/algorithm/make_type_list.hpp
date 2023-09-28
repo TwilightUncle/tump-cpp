@@ -18,10 +18,14 @@ namespace tump
      * 型リストの先頭に指定されたパラメータパックを挿入する
     */
     template <TypeList List, class... Types>
-    using make_type_list_t = make_type_list<List, Types...>::type;
+    using make_type_list_t = typename make_type_list<List, Types...>::type;
 
-    template <std::size_t ArgsSize, TypeList List>
-    struct invoke_result<callback<make_type_list, ArgsSize>, List> : public constraint_st_type_list<List> {};
+    template <std::size_t ArgsSize, TypeList List, class... Types>
+    requires (ArgsSize > 0)
+    struct invoke_result<callback<make_type_list, ArgsSize>, List, Types...> : public constraint_st_type_list<List> {};
+
+    template <TypeList List, class... Types>
+    struct invoke_result<callback<make_type_list>, List, Types...> : public constraint_st_type_list<List> {};
 }
 
 #endif

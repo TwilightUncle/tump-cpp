@@ -39,7 +39,7 @@ namespace tump
 
     template <TypeList List1, TypeList List2>
     struct is_same_container<List1, List2> : public std::is_same<
-        make_empty_t<List1>, make_empty_t<List2>
+        make_empty_t<List1, get_container_constraint_t<List1>>, make_empty_t<List2, get_container_constraint_t<List2>>
     > {};
 
     template <TypeList T>

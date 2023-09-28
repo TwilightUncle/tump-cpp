@@ -19,7 +19,7 @@ namespace tump
      * リストの先頭要素を取得
     */
     template <TypeList List>
-    using get_front_t = get_front<List>::type;
+    using get_front_t = typename get_front<List>::type;
 
     /**
      * リストの N 番目の要素を取得
@@ -28,17 +28,18 @@ namespace tump
     requires (N < len_v<List>)
     struct get : public get<N, to_norm_li_t<List>> {};
 
-    template <TypeList List>
-    struct get<0, List> : public get_front<List> {};
+    template <class... Types>
+    struct get<0, list<Types...>> : public get_front<list<Types...>> {};
 
     template <std::size_t N, class Head, class... Types>
+    requires (N != 0)
     struct get<N, list<Head, Types...>> : public get<N - 1, list<Types...>> {};
 
     /**
      * リストの N 番目の要素を取得
     */
     template <std::size_t N, TypeList List>
-    using get_t = get<N, List>::type;
+    using get_t = typename get<N, List>::type;
 
     /**
      * リストの末尾要素を取得
@@ -51,7 +52,7 @@ namespace tump
      * リストの末尾要素を取得
     */
     template <TypeList List>
-    using get_back_t = get_back<List>::type;
+    using get_back_t = typename get_back<List>::type;
 
     template <unsigned int ArgsSize, TypeList List>
     struct invoke_result<callback<get_front, ArgsSize>, List> : public get_container_constraint<List> {};

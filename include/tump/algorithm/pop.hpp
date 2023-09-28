@@ -16,19 +16,18 @@ namespace tump
         typename pop_front<to_norm_li_t<List>>::type
     > {};
 
-    template <TypeList List>
-    requires (len_v<List> == 1)
-    struct pop_front<List> : public make_empty<List> {};
-
     template <class Head, class... Types>
-    requires (sizeof...(Types) > 0)
-    struct pop_front<list<Head, Types...>> : public std::type_identity<list<Types...>> {};
+    struct pop_front<list<Head, Types...>> : public std::conditional<
+        sizeof...(Types) != 0,
+        list<Types...>,
+        list<>
+    > {};
 
     /**
      * リストの先頭要素を除去
     */
     template <TypeList List>
-    using pop_front_t = pop_front<List>::type;
+    using pop_front_t = typename pop_front<List>::type;
 
     namespace _
     {
@@ -59,7 +58,7 @@ namespace tump
      * リストの末尾要素を除去
     */
     template <TypeList List>
-    using pop_back_t = pop_back<List>::type;
+    using pop_back_t = typename pop_back<List>::type;
 
     template <unsigned int ArgsSize, TypeList List>
     struct invoke_result<callback<pop_front, ArgsSize>, List> : public constraint_st_type_list<List> {};

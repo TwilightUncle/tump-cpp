@@ -15,7 +15,7 @@ namespace tump
     struct to_norm_li : public std::type_identity<mp_null_t> {};
 
     template <class T>
-    using to_norm_li_t = to_norm_li<T>::type;
+    using to_norm_li_t = typename to_norm_li<T>::type;
 
     /**
      * コンテナのガワを置き換える
@@ -24,16 +24,16 @@ namespace tump
     struct unnorm_li;
 
     template <class Container, class NormalizedList>
-    using unnorm_li_t = unnorm_li<Container, NormalizedList>::type;
+    using unnorm_li_t = typename unnorm_li<Container, NormalizedList>::type;
 
     /**
      * コンテナが持つ要素の制約を取得
     */
     template <class T>
-    struct get_container_constraint : public std::type_identity<cbk<to_true, 1>> {};
+    struct get_container_constraint;
 
     template <class T>
-    using get_container_constraint_t = get_container_constraint<T>::type;
+    using get_container_constraint_t = typename get_container_constraint<T>::type;
 
     /**
      * 指定したリストの側だけ取り出し、空のリストを作成する
@@ -42,17 +42,11 @@ namespace tump
     template <class List, class Constraint = get_container_constraint_t<List>>
     struct make_empty;
 
-    template <template <class...> class Outer, class... Types, class Constraint>
-    struct make_empty<Outer<Types...>, Constraint> : public std::type_identity<empty<Outer>> {};
-
-    template <template <class...> class Outer, class Constraint>
-    struct make_empty<empty<Outer>, Constraint> : public std::type_identity<empty<Outer>> {};
-
     /**
      * 指定したリストの側だけ取り出し、空のリストを作成する
     */
     template <class List, class Constraint = get_container_constraint_t<List>>
-    using make_empty_t = make_empty<List, Constraint>::type;
+    using make_empty_t = typename make_empty<List, Constraint>::type;
 
     /**
      * 空のリストかどうか判定する

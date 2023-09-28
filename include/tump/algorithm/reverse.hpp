@@ -26,7 +26,7 @@ namespace tump
      * リストの先頭要素を除去
     */
     template <TypeList List>
-    using reverse_t = reverse<List>::type;
+    using reverse_t = typename reverse<List>::type;
 
     template <unsigned int ArgsSize, TypeList List>
     struct invoke_result<callback<reverse, ArgsSize>, List> : public constraint_st_type_list<List> {};

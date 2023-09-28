@@ -17,10 +17,10 @@ namespace tump
      * リストの中身をDestにコピーする
     */
     template <TypeList Src, TypeList Dest>
-    using copy_t = copy<Src, Dest>::type;
+    using copy_t = typename copy<Src, Dest>::type;
 
-    template <std::size_t ArgsSize, TypeList Src, TypeList Dest>
-    struct invoke_result<callback<copy, ArgsSize>, Src, Dest> : public constraint_st_type_list<Dest> {};
+    template <TypeList Src, TypeList Dest>
+    struct invoke_result<callback<copy, 2>, Src, Dest> : public constraint_st_type_list<Dest> {};
 }
 
 #endif

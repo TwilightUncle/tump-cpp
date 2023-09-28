@@ -26,7 +26,7 @@ namespace tump
      * 二つの型を受け取り、左側の型のみ返却
     */
     template <class... Types>
-    using left_t = left<Types...>::type;
+    using left_t = typename left<Types...>::type;
 
     /**
      * 二つの型を受け取り、右側の型のみ返却
@@ -48,7 +48,7 @@ namespace tump
      * 二つの型を受け取り、右側の型のみ返却
     */
     template <class... Types>
-    using right_t = right<Types...>::type;
+    using right_t = typename right<Types...>::type;
 
     template <std::size_t ArgsSize, class L, class R>
     struct invoke_result<callback<left, ArgsSize>, L, R> : public constraint_or_types<L, R> {};

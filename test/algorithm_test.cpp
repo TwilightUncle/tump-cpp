@@ -51,12 +51,12 @@ TEST(TumpAlgorithmTest, MakeTypeListTest)
 
     using constraint1 = tump::invoke_result_t<
         tump::cbk<tump::make_type_list>,
-        tump::st_list<tump::cbk<std::is_integral>>
+        tump::st_list<tump::cbk<std::is_integral, 1>>
     >;
 
-    constexpr auto case6 = tump::invoke_v<constraint1, tump::st_list<tump::cbk<std::is_integral>>>;
-    constexpr auto case7 = tump::invoke_v<constraint1, tump::st_list<tump::cbk<std::is_integral>, int, short, long>>;
-    constexpr auto case8 = tump::invoke_v<constraint1, tump::st_list<tump::cbk<std::is_floating_point>, float>>;
+    constexpr auto case6 = tump::invoke_v<constraint1, tump::st_list<tump::cbk<std::is_integral, 1>>>;
+    constexpr auto case7 = tump::invoke_v<constraint1, tump::st_list<tump::cbk<std::is_integral, 1>, int, short, long>>;
+    constexpr auto case8 = tump::invoke_v<constraint1, tump::st_list<tump::cbk<std::is_floating_point, 1>, float>>;
 
     ASSERT_TRUE(case6);
     ASSERT_TRUE(case7);
@@ -138,6 +138,8 @@ TEST(TumpAlgorithmTest, CopyTest)
     >;
     constexpr auto case4 = tump::invoke_v<constraint1, tump::st_list<tump::cbk<std::is_integral>>>;
     constexpr auto case5 = tump::invoke_v<constraint1, tump::st_list<tump::cbk<std::is_floating_point>>>;
+    constexpr auto case6 = tump::invoke_v<constraint1, void>;
+    ASSERT_FALSE(case6);
     ASSERT_TRUE(case4);
     ASSERT_FALSE(case5);
 }

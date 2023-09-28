@@ -34,7 +34,7 @@ namespace tump
      * リストの重複を除去する
     */
     template <TypeList List>
-    using unique_t = unique<List>::type;
+    using unique_t = typename unique<List>::type;
 
     /**
      * リストの内容が一意であるか判定

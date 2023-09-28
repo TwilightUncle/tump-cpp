@@ -17,7 +17,7 @@ namespace tump
      * 型リストの最後尾に指定されたパラメータパックを挿入する
     */
     template <TypeList List, class... Types>
-    using push_back_t = push_back<List, Types...>::type;
+    using push_back_t = typename push_back<List, Types...>::type;
 
     /**
      * 型リストの先頭に指定されたパラメータパックを挿入する
@@ -29,7 +29,7 @@ namespace tump
      * 型リストの先頭に指定されたパラメータパックを挿入する
     */
     template <TypeList List, class... Types>
-    using push_front_t = push_front<List, Types...>::type;
+    using push_front_t = typename push_front<List, Types...>::type;
 
     /**
      * 指定さ入れたパラメータパックのうち、条件に合致する要素のみ型リストの最後尾に追加
@@ -56,7 +56,7 @@ namespace tump
      * 指定さ入れたパラメータパックのうち、条件に合致する要素のみ型リストの最後尾に追加
     */
     template <InvocableArgN<1> F, TypeList List, class... Types>
-    using push_back_if_t = push_back_if<F, List, Types...>::type;
+    using push_back_if_t = typename push_back_if<F, List, Types...>::type;
 
     /**
      * 指定さ入れたパラメータパックのうち、条件に合致する要素のみ型リストの先頭に追加
@@ -86,7 +86,7 @@ namespace tump
      * 指定さ入れたパラメータパックのうち、条件に合致する要素のみ型リストの先頭に追加
     */
     template <InvocableArgN<1> F, TypeList List, class... Types>
-    using push_front_if_t = push_front_if<F, List, Types...>::type;
+    using push_front_if_t = typename push_front_if<F, List, Types...>::type;
 
     template <std::size_t ArgsSize, TypeList List, class... Types>
     struct invoke_result<callback<push_back, ArgsSize>, List, Types...> : public constraint_st_type_list<List> {};

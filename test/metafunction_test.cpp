@@ -133,11 +133,11 @@ TEST(TumpMetafunctionTest, ComposeTest)
         tump::invoke_t<
             tump::compose<
                 tump::cbk<std::add_const, 1>,
-                tump::cbk<std::invoke_result, 1>
+                tump::cbk<std::make_unsigned, 1>
             >,
-            decltype([]() -> double { return 1.; })
+            int
         >,
-        const double
+        const unsigned int
     >;
 
     ASSERT_TRUE(case7);

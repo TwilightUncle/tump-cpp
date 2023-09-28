@@ -11,11 +11,11 @@ namespace tump
     */
     template <Invocable F, class... Args>
     requires (_is_allowed_args_size<sizeof...(Args), F>::value)
-    struct apply : public invoke_t<F, Args...> {};
-
-    template <Invocable F, class... Args>
-    requires (!_eq_args_size<sizeof...(Args), F>::value)
-    struct apply<F, Args...> : public bind<F, Args...> {};
+    struct apply : public std::conditional_t<
+        _eq_args_size<sizeof...(Args), F>::value,
+        invoke<F, Args...>,
+        std::type_identity<bind<F, Args...>>
+    >::type {};
 
     template <Invocable F, class... Args, unsigned int CheckArgsSize, bool IsCheckArgsSize>
     requires (std::is_base_of_v<bind<F, Args...>, apply<F, Args...>>)

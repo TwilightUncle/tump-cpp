@@ -5,11 +5,19 @@
 
 namespace tump
 {
+    namespace _
+    {
+        /**
+         * 本プロジェクトで定義するコンテナの識別用
+        */
+        struct base_list {};
+    }
+
     /**
      * 任意の型を任意の個数要素として保持できるリスト
     */
     template <class... Types>
-    struct list {};
+    struct list : public _::base_list {};
 
     // ---------------------------------------------------------
     // 下記メソッドの実装定義
@@ -28,8 +36,22 @@ namespace tump
     template <template <class...> class Outer, class... Types>
     struct unnorm_li<empty<Outer>, list<Types...>> : public std::type_identity<Outer<Types...>> {};
 
+    template <class... Types>
+    struct get_container_constraint<list<Types...>> : public std::type_identity<cbk<to_true, 1>> {};
+
+    template <class T>
+    requires (!std::is_base_of_v<_::base_list, T>)
+    struct get_container_constraint<T> : public std::type_identity<cbk<to_true, 1>> {};
+
     template <class... Types, class Constraint>
     struct make_empty<list<Types...>, Constraint> : public std::type_identity<list<>> {};
+
+    template <template <class...> class Outer, class... Types, class Constraint>
+    requires (!std::is_base_of_v<_::base_list, Outer<Types...>>)
+    struct make_empty<Outer<Types...>, Constraint> : public std::type_identity<empty<Outer>> {};
+
+    template <template <class...> class Outer, class Constraint>
+    struct make_empty<empty<Outer>, Constraint> : public std::type_identity<empty<Outer>> {};
 
     template <>
     struct is_empty<list<>> : public std::true_type {};

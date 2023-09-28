@@ -23,22 +23,24 @@ namespace tump
     template <class... Inner1, class... Inner2>
     struct concat<list<Inner1...>, list<Inner2...>> : public std::type_identity<list<Inner1..., Inner2...>> {};
 
-    template <TypeList List>
-    requires (!is_empty_v<List>)
-    struct concat<make_empty_t<List>, List> : std::type_identity<List> {};
+    template <class... Types>
+    struct concat<list<>, list<Types...>> : std::type_identity<list<Types...>> {};
 
-    template <TypeList List>
-    struct concat<List, make_empty_t<List>> : std::type_identity<List> {};
+    template <class... Types>
+    struct concat<list<Types...>, list<>> : std::type_identity<list<Types...>> {};
 
-    template <TypeList List>
-    struct concat<List> : std::type_identity<List> {};
+    template <>
+    struct concat<list<>, list<>> : std::type_identity<list<>> {};
+
+    template <class... Types>
+    struct concat<list<Types...>> : std::type_identity<list<Types...>> {};
 
     /**
      * 複数のリストを結合する
      * ただし、リストの側として利用されているテンプレート型は共通でなければいけない
     */
     template <TypeList... Lists>
-    using concat_t = concat<Lists...>::type;
+    using concat_t = typename concat<Lists...>::type;
 
     template <std::size_t ArgsSize, TypeList List, TypeList... Lists>
     struct invoke_result<callback<concat, ArgsSize>, List, Lists...> : public constraint_st_type_list<List> {};

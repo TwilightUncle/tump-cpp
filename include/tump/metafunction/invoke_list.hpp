@@ -21,7 +21,7 @@ namespace tump
     */
     template <Invocable F, class ArgList>
     requires TFunctional<invoke_list<F, ArgList>>
-    using invoke_list_t = invoke_list<F, ArgList>::type;
+    using invoke_list_t = typename invoke_list<F, ArgList>::type;
 
     /**
      * コールバック化したメタ関数を実行  

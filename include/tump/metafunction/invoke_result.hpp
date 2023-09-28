@@ -16,8 +16,8 @@ namespace tump
     template <Invocable F, class... Args>
     struct invoke_result : public std::type_identity<cbk<to_true, 1>> {};
 
-    template <Invocable F, class... Args>
-    using invoke_result_t = invoke_result<F, Args...>::type;
+    template <class F, class... Args>
+    using invoke_result_t = typename invoke_result<F, Args...>::type;
 
     template <template <class...> class OuterF, Invocable InnerF, class... Args1, class... Args>
     struct invoke_result<OuterF<InnerF, Args1...>, Args...> : public invoke_result<InnerF, Args1..., Args...> {};

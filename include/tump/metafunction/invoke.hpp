@@ -32,15 +32,15 @@ namespace tump
     )
     struct invoke<callback<MetaFunc, ArgsSize>, Args...> : public MetaFunc<Args...> {};
 
-    template <template <class...> class OuterF, Invocable InnerF, class... Args1, class... Args2>
-    struct invoke<OuterF<InnerF, Args1...>, Args2...> : public invoke<InnerF, Args1..., Args2...> {};
+    template <Invocable InnerF, class... Args1, class... Args2>
+    struct invoke<bind<InnerF, Args1...>, Args2...> : public invoke<InnerF, Args1..., Args2...> {};
 
     /**
      * コールバック化したメタ関数を実行
     */
     template <Invocable F, class... Args>
     requires TFunctional<invoke<F, Args...>>
-    using invoke_t = invoke<F, Args...>::type;
+    using invoke_t = typename invoke<F, Args...>::type;
 
     /**
      * コールバック化したメタ関数を実行

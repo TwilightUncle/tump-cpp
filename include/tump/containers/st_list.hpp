@@ -11,7 +11,7 @@ namespace tump
     */
     template <InvocableArgN<1> Constraint, class... Types>
     requires (bool(invoke_v<Constraint, Types>) && ...)
-    struct st_list {};
+    struct st_list : _::base_list {};
 
     // ---------------------------------------------------------
     // 下記メソッドの実装定義

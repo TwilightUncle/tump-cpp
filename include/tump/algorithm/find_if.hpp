@@ -32,7 +32,7 @@ namespace tump
      * 見つからなかった場合、mp_null_t を返却
     */
     template <InvocableArgN<1> F, TypeList List>
-    using find_if_t = find_if<F, List>::type;
+    using find_if_t = typename find_if<F, List>::type;
 
     /**
      * 条件に合致する一番最初の型の位置を取得
@@ -53,7 +53,7 @@ namespace tump
      * 存在しなかった場合、mp_null_tを返す
     */
     template <class Search, TypeList List>
-    using find_t = find<Search, List>::type;
+    using find_t = typename find<Search, List>::type;
 
     /**
      * 一致する型の位置をListの中から検索する

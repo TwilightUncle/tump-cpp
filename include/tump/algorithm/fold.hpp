@@ -23,7 +23,7 @@ namespace tump
      * 左畳み込みを実施
     */
     template <InvocableArgN<2> F, class Init, TypeList List>
-    using foldl_t = foldl<F, Init, List>::type;
+    using foldl_t = typename foldl<F, Init, List>::type;
 
     /**
      * 右畳み込みを実施
@@ -42,7 +42,7 @@ namespace tump
      * 右畳み込みを実施
     */
     template <InvocableArgN<2> F, class Init, TypeList List>
-    using foldr_t = foldr<F, Init, List>::type;
+    using foldr_t = typename foldr<F, Init, List>::type;
 
     template <unsigned int ArgsSize, InvocableArgN<2> F, class Init, TypeList List>
     struct invoke_result<callback<foldl, ArgsSize>, F, Init, List> : public invoke_result<F, Init, get_front_t<List>> {};

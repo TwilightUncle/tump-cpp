@@ -23,7 +23,7 @@ namespace tump
      * 指定条件に合致する要素のみ抽出する
     */
     template <InvocableArgN<1> F, TypeList List>
-    using filter_t = filter<F, List>::type;
+    using filter_t = typename filter<F, List>::type;
 
     // TODO: Fによってリストの制約を変えるべきか考える
     template <std::size_t ArgsSize, InvocableArgN<1> F, TypeList List>

@@ -32,7 +32,7 @@ namespace tump
      * (valueメンバ定数がboolへ変換可能であること)
     */
     template <VFunctional Cond, class... Types>
-    using mp_if_t = mp_if<Cond, Types...>::type;
+    using mp_if_t = typename mp_if<Cond, Types...>::type;
 
     template <unsigned int ArgsSize, VFunctional Cond, class T, class F>
     struct invoke_result<callback<mp_if, ArgsSize>, Cond, T, F> : public constraint_or_types<T, F> {};
