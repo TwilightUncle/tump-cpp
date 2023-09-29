@@ -10,16 +10,6 @@ namespace tump
         template <TypeList List, TypeList Result, std::size_t Start, std::size_t Size, std::size_t Stride>
         struct slice_impl;
 
-        // template <TypeList List, TypeList Result, std::size_t Start, std::size_t Size, std::size_t Stride>
-        // requires (!is_empty_v<List> && Size > 0 && Start != 0 && len_v<List> > Start)
-        // struct slice_impl<List, Result, Start, Size, Stride> : public slice_impl<
-        //     pop_front_t<List>,
-        //     Result,
-        //     Start - 1,
-        //     Size,
-        //     Stride
-        // > {};
-
         template <TypeList List, TypeList Result, std::size_t Start, std::size_t Size, std::size_t Stride>
         requires (!is_empty_v<List> && Size > 0 && len_v<List> > Start)
         struct slice_impl<List, Result, Start, Size, Stride> : public slice_impl<

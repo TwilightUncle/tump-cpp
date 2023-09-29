@@ -1,10 +1,8 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_INVOKE_RESULT_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_INVOKE_RESULT_HPP
 
-#include <tump/null.hpp>
 #include <tump/containers/methods.hpp>
 #include <tump/metafunction/flip.hpp>
-#include <tump/algorithm/to_true.hpp>
 // TODO: 制約の合成と式からの制約の推論
 namespace tump
 {

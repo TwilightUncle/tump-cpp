@@ -2,7 +2,6 @@
 #define TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_ST_LIST_HPP
 
 #include <tump/containers/list.hpp>
-#include <tump/metafunction/invoke.hpp>
 
 namespace tump
 {

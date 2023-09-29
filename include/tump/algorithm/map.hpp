@@ -2,7 +2,6 @@
 #define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_MAP_HPP
 
 #include <tump/algorithm/get.hpp>
-#include <tump/metafunction/invoke.hpp>
 
 namespace tump
 {

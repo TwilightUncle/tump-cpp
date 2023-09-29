@@ -2,7 +2,6 @@
 #define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_EXISTS_HPP
 
 #include <tump/algorithm/has_type_parameters.hpp>
-#include <tump/metafunction/invoke_result.hpp>
 
 namespace tump
 {

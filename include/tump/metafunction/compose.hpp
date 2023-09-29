@@ -1,10 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_RELAY_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_RELAY_HPP
 
-#include <tump/metafunction/flip.hpp>
 #include <tump/metafunction/invoke_list.hpp>
-#include <tump/metafunction/invoke_result.hpp>
-#include <tump/algorithm/map.hpp>
 #include <tump/algorithm/fold.hpp>
 
 namespace tump
