@@ -27,7 +27,7 @@ namespace tump
 
     // TODO: Fによってリストの制約を変えるべきか考える
     template <std::size_t ArgsSize, InvocableArgN<1> F, TypeList List>
-    struct invoke_result<callback<filter, ArgsSize>, F, List> : public constraint_st_type_list<List> {};
+    struct mp_invoke_result<callback<filter, ArgsSize>, F, List> : public constraint_st_type_list<List> {};
 }
 
 #endif

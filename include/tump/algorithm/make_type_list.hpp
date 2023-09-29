@@ -22,10 +22,10 @@ namespace tump
 
     template <std::size_t ArgsSize, TypeList List, class... Types>
     requires (ArgsSize > 0)
-    struct invoke_result<callback<make_type_list, ArgsSize>, List, Types...> : public constraint_st_type_list<List> {};
+    struct mp_invoke_result<callback<make_type_list, ArgsSize>, List, Types...> : public constraint_st_type_list<List> {};
 
     template <TypeList List, class... Types>
-    struct invoke_result<callback<make_type_list>, List, Types...> : public constraint_st_type_list<List> {};
+    struct mp_invoke_result<callback<make_type_list>, List, Types...> : public constraint_st_type_list<List> {};
 }
 
 #endif

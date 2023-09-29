@@ -55,12 +55,12 @@ namespace tump
     using get_back_t = typename get_back<List>::type;
 
     template <unsigned int ArgsSize, TypeList List>
-    struct invoke_result<callback<get_front, ArgsSize>, List> : public get_container_constraint<List> {};
+    struct mp_invoke_result<callback<get_front, ArgsSize>, List> : public get_container_constraint<List> {};
 
     // TODO: get の戻り値制約についても考える(本メタ関数を格納可能なcallbackを定義か？)
 
     template <unsigned int ArgsSize, TypeList List>
-    struct invoke_result<callback<get_back, ArgsSize>, List> : public get_container_constraint<List> {}; 
+    struct mp_invoke_result<callback<get_back, ArgsSize>, List> : public get_container_constraint<List> {}; 
 }
 
 #endif

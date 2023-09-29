@@ -26,7 +26,7 @@ namespace tump
     constexpr auto len_v = len<List>::value;
 
     template <unsigned int ArgsSize, class T>
-    struct invoke_result<callback<len, ArgsSize>, T> : public constraint_size_constant {};
+    struct mp_invoke_result<callback<len, ArgsSize>, T> : public constraint_size_constant {};
 }
 
 #endif

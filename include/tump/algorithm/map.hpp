@@ -11,7 +11,7 @@ namespace tump
     */
     template <InvocableArgN<1> F, TypeList List>
     struct map : public unnorm_li<
-        make_empty_t<List, invoke_result_t<F, get_front_t<List>>>,
+        make_empty_t<List, mp_invoke_result_t<F, get_front_t<List>>>,
         typename map<F, to_norm_li_t<List>>::type
     > {};
     
@@ -35,7 +35,7 @@ namespace tump
         template <InvocableArgN<1> F, TypeList List, TypeList Target>
         requires (!is_empty_v<List>)
         struct map_result_impl<F, List, Target> : public std::is_same<
-            make_empty_t<List, invoke_result_t<F, get_front_t<List>>>,
+            make_empty_t<List, mp_invoke_result_t<F, get_front_t<List>>>,
             make_empty_t<Target>
         > {}; 
 
@@ -48,7 +48,7 @@ namespace tump
     }
 
     template <unsigned int ArgsSize, InvocableArgN<1> F, TypeList List>
-    struct invoke_result<callback<map, ArgsSize>, F, List> : public std::type_identity<
+    struct mp_invoke_result<callback<map, ArgsSize>, F, List> : public std::type_identity<
         bind<cbk<_::map_result_impl, 3>, F, List>
     > {};
 }

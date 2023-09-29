@@ -20,7 +20,7 @@ namespace tump
     using copy_t = typename copy<Src, Dest>::type;
 
     template <TypeList Src, TypeList Dest>
-    struct invoke_result<callback<copy, 2>, Src, Dest> : public constraint_st_type_list<Dest> {};
+    struct mp_invoke_result<callback<copy, 2>, Src, Dest> : public constraint_st_type_list<Dest> {};
 }
 
 #endif

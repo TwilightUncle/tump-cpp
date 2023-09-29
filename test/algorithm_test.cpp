@@ -49,7 +49,7 @@ TEST(TumpAlgorithmTest, MakeTypeListTest)
     ASSERT_TRUE(case4);
     ASSERT_TRUE(case5);
 
-    using constraint1 = tump::invoke_result_t<
+    using constraint1 = tump::mp_invoke_result_t<
         tump::cbk<tump::make_type_list>,
         tump::st_list<tump::cbk<std::is_integral, 1>>
     >;
@@ -80,7 +80,7 @@ TEST(TumpAlgorithmTest, MapTest)
         >,
         tump::empty<std::tuple>
     >;
-    // invoke_result を定義済みのメタ関数を実行した際の確認
+    // mp_invoke_result を定義済みのメタ関数を実行した際の確認
     constexpr auto case3 = std::is_same_v<
         tump::map_t<
             tump::callback<std::is_integral, 1>,
@@ -93,12 +93,12 @@ TEST(TumpAlgorithmTest, MapTest)
     ASSERT_TRUE(case2);
     ASSERT_TRUE(case3);
 
-    using constraint1 = tump::invoke_result_t<
+    using constraint1 = tump::mp_invoke_result_t<
         tump::cbk<tump::map, 2>,
         tump::cbk<std::is_integral, 1>,
         tump::st_list<tump::cbk<std::is_integral>>
     >;
-    using constraint2 = tump::invoke_result_t<
+    using constraint2 = tump::mp_invoke_result_t<
         tump::cbk<tump::map, 2>,
         tump::cbk<std::is_integral, 1>,
         tump::st_list<tump::cbk<std::is_integral>, int>
@@ -131,7 +131,7 @@ TEST(TumpAlgorithmTest, CopyTest)
     ASSERT_TRUE(case2);
     ASSERT_TRUE(case3);
 
-    using constraint1 = tump::invoke_result_t<
+    using constraint1 = tump::mp_invoke_result_t<
         tump::cbk<tump::copy, 2>,
         tump::list<int, long, short>,
         tump::st_list<tump::cbk<std::is_integral>>
@@ -469,13 +469,13 @@ TEST(TumpAlgorithmTest, MpIfTest)
     ASSERT_TRUE(case3);
     ASSERT_TRUE(case4);
 
-    using constraint1 = tump::invoke_result_t<
+    using constraint1 = tump::mp_invoke_result_t<
         tump::cbk<tump::mp_if, 3>,
         std::true_type,
         int,
         double
     >;
-    using constraint2 = tump::invoke_result_t<
+    using constraint2 = tump::mp_invoke_result_t<
         tump::cbk<tump::mp_if, 3>,
         std::true_type,
         tump::array<tump::cbk<std::is_arithmetic, 1>, 2, int, double>

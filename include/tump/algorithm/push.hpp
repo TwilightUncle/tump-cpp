@@ -89,16 +89,16 @@ namespace tump
     using push_front_if_t = typename push_front_if<F, List, Types...>::type;
 
     template <std::size_t ArgsSize, TypeList List, class... Types>
-    struct invoke_result<callback<push_back, ArgsSize>, List, Types...> : public constraint_st_type_list<List> {};
+    struct mp_invoke_result<callback<push_back, ArgsSize>, List, Types...> : public constraint_st_type_list<List> {};
 
     template <std::size_t ArgsSize, TypeList List, class... Types>
-    struct invoke_result<callback<push_front, ArgsSize>, List, Types...> : public constraint_st_type_list<List> {};
+    struct mp_invoke_result<callback<push_front, ArgsSize>, List, Types...> : public constraint_st_type_list<List> {};
 
     template <std::size_t ArgsSize, InvocableArgN<1> F, TypeList List, class... Types>
-    struct invoke_result<callback<push_back_if, ArgsSize>, F, List, Types...> : public constraint_st_type_list<List> {};
+    struct mp_invoke_result<callback<push_back_if, ArgsSize>, F, List, Types...> : public constraint_st_type_list<List> {};
 
     template <std::size_t ArgsSize, InvocableArgN<1> F, TypeList List, class... Types>
-    struct invoke_result<callback<push_front_if, ArgsSize>, F, List, Types...> : public constraint_st_type_list<List> {};
+    struct mp_invoke_result<callback<push_front_if, ArgsSize>, F, List, Types...> : public constraint_st_type_list<List> {};
 }
 
 #endif

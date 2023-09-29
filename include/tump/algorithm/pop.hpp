@@ -61,10 +61,10 @@ namespace tump
     using pop_back_t = typename pop_back<List>::type;
 
     template <unsigned int ArgsSize, TypeList List>
-    struct invoke_result<callback<pop_front, ArgsSize>, List> : public constraint_st_type_list<List> {};
+    struct mp_invoke_result<callback<pop_front, ArgsSize>, List> : public constraint_st_type_list<List> {};
 
     template <unsigned int ArgsSize, TypeList List>
-    struct invoke_result<callback<pop_back, ArgsSize>, List> : public constraint_st_type_list<List> {};
+    struct mp_invoke_result<callback<pop_back, ArgsSize>, List> : public constraint_st_type_list<List> {};
 }
 
 #endif

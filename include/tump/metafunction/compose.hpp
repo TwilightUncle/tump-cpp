@@ -7,6 +7,7 @@
 #include <tump/algorithm/map.hpp>
 #include <tump/algorithm/fold.hpp>
 
+// TODO: 関数合成も関数として定義する。断じて構造ではない
 namespace tump
 {
     template <class T, class OptionalArgs = optional_args_for_is_callback<0>>
@@ -74,7 +75,7 @@ namespace tump
     > {};
 
     template <InvocableArgN<1> F, InvocableArgN<1>... Funcs, class... Args>
-    struct invoke_result<compose<F, Funcs...>, Args...> : public invoke_result<F, Args...> {};
+    struct mp_invoke_result<compose<F, Funcs...>, Args...> : public mp_invoke_result<F, Args...> {};
 }
 
 #endif

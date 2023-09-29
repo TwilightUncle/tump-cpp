@@ -33,7 +33,7 @@ namespace tump
     >;
 
     template <std::size_t ArgsSize, class Search, TypeList List>
-    struct invoke_result<callback<exists, ArgsSize>, Search, List> : public constraint_bool_constant {}; 
+    struct mp_invoke_result<callback<exists, ArgsSize>, Search, List> : public constraint_bool_constant {}; 
 }
 
 #endif

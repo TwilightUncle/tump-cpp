@@ -49,10 +49,10 @@ namespace tump
     constexpr auto is_unique_v = is_unique<List>::value;
 
     template <std::size_t ArgsSize, TypeList List>
-    struct invoke_result<callback<unique, ArgsSize>, List> : public constraint_st_type_list<List> {};
+    struct mp_invoke_result<callback<unique, ArgsSize>, List> : public constraint_st_type_list<List> {};
 
     template <std::size_t ArgsSize, TypeList List>
-    struct invoke_result<callback<is_unique, ArgsSize>, List> : public constraint_bool_constant {};
+    struct mp_invoke_result<callback<is_unique, ArgsSize>, List> : public constraint_bool_constant {};
 }
 
 #endif

@@ -48,7 +48,7 @@ namespace tump
     >;
 
     template <unsigned int ArgsSize, class T>
-    struct invoke_result<callback<has_type_parameters, ArgsSize>, T> : public constraint_bool_constant {};
+    struct mp_invoke_result<callback<has_type_parameters, ArgsSize>, T> : public constraint_bool_constant {};
 }
 
 #endif

@@ -43,7 +43,7 @@ namespace tump
     using concat_t = typename concat<Lists...>::type;
 
     template <std::size_t ArgsSize, TypeList List, TypeList... Lists>
-    struct invoke_result<callback<concat, ArgsSize>, List, Lists...> : public constraint_st_type_list<List> {};
+    struct mp_invoke_result<callback<concat, ArgsSize>, List, Lists...> : public constraint_st_type_list<List> {};
 }
 
 #endif

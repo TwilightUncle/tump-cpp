@@ -35,10 +35,10 @@ namespace tump
     using mp_if_t = typename mp_if<Cond, Types...>::type;
 
     template <unsigned int ArgsSize, VFunctional Cond, class T, class F>
-    struct invoke_result<callback<mp_if, ArgsSize>, Cond, T, F> : public constraint_or_types<T, F> {};
+    struct mp_invoke_result<callback<mp_if, ArgsSize>, Cond, T, F> : public constraint_or_types<T, F> {};
 
     template <unsigned int ArgsSize, VFunctional Cond, TypeList List>
-    struct invoke_result<callback<mp_if, ArgsSize>, Cond, List> : public std::type_identity<
+    struct mp_invoke_result<callback<mp_if, ArgsSize>, Cond, List> : public std::type_identity<
         bind<cbk<flip>, cbk<exists>, List>
     > {};
 }

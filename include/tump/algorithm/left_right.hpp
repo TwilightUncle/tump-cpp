@@ -51,18 +51,18 @@ namespace tump
     using right_t = typename right<Types...>::type;
 
     template <std::size_t ArgsSize, class L, class R>
-    struct invoke_result<callback<left, ArgsSize>, L, R> : public constraint_or_types<L, R> {};
+    struct mp_invoke_result<callback<left, ArgsSize>, L, R> : public constraint_or_types<L, R> {};
 
     template <unsigned int ArgsSize, TypeList List>
-    struct invoke_result<callback<left, ArgsSize>, List> : public std::type_identity<
+    struct mp_invoke_result<callback<left, ArgsSize>, List> : public std::type_identity<
         bind<cbk<flip>, cbk<exists>, List>
     > {};
 
     template <std::size_t ArgsSize, class L, class R>
-    struct invoke_result<callback<right, ArgsSize>, L, R> : public constraint_or_types<L, R> {};
+    struct mp_invoke_result<callback<right, ArgsSize>, L, R> : public constraint_or_types<L, R> {};
 
     template <unsigned int ArgsSize, TypeList List>
-    struct invoke_result<callback<right, ArgsSize>, List> : public std::type_identity<
+    struct mp_invoke_result<callback<right, ArgsSize>, List> : public std::type_identity<
         bind<cbk<flip>, cbk<exists>, List>
     > {};
 }
