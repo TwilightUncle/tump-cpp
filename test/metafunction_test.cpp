@@ -96,39 +96,6 @@ TEST(TumpMetafunctionTest, FlipTest)
 
 TEST(TumpMetafunctionTest, ComposeTest)
 {
-    constexpr auto case1 = tump::InvocableList<std::tuple<
-        F1,
-        F3
-    >>;
-    constexpr auto case2 = tump::InvocableList<std::tuple<
-        F1,
-        int
-    >>;
-    constexpr auto case3 = tump::InvocableList<int>;
-
-    ASSERT_TRUE(case1);
-    ASSERT_FALSE(case2);
-    ASSERT_FALSE(case3);
-
-    constexpr auto case4 = tump::InvocableArgNList<std::tuple<
-        F1,
-        F1,
-        F2
-    >, 2>;
-    constexpr auto case5 = tump::InvocableArgNList<std::tuple<
-        F1,
-        F3
-    >, 2>;
-    constexpr auto case6 = tump::InvocableArgNList<std::tuple<
-        F3,
-        F3,
-        F4
-    >, 1>;
-
-    ASSERT_TRUE(case4);
-    ASSERT_FALSE(case5);
-    ASSERT_TRUE(case6);
-
     constexpr auto case7 = std::is_same_v<
         tump::invoke_t<
             tump::compose<
@@ -145,7 +112,7 @@ TEST(TumpMetafunctionTest, ComposeTest)
 
 TEST(TumpMetafunctionTest, ApplyTest)
 {
-    using type1 = tump::apply<
+    using type1 = tump::apply_t<
         tump::cbk<std::conjunction>,
         std::true_type,
         std::true_type
@@ -156,13 +123,13 @@ TEST(TumpMetafunctionTest, ApplyTest)
     ASSERT_TRUE(case1);
     ASSERT_FALSE(case2);
 
-    using type2 = tump::apply<F1, int>;
+    using type2 = tump::apply_t<F1, int>;
     constexpr auto case4 = tump::Invocable<type2>;
     constexpr auto case5 = tump::Functional<type2>;
     ASSERT_TRUE(case4);
     ASSERT_FALSE(case5);
 
-    using type3 = tump::apply<F3, int>;
+    using type3 = tump::apply_t<F3, int>;
     constexpr auto case6 = tump::VFunctional<type3>;
     constexpr auto case7 = tump::Invocable<type3>;
     ASSERT_TRUE(case6);
@@ -171,14 +138,14 @@ TEST(TumpMetafunctionTest, ApplyTest)
 
 TEST(TumpMetafunctionTest, InvokeResultTest)
 {
-    using type1 = tump::invoke_result_t<tump::compose<tump::bind<tump::cbk<tump::invoke_result>>>>;
+    using type1 = tump::mp_invoke_result_t<tump::compose<tump::bind<tump::cbk<tump::mp_invoke_result>>>>;
     constexpr auto case1 = tump::invoke_v<type1, tump::cbk<std::is_integral, 1>>;
     constexpr auto case2 = tump::invoke_v<type1, tump::cbk<std::is_same, 2>>;
 
     ASSERT_TRUE(case1);
     ASSERT_FALSE(case2);
 
-    using type2 = tump::invoke_result_t<tump::cbk<std::is_same, 2>, int, int>;
+    using type2 = tump::mp_invoke_result_t<tump::cbk<std::is_same, 2>, int, int>;
     constexpr auto case3 = tump::invoke_v<type2, std::true_type>;
     constexpr auto case4 = tump::invoke_v<type2, std::false_type>;
     constexpr auto case5 = tump::invoke_v<type2, int>;

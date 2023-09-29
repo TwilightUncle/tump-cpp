@@ -10,37 +10,6 @@
 // TODO: 関数合成も関数として定義する。断じて構造ではない
 namespace tump
 {
-    template <class T, class OptionalArgs = optional_args_for_is_callback<0>>
-    struct is_invocable_list : public std::false_type {};
-
-    template <TypeList List, class OptionalArgs>
-    struct is_invocable_list<List, OptionalArgs> : public invoke_list<
-        cbk<std::conjunction>,
-        map_t<
-            bind<
-                cbk<flip, 3>,
-                cbk<is_callback, 2>,
-                OptionalArgs
-            >,
-            List
-        >
-    > {};
-
-    template <class T, class OptionalArgs = optional_args_for_is_callback<0>>
-    constexpr auto is_invocable_list_v = is_invocable_list<T, OptionalArgs>::value;
-
-    /**
-     * 型リストの要素がすべてInvocableの制約を満たしている
-    */
-    template <class T>
-    concept InvocableList = is_invocable_list_v<T>;
-
-    /**
-     * 型リストの要素がすべてInvocableArgNの制約を満たしている
-    */
-    template <class T, unsigned int ArgsSize>
-    concept InvocableArgNList = is_invocable_list_v<T, optional_args_for_is_callback<ArgsSize, true>>;
-
     /**
      * 関数の合成
     */
