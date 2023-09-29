@@ -10,7 +10,7 @@ namespace tump
     // バージョンに左右されるが常にほしいものをあらかじめ定義
     // -------------------------------------------------------------------
 
-    namespace F
+    namespace fn
     {
         /**
          * scoped enum判定
@@ -39,7 +39,7 @@ namespace tump
     using is_void                       = cbk<std::is_void,                     1>;
     using is_null_pointer               = cbk<std::is_null_pointer,             1>;
     using is_integral                   = cbk<std::is_integral,                 1>;
-    using is_floating_point              = cbk<std::is_floating_point,           1>;
+    using is_floating_point             = cbk<std::is_floating_point,           1>;
     using is_array                      = cbk<std::is_array,                    1>;
     using is_pointer                    = cbk<std::is_pointer,                  1>;
     using is_lvalue_reference           = cbk<std::is_lvalue_reference,         1>;
@@ -87,7 +87,7 @@ namespace tump
     using is_scalar         = cbk<std::is_scalar,           1>;
     using is_compound       = cbk<std::is_compound,         1>;
     using is_member_pointer = cbk<std::is_member_pointer,   1>;
-    using is_scoped_enum    = cbk<F::is_scoped_enum,        1>;
+    using is_scoped_enum    = cbk<fn::is_scoped_enum,       1>;
 
     template <class T>
     struct mp_invoke_result<is_reference, T> : public constraint_bool_constant {};
