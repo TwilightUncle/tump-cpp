@@ -11,7 +11,7 @@ namespace tump
     */
     template <InvocableArgN<1> F, TypeList List>
     using remove_if = filter<
-        compose<
+        fn::compose_t<
             cbk<std::negation, 1>,
             F
         >,

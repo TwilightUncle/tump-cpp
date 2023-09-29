@@ -11,7 +11,7 @@ namespace tump
     {
         template <TypeList Acc, class Cur>
         using unique_impl = push_back_if<
-            compose<
+            fn::compose_t<
                 cbk<std::negation, 1>,
                 bind<cbk<flip, 3>, cbk<exists, 2>, Acc>
             >,
