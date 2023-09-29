@@ -16,24 +16,24 @@ namespace tump
             bind<
                 cbk<flip, 3>,
                 bind<
-                    cbk<foldr, 3>,
+                    ::tump::foldr,
                     cbk<invoke, 2>
                 >,
                 list<F, Funcs...>
             >
         > {};
-
-        /**
-         * 関数の合成
-        */
-        template <InvocableArgN<1> F, InvocableArgN<1>... Funcs>
-        using compose_t = typename compose<F, Funcs...>::type;
     }
 
     /**
      * 関数の合成
     */
     using compose = cbk<fn::compose>;
+
+    /**
+     * 関数の合成
+    */
+    template <InvocableArgN<1> F, InvocableArgN<1>... Funcs>
+    using compose_t = typename fn::compose<F, Funcs...>::type;
 
     template <InvocableArgN<1> F, InvocableArgN<1>... Funcs>
     struct mp_invoke_result<compose, F, Funcs...> : public constraint_callback_arg1 {};

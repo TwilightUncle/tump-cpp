@@ -98,7 +98,7 @@ TEST(TumpMetafunctionTest, ComposeTest)
 {
     constexpr auto case7 = std::is_same_v<
         tump::invoke_t<
-            tump::fn::compose_t<
+            tump::compose_t<
                 tump::cbk<std::add_const, 1>,
                 tump::cbk<std::make_unsigned, 1>
             >,

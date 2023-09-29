@@ -5,31 +5,36 @@
 
 namespace tump
 {
-    /**
-     * リスト要素の並び順を反転
-    */
-    template <TypeList List>
-    struct reverse : public unnorm_li<List, foldl_t<
-        cbk<push_front, 2>,
-        list<>,
-        to_norm_li_t<List>
-    >> {};
+    namespace fn
+    {
+        /**
+         * リスト要素の並び順を反転
+        */
+        template <TypeList List>
+        struct reverse : public unnorm_li<List, foldl_t<
+            ::tump::push_front,
+            list<>,
+            to_norm_li_t<List>
+        >> {};
+
+        template <TypeList List>
+        requires (is_empty_v<List>)
+        struct reverse<List> : public std::type_identity<List> {};
+    }
 
     /**
      * リスト要素の並び順を反転
     */
-    template <TypeList List>
-    requires (is_empty_v<List>)
-    struct reverse<List> : public std::type_identity<List> {};
+    using reverse = cbk<fn::reverse, 1>;
 
     /**
-     * リストの先頭要素を除去
+     * リスト要素の並び順を反転
     */
     template <TypeList List>
-    using reverse_t = typename reverse<List>::type;
+    using reverse_t = typename fn::reverse<List>::type;
 
-    template <unsigned int ArgsSize, TypeList List>
-    struct mp_invoke_result<callback<reverse, ArgsSize>, List> : public constraint_st_type_list<List> {};
+    template <TypeList List>
+    struct mp_invoke_result<reverse, List> : public constraint_st_type_list<List> {};
 }
 
 #endif

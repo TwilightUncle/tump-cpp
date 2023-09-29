@@ -2,7 +2,6 @@
 #include <tuple>
 #include <tump/containers/array.hpp>
 #include <tump/algorithm.hpp>
-#include <tump/metafunction/std.hpp>
 
 TEST(TumpAlgorithmTest, HasTypeParametersTest)
 {
@@ -51,7 +50,7 @@ TEST(TumpAlgorithmTest, MakeTypeListTest)
     ASSERT_TRUE(case5);
 
     using constraint1 = tump::mp_invoke_result_t<
-        tump::cbk<tump::make_type_list>,
+        tump::make_type_list,
         tump::st_list<tump::is_integral>
     >;
 
@@ -95,12 +94,12 @@ TEST(TumpAlgorithmTest, MapTest)
     ASSERT_TRUE(case3);
 
     using constraint1 = tump::mp_invoke_result_t<
-        tump::cbk<tump::map, 2>,
+        tump::map,
         tump::is_integral,
         tump::st_list<tump::is_integral>
     >;
     using constraint2 = tump::mp_invoke_result_t<
-        tump::cbk<tump::map, 2>,
+        tump::map,
         tump::is_integral,
         tump::st_list<tump::is_integral, int>
     >;
@@ -133,7 +132,7 @@ TEST(TumpAlgorithmTest, CopyTest)
     ASSERT_TRUE(case3);
 
     using constraint1 = tump::mp_invoke_result_t<
-        tump::cbk<tump::copy, 2>,
+        tump::copy,
         tump::list<int, long, short>,
         tump::st_list<tump::is_integral>
     >;
@@ -381,35 +380,35 @@ TEST(TumpAlgorithmTest, SliceTest)
     using type_list2 = tump::st_list<tump::cbk<std::is_arithmetic>, int, short, char, long long, float, double>;
 
     constexpr auto case1 = std::is_same_v<
-        tump::slice_t<type_list1, 4>,
+        tump::slice_t<type_list1, tump::size_args<4>>,
         tump::list<float, double>
     >;
     constexpr auto case2 = std::is_same_v<
-        tump::slice_t<type_list1, 5>,
+        tump::slice_t<type_list1, tump::size_args<5>>,
         tump::list<double>
     >;
     constexpr auto case3 = std::is_same_v<
-        tump::slice_t<type_list1, 6>,
+        tump::slice_t<type_list1, tump::size_args<6>>,
         tump::list<>
     >;
     constexpr auto case4 = std::is_same_v<
-        tump::slice_t<type_list1, 0, 4>,
+        tump::slice_t<type_list1, tump::size_args<0, 4>>,
         tump::list<int, short, char, long long>
     >;
     constexpr auto case5 = std::is_same_v<
-        tump::slice_t<type_list2, 2, 3>,
+        tump::slice_t<type_list2, tump::size_args<2, 3>>,
         tump::st_list<tump::cbk<std::is_arithmetic>, char, long long, float>
     >;
     constexpr auto case6 = std::is_same_v<
-        tump::slice_t<type_list2, 2, 0>,
+        tump::slice_t<type_list2, tump::size_args<2, 0>>,
         tump::st_list<tump::cbk<std::is_arithmetic>>
     >;
     constexpr auto case7 = std::is_same_v<
-        tump::slice_t<type_list2, 1, 3, 1>,
+        tump::slice_t<type_list2, tump::size_args<1, 3, 1>>,
         tump::st_list<tump::cbk<std::is_arithmetic>, short, long long, double>
     >;
     constexpr auto case8 = std::is_same_v<
-        tump::slice_t<type_list2, 1, 3, 2>,
+        tump::slice_t<type_list2, tump::size_args<1, 3, 2>>,
         tump::st_list<tump::cbk<std::is_arithmetic>, short, float>
     >;
 
@@ -471,13 +470,13 @@ TEST(TumpAlgorithmTest, MpIfTest)
     ASSERT_TRUE(case4);
 
     using constraint1 = tump::mp_invoke_result_t<
-        tump::cbk<tump::mp_if, 3>,
+        tump::mp_if,
         std::true_type,
         int,
         double
     >;
     using constraint2 = tump::mp_invoke_result_t<
-        tump::cbk<tump::mp_if, 3>,
+        tump::mp_if,
         std::true_type,
         tump::array<tump::is_arithmetic, 2, int, double>
     >;

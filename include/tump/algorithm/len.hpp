@@ -5,28 +5,33 @@
 
 namespace tump
 {
-    /**
-     * リストの長さを取得
-    */
+    namespace fn
+    {
+        /**
+         * リストの長さを取得
+        */
+        template <TypeList List>
+        struct len : public len<to_norm_li_t<List>> {};
+
+        template <class... Types>
+        struct len<list<Types...>>
+            : public std::integral_constant<std::size_t, sizeof...(Types)>
+        {};
+
+        template <TypeList List>
+        requires (is_empty_v<List>)
+        struct len<List>
+            : public std::integral_constant<std::size_t, 0>
+        {};
+    }
+
+    using len = cbk<fn::len, 1>;
+
     template <TypeList List>
-    struct len : public len<to_norm_li_t<List>> {};
+    constexpr auto len_v = fn::len<List>::value;
 
-    template <class... Types>
-    struct len<list<Types...>>
-        : public std::integral_constant<std::size_t, sizeof...(Types)>
-    {};
-
-    template <TypeList List>
-    requires (is_empty_v<List>)
-    struct len<List>
-        : public std::integral_constant<std::size_t, 0>
-    {};
-
-    template <TypeList List>
-    constexpr auto len_v = len<List>::value;
-
-    template <unsigned int ArgsSize, class T>
-    struct mp_invoke_result<callback<len, ArgsSize>, T> : public constraint_size_constant {};
+    template <class T>
+    struct mp_invoke_result<len, T> : public constraint_size_constant {};
 }
 
 #endif

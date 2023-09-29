@@ -6,27 +6,35 @@
 
 namespace tump
 {
+    namespace fn
+    {
+        /**
+         * 指定条件に合致する要素のみ抽出する
+        */
+        template <InvocableArgN<1> F, TypeList List>
+        using remove_if = filter<
+            compose_t<
+                cbk<std::negation, 1>,
+                F
+            >,
+            List
+        >;
+    }
+
     /**
      * 指定条件に合致する要素のみ抽出する
     */
-    template <InvocableArgN<1> F, TypeList List>
-    using remove_if = filter<
-        fn::compose_t<
-            cbk<std::negation, 1>,
-            F
-        >,
-        List
-    >;
+    using remove_if = cbk<fn::remove_if, 2>;
 
     /**
      * 指定条件に合致する要素のみ抽出する
     */
     template <InvocableArgN<1> F, TypeList List>
-    using remove_if_t = typename remove_if<F, List>::type;
+    using remove_if_t = typename fn::remove_if<F, List>::type;
 
     // TODO: Fによってリストの制約を変えるべきか考える
-    template <std::size_t ArgsSize, InvocableArgN<1> F, TypeList List>
-    struct mp_invoke_result<callback<remove_if, ArgsSize>, F, List> : public constraint_st_type_list<List> {};
+    template <InvocableArgN<1> F, TypeList List>
+    struct mp_invoke_result<remove_if, F, List> : public constraint_st_type_list<List> {};
 }
 
 #endif

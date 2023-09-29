@@ -6,28 +6,36 @@
 
 namespace tump
 {
+    namespace fn
+    {
+        /**
+         * 指定条件に合致する要素のみ抽出する
+        */
+        template <InvocableArgN<1> F, TypeList List>
+        using filter = invoke_list<
+            bind<
+                cbk<push_back_if>,
+                F,
+                make_empty_t<List>
+            >,
+            to_norm_li_t<List>
+        >;
+    }
+
     /**
      * 指定条件に合致する要素のみ抽出する
     */
-    template <InvocableArgN<1> F, TypeList List>
-    using filter = invoke_list<
-        bind<
-            cbk<push_back_if>,
-            F,
-            make_empty_t<List>
-        >,
-        to_norm_li_t<List>
-    >;
+    using filter = cbk<fn::filter, 2>;
 
     /**
      * 指定条件に合致する要素のみ抽出する
     */
     template <InvocableArgN<1> F, TypeList List>
-    using filter_t = typename filter<F, List>::type;
+    using filter_t = typename fn::filter<F, List>::type;
 
     // TODO: Fによってリストの制約を変えるべきか考える
-    template <std::size_t ArgsSize, InvocableArgN<1> F, TypeList List>
-    struct mp_invoke_result<callback<filter, ArgsSize>, F, List> : public constraint_st_type_list<List> {};
+    template <InvocableArgN<1> F, TypeList List>
+    struct mp_invoke_result<filter, F, List> : public constraint_st_type_list<List> {};
 }
 
 #endif

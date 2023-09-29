@@ -6,40 +6,46 @@
 
 namespace tump
 {
+    namespace fn
+    {
+        /**
+         * conditional の第一引数が型バージョン
+         * (valueメンバ定数がboolへ変換可能であること)
+        */
+        template <VFunctional Cond, class... Types>
+        struct mp_if;
+
+        template <VFunctional Cond, class T, class F>
+        requires std::convertible_to<decltype(Cond::value), bool>
+        struct mp_if<Cond, T, F> : public std::conditional<Cond::value, T, F> {};
+
+        /**
+         * 二つの要素のリストを受け取るバージョン
+        */
+        template <VFunctional Cond, TypeList List>
+        requires (len_v<List> == 2)
+        struct mp_if<Cond, List> : public mp_if<Cond, to_norm_li_t<List>> {};
+
+        template <VFunctional Cond, class T, class F>
+        struct mp_if<Cond, list<T, F>> : public mp_if<Cond, T, F> {};
+    }
+
+    using mp_if = cbk<fn::mp_if>;
+
     /**
      * conditional の第一引数が型バージョン
      * (valueメンバ定数がboolへ変換可能であること)
     */
     template <VFunctional Cond, class... Types>
-    struct mp_if;
+    using mp_if_t = typename fn::mp_if<Cond, Types...>::type;
 
     template <VFunctional Cond, class T, class F>
-    requires std::convertible_to<decltype(Cond::value), bool>
-    struct mp_if<Cond, T, F> : public std::conditional<Cond::value, T, F> {};
+    struct mp_invoke_result<mp_if, Cond, T, F> : public constraint_or_types<T, F> {};
 
-    /**
-     * 二つの要素のリストを受け取るバージョン
-    */
     template <VFunctional Cond, TypeList List>
     requires (len_v<List> == 2)
-    struct mp_if<Cond, List> : public mp_if<Cond, to_norm_li_t<List>> {};
-
-    template <VFunctional Cond, class T, class F>
-    struct mp_if<Cond, list<T, F>> : public mp_if<Cond, T, F> {};
-
-    /**
-     * conditional の第一引数が型バージョン
-     * (valueメンバ定数がboolへ変換可能であること)
-    */
-    template <VFunctional Cond, class... Types>
-    using mp_if_t = typename mp_if<Cond, Types...>::type;
-
-    template <unsigned int ArgsSize, VFunctional Cond, class T, class F>
-    struct mp_invoke_result<callback<mp_if, ArgsSize>, Cond, T, F> : public constraint_or_types<T, F> {};
-
-    template <unsigned int ArgsSize, VFunctional Cond, TypeList List>
-    struct mp_invoke_result<callback<mp_if, ArgsSize>, Cond, List> : public std::type_identity<
-        bind<cbk<flip>, cbk<exists>, List>
+    struct mp_invoke_result<mp_if, Cond, List> : public std::type_identity<
+        bind<cbk<flip>, exists, List>
     > {};
 }
 
