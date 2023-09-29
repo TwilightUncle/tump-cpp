@@ -3,5 +3,6 @@
 
 #include <tump/metafunction/apply.hpp>
 #include <tump/metafunction/compose.hpp>
+#include <tump/metafunction/std.hpp>
 
 #endif

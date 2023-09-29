@@ -2,6 +2,7 @@
 #include <tuple>
 #include <tump/containers/array.hpp>
 #include <tump/algorithm.hpp>
+#include <tump/metafunction/std.hpp>
 
 TEST(TumpAlgorithmTest, HasTypeParametersTest)
 {
@@ -9,8 +10,8 @@ TEST(TumpAlgorithmTest, HasTypeParametersTest)
     constexpr auto case2 = tump::has_type_parameters_v<tump::empty<std::tuple>>;
     constexpr auto case3 = tump::has_type_parameters_v<std::tuple<int, float, int*>>;
     constexpr auto case4 = tump::has_type_parameters_v<tump::list<int, float, int*>>;
-    constexpr auto case5 = tump::has_type_parameters_v<tump::st_list<tump::cbk<std::is_integral>, int, long, short>>;
-    constexpr auto case6 = tump::has_type_parameters_v<tump::array<tump::cbk<std::is_integral>, 3, int, long, short>>;
+    constexpr auto case5 = tump::has_type_parameters_v<tump::st_list<tump::is_integral, int, long, short>>;
+    constexpr auto case6 = tump::has_type_parameters_v<tump::array<tump::is_integral, 3, int, long, short>>;
     
     ASSERT_FALSE(case1);
     ASSERT_TRUE(case2);
@@ -35,12 +36,12 @@ TEST(TumpAlgorithmTest, MakeTypeListTest)
         tump::list<int, float, int*>
     >;
     constexpr auto case4 = std::is_same_v<
-        tump::make_type_list_t<tump::st_list<tump::cbk<std::is_floating_point>, double>, long double, float, double>,
-        tump::st_list<tump::cbk<std::is_floating_point>, long double, float, double>
+        tump::make_type_list_t<tump::st_list<tump::is_floating_point, double>, long double, float, double>,
+        tump::st_list<tump::is_floating_point, long double, float, double>
     >;
     constexpr auto case5 = std::is_same_v<
-        tump::make_type_list_t<tump::array<tump::cbk<std::is_integral>, 4>, int, short, char, long>,
-        tump::array<tump::cbk<std::is_integral>, 4, int, short, char, long>
+        tump::make_type_list_t<tump::array<tump::is_integral, 4>, int, short, char, long>,
+        tump::array<tump::is_integral, 4, int, short, char, long>
     >;
 
     ASSERT_TRUE(case1);
@@ -51,12 +52,12 @@ TEST(TumpAlgorithmTest, MakeTypeListTest)
 
     using constraint1 = tump::mp_invoke_result_t<
         tump::cbk<tump::make_type_list>,
-        tump::st_list<tump::cbk<std::is_integral, 1>>
+        tump::st_list<tump::is_integral>
     >;
 
-    constexpr auto case6 = tump::invoke_v<constraint1, tump::st_list<tump::cbk<std::is_integral, 1>>>;
-    constexpr auto case7 = tump::invoke_v<constraint1, tump::st_list<tump::cbk<std::is_integral, 1>, int, short, long>>;
-    constexpr auto case8 = tump::invoke_v<constraint1, tump::st_list<tump::cbk<std::is_floating_point, 1>, float>>;
+    constexpr auto case6 = tump::invoke_v<constraint1, tump::st_list<tump::is_integral>>;
+    constexpr auto case7 = tump::invoke_v<constraint1, tump::st_list<tump::is_integral, int, short, long>>;
+    constexpr auto case8 = tump::invoke_v<constraint1, tump::st_list<tump::is_floating_point, float>>;
 
     ASSERT_TRUE(case6);
     ASSERT_TRUE(case7);
@@ -67,7 +68,7 @@ TEST(TumpAlgorithmTest, MapTest)
 {
     constexpr auto case1 = std::is_same_v<
         tump::map_t<
-            tump::callback<std::add_const, 1>,
+            tump::add_const,
             std::tuple<int, float, short>
         >,
         std::tuple<const int, const float, const short>
@@ -75,7 +76,7 @@ TEST(TumpAlgorithmTest, MapTest)
     // 空のリストに対する動作の確認
     constexpr auto case2 = std::is_same_v<
         tump::map_t<
-            tump::callback<std::add_const, 1>,
+            tump::add_const,
             tump::empty<std::tuple>
         >,
         tump::empty<std::tuple>
@@ -83,7 +84,7 @@ TEST(TumpAlgorithmTest, MapTest)
     // mp_invoke_result を定義済みのメタ関数を実行した際の確認
     constexpr auto case3 = std::is_same_v<
         tump::map_t<
-            tump::callback<std::is_integral, 1>,
+            tump::is_integral,
             tump::st_list<tump::cbk<tump::to_true, 1>, int, float, short>
         >,
         tump::st_list<typename tump::constraint_bool_constant::type, std::true_type, std::false_type, std::true_type>
@@ -95,16 +96,16 @@ TEST(TumpAlgorithmTest, MapTest)
 
     using constraint1 = tump::mp_invoke_result_t<
         tump::cbk<tump::map, 2>,
-        tump::cbk<std::is_integral, 1>,
-        tump::st_list<tump::cbk<std::is_integral>>
+        tump::is_integral,
+        tump::st_list<tump::is_integral>
     >;
     using constraint2 = tump::mp_invoke_result_t<
         tump::cbk<tump::map, 2>,
-        tump::cbk<std::is_integral, 1>,
-        tump::st_list<tump::cbk<std::is_integral>, int>
+        tump::is_integral,
+        tump::st_list<tump::is_integral, int>
     >;
 
-    constexpr auto case4 = tump::invoke_v<constraint1, tump::st_list<tump::cbk<std::is_integral>>>;
+    constexpr auto case4 = tump::invoke_v<constraint1, tump::st_list<tump::is_integral>>;
     constexpr auto case5 = tump::invoke_v<constraint2, tump::st_list<typename tump::constraint_bool_constant::type>>;
     constexpr auto case6 = tump::invoke_v<constraint2, tump::st_list<typename tump::constraint_bool_constant::type, std::true_type, std::false_type>>;
     ASSERT_TRUE(case4);
@@ -134,10 +135,10 @@ TEST(TumpAlgorithmTest, CopyTest)
     using constraint1 = tump::mp_invoke_result_t<
         tump::cbk<tump::copy, 2>,
         tump::list<int, long, short>,
-        tump::st_list<tump::cbk<std::is_integral>>
+        tump::st_list<tump::is_integral>
     >;
-    constexpr auto case4 = tump::invoke_v<constraint1, tump::st_list<tump::cbk<std::is_integral>>>;
-    constexpr auto case5 = tump::invoke_v<constraint1, tump::st_list<tump::cbk<std::is_floating_point>>>;
+    constexpr auto case4 = tump::invoke_v<constraint1, tump::st_list<tump::is_integral>>;
+    constexpr auto case5 = tump::invoke_v<constraint1, tump::st_list<tump::is_floating_point>>;
     constexpr auto case6 = tump::invoke_v<constraint1, void>;
     ASSERT_FALSE(case6);
     ASSERT_TRUE(case4);
@@ -153,7 +154,7 @@ struct get_derived : std::conditional<std::is_base_of_v<L, R>, R, tump::mp_null_
 TEST(TumpAlgorithmTest, FoldTest)
 {
     using type1 = tump::foldl_t<
-        tump::callback<std::conjunction>,
+        tump::conjunction,
         std::true_type,
         tump::list<
             std::false_type,
@@ -162,7 +163,7 @@ TEST(TumpAlgorithmTest, FoldTest)
         >
     >;
     using type2 = tump::foldl_t<
-        tump::callback<std::conjunction>,
+        tump::conjunction,
         std::true_type,
         tump::list<
             std::true_type,
@@ -171,7 +172,7 @@ TEST(TumpAlgorithmTest, FoldTest)
         >
     >;
     using type3 = tump::foldl_t<
-        tump::callback<std::conjunction>,
+        tump::conjunction,
         std::true_type,
         tump::st_list<
             tump::cbk<tump::is_bool_constant, 1>,
@@ -253,11 +254,11 @@ TEST(TumpAlgorithmTest, ConcatTest)
 
     constexpr auto case8 = std::is_same_v<
         tump::concat_t<
-            tump::st_list<tump::cbk<std::is_integral, 1>, int, char>,
-            tump::st_list<tump::cbk<std::is_integral, 1>, long, unsigned short>,
-            tump::st_list<tump::cbk<std::is_integral, 1>, long long, unsigned char>
+            tump::st_list<tump::is_integral, int, char>,
+            tump::st_list<tump::is_integral, long, unsigned short>,
+            tump::st_list<tump::is_integral, long long, unsigned char>
         >,
-        tump::st_list<tump::cbk<std::is_integral, 1>, int, char, long, unsigned short, long long, unsigned char>
+        tump::st_list<tump::is_integral, int, char, long, unsigned short, long long, unsigned char>
     >;
     ASSERT_TRUE(case8);
 }
@@ -265,7 +266,7 @@ TEST(TumpAlgorithmTest, ConcatTest)
 TEST(TumpAlgorithmTest, PushTest)
 {
     using type_list1 = tump::list<int, short, long long>;
-    using type_list2 = tump::st_list<tump::cbk<std::is_integral, 1>, int, short, long long>;
+    using type_list2 = tump::st_list<tump::is_integral, int, short, long long>;
     using empty_list = tump::list<>;
 
     constexpr auto case1 = std::is_same_v<
@@ -300,23 +301,23 @@ TEST(TumpAlgorithmTest, PushTest)
     >;
     ASSERT_TRUE(case6);
     constexpr auto case7 = std::is_same_v<
-        tump::push_back_if_t<tump::cbk<std::is_integral, 1>, empty_list, double, float>,
+        tump::push_back_if_t<tump::is_integral, empty_list, double, float>,
         empty_list
     >;
     ASSERT_TRUE(case7);
     constexpr auto case8 = std::is_same_v<
-        tump::push_back_if_t<tump::cbk<std::is_integral, 1>, type_list2, unsigned long, double, char, float>,
-        tump::st_list<tump::cbk<std::is_integral, 1>, int, short, long long, unsigned long, char>
+        tump::push_back_if_t<tump::is_integral, type_list2, unsigned long, double, char, float>,
+        tump::st_list<tump::is_integral, int, short, long long, unsigned long, char>
     >;
     ASSERT_TRUE(case8);
     constexpr auto case9 = std::is_same_v<
-        tump::push_front_if_t<tump::cbk<std::is_integral, 1>, empty_list, double, float>,
+        tump::push_front_if_t<tump::is_integral, empty_list, double, float>,
         empty_list
     >;
     ASSERT_TRUE(case9);
     constexpr auto case10 = std::is_same_v<
-        tump::push_front_if_t<tump::cbk<std::is_integral, 1>, type_list2, unsigned long, double, char, float>,
-        tump::st_list<tump::cbk<std::is_integral, 1>, unsigned long, char, int, short, long long>
+        tump::push_front_if_t<tump::is_integral, type_list2, unsigned long, double, char, float>,
+        tump::st_list<tump::is_integral, unsigned long, char, int, short, long long>
     >;
     ASSERT_TRUE(case10);
 }
@@ -325,8 +326,8 @@ TEST(TumpAlgorithmTest, LenTest)
 {
     constexpr auto case1 = tump::len_v<tump::list<int, short, long long>>;
     constexpr auto case2 = tump::len_v<tump::list<>>;
-    constexpr auto case3 = tump::len_v<tump::st_list<tump::cbk<std::is_integral, 1>, int, short>>;
-    constexpr auto case4 = tump::len_v<tump::st_list<tump::cbk<std::is_integral, 1>>>;
+    constexpr auto case3 = tump::len_v<tump::st_list<tump::is_integral, int, short>>;
+    constexpr auto case4 = tump::len_v<tump::st_list<tump::is_integral>>;
     ASSERT_EQ(case1, 3);
     ASSERT_EQ(case2, 0);
     ASSERT_EQ(case3, 2);
@@ -450,8 +451,8 @@ TEST(TumpAlgorithmTest, ExistsTest)
 {
     constexpr auto case1 = tump::exists_v<int, tump::list<float, int, double>>;
     constexpr auto case2 = tump::exists_v<int, tump::list<>>;
-    constexpr auto case3 = tump::exists_v<int, tump::array<tump::cbk<std::is_arithmetic, 1>, 3, float, int, double>>;
-    constexpr auto case4 = tump::exists_v<tump::cbk<std::is_arithmetic, 1>, tump::array<tump::cbk<std::is_arithmetic, 1>, 3, float, int, double>>;
+    constexpr auto case3 = tump::exists_v<int, tump::array<tump::is_arithmetic, 3, float, int, double>>;
+    constexpr auto case4 = tump::exists_v<tump::is_arithmetic, tump::array<tump::is_arithmetic, 3, float, int, double>>;
     ASSERT_TRUE(case1);
     ASSERT_FALSE(case2);
     ASSERT_TRUE(case3);
@@ -463,7 +464,7 @@ TEST(TumpAlgorithmTest, MpIfTest)
     constexpr auto case1 = std::is_same_v<tump::mp_if_t<std::true_type, int, double>, int>;
     constexpr auto case2 = std::is_same_v<tump::mp_if_t<std::false_type, int, double>, double>;
     constexpr auto case3 = std::is_same_v<tump::mp_if_t<std::true_type, tump::list<int, double>>, int>;
-    constexpr auto case4 = std::is_same_v<tump::mp_if_t<std::false_type, tump::array<tump::cbk<std::is_arithmetic, 1>, 2, int, double>>, double>;
+    constexpr auto case4 = std::is_same_v<tump::mp_if_t<std::false_type, tump::array<tump::is_arithmetic, 2, int, double>>, double>;
     ASSERT_TRUE(case1);
     ASSERT_TRUE(case2);
     ASSERT_TRUE(case3);
@@ -478,7 +479,7 @@ TEST(TumpAlgorithmTest, MpIfTest)
     using constraint2 = tump::mp_invoke_result_t<
         tump::cbk<tump::mp_if, 3>,
         std::true_type,
-        tump::array<tump::cbk<std::is_arithmetic, 1>, 2, int, double>
+        tump::array<tump::is_arithmetic, 2, int, double>
     >;
 
     constexpr auto case5 = tump::invoke_v<constraint1, int>;
@@ -497,15 +498,15 @@ TEST(TumpAlgorithmTest, MpIfTest)
 
 TEST(TumpAlgorithmTest, FilterTest)
 {
-    using list1 = tump::st_list<tump::cbk<std::is_arithmetic, 1>, int, float, double, char, unsigned long>;
+    using list1 = tump::st_list<tump::is_arithmetic, int, float, double, char, unsigned long>;
 
     constexpr auto case1 = std::is_same_v<
-        tump::filter_t<tump::cbk<std::is_integral, 1>, list1>,
-        tump::st_list<tump::cbk<std::is_arithmetic, 1>, int, char, unsigned long>
+        tump::filter_t<tump::is_integral, list1>,
+        tump::st_list<tump::is_arithmetic, int, char, unsigned long>
     >;
     constexpr auto case2 = std::is_same_v<
-        tump::filter_t<tump::cbk<std::is_floating_point, 1>, list1>,
-        tump::st_list<tump::cbk<std::is_arithmetic, 1>, float, double>
+        tump::filter_t<tump::is_floating_point, list1>,
+        tump::st_list<tump::is_arithmetic, float, double>
     >;
     ASSERT_TRUE(case1);
     ASSERT_TRUE(case2);
@@ -513,15 +514,15 @@ TEST(TumpAlgorithmTest, FilterTest)
 
 TEST(TumpAlgorithmTest, RemoveIfTest)
 {
-    using list1 = tump::st_list<tump::cbk<std::is_arithmetic, 1>, int, float, double, char, unsigned long>;
+    using list1 = tump::st_list<tump::is_arithmetic, int, float, double, char, unsigned long>;
 
     constexpr auto case1 = std::is_same_v<
-        tump::remove_if_t<tump::cbk<std::is_integral, 1>, list1>,
-        tump::st_list<tump::cbk<std::is_arithmetic, 1>, float, double>
+        tump::remove_if_t<tump::is_integral, list1>,
+        tump::st_list<tump::is_arithmetic, float, double>
     >;
     constexpr auto case2 = std::is_same_v<
-        tump::remove_if_t<tump::cbk<std::is_floating_point, 1>, list1>,
-        tump::st_list<tump::cbk<std::is_arithmetic, 1>, int, char, unsigned long>
+        tump::remove_if_t<tump::is_floating_point, list1>,
+        tump::st_list<tump::is_arithmetic, int, char, unsigned long>
     >;
     ASSERT_TRUE(case1);
     ASSERT_TRUE(case2);
@@ -529,12 +530,12 @@ TEST(TumpAlgorithmTest, RemoveIfTest)
 
 TEST(TumpAlgorithmTest, UniqueTest)
 {
-    using list1 = tump::st_list<tump::cbk<std::is_arithmetic, 1>, int, float, int, char, float, int>;
-    using list2 = tump::array<tump::cbk<std::is_arithmetic, 1>, 3, int, float, char>;
+    using list1 = tump::st_list<tump::is_arithmetic, int, float, int, char, float, int>;
+    using list2 = tump::array<tump::is_arithmetic, 3, int, float, char>;
 
     constexpr auto case1 = std::is_same_v<
         tump::unique_t<list1>,
-        tump::st_list<tump::cbk<std::is_arithmetic, 1>, int, float, char>
+        tump::st_list<tump::is_arithmetic, int, float, char>
     >;
     ASSERT_TRUE(case1);
 
@@ -546,10 +547,10 @@ TEST(TumpAlgorithmTest, UniqueTest)
 
 TEST(TumpAlgorithmTest, FindIfTest)
 {
-    using list1 = tump::array<tump::cbk<std::is_arithmetic, 1>, 5, int, float, double, char, unsigned long>;
+    using list1 = tump::array<tump::is_arithmetic, 5, int, float, double, char, unsigned long>;
     
-    constexpr auto case1 = std::is_same_v<tump::find_if_t<tump::cbk<std::is_floating_point, 1>, list1>, float>;
-    constexpr auto case2 = tump::find_if_v<tump::cbk<std::is_floating_point, 1>, list1>;
+    constexpr auto case1 = std::is_same_v<tump::find_if_t<tump::is_floating_point, list1>, float>;
+    constexpr auto case2 = tump::find_if_v<tump::is_floating_point, list1>;
     constexpr auto case3 = std::is_same_v<tump::find_if_t<tump::cbk<std::is_pointer, 1>, list1>, tump::mp_null_t>;
     constexpr auto case4 = tump::find_if_v<tump::cbk<std::is_pointer, 1>, list1>;
     constexpr auto case5 = std::is_same_v<tump::find_t<double, list1>, double>;

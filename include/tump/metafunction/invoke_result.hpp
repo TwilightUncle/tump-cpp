@@ -47,18 +47,6 @@ namespace tump
     using constraint_size_constant = std::type_identity<cbk<is_size_constant, 1>>;
 
     /**
-     * 標準ライブラリの結果型指定
-    */
-    template <unsigned int ArgsSize, class L, class R>
-    struct mp_invoke_result<callback<std::is_same, ArgsSize>, L, R> : public constraint_bool_constant {};
-    template <unsigned int ArgsSize, class T>
-    struct mp_invoke_result<callback<std::is_arithmetic, ArgsSize>, T> : public constraint_bool_constant {};
-    template <unsigned int ArgsSize, class T>
-    struct mp_invoke_result<callback<std::is_integral, ArgsSize>, T> : public constraint_bool_constant {};
-    template <unsigned int ArgsSize, class T>
-    struct mp_invoke_result<callback<std::is_floating_point, ArgsSize>, T> : public constraint_bool_constant {};
-
-    /**
      * tump内の結果型について指定
     */
     template <unsigned int ArgsSize, class T>
