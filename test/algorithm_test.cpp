@@ -84,7 +84,7 @@ TEST(TumpAlgorithmTest, MapTest)
     constexpr auto case3 = std::is_same_v<
         tump::map_t<
             tump::is_integral,
-            tump::st_list<tump::cbk<tump::to_true, 1>, int, float, short>
+            tump::st_list<tump::to_true, int, float, short>
         >,
         tump::st_list<typename tump::constraint_bool_constant::type, std::true_type, std::false_type, std::true_type>
     >;
@@ -123,8 +123,8 @@ TEST(TumpAlgorithmTest, CopyTest)
         std::tuple<int, float, int*>
     >;
     constexpr auto case3 = std::is_same_v<
-        tump::copy_t<std::tuple<double, long, short, char>, tump::st_list<tump::cbk<tump::to_true, 1>, int, float, short>>,
-        tump::st_list<tump::cbk<tump::to_true, 1>, double, long, short, char>
+        tump::copy_t<std::tuple<double, long, short, char>, tump::st_list<tump::to_true, int, float, short>>,
+        tump::st_list<tump::to_true, double, long, short, char>
     >;
 
     ASSERT_TRUE(case1);
@@ -377,7 +377,7 @@ TEST(TumpAlgorithmTest, PopTest)
 TEST(TumpAlgorithmTest, SliceTest)
 {
     using type_list1 = tump::list<int, short, char, long long, float, double>;
-    using type_list2 = tump::st_list<tump::cbk<std::is_arithmetic>, int, short, char, long long, float, double>;
+    using type_list2 = tump::st_list<tump::is_arithmetic, int, short, char, long long, float, double>;
 
     constexpr auto case1 = std::is_same_v<
         tump::slice_t<type_list1, tump::size_args<4>>,
@@ -397,19 +397,19 @@ TEST(TumpAlgorithmTest, SliceTest)
     >;
     constexpr auto case5 = std::is_same_v<
         tump::slice_t<type_list2, tump::size_args<2, 3>>,
-        tump::st_list<tump::cbk<std::is_arithmetic>, char, long long, float>
+        tump::st_list<tump::is_arithmetic, char, long long, float>
     >;
     constexpr auto case6 = std::is_same_v<
         tump::slice_t<type_list2, tump::size_args<2, 0>>,
-        tump::st_list<tump::cbk<std::is_arithmetic>>
+        tump::st_list<tump::is_arithmetic>
     >;
     constexpr auto case7 = std::is_same_v<
         tump::slice_t<type_list2, tump::size_args<1, 3, 1>>,
-        tump::st_list<tump::cbk<std::is_arithmetic>, short, long long, double>
+        tump::st_list<tump::is_arithmetic, short, long long, double>
     >;
     constexpr auto case8 = std::is_same_v<
         tump::slice_t<type_list2, tump::size_args<1, 3, 2>>,
-        tump::st_list<tump::cbk<std::is_arithmetic>, short, float>
+        tump::st_list<tump::is_arithmetic, short, float>
     >;
 
     ASSERT_TRUE(case1);
@@ -425,8 +425,8 @@ TEST(TumpAlgorithmTest, SliceTest)
 TEST(TumpAlgorithmTest, ReverseTest)
 {
     using type_list1 = tump::list<int, short, char, long long, float, double>;
-    using type_list2 = tump::st_list<tump::cbk<std::is_arithmetic>, int, short, char, long long, float, double>;
-    using type_list3 = tump::array<tump::cbk<std::is_arithmetic>, 6, int, short, char, long long, float, double>;
+    using type_list2 = tump::st_list<tump::is_arithmetic, int, short, char, long long, float, double>;
+    using type_list3 = tump::array<tump::is_arithmetic, 6, int, short, char, long long, float, double>;
 
     constexpr auto case1 = std::is_same_v<
         tump::reverse_t<type_list1>,
@@ -434,11 +434,11 @@ TEST(TumpAlgorithmTest, ReverseTest)
     >;
     constexpr auto case2 = std::is_same_v<
         tump::reverse_t<type_list2>,
-        tump::st_list<tump::cbk<std::is_arithmetic>, double, float, long long, char, short, int>
+        tump::st_list<tump::is_arithmetic, double, float, long long, char, short, int>
     >;
     constexpr auto case3 = std::is_same_v<
         tump::reverse_t<type_list3>,
-        tump::array<tump::cbk<std::is_arithmetic>, 6, double, float, long long, char, short, int>
+        tump::array<tump::is_arithmetic, 6, double, float, long long, char, short, int>
     >;
 
     ASSERT_TRUE(case1);
@@ -550,8 +550,8 @@ TEST(TumpAlgorithmTest, FindIfTest)
     
     constexpr auto case1 = std::is_same_v<tump::find_if_t<tump::is_floating_point, list1>, float>;
     constexpr auto case2 = tump::find_if_v<tump::is_floating_point, list1>;
-    constexpr auto case3 = std::is_same_v<tump::find_if_t<tump::cbk<std::is_pointer, 1>, list1>, tump::mp_null_t>;
-    constexpr auto case4 = tump::find_if_v<tump::cbk<std::is_pointer, 1>, list1>;
+    constexpr auto case3 = std::is_same_v<tump::find_if_t<tump::is_pointer, list1>, tump::mp_null_t>;
+    constexpr auto case4 = tump::find_if_v<tump::is_pointer, list1>;
     constexpr auto case5 = std::is_same_v<tump::find_t<double, list1>, double>;
     constexpr auto case6 = tump::find_v<double, list1>;
     constexpr auto case7 = std::is_same_v<tump::find_t<long long, list1>, tump::mp_null_t>;

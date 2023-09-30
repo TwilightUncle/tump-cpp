@@ -39,11 +39,11 @@ namespace tump
         struct unnorm_li<empty<Outer>, list<Types...>> : public std::type_identity<Outer<Types...>> {};
 
         template <class... Types>
-        struct get_container_constraint<list<Types...>> : public std::type_identity<cbk<to_true, 1>> {};
+        struct get_container_constraint<list<Types...>> : public std::type_identity<::tump::to_true> {};
 
         template <class T>
         requires (!std::is_base_of_v<::tump::_::base_list, T>)
-        struct get_container_constraint<T> : public std::type_identity<cbk<to_true, 1>> {};
+        struct get_container_constraint<T> : public std::type_identity<::tump::to_true> {};
 
         template <class... Types, class Constraint>
         struct make_empty<list<Types...>, Constraint> : public std::type_identity<list<>> {};

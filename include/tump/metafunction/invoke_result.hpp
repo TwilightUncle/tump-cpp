@@ -14,7 +14,7 @@ namespace tump
          * 引数の型によって結果の制約が変わる場合、Argsを指定
         */
         template <Invocable F, class... Args>
-        struct mp_invoke_result : public std::type_identity<cbk<to_true, 1>> {};
+        struct mp_invoke_result : public std::type_identity<::tump::to_true> {};
 
         template <template <class...> class OuterF, Invocable InnerF, class... Args1, class... Args>
         struct mp_invoke_result<OuterF<InnerF, Args1...>, Args...> : public mp_invoke_result<InnerF, Args1..., Args...> {};

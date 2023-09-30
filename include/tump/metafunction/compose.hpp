@@ -13,7 +13,7 @@ namespace tump
         template <InvocableArgN<1> F, InvocableArgN<1>... Funcs>
         struct compose : public std::type_identity<
             bind<
-                cbk<flip, 3>,
+                ::tump::flip,
                 bind<
                     ::tump::foldr,
                     ::tump::invoke
