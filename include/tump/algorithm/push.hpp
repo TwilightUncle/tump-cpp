@@ -116,16 +116,16 @@ namespace tump
     using push_front_if_t = typename fn::push_front_if<F, List, Types...>::type;
 
     template <TypeList List, class... Types>
-    struct mp_invoke_result<push_back, List, Types...> : public constraint_st_type_list<List> {};
+    struct fn::mp_invoke_result<push_back, List, Types...> : public constraint_st_type_list<List> {};
 
     template <TypeList List, class... Types>
-    struct mp_invoke_result<push_front, List, Types...> : public constraint_st_type_list<List> {};
+    struct fn::mp_invoke_result<push_front, List, Types...> : public constraint_st_type_list<List> {};
 
     template <InvocableArgN<1> F, TypeList List, class... Types>
-    struct mp_invoke_result<push_back_if, F, List, Types...> : public constraint_st_type_list<List> {};
+    struct fn::mp_invoke_result<push_back_if, F, List, Types...> : public constraint_st_type_list<List> {};
 
     template <InvocableArgN<1> F, TypeList List, class... Types>
-    struct mp_invoke_result<push_front_if, F, List, Types...> : public constraint_st_type_list<List> {};
+    struct fn::mp_invoke_result<push_front_if, F, List, Types...> : public constraint_st_type_list<List> {};
 }
 
 #endif

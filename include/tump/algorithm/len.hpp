@@ -11,7 +11,7 @@ namespace tump
          * リストの長さを取得
         */
         template <TypeList List>
-        struct len : public len<to_norm_li_t<List>> {};
+        struct len : public len<to_norm_li_t<List>>::type {};
 
         template <class... Types>
         struct len<list<Types...>>
@@ -31,7 +31,7 @@ namespace tump
     constexpr auto len_v = fn::len<List>::value;
 
     template <class T>
-    struct mp_invoke_result<len, T> : public constraint_size_constant {};
+    struct fn::mp_invoke_result<len, T> : public constraint_size_constant {};
 }
 
 #endif

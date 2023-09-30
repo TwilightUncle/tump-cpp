@@ -11,7 +11,7 @@ namespace tump
          * リスト要素の並び順を反転
         */
         template <TypeList List>
-        struct reverse : public unnorm_li<List, foldl_t<
+        struct reverse : public fn::unnorm_li<List, foldl_t<
             ::tump::push_front,
             list<>,
             to_norm_li_t<List>
@@ -34,7 +34,7 @@ namespace tump
     using reverse_t = typename fn::reverse<List>::type;
 
     template <TypeList List>
-    struct mp_invoke_result<reverse, List> : public constraint_st_type_list<List> {};
+    struct fn::mp_invoke_result<reverse, List> : public constraint_st_type_list<List> {};
 }
 
 #endif

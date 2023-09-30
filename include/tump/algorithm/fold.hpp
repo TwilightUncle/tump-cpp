@@ -57,10 +57,10 @@ namespace tump
     using foldr_t = typename fn::foldr<F, Init, List>::type;
 
     template <InvocableArgN<2> F, class Init, TypeList List>
-    struct mp_invoke_result<foldl, F, Init, List> : public mp_invoke_result<F, Init, get_front_t<List>> {};
+    struct fn::mp_invoke_result<foldl, F, Init, List> : public mp_invoke_result<F, Init, get_front_t<List>> {};
 
     template <InvocableArgN<2> F, class Init, TypeList List>
-    struct mp_invoke_result<foldr, F, Init, List> : public mp_invoke_result<F, get_back_t<List>, Init> {};
+    struct fn::mp_invoke_result<foldr, F, Init, List> : public mp_invoke_result<F, get_back_t<List>, Init> {};
 }
 
 #endif

@@ -174,7 +174,7 @@ TEST(TumpAlgorithmTest, FoldTest)
         tump::conjunction,
         std::true_type,
         tump::st_list<
-            tump::cbk<tump::is_bool_constant, 1>,
+            tump::is_bool_constant,
             std::true_type,
             std::true_type,
             std::true_type

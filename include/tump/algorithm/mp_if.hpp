@@ -40,12 +40,12 @@ namespace tump
     using mp_if_t = typename fn::mp_if<Cond, Types...>::type;
 
     template <VFunctional Cond, class T, class F>
-    struct mp_invoke_result<mp_if, Cond, T, F> : public constraint_or_types<T, F> {};
+    struct fn::mp_invoke_result<mp_if, Cond, T, F> : public constraint_or_types<T, F> {};
 
     template <VFunctional Cond, TypeList List>
     requires (len_v<List> == 2)
-    struct mp_invoke_result<mp_if, Cond, List> : public std::type_identity<
-        bind<cbk<flip>, exists, List>
+    struct fn::mp_invoke_result<mp_if, Cond, List> : public std::type_identity<
+        bind<cbk<flip>, ::tump::exists, List>
     > {};
 }
 

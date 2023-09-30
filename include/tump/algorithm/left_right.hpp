@@ -64,21 +64,21 @@ namespace tump
     using right_t = typename fn::right<Types...>::type;
 
     template <class L, class R>
-    struct mp_invoke_result<left, L, R> : public constraint_or_types<L, R> {};
+    struct fn::mp_invoke_result<left, L, R> : public constraint_or_types<L, R> {};
 
     template <TypeList List>
     requires (len_v<List> == 2)
-    struct mp_invoke_result<left, List> : public std::type_identity<
-        bind<cbk<flip>, exists, List>
+    struct fn::mp_invoke_result<left, List> : public std::type_identity<
+        bind<cbk<flip>, ::tump::exists, List>
     > {};
 
     template <class L, class R>
-    struct mp_invoke_result<right, L, R> : public constraint_or_types<L, R> {};
+    struct fn::mp_invoke_result<right, L, R> : public constraint_or_types<L, R> {};
 
     template <TypeList List>
     requires (len_v<List> == 2)
-    struct mp_invoke_result<right, List> : public std::type_identity<
-        bind<cbk<flip>, exists, List>
+    struct fn::mp_invoke_result<right, List> : public std::type_identity<
+        bind<cbk<flip>, ::tump::exists, List>
     > {};
 }
 

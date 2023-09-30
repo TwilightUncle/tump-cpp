@@ -77,10 +77,10 @@ namespace tump
     constexpr auto find_v = fn::find<Search, List>::value;
 
     template <InvocableArgN<1> F, TypeList List>
-    struct mp_invoke_result<find_if, F, List> : public std::type_identity<cbk<is_type_value, 1>> {};
+    struct fn::mp_invoke_result<find_if, F, List> : public std::type_identity<cbk<is_type_value, 1>> {};
 
     template <class T, TypeList List>
-    struct mp_invoke_result<find, T, List> : public std::type_identity<cbk<is_type_value, 1>> {};
+    struct fn::mp_invoke_result<find, T, List> : public std::type_identity<cbk<is_type_value, 1>> {};
 }
 
 #endif

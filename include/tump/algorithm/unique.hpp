@@ -64,10 +64,10 @@ namespace tump
     constexpr auto is_unique_v = fn::is_unique<List>::value;
 
     template <TypeList List>
-    struct mp_invoke_result<unique, List> : public constraint_st_type_list<List> {};
+    struct fn::mp_invoke_result<unique, List> : public constraint_st_type_list<List> {};
 
     template <TypeList List>
-    struct mp_invoke_result<is_unique, List> : public constraint_bool_constant {};
+    struct fn::mp_invoke_result<is_unique, List> : public constraint_bool_constant {};
 }
 
 #endif

@@ -34,7 +34,7 @@ namespace tump
 
     // TODO: Fによってリストの制約を変えるべきか考える
     template <InvocableArgN<1> F, TypeList List>
-    struct mp_invoke_result<remove_if, F, List> : public constraint_st_type_list<List> {};
+    struct fn::mp_invoke_result<remove_if, F, List> : public constraint_st_type_list<List> {};
 }
 
 #endif

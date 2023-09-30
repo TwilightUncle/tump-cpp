@@ -12,7 +12,7 @@ namespace tump
         */
         template <TypeList List>
         requires (!is_empty_v<List>)
-        struct pop_front : public unnorm_li<
+        struct pop_front : public fn::unnorm_li<
             List,
             typename pop_front<to_norm_li_t<List>>::type
         > {};
@@ -35,7 +35,7 @@ namespace tump
 
             template <TypeList List, TypeList Result, std::size_t N>
             requires (len_v<List> == 1)
-            struct pop_back_impl<List, Result, N> : public make_empty<List> {};
+            struct pop_back_impl<List, Result, N> : public fn::make_empty<List> {};
 
             template <TypeList List, TypeList Result, std::size_t N>
             requires (len_v<List> - 1 == N && N > 0)
@@ -73,10 +73,10 @@ namespace tump
     using pop_back_t = typename fn::pop_back<List>::type;
 
     template <TypeList List>
-    struct mp_invoke_result<pop_front, List> : public constraint_st_type_list<List> {};
+    struct fn::mp_invoke_result<pop_front, List> : public constraint_st_type_list<List> {};
 
     template <TypeList List>
-    struct mp_invoke_result<pop_back, List> : public constraint_st_type_list<List> {};
+    struct fn::mp_invoke_result<pop_back, List> : public constraint_st_type_list<List> {};
 }
 
 #endif

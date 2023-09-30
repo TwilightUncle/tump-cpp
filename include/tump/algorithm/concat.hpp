@@ -13,7 +13,7 @@ namespace tump
         */
         template <TypeList List1, TypeList... Lists>
         requires (std::is_same_v<make_empty_t<List1>, make_empty_t<Lists>> && ...)
-        struct concat : public unnorm_li<
+        struct concat : public fn::unnorm_li<
             List1,
             foldl_t<
                 callback<concat, 2>,
@@ -52,7 +52,7 @@ namespace tump
     using concat_t = typename fn::concat<Lists...>::type;
 
     template <TypeList List, TypeList... Lists>
-    struct mp_invoke_result<concat, List, Lists...> : public constraint_st_type_list<List> {};
+    struct fn::mp_invoke_result<concat, List, Lists...> : public constraint_st_type_list<List> {};
 }
 
 #endif

@@ -25,7 +25,7 @@ namespace tump
     using copy_t = typename fn::copy<Src, Dest>::type;
 
     template <TypeList Src, TypeList Dest>
-    struct mp_invoke_result<copy, Src, Dest> : public constraint_st_type_list<Dest> {};
+    struct fn::mp_invoke_result<copy, Src, Dest> : public constraint_st_type_list<Dest> {};
 }
 
 #endif

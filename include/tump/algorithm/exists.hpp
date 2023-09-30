@@ -11,7 +11,7 @@ namespace tump
          * 任意の型が、型リストの中に存在するか判定
         */
         template <class Search, TypeList List>
-        struct exists : public exists<Search, to_norm_li_t<List>> {};
+        struct exists : public exists<Search, to_norm_li_t<List>>::type {};
 
         template <class Search, TypeList List>
         requires (is_empty_v<List>)
@@ -20,7 +20,7 @@ namespace tump
         template <class Search, class... Types>
         struct exists<Search, list<Types...>> : public std::disjunction<
             std::is_same<Search, Types>...
-        > {};
+        >::type {};
     }
 
     /**
@@ -40,7 +40,7 @@ namespace tump
     >;
 
     template <class Search, TypeList List>
-    struct mp_invoke_result<exists, Search, List> : public constraint_bool_constant {}; 
+    struct fn::mp_invoke_result<exists, Search, List> : public constraint_bool_constant {}; 
 }
 
 #endif

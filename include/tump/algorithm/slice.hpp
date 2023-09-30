@@ -63,7 +63,7 @@ namespace tump
 
     template <TypeList List, std::size_t... Sizes>
     requires (sizeof...(Sizes) > 0 && sizeof...(Sizes) <= 3)
-    struct mp_invoke_result<slice, List, size_args<Sizes...>> : public constraint_st_type_list<List> {};
+    struct fn::mp_invoke_result<slice, List, size_args<Sizes...>> : public constraint_st_type_list<List> {};
 }
 
 #endif

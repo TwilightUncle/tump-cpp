@@ -11,7 +11,7 @@ namespace tump
          * 型リストに含まれるすべての要素に対して、メタ関数を適用する
         */
         template <InvocableArgN<1> F, TypeList List>
-        struct map : public unnorm_li<
+        struct map : public fn::unnorm_li<
             make_empty_t<List, mp_invoke_result_t<F, get_front_t<List>>>,
             typename map<F, to_norm_li_t<List>>::type
         > {};
@@ -55,7 +55,7 @@ namespace tump
     }
 
     template <InvocableArgN<1> F, TypeList List>
-    struct mp_invoke_result<map, F, List> : public std::type_identity<
+    struct fn::mp_invoke_result<map, F, List> : public std::type_identity<
         bind<cbk<_::map_result_impl, 3>, F, List>
     > {};
 }

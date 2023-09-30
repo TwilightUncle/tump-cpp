@@ -11,7 +11,7 @@ namespace tump
          * リストの中身を指定の要素に置き換える
         */
         template <TypeList List, class... Types>
-        struct make_type_list : public unnorm_li<List, list<Types...>> {};
+        struct make_type_list : public fn::unnorm_li<List, list<Types...>> {};
 
         template <template <class...> class Outer, class... Types>
         struct make_type_list<empty<Outer>, Types...> : public std::type_identity<Outer<Types...>> {};
@@ -26,7 +26,7 @@ namespace tump
     using make_type_list_t = typename fn::make_type_list<List, Types...>::type;
 
     template <TypeList List, class... Types>
-    struct mp_invoke_result<make_type_list, List, Types...> : public constraint_st_type_list<List> {};
+    struct fn::mp_invoke_result<make_type_list, List, Types...> : public constraint_st_type_list<List> {};
 }
 
 #endif

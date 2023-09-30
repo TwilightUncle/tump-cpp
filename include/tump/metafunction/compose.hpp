@@ -36,7 +36,7 @@ namespace tump
     using compose_t = typename fn::compose<F, Funcs...>::type;
 
     template <InvocableArgN<1> F, InvocableArgN<1>... Funcs>
-    struct mp_invoke_result<compose, F, Funcs...> : public constraint_callback_arg1 {};
+    struct fn::mp_invoke_result<compose, F, Funcs...> : public constraint_callback_arg1 {};
 }
 
 #endif
