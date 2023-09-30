@@ -30,7 +30,7 @@ namespace tump
     template <class F, class... Args>
     using mp_invoke_result_t = typename fn::mp_invoke_result<F, Args...>::type;
 
-    using constraint_callback_arg1 = std::type_identity<bind<cbk<flip, 3>, cbk<is_callback, 2>, optional_args_for_is_callback<1>>>;
+    using constraint_callback_arg1 = std::type_identity<bind<flip, is_callback, optional_args_for_is_callback<1>>>;
 
     namespace fn
     {

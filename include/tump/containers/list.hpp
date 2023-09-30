@@ -42,14 +42,14 @@ namespace tump
         struct get_container_constraint<list<Types...>> : public std::type_identity<cbk<to_true, 1>> {};
 
         template <class T>
-        requires (!std::is_base_of_v<_::base_list, T>)
+        requires (!std::is_base_of_v<::tump::_::base_list, T>)
         struct get_container_constraint<T> : public std::type_identity<cbk<to_true, 1>> {};
 
         template <class... Types, class Constraint>
         struct make_empty<list<Types...>, Constraint> : public std::type_identity<list<>> {};
 
         template <template <class...> class Outer, class... Types, class Constraint>
-        requires (!std::is_base_of_v<_::base_list, Outer<Types...>>)
+        requires (!std::is_base_of_v<::tump::_::base_list, Outer<Types...>>)
         struct make_empty<Outer<Types...>, Constraint> : public std::type_identity<empty<Outer>> {};
 
         template <template <class...> class Outer, class Constraint>

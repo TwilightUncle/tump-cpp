@@ -16,6 +16,9 @@ namespace tump
         using copy = invoke_list<bind<::tump::make_type_list, Dest>, Src>;
     }
 
+    /**
+     * リストの中身をDestにコピーする
+    */
     using copy = cbk<fn::copy, 2>;
 
     /**

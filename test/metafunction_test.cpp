@@ -54,7 +54,7 @@ TEST(TumpMetafunctionTest, InvokeTest)
     ASSERT_FALSE(case3);
     ASSERT_TRUE(case4);
 
-    constexpr auto case5 = tump::invoke<F1, int, int>::value;
+    constexpr auto case5 = tump::fn::invoke<F1, int, int>::value;
     constexpr auto case6 = tump::invoke_v<F2, int, float>;
     constexpr auto case7 = std::is_same_v<tump::invoke_t<F3, int>, std::true_type>;
     constexpr auto case8 = std::is_same_v<tump::invoke_t<F3, float>, std::false_type>;

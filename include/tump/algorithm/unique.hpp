@@ -14,7 +14,7 @@ namespace tump
             using unique_impl = push_back_if<
                 compose_t<
                     negation,
-                    bind<cbk<flip, 3>, ::tump::exists, Acc>
+                    bind<::tump::flip, ::tump::exists, Acc>
                 >,
                 Acc,
                 Cur

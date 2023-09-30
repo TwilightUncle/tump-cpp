@@ -1,7 +1,6 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_RELAY_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_RELAY_HPP
 
-#include <tump/metafunction/invoke_list.hpp>
 #include <tump/algorithm/fold.hpp>
 
 namespace tump
@@ -17,7 +16,7 @@ namespace tump
                 cbk<flip, 3>,
                 bind<
                     ::tump::foldr,
-                    cbk<invoke, 2>
+                    ::tump::invoke
                 >,
                 list<F, Funcs...>
             >
