@@ -168,17 +168,25 @@ TEST(TumpMetafunctionTest, ExpressionTest)
         tump::exp<tump::add_const, tump::_dot, tump::make_unsigned, tump::_doll, int>,
         const unsigned int
     >;
-    // constexpr auto case6 = tump::exp<
-    //     tump::is_same, const unsigned int,
-    //     tump::_doll,
-    //     tump::add_const, tump::_dot, tump::make_unsigned,
-    //     tump::_doll,
-    //     int
-    // >::value;
+    constexpr auto case6 = tump::exp<
+        tump::is_same, const unsigned int,
+        tump::_doll,
+        tump::add_const, tump::_dot, tump::make_unsigned,
+        tump::_doll,
+        int
+    >::value;
+    constexpr auto case7 = tump::exp<
+        tump::is_same, const unsigned int,
+        tump::_dot, tump::add_const, tump::_dot, tump::make_unsigned,
+        tump::_doll,
+        int
+    >::value;
 
     ASSERT_TRUE(case1);
     ASSERT_TRUE(case2);
     ASSERT_TRUE(case3);
     ASSERT_TRUE(case4);
     ASSERT_TRUE(case5);
+    ASSERT_TRUE(case6);
+    ASSERT_TRUE(case7);
 }

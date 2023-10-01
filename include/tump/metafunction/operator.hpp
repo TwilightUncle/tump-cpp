@@ -1,6 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_OPERATOR_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_OPERATOR_HPP
 
+#include <tump/vwrap.hpp>
 #include <tump/metafunction/apply.hpp>
 #include <tump/metafunction/compose.hpp>
 
@@ -24,11 +25,14 @@ namespace tump
         r_7, l_7, _7,
         r_8, l_8, _8,
         r_9, l_9, _9,
-        func,
+        func = 31u,
     };
 
     inline constexpr e_op_priority decrement_op_priority(e_op_priority priority)
     {
+        if (priority == e_op_priority::func) {
+            return e_op_priority::_9;
+        }
         return static_cast<e_op_priority>(
             static_cast<std::size_t>(priority) - 1
         );
@@ -90,8 +94,11 @@ namespace tump
             struct check_infix_base : public std::false_type {};
 
             template <InvocableArgN<2> F, e_op_priority Priority, std::size_t Rem>
-            struct check_infix_base<_op<F, Priority>, Rem> : public std::bool_constant<
-                static_case<std::size_t>(Priority) % 3u == Rem
+            struct check_infix_base<_op<F, Priority>, Rem> : public check_infix_base<vwrap<Priority>, Rem> {};
+
+            template <e_op_priority Priority, std::size_t Rem>
+            struct check_infix_base<vwrap<Priority>, Rem> : public std::bool_constant<
+                static_cast<std::size_t>(Priority) % 3u == Rem
             > {};
         }
 

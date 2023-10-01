@@ -1,7 +1,6 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_EXPRESSION_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_EXPRESSION_HPP
 
-#include <tump/vwrap.hpp>
 #include <tump/metafunction/operator.hpp>
 #include <tump/algorithm/pop.hpp>
 #include <tump/algorithm/reverse.hpp>
@@ -14,6 +13,7 @@ namespace tump
         template <e_op_priority Priority, TypeList Result, class T>
         struct exp_2;
     
+        // 特に処理を行わず、次の要素へ進めるだけ
         template <e_op_priority Priority, TypeList Result, class T>
         requires (
             is_empty_v<Result> && !is_operator_v<T> ||
@@ -22,6 +22,7 @@ namespace tump
         )
         struct exp_2<Priority, Result, T> : fn::push_front<Result, T> {};
 
+        // 関数適用
         template <e_op_priority Priority, TypeList Result, class T>
         requires (!is_empty_v<Result> && !is_operator_v<T> && Invocable<get_front_t<Result>>)
         struct exp_2<Priority, Result, T> : fn::push_front<
@@ -29,31 +30,54 @@ namespace tump
             apply_t<get_front_t<Result>, T>
         > {};
 
+        // 右結合以外の場合の演算子の関数化
         template <e_op_priority Priority, TypeList Result, class T>
-        requires (!is_empty_v<Result> && is_operator_v<T> && eq_op_priority_v<T, Priority>)
+        requires (!is_empty_v<Result> && is_operator_v<T> && eq_op_priority_v<T, Priority> && !is_infixr_v<vwrap<Priority>>)
         struct exp_2<Priority, Result, T> : fn::push_front<
             pop_front_t<Result>,
             ::tump::sec<get_front_t<Result>, T>
+        > {};
+
+        // 右結合の場合の演算子の関数化
+        template <e_op_priority Priority, TypeList Result, class T>
+        requires (!is_empty_v<Result> && is_operator_v<T> && eq_op_priority_v<T, Priority> && is_infixr_v<vwrap<Priority>>)
+        struct exp_2<Priority, Result, T> : fn::push_front<
+            pop_front_t<Result>,
+            ::tump::sec<T, get_front_t<Result>>
         > {};
 
         // fold用
         template <class Acc, class Cur>
         struct exp_n_impl;
 
+        // foldl用
         template <e_op_priority Priority, TypeList List, class Cur>
         struct exp_n_impl<list<List, vwrap<Priority>>, Cur> : public std::type_identity<list<
             typename exp_2<Priority, List, Cur>::type,
             vwrap<Priority>
         >> {};
 
+        // foldr用
+        template <e_op_priority Priority, TypeList List, class Cur>
+        struct exp_n_impl<Cur, list<List, vwrap<Priority>>> : public exp_n_impl<list<List, vwrap<Priority>>, Cur> {};
+
         // 優先度毎の式の実装
         template <e_op_priority Priority, TypeList List>
         using exp_n = invoke_t<
             compose_t<
-                ::tump::reverse,
+                std::conditional_t<
+                    is_infixr_v<vwrap<Priority>>,
+                    ::tump::type_identity,
+                    ::tump::reverse
+                >,
                 ::tump::get_front
             >,
-            foldl_t<
+            apply_t<
+                std::conditional_t<
+                    is_infixr_v<vwrap<Priority>>,
+                    ::tump::foldr,
+                    ::tump::foldl
+                >,
                 cbk<exp_n_impl, 2>,
                 list<list<>, vwrap<Priority>>,
                 List
