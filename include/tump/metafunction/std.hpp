@@ -7,7 +7,7 @@
 namespace tump
 {
     // -------------------------------------------------------------------
-    // バージョンに左右されるが常にほしいものをあらかじめ定義
+    // バージョンに左右されるが常にほしいものやちょっといじったものをあらかじめ定義
     // -------------------------------------------------------------------
 
     namespace fn
@@ -26,12 +26,22 @@ namespace tump
 #endif
 
         /**
-         * scoped enum判定
+         * is_sameの逆
         */
-        template <class T>
-        constexpr auto is_scoped_enum_v = is_scoped_enum<T>::value ;
+        template <class T1, class T2>
+        using is_not_same = typename std::negation<std::is_same<T1, T2>>::type;
     }
-    
+
+    /**
+     * scoped enum判定
+    */
+    template <class T>
+    constexpr auto is_scoped_enum_v = fn::is_scoped_enum<T>::value;
+
+    template <class T1, class T2>
+    constexpr auto is_not_same_v = fn::is_not_same<T1, T2>::value;
+
+
     // -------------------------------------------------------------------
     // 標準ライブラリのメタ関数をあらかじめコールバック化
     // -------------------------------------------------------------------
@@ -252,6 +262,7 @@ namespace tump
     // struct mp_invoke_result<extent, T> : public {};
 
     using is_same                               = cbk<std::is_same,                             2>;
+    using is_not_same                           = cbk<fn::is_not_same,                          2>;
     using is_base_of                            = cbk<std::is_base_of,                          2>;
     using is_convertible                        = cbk<std::is_convertible,                      2>;
     using is_nothrow_convertible                = cbk<std::is_nothrow_convertible,              2>;
@@ -265,6 +276,8 @@ namespace tump
 
     template <class T1, class T2>
     struct fn::mp_invoke_result<is_same, T1, T2> : public constraint_bool_constant {};
+    template <class T1, class T2>
+    struct fn::mp_invoke_result<is_not_same, T1, T2> : public constraint_bool_constant {};
     template <class Base, class Derived>
     struct fn::mp_invoke_result<is_base_of, Base, Derived> : public constraint_bool_constant {};
     template <class From, class To>

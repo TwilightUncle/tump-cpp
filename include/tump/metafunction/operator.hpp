@@ -4,6 +4,7 @@
 #include <tump/vwrap.hpp>
 #include <tump/metafunction/apply.hpp>
 #include <tump/metafunction/compose.hpp>
+#include <tump/algorithm/push.hpp>
 
 namespace tump
 {
@@ -43,16 +44,6 @@ namespace tump
     */
     template <InvocableArgN<2> F, e_op_priority Priority>
     struct _op {};
-
-    /**
-     * haskell の $ 演算子と等価
-    */
-    using _doll = _op<cbk<fn::invoke, 2>, e_op_priority::r_0>;
-
-    /**
-     * 関数合成を行う演算子
-    */
-    using _dot = _op<cbk<fn::compose, 2>, e_op_priority::r_9>;
 
     namespace fn
     {
@@ -150,6 +141,64 @@ namespace tump
     */
     template <class T1, class T2>
     using sec = typename fn::sec<T1, T2>::type;
+
+    // ----------------------------------------------------------------------------------
+    // 演算子定義
+    // ----------------------------------------------------------------------------------
+
+    /**
+     * haskell の $ 演算子と等価
+    */
+    using _doll = _op<cbk<fn::invoke, 2>, e_op_priority::r_0>;
+
+    /**
+     * 関数合成を行う演算子
+    */
+    using _dot = _op<cbk<fn::compose, 2>, e_op_priority::r_9>;
+
+    /**
+     * 論理和
+    */
+    using _or = _op<cbk<std::disjunction, 2>, e_op_priority::r_2>;
+
+    /**
+     * 論理積
+    */
+    using _and = _op<cbk<std::conjunction, 2>, e_op_priority::r_3>;
+
+    /**
+     * 等号
+    */
+    using _eq = _op<is_same, e_op_priority::_4>;
+
+    /**
+     * 不一致
+    */
+    using _ne = _op<is_not_same, e_op_priority::_4>;
+
+    /**
+     * リストに要素が含まれているか
+     * expr _elem list
+    */
+    using _elem = _op<exists, e_op_priority::_4>;
+
+    /**
+     * リストに要素が含まれていないか
+     * expr _not_elem list
+    */
+    using _not_elem = _op<not_exists, e_op_priority::_4>;
+
+    /**
+     * リストの結合
+     * list1 _concat list2
+    */
+    using _concat = _op<cbk<fn::concat, 2>, e_op_priority::r_5>;
+
+    /**
+     * 先頭に要素を追加
+     * type _cons list
+    */
+    using _cons = _op<bind<flip, cbk<fn::push_front, 2>>, e_op_priority::r_5>;
 }
 
 #endif

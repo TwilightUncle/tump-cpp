@@ -21,6 +21,12 @@ namespace tump
         struct exists<Search, list<Types...>> : public std::disjunction<
             std::is_same<Search, Types>...
         >::type {};
+
+        /**
+         * 任意の型が、リストの中に存在していないか判定
+        */
+        template <class Search, TypeList List>
+        using not_exists = typename std::negation<exists<Search, List>>::type;
     }
 
     /**
@@ -34,13 +40,20 @@ namespace tump
     template <class Search, TypeList List>
     constexpr auto exists_v = fn::exists<Search, List>::value;
 
+    using not_exists = cbk<fn::not_exists, 2>;
+
+    template <class Search, TypeList List>
+    constexpr auto not_exists_v = fn::not_exists<Search, List>::value;
+
     template <class... Types>
     using constraint_or_types = std::type_identity<
         bind<flip, exists, list<Types...>>
     >;
 
     template <class Search, TypeList List>
-    struct fn::mp_invoke_result<exists, Search, List> : public constraint_bool_constant {}; 
+    struct fn::mp_invoke_result<exists, Search, List> : public constraint_bool_constant {};
+    template <class Search, TypeList List>
+    struct fn::mp_invoke_result<not_exists, Search, List> : public constraint_bool_constant {}; 
 }
 
 #endif
