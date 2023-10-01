@@ -147,3 +147,38 @@ TEST(TumpMetafunctionTest, InvokeResultTest)
     ASSERT_TRUE(case2);
     ASSERT_FALSE(case3);
 }
+
+TEST(TumpMetafunctionTest, ExpressionTest)
+{
+    constexpr auto case1 = tump::exp<tump::is_integral, int>::value;
+    constexpr auto case2 = tump::exp<tump::is_same, int, int>::value;
+
+    constexpr auto case3 = std::is_same_v<
+        tump::invoke_t<
+            tump::apply_t<tump::sec<tump::add_const, tump::_dot>, tump::make_unsigned>,
+            int
+        >,
+        const unsigned int
+    >;
+    constexpr auto case4 = std::is_same_v<
+        tump::invoke_t<tump::exp<tump::add_const, tump::_dot, tump::make_unsigned>, int>,
+        const unsigned int
+    >;
+    constexpr auto case5 = std::is_same_v<
+        tump::exp<tump::add_const, tump::_dot, tump::make_unsigned, tump::_doll, int>,
+        const unsigned int
+    >;
+    // constexpr auto case6 = tump::exp<
+    //     tump::is_same, const unsigned int,
+    //     tump::_doll,
+    //     tump::add_const, tump::_dot, tump::make_unsigned,
+    //     tump::_doll,
+    //     int
+    // >::value;
+
+    ASSERT_TRUE(case1);
+    ASSERT_TRUE(case2);
+    ASSERT_TRUE(case3);
+    ASSERT_TRUE(case4);
+    ASSERT_TRUE(case5);
+}
