@@ -99,8 +99,8 @@ TEST(TumpMetafunctionTest, ComposeTest)
     constexpr auto case7 = std::is_same_v<
         tump::invoke_t<
             tump::compose_t<
-                tump::cbk<std::add_const, 1>,
-                tump::cbk<std::make_unsigned, 1>
+                tump::add_const,
+                tump::make_unsigned
             >,
             int
         >,
@@ -113,7 +113,7 @@ TEST(TumpMetafunctionTest, ComposeTest)
 TEST(TumpMetafunctionTest, ApplyTest)
 {
     using type1 = tump::apply_t<
-        tump::cbk<std::conjunction>,
+        tump::conjunction,
         std::true_type,
         std::true_type
     >;
