@@ -190,3 +190,25 @@ TEST(TumpMetafunctionTest, ExpressionTest)
     ASSERT_TRUE(case6);
     ASSERT_TRUE(case7);
 }
+
+TEST(TumpMetafunctionTest, LambdaTest)
+{
+    using arg_expect = tump::_farg<'E'>; // expect
+    using arg_value = tump::_farg<'V'>; // value
+
+    // 与えた引数と結果の比較テストを行うラムダ式
+    using test_lambda = tump::lambda<
+        tump::lambda_args<arg_expect, arg_value>,
+        tump::fn::exp<
+            tump::is_same, arg_expect,
+            tump::_dot, tump::add_const, tump::_dot, tump::make_unsigned,
+            tump::_doll,
+            arg_value
+        >
+    >;
+
+    constexpr auto case1 = tump::exp<test_lambda, const unsigned int, int>::value;
+    constexpr auto case2 = tump::exp<test_lambda, const unsigned long long, long long>::value;
+    ASSERT_TRUE(case1);
+    ASSERT_TRUE(case2);
+}

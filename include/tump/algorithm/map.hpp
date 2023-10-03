@@ -22,6 +22,31 @@ namespace tump
 
         template <InvocableArgN<1> F, class... Types>
         struct map<F, list<Types...>> : public std::type_identity<list<invoke_t<F, Types>...>> {};
+
+        /**
+         * 型リストに含まれる条件に合致するすべての要素に対して、メタ関数を適用する
+        */
+        template <InvocableArgN<1> Pred, InvocableArgN<1> F, TypeList List>
+        struct map_if : public fn::unnorm_li<
+            make_empty_t<List>,
+            typename map_if<Pred, F, to_norm_li_t<List>>::type
+        > {};
+
+        template <InvocableArgN<1> Pred, InvocableArgN<1> F, TypeList List>
+        requires (is_empty_v<List>)
+        struct map_if<Pred, F, List> : public std::type_identity<List> {};
+
+        template <InvocableArgN<1> Pred, InvocableArgN<1> F, class... Types>
+        struct map_if<Pred, F, list<Types...>> : public std::type_identity<list<
+            invoke_t<
+                std::conditional_t<
+                    invoke_v<Pred, Types>,
+                    F,
+                    ::tump::type_identity
+                >,
+                Types
+            >...
+        >> {};
     }
 
     /**
@@ -34,6 +59,17 @@ namespace tump
     */
     template <InvocableArgN<1> F, TypeList List>
     using map_t = typename fn::map<F, List>::type;
+
+    /**
+     * 型リストに含まれる条件に合致するすべての要素に対して、メタ関数を適用する
+    */
+    using map_if = cbk<fn::map_if, 3>;
+
+    /**
+     * 型リストに含まれる条件に合致するすべての要素に対して、メタ関数を適用する
+    */
+    template <InvocableArgN<1> Pred, InvocableArgN<1> F, TypeList List>
+    using map_if_t = typename fn::map_if<Pred, F, List>::type;
 
     namespace _ {
         template <class F, class List, class Target>
@@ -58,6 +94,9 @@ namespace tump
     struct fn::mp_invoke_result<map, F, List> : public std::type_identity<
         bind<cbk<::tump::_::map_result_impl, 3>, F, List>
     > {};
+
+    template <InvocableArgN<1> Pred, InvocableArgN<1> F, TypeList List>
+    struct fn::mp_invoke_result<map_if, Pred, F, List> : public constraint_st_type_list<List> {};
 }
 
 #endif

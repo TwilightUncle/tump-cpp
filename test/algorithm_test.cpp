@@ -93,6 +93,17 @@ TEST(TumpAlgorithmTest, MapTest)
     ASSERT_TRUE(case2);
     ASSERT_TRUE(case3);
 
+    constexpr auto case4 = std::is_same_v<
+        tump::map_if_t<
+            tump::is_integral,
+            tump::add_const,
+            tump::list<int, float, int*, double, char, long, void>
+        >,
+        tump::list<const int, float, int*, double, const char, const long, void>
+    >;
+
+    ASSERT_TRUE(case4);
+
     using constraint1 = tump::mp_invoke_result_t<
         tump::map,
         tump::is_integral,
@@ -104,12 +115,12 @@ TEST(TumpAlgorithmTest, MapTest)
         tump::st_list<tump::is_integral, int>
     >;
 
-    constexpr auto case4 = tump::invoke_v<constraint1, tump::st_list<tump::is_integral>>;
-    constexpr auto case5 = tump::invoke_v<constraint2, tump::st_list<typename tump::constraint_bool_constant::type>>;
-    constexpr auto case6 = tump::invoke_v<constraint2, tump::st_list<typename tump::constraint_bool_constant::type, std::true_type, std::false_type>>;
-    ASSERT_TRUE(case4);
+    constexpr auto case5 = tump::invoke_v<constraint1, tump::st_list<tump::is_integral>>;
+    constexpr auto case6 = tump::invoke_v<constraint2, tump::st_list<typename tump::constraint_bool_constant::type>>;
+    constexpr auto case7 = tump::invoke_v<constraint2, tump::st_list<typename tump::constraint_bool_constant::type, std::true_type, std::false_type>>;
     ASSERT_TRUE(case5);
     ASSERT_TRUE(case6);
+    ASSERT_TRUE(case7);
 }
 
 TEST(TumpAlgorithmTest, CopyTest)
@@ -564,4 +575,39 @@ TEST(TumpAlgorithmTest, FindIfTest)
     ASSERT_EQ(case6, 2);
     ASSERT_TRUE(case7);
     ASSERT_EQ(case8, -1);
+}
+
+TEST(TumpAlgorithmTest, ReplaceIfTest)
+{
+    using list1 = tump::array<tump::is_arithmetic, 6, int, float, double, char, unsigned long, char>;
+    
+    constexpr auto case1 = std::is_same_v<
+        tump::replace_if_t<tump::is_integral, short, list1>,
+        tump::array<tump::is_arithmetic, 6, short, float, double, short, short, short>
+    >;
+    constexpr auto case2 = std::is_same_v<
+        tump::replace_t<char, short, list1>,
+        tump::array<tump::is_arithmetic, 6, int, float, double, short, unsigned long, short>
+    >;
+    ASSERT_TRUE(case1);
+    ASSERT_TRUE(case2);
+}
+
+TEST(TumpAlgorithmTest, ZipTest)
+{
+    using list1 = tump::array<tump::is_arithmetic, 6, int, float, double, char, unsigned long, char>;
+
+    constexpr auto case1 = std::is_same_v<
+        tump::zip_t<list1, tump::reverse_t<list1>>,
+        tump::list<
+            tump::list<int, char>,
+            tump::list<float, unsigned long>,
+            tump::list<double, char>,
+            tump::list<char, double>,
+            tump::list<unsigned long, float>,
+            tump::list<char, int>
+        >
+    >;
+
+    ASSERT_TRUE(case1);
 }

@@ -9,5 +9,7 @@
 #include <tump/algorithm/remove_if.hpp>
 #include <tump/algorithm/unique.hpp>
 #include <tump/algorithm/find_if.hpp>
+#include <tump/algorithm/replace_if.hpp>
+#include <tump/algorithm/zip.hpp>
 
 #endif

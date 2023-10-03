@@ -5,6 +5,8 @@
 #include <tump/algorithm/pop.hpp>
 #include <tump/algorithm/reverse.hpp>
 
+// TODO: invoke_result の特殊化を定義すること
+
 namespace tump
 {
     namespace fn
@@ -95,7 +97,16 @@ namespace tump
          * 関数型言語っぽい式
         */
         template <class Head, class... Types>
-        using exp = exp_impl<e_op_priority::func, list<Head, Types...>>;
+        struct exp : public exp_impl<e_op_priority::func, list<Head, Types...>> {};
+
+        /**
+         * 式か判定
+        */
+        template <class T>
+        struct is_exp : public std::false_type {};
+
+        template <class Head, class... Types>
+        struct is_exp<exp<Head, Types...>> : public std::true_type {};
     }
 
     /**
@@ -104,6 +115,16 @@ namespace tump
     template <class Head, class... Types>
     using exp = typename fn::exp<Head, Types...>::type;
 
+    /**
+     * 式か判定
+    */
+    using is_exp = cbk<fn::is_exp, 1>;
+
+    /**
+     * 式か判定
+    */
+    template <class T>
+    constexpr auto is_exp_v = fn::is_exp<T>::value;
 }
 
 #endif

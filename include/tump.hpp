@@ -3,5 +3,6 @@
 
 #include <tump/metafunction.hpp>
 #include <tump/algorithm.hpp>
+#include <tump/containers/array.hpp>
 
 #endif

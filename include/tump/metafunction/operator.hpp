@@ -6,6 +6,8 @@
 #include <tump/metafunction/compose.hpp>
 #include <tump/algorithm/push.hpp>
 
+// TODO: invoke_result の特殊化を定義すること
+
 namespace tump
 {
     /**
