@@ -11,5 +11,6 @@
 #include <tump/algorithm/find_if.hpp>
 #include <tump/algorithm/replace_if.hpp>
 #include <tump/algorithm/zip.hpp>
+#include <tump/algorithm/through_if.hpp>
 
 #endif

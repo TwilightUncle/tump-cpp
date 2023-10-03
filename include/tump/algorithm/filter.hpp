@@ -3,7 +3,6 @@
 
 #include <tump/algorithm/push.hpp>
 
-
 namespace tump
 {
     namespace fn
