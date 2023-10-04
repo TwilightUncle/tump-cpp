@@ -10,7 +10,7 @@ namespace tump
         /**
          * リストの長さを取得
         */
-        template <TypeList List>
+        template <TypeListOrValueList List>
         struct len : public len<to_norm_li_t<List>>::type {};
 
         template <class... Types>
@@ -18,7 +18,7 @@ namespace tump
             : public std::integral_constant<std::size_t, sizeof...(Types)>
         {};
 
-        template <TypeList List>
+        template <TypeListOrValueList List>
         requires (is_empty_v<List>)
         struct len<List>
             : public std::integral_constant<std::size_t, 0>
@@ -27,7 +27,7 @@ namespace tump
 
     using len = cbk<fn::len, 1>;
 
-    template <TypeList List>
+    template <TypeListOrValueList List>
     constexpr auto len_v = fn::len<List>::value;
 
     template <class T>

@@ -11,7 +11,7 @@ namespace tump
          * 複数のリストを結合する
          * ただし、リストの側として利用されているテンプレート型は共通でなければいけない
         */
-        template <TypeList List1, TypeList... Lists>
+        template <TypeListOrValueList List1, TypeListOrValueList... Lists>
         requires (std::is_same_v<make_empty_t<List1>, make_empty_t<Lists>> && ...)
         struct concat : public fn::unnorm_li<
             List1,
@@ -48,10 +48,10 @@ namespace tump
      * 複数のリストを結合する
      * ただし、リストの側として利用されているテンプレート型は共通でなければいけない
     */
-    template <TypeList... Lists>
+    template <TypeListOrValueList... Lists>
     using concat_t = typename fn::concat<Lists...>::type;
 
-    template <TypeList List, TypeList... Lists>
+    template <TypeListOrValueList List, TypeListOrValueList... Lists>
     struct fn::mp_invoke_result<concat, List, Lists...> : public constraint_st_type_list<List> {};
 }
 

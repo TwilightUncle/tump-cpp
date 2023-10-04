@@ -271,6 +271,17 @@ TEST(TumpAlgorithmTest, ConcatTest)
         tump::st_list<tump::is_integral, int, char, long, unsigned short, long long, unsigned char>
     >;
     ASSERT_TRUE(case8);
+
+    constexpr auto case9 = std::is_same_v<
+        tump::concat_t<
+            tump::vlist<1, 2u, 3l>,
+            tump::vlist<4ul, 5ll>,
+            tump::vlist<nullptr>,
+            tump::vlist<>
+        >,
+        tump::vlist<1, 2u, 3l, 4ul, 5ll, nullptr>
+    >;
+    ASSERT_TRUE(case9);
 }
 
 TEST(TumpAlgorithmTest, PushTest)
@@ -342,6 +353,11 @@ TEST(TumpAlgorithmTest, LenTest)
     ASSERT_EQ(case2, 0);
     ASSERT_EQ(case3, 2);
     ASSERT_EQ(case4, 0);
+
+    constexpr auto case5 = tump::len_v<tump::vlist<int(1), short(2), char(2), long(4)>>;
+    constexpr auto case6 = tump::len_v<tump::vlist<>>;
+    ASSERT_EQ(case5, 4);
+    ASSERT_EQ(case6, 0);
 }
 
 TEST(TumpAlgorithmTest, GetTest)
@@ -361,6 +377,19 @@ TEST(TumpAlgorithmTest, GetTest)
     ASSERT_TRUE(case4);
     ASSERT_TRUE(case5);
     ASSERT_TRUE(case6);
+
+    using value_lsit = tump::vlist<int(1), short(2), char(3), long(4)>;
+
+    constexpr auto case7 = tump::get_front_v<value_lsit>;
+    constexpr auto case8 = tump::get_v<0, value_lsit>;
+    constexpr auto case9 = tump::get_v<2, value_lsit>;
+    constexpr auto case10 = tump::get_v<3, value_lsit>;
+    constexpr auto case11 = tump::get_back_v<value_lsit>;
+    ASSERT_EQ(case7, int(1));
+    ASSERT_EQ(case8, int(1));
+    ASSERT_EQ(case9, char(3));
+    ASSERT_EQ(case10, long(4));
+    ASSERT_EQ(case11, long(4));
 }
 
 TEST(TumpAlgorithmTest, PopTest)

@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_HAS_TYPE_PARAMETERS_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_HAS_TYPE_PARAMETERS_HPP
 
-#include <tump/containers/list.hpp>
+#include <tump/containers/vlist.hpp>
 #include <tump/metafunction/std.hpp>
 
 namespace tump
@@ -33,10 +33,23 @@ namespace tump
     constexpr auto has_type_parameters_v = fn::has_type_parameters<T>::value;
 
     /**
-     * テンプレートパラメータを持つ型ことのできる型のリストか判定
+     * 型テンプレートパラメータを持つ型ことのできる型のリストか判定
     */
     template <class T>
-    concept TypeList = has_type_parameters_v<T> || is_empty_v<T>;
+    concept TypeList = (has_type_parameters_v<T> || is_empty_v<T>) && !is_vlist_v<T>;
+
+    /**
+     * 非型テンプレートパラメータを持つ型ことのできる型のリストか判定
+    */
+    template <class T>
+    concept ValueList = (is_vlist_v<T> || is_empty_v<T>) && !has_type_parameters_v<T>;
+
+    /**
+     * 型/非型テンプレートパラメータを持つ型ことのできる型のリストか判定
+     * 混在はNG
+    */
+    template <class T>
+    concept TypeListOrValueList = (has_type_parameters_v<T> || is_vlist_v<T> || is_empty_v<T>);
 
     namespace fn
     {
