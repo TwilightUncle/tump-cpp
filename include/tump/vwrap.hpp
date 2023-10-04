@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_VWRAP_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_VWRAP_HPP
 
-#include <type_traits>
+#include <tump/metafunction/callback.hpp>
 
 namespace tump
 {
@@ -15,20 +15,28 @@ namespace tump
         static constexpr auto value = V;
     };
 
+    namespace fn
+    {
+        /**
+         * vwarpかどうか判定
+        */
+        template <class T>
+        struct is_vwrap : public std::false_type {};
+
+        template <auto V>
+        struct is_vwrap<vwrap<V>> : public std::true_type {};
+    }
+
+    /**
+     * vwarpかどうか判定
+    */
+    using is_wrap = cbk<fn::is_vwrap, 1>;
+
     /**
      * vwarpかどうか判定
     */
     template <class T>
-    struct is_vwrap : public std::false_type {};
-
-    template <auto V>
-    struct is_vwrap<vwrap<V>> : public std::true_type {};
-
-    /**
-     * vwarpかどうか判定
-    */
-    template <class T>
-    constexpr auto is_vwrap_v = is_vwrap<T>::value;
+    constexpr auto is_vwrap_v = fn::is_vwrap<T>::value;
 }
 
 #endif
