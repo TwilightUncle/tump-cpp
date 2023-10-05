@@ -37,16 +37,21 @@ namespace tump
         /**
          * リストを切り出す
         */
-        template <TypeList List, class SizeArgs>
+        template <TypeListOrValueList List, class SizeArgs>
         struct slice;
     
-        template <TypeList List, std::size_t Start, std::size_t Size, std::size_t Stride>
-        struct slice<List, size_args<Start, Size, Stride>> : public _::slice_impl<List, make_empty_t<List>, Start, Size, Stride> {};
+        template <TypeListOrValueList List, std::size_t Start, std::size_t Size, std::size_t Stride>
+        struct slice<List, size_args<Start, Size, Stride>> : public unnorm_li<
+            List,
+            typename _::slice_impl<
+                to_norm_li_t<List>, list<>, Start, Size, Stride
+            >::type
+        > {};
 
-        template <TypeList List, std::size_t Start, std::size_t Size>
+        template <TypeListOrValueList List, std::size_t Start, std::size_t Size>
         struct slice<List, size_args<Start, Size>> : public slice<List, size_args<Start, Size, 0>> {};
 
-        template <TypeList List, std::size_t Start>
+        template <TypeListOrValueList List, std::size_t Start>
         struct slice<List, size_args<Start>> : public slice<List, size_args<Start, len_v<List>>> {};
     }
 
@@ -58,10 +63,10 @@ namespace tump
     /**
      * リストを切り出す
     */
-    template <TypeList List, class SizeArgs>
+    template <TypeListOrValueList List, class SizeArgs>
     using slice_t = typename fn::slice<List, SizeArgs>::type;
 
-    template <TypeList List, std::size_t... Sizes>
+    template <TypeListOrValueList List, std::size_t... Sizes>
     requires (sizeof...(Sizes) > 0 && sizeof...(Sizes) <= 3)
     struct fn::mp_invoke_result<slice, List, size_args<Sizes...>> : public constraint_st_type_list<List> {};
 }

@@ -10,14 +10,14 @@ namespace tump
         /**
          * リスト要素の並び順を反転
         */
-        template <TypeList List>
+        template <TypeListOrValueList List>
         struct reverse : public fn::unnorm_li<List, foldl_t<
             ::tump::push_front,
             list<>,
             to_norm_li_t<List>
         >> {};
 
-        template <TypeList List>
+        template <TypeListOrValueList List>
         requires (is_empty_v<List>)
         struct reverse<List> : public std::type_identity<List> {};
     }
@@ -30,10 +30,10 @@ namespace tump
     /**
      * リスト要素の並び順を反転
     */
-    template <TypeList List>
+    template <TypeListOrValueList List>
     using reverse_t = typename fn::reverse<List>::type;
 
-    template <TypeList List>
+    template <TypeListOrValueList List>
     struct fn::mp_invoke_result<reverse, List> : public constraint_st_type_list<List> {};
 }
 

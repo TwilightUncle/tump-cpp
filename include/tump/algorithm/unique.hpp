@@ -24,12 +24,14 @@ namespace tump
         /**
          * リストの重複を除去する
         */
-        template <TypeList List>
-        using unique = foldl<
-            cbk<_::unique_impl, 2>,
-            make_empty_t<List>,
-            to_norm_li_t<List>
-        >;
+        template <TypeListOrValueList List>
+        using unique = unnorm_li<
+            List,
+            foldl_t<
+                cbk<_::unique_impl, 2>,
+                list<>,
+                to_norm_li_t<List>>
+            >;
     }
 
     /**
@@ -40,7 +42,7 @@ namespace tump
     /**
      * リストの重複を除去する
     */
-    template <TypeList List>
+    template <TypeListOrValueList List>
     using unique_t = typename fn::unique<List>::type;
 
     namespace fn
@@ -48,7 +50,7 @@ namespace tump
         /**
          * リストの内容が一意であるか判定
         */
-        template <TypeList List>
+        template <TypeListOrValueList List>
         using is_unique = std::is_same<to_norm_li_t<List>, unique_t<to_norm_li_t<List>>>;
     }
 
@@ -60,13 +62,13 @@ namespace tump
     /**
      * リストの内容が一意であるか判定
     */
-    template <TypeList List>
+    template <TypeListOrValueList List>
     constexpr auto is_unique_v = fn::is_unique<List>::value;
 
-    template <TypeList List>
+    template <TypeListOrValueList List>
     struct fn::mp_invoke_result<unique, List> : public constraint_st_type_list<List> {};
 
-    template <TypeList List>
+    template <TypeListOrValueList List>
     struct fn::mp_invoke_result<is_unique, List> : public constraint_bool_constant {};
 }
 

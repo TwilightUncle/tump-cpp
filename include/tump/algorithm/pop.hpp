@@ -10,7 +10,7 @@ namespace tump
         /**
          * リストの先頭要素を除去
         */
-        template <TypeList List>
+        template <TypeListOrValueList List>
         requires (!is_empty_v<List>)
         struct pop_front : public fn::unnorm_li<
             List,
@@ -45,9 +45,16 @@ namespace tump
         /**
          * リストの末尾要素を除去
         */
-        template <TypeList List>
+        template <TypeListOrValueList List>
         requires (!is_empty_v<List>)
-        using pop_back = _::pop_back_impl<List, make_empty_t<List>, 0>;
+        using pop_back = unnorm_li<
+            List,
+            typename _::pop_back_impl<
+                to_norm_li_t<List>,
+                list<>,
+                0
+            >::type
+        >;
     }
 
     /**
@@ -58,7 +65,7 @@ namespace tump
     /**
      * リストの先頭要素を除去
     */
-    template <TypeList List>
+    template <TypeListOrValueList List>
     using pop_front_t = typename fn::pop_front<List>::type;
 
     /**
@@ -69,13 +76,13 @@ namespace tump
     /**
      * リストの末尾要素を除去
     */
-    template <TypeList List>
+    template <TypeListOrValueList List>
     using pop_back_t = typename fn::pop_back<List>::type;
 
-    template <TypeList List>
+    template <TypeListOrValueList List>
     struct fn::mp_invoke_result<pop_front, List> : public constraint_st_type_list<List> {};
 
-    template <TypeList List>
+    template <TypeListOrValueList List>
     struct fn::mp_invoke_result<pop_back, List> : public constraint_st_type_list<List> {};
 }
 

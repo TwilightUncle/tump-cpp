@@ -412,6 +412,13 @@ TEST(TumpAlgorithmTest, PopTest)
     ASSERT_TRUE(case2);
     ASSERT_TRUE(case3);
     ASSERT_TRUE(case4);
+
+    using value_list1 = tump::vlist<int(1), short(2), long(3)>;
+    using value_list2 = tump::vlist<int(1)>;
+    constexpr auto case5 = std::is_same_v<tump::pop_front_t<value_list1>, tump::vlist<short(2), long(3)>>;
+    constexpr auto case6 = std::is_same_v<tump::pop_front_t<value_list2>, tump::vlist<>>;
+    constexpr auto case7 = std::is_same_v<tump::pop_back_t<value_list1>, tump::vlist<int(1), short(2)>>;
+    constexpr auto case8 = std::is_same_v<tump::pop_back_t<value_list2>, tump::vlist<>>;
 }
 
 TEST(TumpAlgorithmTest, SliceTest)
@@ -460,6 +467,15 @@ TEST(TumpAlgorithmTest, SliceTest)
     ASSERT_TRUE(case6);
     ASSERT_TRUE(case7);
     ASSERT_TRUE(case8);
+
+    constexpr auto case9 = std::is_same_v<
+        tump::slice_t<
+            tump::vlist<int(1), short(2), long(3), std::size_t(4), char(5), 6u>,
+            tump::size_args<1,3,2>
+        >,
+        tump::vlist<short(2), char(5)>
+    >;
+    ASSERT_TRUE(case9);
 }
 
 TEST(TumpAlgorithmTest, ReverseTest)
@@ -484,6 +500,12 @@ TEST(TumpAlgorithmTest, ReverseTest)
     ASSERT_TRUE(case1);
     ASSERT_TRUE(case2);
     ASSERT_TRUE(case3);
+
+    constexpr auto case4 = std::is_same_v<
+        tump::reverse_t<tump::vlist<int(1), short(2), long(3)>>,
+        tump::vlist<long(3), short(2), int(1)>
+    >;
+    ASSERT_TRUE(case4);
 }
 
 TEST(TumpAlgorithmTest, ExistsTest)
@@ -565,6 +587,12 @@ TEST(TumpAlgorithmTest, RemoveIfTest)
     >;
     ASSERT_TRUE(case1);
     ASSERT_TRUE(case2);
+
+    constexpr auto case3 = std::is_same_v<
+        tump::remove_t<int, tump::list<int, float, int, double, int, short>>,
+        tump::list<float, double, short>
+    >;
+    ASSERT_TRUE(case3);
 }
 
 TEST(TumpAlgorithmTest, UniqueTest)
@@ -582,6 +610,18 @@ TEST(TumpAlgorithmTest, UniqueTest)
     constexpr auto case3 = tump::is_unique_v<list2>;
     ASSERT_FALSE(case2);
     ASSERT_TRUE(case3);
+
+    constexpr auto case4 = std::is_same_v<
+        tump::unique_t<tump::vlist<int(1), short(2), long(3), int(1), int(2), long(3), long(4)>>,
+        tump::vlist<int(1), short(2), long(3), int(2), long(4)>
+    >;
+    ASSERT_TRUE(case4);
+
+    constexpr auto case5 = tump::is_unique_v<tump::vlist<int(1), short(2), long(3), int(1), int(2), long(3), long(4)>>;
+    constexpr auto case6 = tump::is_unique_v<tump::vlist<int(1), short(2), long(3), int(2), long(4)>>;
+    ASSERT_FALSE(case5);
+    ASSERT_TRUE(case6);
+
 }
 
 TEST(TumpAlgorithmTest, FindIfTest)
