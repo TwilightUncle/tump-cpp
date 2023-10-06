@@ -18,6 +18,12 @@ namespace tump
     using lambda_args = list<Head, Types...>;
 
     /**
+     * ラムダ式の、式
+    */
+    template <class Head, class... Types>
+    using lambda_exp = fn::exp<Head, Types...>;
+
+    /**
      * わかりやすいようにラムダ式用のそれっぽい仮引数の型を定義しておく
      * 別の型と識別させることが目的のため、テンプレートパラメータ自体には意味はない
     */

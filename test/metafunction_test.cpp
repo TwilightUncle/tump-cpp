@@ -199,7 +199,7 @@ TEST(TumpMetafunctionTest, LambdaTest)
     // 与えた引数と結果の比較テストを行うラムダ式
     using test_lambda = tump::lambda<
         tump::lambda_args<arg_expect, arg_value>,
-        tump::fn::exp<
+        tump::lambda_exp<
             tump::is_same, arg_expect,
             tump::_dot, tump::add_const, tump::_dot, tump::make_unsigned,
             tump::_doll,
