@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_MAKE_TYPE_LIST_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_MAKE_TYPE_LIST_HPP
 
-#include <tump/algorithm/has_type_parameters.hpp>
+#include TUMP_COMMON_INCLUDE(algorithm/has_type_parameters.hpp)
 
 namespace tump
 {

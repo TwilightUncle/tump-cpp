@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_GET_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_GET_HPP
 
-#include <tump/algorithm/len.hpp>
+#include TUMP_COMMON_INCLUDE(algorithm/len.hpp)
 
 namespace tump
 {

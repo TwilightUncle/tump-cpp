@@ -1,9 +1,9 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_APPLICATIVE_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_APPLICATIVE_HPP
 
-#include <tump/containers/functor.hpp>
-#include <tump/metafunction/apply.hpp>
-#include <tump/algorithm/concat.hpp>
+#include TUMP_COMMON_INCLUDE(containers/functor.hpp)
+#include TUMP_COMMON_INCLUDE(metafunction/apply.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/concat.hpp)
 
 namespace tump
 {

@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_PARTIAL_APPLY_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_PARTIAL_APPLY_HPP
 
-#include <tump/metafunction/callback.hpp>
+#include TUMP_COMMON_INCLUDE(metafunction/callback.hpp)
 
 namespace tump
 {

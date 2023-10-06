@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_REVERSE_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_REVERSE_HPP
 
-#include <tump/algorithm/push.hpp>
+#include TUMP_COMMON_INCLUDE(algorithm/push.hpp)
 
 namespace tump
 {

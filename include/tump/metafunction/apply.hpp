@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_APPLY_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_APPLY_HPP
 
-#include <tump/metafunction/invoke_result.hpp>
+#include TUMP_COMMON_INCLUDE(metafunction/invoke_result.hpp)
 
 namespace tump
 {

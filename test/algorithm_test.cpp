@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <tuple>
-#include <tump/containers/array.hpp>
 #include <tump/algorithm.hpp>
+#include <tump/containers/array.hpp>
 
 TEST(TumpAlgorithmTest, HasTypeParametersTest)
 {

@@ -1,8 +1,8 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_UNIQUE_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_UNIQUE_HPP
 
-#include <tump/algorithm/filter.hpp>
-#include <tump/metafunction/compose.hpp>
+#include TUMP_COMMON_INCLUDE(algorithm/filter.hpp)
+#include TUMP_COMMON_INCLUDE(metafunction/compose.hpp)
 
 namespace tump
 {

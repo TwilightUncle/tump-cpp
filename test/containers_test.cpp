@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include <tump/metafunction/expression.hpp>
 #include <tump/containers.hpp>
+#include <tump/metafunction/expression.hpp>
 
 TEST(TumpContainersTest, FunctorTest)
 {

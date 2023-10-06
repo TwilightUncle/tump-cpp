@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_TO_TRUE_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_TO_TRUE_HPP
 
-#include <tump/metafunction/callback.hpp>
+#include TUMP_COMMON_INCLUDE(metafunction/callback.hpp)
 
 namespace tump
 {

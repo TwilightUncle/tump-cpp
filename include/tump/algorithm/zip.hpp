@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_ZIP_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_ZIP_HPP
 
-#include <tump/algorithm/pop.hpp>
+#include TUMP_COMMON_INCLUDE(algorithm/pop.hpp)
 
 namespace tump
 {

@@ -1,8 +1,8 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_FIND_IF_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_FIND_IF_HPP
 
-#include <tump/type_value.hpp>
-#include <tump/algorithm/pop.hpp>
+#include TUMP_COMMON_INCLUDE(type_value.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/pop.hpp)
 
 namespace tump
 {

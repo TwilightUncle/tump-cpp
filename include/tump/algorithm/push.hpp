@@ -1,9 +1,9 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_PUSH_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_PUSH_HPP
 
-#include <tump/algorithm/make_type_list.hpp>
-#include <tump/algorithm/left_right.hpp>
-#include <tump/algorithm/concat.hpp>
+#include TUMP_COMMON_INCLUDE(algorithm/make_type_list.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/left_right.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/concat.hpp)
 
 namespace tump
 {

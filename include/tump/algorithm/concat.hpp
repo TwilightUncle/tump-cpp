@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_CONCAT_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_CONCAT_HPP
 
-#include <tump/algorithm/fold.hpp>
+#include TUMP_COMMON_INCLUDE(algorithm/fold.hpp)
 
 namespace tump
 {

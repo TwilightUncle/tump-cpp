@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_LIST_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_LIST_HPP
 
-#include <tump/containers/methods.hpp>
+#include TUMP_COMMON_INCLUDE(containers/methods.hpp)
 
 namespace tump
 {
