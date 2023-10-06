@@ -2,9 +2,8 @@
 #define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_OPERATOR_HPP
 
 #include <tump/vwrap.hpp>
-#include <tump/metafunction/apply.hpp>
-#include <tump/metafunction/compose.hpp>
 #include <tump/algorithm/push.hpp>
+#include <tump/containers/applicative.hpp>
 
 // TODO: invoke_result の特殊化を定義すること
 
@@ -200,7 +199,17 @@ namespace tump
      * 先頭に要素を追加
      * type _cons list
     */
-    using _cons = _op<bind<flip, cbk<fn::push_front, 2>>, e_op_priority::r_5>;
+    using _cons = _op<partial_apply<flip, cbk<fn::push_front, 2>>, e_op_priority::r_5>;
+
+    /**
+     * fmap の演算子バージョン
+    */
+    using _fmap = _op<fmap, e_op_priority::l_4>;
+
+    /**
+     * アプリカティブの <*> 演算子
+    */
+    using _ap = _op<ap, e_op_priority::l_4>;
 }
 
 #endif
