@@ -47,7 +47,7 @@ namespace tump
 
     template <class... Types>
     using constraint_or_types = std::type_identity<
-        bind<flip, exists, list<Types...>>
+        partial_apply<flip, exists, list<Types...>>
     >;
 
     template <class Search, TypeList List>

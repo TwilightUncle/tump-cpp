@@ -69,7 +69,7 @@ namespace tump
     template <TypeList List>
     requires (len_v<List> == 2)
     struct fn::mp_invoke_result<left, List> : public std::type_identity<
-        bind<::tump::flip, ::tump::exists, List>
+        partial_apply<::tump::flip, ::tump::exists, List>
     > {};
 
     template <class L, class R>
@@ -78,7 +78,7 @@ namespace tump
     template <TypeList List>
     requires (len_v<List> == 2)
     struct fn::mp_invoke_result<right, List> : public std::type_identity<
-        bind<::tump::flip, ::tump::exists, List>
+        partial_apply<::tump::flip, ::tump::exists, List>
     > {};
 }
 

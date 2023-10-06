@@ -33,7 +33,7 @@ namespace tump
          * 見つからなかった場合、type = mp_null_t, value = -1 となる
         */
         template <class Search, TypeList List>
-        using find = find_if<bind<is_same, Search>, List>;
+        using find = find_if<partial_apply<is_same, Search>, List>;
     }
 
     /**

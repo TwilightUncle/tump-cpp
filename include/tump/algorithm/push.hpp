@@ -51,7 +51,7 @@ namespace tump
         */
         template <InvocableArgN<1> F, TypeList List, class... Types>
         struct push_back_if : public foldl<
-            bind<cbk<push_back_if, 3>, F>,
+            partial_apply<cbk<push_back_if, 3>, F>,
             List,
             list<Types...>
         > {};
@@ -73,9 +73,9 @@ namespace tump
         */
         template <InvocableArgN<1> F, TypeList List, class... Types>
         struct push_front_if : public foldr<
-            bind<
+            partial_apply<
                 ::tump::flip,
-                bind<cbk<push_front_if, 3>, F>
+                partial_apply<cbk<push_front_if, 3>, F>
             >,
             List,
             list<Types...>

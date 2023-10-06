@@ -5,9 +5,9 @@
 
 using F1 = tump::callback<std::is_same, 2>;
 using F2 = tump::callback<std::is_same>;
-using F3 = tump::bind<F1, int>;
-using F4 = tump::bind<F2, int>;
-using F5 = tump::bind<F3, int>;
+using F3 = tump::partial_apply<F1, int>;
+using F4 = tump::partial_apply<F2, int>;
+using F5 = tump::partial_apply<F3, int>;
 
 TEST(TumpMetafunctionTest, InvocableTest)
 {

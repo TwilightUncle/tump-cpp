@@ -45,7 +45,7 @@ namespace tump
     template <VFunctional Cond, TypeList List>
     requires (len_v<List> == 2)
     struct fn::mp_invoke_result<mp_if, Cond, List> : public std::type_identity<
-        bind<::tump::flip, ::tump::exists, List>
+        partial_apply<::tump::flip, ::tump::exists, List>
     > {};
 }
 

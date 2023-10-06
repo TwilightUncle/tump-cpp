@@ -16,7 +16,7 @@ namespace tump
         struct apply : public std::conditional_t<
             eq_args_size<sizeof...(Args), F>::value,
             invoke<F, Args...>,
-            std::type_identity<bind<F, Args...>>
+            std::type_identity<partial_apply<F, Args...>>
         > {};
     }
 

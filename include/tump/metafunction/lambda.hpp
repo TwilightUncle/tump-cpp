@@ -67,7 +67,7 @@ namespace tump
      * ラムダ式
     */
     template <TypeList FormalArgList, class Expression>
-    using lambda = bind<cbk<fn::lambda, 2 + len_v<FormalArgList>>, FormalArgList, Expression>;
+    using lambda = partial_apply<cbk<fn::lambda, 2 + len_v<FormalArgList>>, FormalArgList, Expression>;
 
     /**
      * ラムダ式

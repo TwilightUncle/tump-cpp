@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_INVOKE_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_INVOKE_HPP
 
-#include <tump/metafunction/bind.hpp>
+#include <tump/metafunction/partial_apply.hpp>
 
 namespace tump
 {
@@ -35,7 +35,7 @@ namespace tump
         struct invoke<callback<MetaFunc, ArgsSize>, Args...> : public MetaFunc<Args...> {};
 
         template <Invocable InnerF, class... Args1, class... Args2>
-        struct invoke<bind<InnerF, Args1...>, Args2...> : public invoke<InnerF, Args1..., Args2...> {};
+        struct invoke<partial_apply<InnerF, Args1...>, Args2...> : public invoke<InnerF, Args1..., Args2...> {};
     }
 
     /**

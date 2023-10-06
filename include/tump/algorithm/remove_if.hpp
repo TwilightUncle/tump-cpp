@@ -23,7 +23,7 @@ namespace tump
         template <class Search, TypeList List>
         using remove = unnorm_li<
             List,
-            typename remove_if<bind<::tump::is_same, Search>, to_norm_li_t<List>>::type
+            typename remove_if<partial_apply<::tump::is_same, Search>, to_norm_li_t<List>>::type
         >;
     }
 

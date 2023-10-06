@@ -92,7 +92,7 @@ namespace tump
 
     template <InvocableArgN<1> F, TypeList List>
     struct fn::mp_invoke_result<map, F, List> : public std::type_identity<
-        bind<cbk<::tump::_::map_result_impl, 3>, F, List>
+        partial_apply<cbk<::tump::_::map_result_impl, 3>, F, List>
     > {};
 
     template <InvocableArgN<1> Pred, InvocableArgN<1> F, TypeList List>

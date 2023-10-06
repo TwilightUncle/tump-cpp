@@ -12,9 +12,9 @@ namespace tump
         */
         template <InvocableArgN<1> F, InvocableArgN<1>... Funcs>
         struct compose : public std::type_identity<
-            bind<
+            partial_apply<
                 ::tump::flip,
-                bind<
+                partial_apply<
                     ::tump::foldr,
                     ::tump::invoke
                 >,

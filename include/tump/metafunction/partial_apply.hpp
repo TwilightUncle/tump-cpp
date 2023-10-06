@@ -1,5 +1,5 @@
-#ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_BIND_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_BIND_HPP
+#ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_PARTIAL_APPLY_HPP
+#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_PARTIAL_APPLY_HPP
 
 #include <tump/metafunction/callback.hpp>
 
@@ -13,7 +13,7 @@ namespace tump
     */
     template <Invocable F, class... PartialArgs>
     requires (fn::is_allowed_args_size<sizeof...(PartialArgs), F>::value)
-    struct bind : public _::args_size_members<
+    struct partial_apply : public _::args_size_members<
         F::is_check_args_size
             ? F::args_size - sizeof...(PartialArgs)
             : 0,
@@ -23,8 +23,8 @@ namespace tump
     namespace fn
     {
         template <::tump::_::DerivedAsArgSizeMembers InnerF, class... PartialArgs, unsigned int ArgsSize, bool IsCheckArgsSize>
-        requires (_::is_callback_impl<bind<InnerF, PartialArgs...>, ArgsSize, IsCheckArgsSize>::value)
-        struct is_callback<bind<InnerF, PartialArgs...>, optional_args_for_is_callback<ArgsSize, IsCheckArgsSize>> : public is_callback<
+        requires (_::is_callback_impl<partial_apply<InnerF, PartialArgs...>, ArgsSize, IsCheckArgsSize>::value)
+        struct is_callback<partial_apply<InnerF, PartialArgs...>, optional_args_for_is_callback<ArgsSize, IsCheckArgsSize>> : public is_callback<
             InnerF,
             optional_args_for_is_callback<
                 sizeof...(PartialArgs) + ArgsSize,

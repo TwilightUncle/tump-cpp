@@ -109,7 +109,7 @@ namespace tump
     */
     template <TypeList T>
     using constraint_st_type_list = std::type_identity<
-        bind<is_same_container, T>
+        partial_apply<is_same_container, T>
     >;
 
     template <class T>

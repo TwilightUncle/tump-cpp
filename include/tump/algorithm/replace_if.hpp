@@ -12,13 +12,13 @@ namespace tump
          * 条件に一意する要素を NewType に置き換える
         */
         template <InvocableArgN<1> Pred, class NewType, TypeList List>
-        using replace_if = fn::map_if<Pred, bind<::tump::left, NewType>, List>;
+        using replace_if = fn::map_if<Pred, partial_apply<::tump::left, NewType>, List>;
 
         /**
          * リストに存在する OldType をすべて NewType に置き換える
         */
         template <class OldType, class NewType, TypeList List>
-        using replace = replace_if<bind<::tump::is_same, OldType>, NewType, List>;
+        using replace = replace_if<partial_apply<::tump::is_same, OldType>, NewType, List>;
     }
 
     /**
