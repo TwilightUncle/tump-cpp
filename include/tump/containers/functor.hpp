@@ -11,16 +11,16 @@ namespace tump
         /**
          * haskellを参考に、ファンクタ
         */
-        template <InvocableArgN<1> F, class Functor>
+        template <Invocable F, class Functor>
         struct fmap;
 
         // リスト用の実装
-        template <InvocableArgN<1> F, TypeList List>
-        requires (!InvocableArgN<List, 1>)
+        template <Invocable F, TypeList List>
+        requires (!Invocable<List>)
         struct fmap<F, List> : public fn::map<F, List> {};
 
         // 関数用の実装
-        template <InvocableArgN<1> F, InvocableArgN<1> F2>
+        template <Invocable F, Invocable F2>
         struct fmap<F, F2> : public std::type_identity<compose_t<F, F2>> {};
     }
 
@@ -32,7 +32,7 @@ namespace tump
     /**
      * haskellを参考に、ファンクタ
     */
-    template <InvocableArgN<1> F, class Functor>
+    template <Invocable F, class Functor>
     using fmap_t = typename fn::fmap<F, Functor>::type;
 }
 

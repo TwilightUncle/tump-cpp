@@ -2,6 +2,7 @@
 #define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_RELAY_HPP
 
 #include TUMP_COMMON_INCLUDE(algorithm/fold.hpp)
+#include TUMP_COMMON_INCLUDE(metafunction/apply.hpp)
 
 namespace tump
 {
@@ -10,13 +11,13 @@ namespace tump
         /**
          * 関数の合成
         */
-        template <InvocableArgN<1> F, InvocableArgN<1>... Funcs>
+        template <Invocable F, Invocable... Funcs>
         struct compose : public std::type_identity<
             partial_apply<
                 ::tump::flip,
                 partial_apply<
                     ::tump::foldr,
-                    ::tump::invoke
+                    ::tump::apply
                 >,
                 list<F, Funcs...>
             >
@@ -31,10 +32,10 @@ namespace tump
     /**
      * 関数の合成
     */
-    template <InvocableArgN<1> F, InvocableArgN<1>... Funcs>
+    template <Invocable F, Invocable... Funcs>
     using compose_t = typename fn::compose<F, Funcs...>::type;
 
-    template <std::size_t ArgsSize, InvocableArgN<1> F, InvocableArgN<1>... Funcs>
+    template <std::size_t ArgsSize, Invocable F, Invocable... Funcs>
     struct fn::mp_invoke_result<cbk<fn::compose, ArgsSize>, F, Funcs...> : public constraint_callback_arg1 {};
 }
 

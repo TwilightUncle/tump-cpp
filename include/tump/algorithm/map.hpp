@@ -2,6 +2,7 @@
 #define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_MAP_HPP
 
 #include TUMP_COMMON_INCLUDE(algorithm/get.hpp)
+#include TUMP_COMMON_INCLUDE(metafunction/apply.hpp)
 
 namespace tump
 {
@@ -10,35 +11,35 @@ namespace tump
         /**
          * 型リストに含まれるすべての要素に対して、メタ関数を適用する
         */
-        template <InvocableArgN<1> F, TypeList List>
+        template <Invocable F, TypeList List>
         struct map : public fn::unnorm_li<
             make_empty_t<List, mp_invoke_result_t<F, get_front_t<List>>>,
             typename map<F, to_norm_li_t<List>>::type
         > {};
         
-        template <InvocableArgN<1> F, TypeList List>
+        template <Invocable F, TypeList List>
         requires (is_empty_v<List>)
         struct map<F, List> : public std::type_identity<List> {};
 
-        template <InvocableArgN<1> F, class... Types>
-        struct map<F, list<Types...>> : public std::type_identity<list<invoke_t<F, Types>...>> {};
+        template <Invocable F, class... Types>
+        struct map<F, list<Types...>> : public std::type_identity<list<apply_t<F, Types>...>> {};
 
         /**
          * 型リストに含まれる条件に合致するすべての要素に対して、メタ関数を適用する
         */
-        template <InvocableArgN<1> Pred, InvocableArgN<1> F, TypeList List>
+        template <InvocableArgN<1> Pred, Invocable F, TypeList List>
         struct map_if : public fn::unnorm_li<
             make_empty_t<List>,
             typename map_if<Pred, F, to_norm_li_t<List>>::type
         > {};
 
-        template <InvocableArgN<1> Pred, InvocableArgN<1> F, TypeList List>
+        template <InvocableArgN<1> Pred, Invocable F, TypeList List>
         requires (is_empty_v<List>)
         struct map_if<Pred, F, List> : public std::type_identity<List> {};
 
-        template <InvocableArgN<1> Pred, InvocableArgN<1> F, class... Types>
+        template <InvocableArgN<1> Pred, Invocable F, class... Types>
         struct map_if<Pred, F, list<Types...>> : public std::type_identity<list<
-            invoke_t<
+            apply_t<
                 std::conditional_t<
                     invoke_v<Pred, Types>,
                     F,
@@ -57,7 +58,7 @@ namespace tump
     /**
      * 型リストに含まれるすべての要素に対して、メタ関数を適用する
     */
-    template <InvocableArgN<1> F, TypeList List>
+    template <Invocable F, TypeList List>
     using map_t = typename fn::map<F, List>::type;
 
     /**
@@ -68,21 +69,21 @@ namespace tump
     /**
      * 型リストに含まれる条件に合致するすべての要素に対して、メタ関数を適用する
     */
-    template <InvocableArgN<1> Pred, InvocableArgN<1> F, TypeList List>
+    template <InvocableArgN<1> Pred, Invocable F, TypeList List>
     using map_if_t = typename fn::map_if<Pred, F, List>::type;
 
     namespace _ {
         template <class F, class List, class Target>
         struct map_result_impl : public std::false_type {};
 
-        template <InvocableArgN<1> F, TypeList List, TypeList Target>
+        template <Invocable F, TypeList List, TypeList Target>
         requires (!is_empty_v<List>)
         struct map_result_impl<F, List, Target> : public std::is_same<
             make_empty_t<List, mp_invoke_result_t<F, get_front_t<List>>>,
             make_empty_t<Target>
         > {}; 
 
-        template <InvocableArgN<1> F, TypeList List, TypeList Target>
+        template <Invocable F, TypeList List, TypeList Target>
         requires (is_empty_v<List>)
         struct map_result_impl<F, List, Target> : public std::is_same<
             make_empty_t<List>,
@@ -90,12 +91,12 @@ namespace tump
         > {};
     }
 
-    template <InvocableArgN<1> F, TypeList List>
+    template <Invocable F, TypeList List>
     struct fn::mp_invoke_result<map, F, List> : public std::type_identity<
         partial_apply<cbk<::tump::_::map_result_impl, 3>, F, List>
     > {};
 
-    template <InvocableArgN<1> Pred, InvocableArgN<1> F, TypeList List>
+    template <InvocableArgN<1> Pred, Invocable F, TypeList List>
     struct fn::mp_invoke_result<map_if, Pred, F, List> : public constraint_st_type_list<List> {};
 }
 
