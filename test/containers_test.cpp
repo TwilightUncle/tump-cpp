@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <tump/containers.hpp>
-#include <tump/metafunction/expression.hpp>
+// #include <tump/metafunction/expression.hpp>
+#include <tump/metafunction/lambda.hpp>
 
 TEST(TumpContainersTest, FunctorTest)
 {
@@ -51,6 +52,7 @@ TEST(TumpContainersTest, FunctorTest)
 TEST(TumpContainersTest, ApplicativeTest)
 {
     // common
+    // pure f <*> pure x = pure (f x)
     constexpr auto case1 = std::is_same_v<
         tump::exp<tump::pure, tump::make_unsigned, tump::_ap, tump::pure, char>,
         tump::pure_t<unsigned char>
@@ -61,21 +63,25 @@ TEST(TumpContainersTest, ApplicativeTest)
     using applicative1 = tump::list<unsigned short, long>;
     using applicative2 = tump::list<tump::add_const, tump::add_pointer>;
     using applicative3 = tump::list<tump::make_signed, tump::make_unsigned>;
+
+    // pure id <*> v = v
     constexpr auto case2 = std::is_same_v<
         tump::exp<tump::pure, tump::type_identity, tump::_ap, applicative1>,
         applicative1
     >;
     ASSERT_TRUE(case2);
 
+    // pure (.) <*> u <*> v <*> w = u <*> (v <*> w)
     constexpr auto case3 = std::is_same_v<
         tump::exp<tump::pure, tump::compose, tump::_ap, applicative2, tump::_ap, applicative3, tump::_ap, applicative1>,
         tump::exp<applicative2, tump::_ap, tump::exp<applicative3, tump::_ap, applicative1>>
     >;
     ASSERT_TRUE(case3);
 
+    // u <*> pure y = pure ($ y) <*> u
     constexpr auto case4 = std::is_same_v<
         tump::exp<applicative2, tump::_ap, tump::pure, char>,
-        tump::exp<tump::pure, tump::exp<tump::flip, tump::cbk<tump::fn::apply, 2>, tump::_doll, char>, tump::_ap, applicative2>
+        tump::exp<tump::pure, tump::sec<tump::_doll, char>, tump::_ap, applicative2>
     >;
     ASSERT_TRUE(case4);
 
@@ -89,4 +95,43 @@ TEST(TumpContainersTest, ApplicativeTest)
         >
     >;
     ASSERT_TRUE(case5);
+}
+
+TEST(TumpContainersTest, MonadTest)
+{
+    // list
+
+    using monad1 = tump::list<unsigned short, long>;
+    using func1 = tump::exp<tump::cbk<tump::fn::make_type_list, 2>, tump::list<>, tump::_dot, tump::make_unsigned>;
+    using func2 = tump::exp<tump::cbk<tump::fn::make_type_list, 2>, tump::list<>, tump::_dot, tump::add_const>;
+
+    // return a >>= k = k a
+    constexpr auto case1 = std::is_same_v<
+        tump::exp<tump::ret, short, tump::_bind, func1>,
+        tump::exp<func1, short>
+    >;
+    ASSERT_TRUE(case1);
+
+    // m >>= return = m
+    constexpr auto case2 = std::is_same_v<
+        tump::exp<monad1, tump::_bind, tump::ret>,
+        monad1
+    >;
+    ASSERT_TRUE(case2);
+
+    // m >>= (\x -> k x >>= h) = (m >>= k) >>= h
+    constexpr auto case3 = std::is_same_v<
+        tump::exp<
+            monad1, tump::_bind,
+            tump::lambda<
+                tump::lambda_args<tump::_argx>,
+                tump::lambda_exp<func1, tump::_argx, tump::_bind, func2>
+            >
+        >,
+        tump::exp<
+            tump::exp<monad1, tump::_bind, func1>,
+            tump::_bind, func2
+        >
+    >;
+    ASSERT_TRUE(case3);
 }

@@ -3,7 +3,7 @@
 
 #include TUMP_COMMON_INCLUDE(vwrap.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/push.hpp)
-#include TUMP_COMMON_INCLUDE(containers/applicative.hpp)
+#include TUMP_COMMON_INCLUDE(containers/monad.hpp)
 
 // TODO: invoke_result の特殊化を定義すること
 
@@ -210,6 +210,11 @@ namespace tump
      * アプリカティブの <*> 演算子
     */
     using _ap = _op<ap, e_op_priority::l_4>;
+
+    /**
+     * モナドの >>= 演算子に該当
+    */
+    using _bind = _op<bind, e_op_priority::l_1>;
 }
 
 #endif

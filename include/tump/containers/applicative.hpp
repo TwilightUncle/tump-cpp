@@ -9,7 +9,6 @@
 
 namespace tump
 {
-
     namespace fn
     {
         /**
@@ -36,7 +35,7 @@ namespace tump
             partial_apply<::tump::apply, F>, Applicative
         > {};
 
-        // リストとリストの実装
+        // リストの実装
         template <TypeList FList, class T>
         struct ap<FList, pure<T>> : public ap<
             FList,
