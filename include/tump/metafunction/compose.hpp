@@ -26,7 +26,7 @@ namespace tump
     /**
      * 関数の合成
     */
-    using compose = cbk<fn::compose>;
+    using compose = cbk<fn::compose, 2>;
 
     /**
      * 関数の合成
@@ -34,8 +34,8 @@ namespace tump
     template <InvocableArgN<1> F, InvocableArgN<1>... Funcs>
     using compose_t = typename fn::compose<F, Funcs...>::type;
 
-    template <InvocableArgN<1> F, InvocableArgN<1>... Funcs>
-    struct fn::mp_invoke_result<compose, F, Funcs...> : public constraint_callback_arg1 {};
+    template <std::size_t ArgsSize, InvocableArgN<1> F, InvocableArgN<1>... Funcs>
+    struct fn::mp_invoke_result<cbk<fn::compose, ArgsSize>, F, Funcs...> : public constraint_callback_arg1 {};
 }
 
 #endif

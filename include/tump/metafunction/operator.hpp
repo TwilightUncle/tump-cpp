@@ -155,7 +155,7 @@ namespace tump
     /**
      * 関数合成を行う演算子
     */
-    using _dot = _op<cbk<fn::compose, 2>, e_op_priority::r_9>;
+    using _dot = _op<compose, e_op_priority::r_9>;
 
     /**
      * 論理和
