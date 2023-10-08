@@ -4,6 +4,8 @@
 #include TUMP_COMMON_INCLUDE(containers/functor.hpp)
 #include TUMP_COMMON_INCLUDE(metafunction/apply.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/concat.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/left_right.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/make_type_list.hpp)
 
 namespace tump
 {
@@ -11,9 +13,7 @@ namespace tump
     namespace fn
     {
         /**
-         * ap で任意のアプリカティブへ関数を適用できるようにする
-         * 本来は関数だが、ここでは構造により表現する
-         * メタ関数としての体裁を保つためのみに type_identity 継承
+         * 任意の型の持ち上げ
         */
         template <class T>
         struct pure : public std::type_identity<pure<T>> {};
@@ -37,6 +37,12 @@ namespace tump
         > {};
 
         // リストとリストの実装
+        template <TypeList FList, class T>
+        struct ap<FList, pure<T>> : public ap<
+            FList,
+            make_type_list_t<FList, T>
+        > {};
+
         template <TypeList FList, TypeList List>
         struct ap<FList, List> : public fn::unnorm_li<
             make_empty_t<
@@ -48,7 +54,10 @@ namespace tump
 
         template <Invocable... Funcs, class... Types>
         struct ap<list<Funcs...>, list<Types...>> : public fn::concat<
-            fmap_t<partial_apply<::tump::apply, Funcs>, list<Types...>>...
+            fmap_t<
+                partial_apply<::tump::apply, Funcs>,
+                list<Types...>
+            >...
         > {};
     }
 
@@ -57,7 +66,7 @@ namespace tump
     using ap = cbk<fn::ap, 2>;
 
     template <class T>
-    using pure_t = fn::pure<T>;
+    using pure_t = typename fn::pure<T>::type;
 
     template <class WrappedF, class Applicative>
     using ap_t = typename fn::ap<WrappedF, Applicative>::type;
