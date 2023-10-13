@@ -7,6 +7,6 @@
 
 #include TUMP_COMMON_INCLUDE(metafunction.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm.hpp)
-#include TUMP_COMMON_INCLUDE(containers/array.hpp)
+#include TUMP_COMMON_INCLUDE(containers.hpp)
 
 #endif
