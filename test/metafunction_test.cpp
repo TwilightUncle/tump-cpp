@@ -192,6 +192,11 @@ TEST(TumpMetafunctionTest, ExpressionTest)
     ASSERT_TRUE(case6);
     ASSERT_TRUE(case7);
     ASSERT_TRUE(case8);
+    
+    // 下記のような記載は文法エラー
+    // tump::exp<tump::is_integral, tump::_doll>;
+    // tump::exp<tump::_doll, int>;
+    // tump::exp<int, int>;
 }
 
 TEST(TumpMetafunctionTest, LambdaTest)
