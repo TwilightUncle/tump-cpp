@@ -182,6 +182,8 @@ TEST(TumpMetafunctionTest, ExpressionTest)
         int
     >::value;
 
+    constexpr auto case8 = std::is_same_v<tump::exp<int>, int>;
+
     ASSERT_TRUE(case1);
     ASSERT_TRUE(case2);
     ASSERT_TRUE(case3);
@@ -189,6 +191,7 @@ TEST(TumpMetafunctionTest, ExpressionTest)
     ASSERT_TRUE(case5);
     ASSERT_TRUE(case6);
     ASSERT_TRUE(case7);
+    ASSERT_TRUE(case8);
 }
 
 TEST(TumpMetafunctionTest, LambdaTest)
