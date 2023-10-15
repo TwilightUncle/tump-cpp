@@ -165,20 +165,20 @@ TEST(TumpMetafunctionTest, ExpressionTest)
         const unsigned int
     >;
     constexpr auto case5 = std::is_same_v<
-        tump::exp<tump::add_const, tump::_dot, tump::make_unsigned, tump::_doll, int>,
+        tump::exp<tump::add_const, tump::_dot, tump::make_unsigned, tump::_apply, int>,
         const unsigned int
     >;
     constexpr auto case6 = tump::exp<
         tump::is_same, const unsigned int,
-        tump::_doll,
+        tump::_apply,
         tump::add_const, tump::_dot, tump::make_unsigned,
-        tump::_doll,
+        tump::_apply,
         int
     >::value;
     constexpr auto case7 = tump::exp<
         tump::is_same, const unsigned int,
         tump::_dot, tump::add_const, tump::_dot, tump::make_unsigned,
-        tump::_doll,
+        tump::_apply,
         int
     >::value;
 
@@ -194,8 +194,8 @@ TEST(TumpMetafunctionTest, ExpressionTest)
     ASSERT_TRUE(case8);
     
     // 下記のような記載は文法エラー
-    // tump::exp<tump::is_integral, tump::_doll>;
-    // tump::exp<tump::_doll, int>;
+    // tump::exp<tump::is_integral, tump::_apply>;
+    // tump::exp<tump::_apply, int>;
     // tump::exp<int, int>;
 }
 
@@ -210,7 +210,7 @@ TEST(TumpMetafunctionTest, LambdaTest)
         tump::lambda_exp<
             tump::is_same, arg_expect,
             tump::_dot, tump::add_const, tump::_dot, tump::make_unsigned,
-            tump::_doll,
+            tump::_apply,
             arg_value
         >
     >;

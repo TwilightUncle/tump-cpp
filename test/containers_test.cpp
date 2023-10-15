@@ -8,8 +8,8 @@ TEST(TumpContainersTest, FunctorTest)
     // function
     using functor1 = tump::add_const;
     constexpr auto case1 = std::is_same_v<
-        tump::exp<tump::fmap, tump::type_identity, functor1, tump::_doll, int>,
-        tump::exp<tump::type_identity, functor1, tump::_doll, int>
+        tump::exp<tump::fmap, tump::type_identity, functor1, tump::_apply, int>,
+        tump::exp<tump::type_identity, functor1, tump::_apply, int>
     >;
     ASSERT_TRUE(case1);
 
@@ -25,20 +25,20 @@ TEST(TumpContainersTest, FunctorTest)
     using functor3 = tump::type_identity;
     constexpr auto case3 = std::is_same_v<
         tump::exp<tump::exp<
-            tump::fmap, tump::_doll,
+            tump::fmap, tump::_apply,
             tump::add_const, tump::_dot, tump::make_unsigned
-        >, functor3, tump::_doll, int>,
+        >, functor3, tump::_apply, int>,
         tump::exp<tump::exp<
             tump::fmap, tump::add_const, tump::_dot,
             tump::fmap, tump::make_unsigned
-        >, functor3, tump::_doll, int>
+        >, functor3, tump::_apply, int>
     >;
     ASSERT_TRUE(case3);
 
     // list
     constexpr auto case4 = std::is_same_v<
         tump::exp<tump::exp<
-            tump::fmap, tump::_doll,
+            tump::fmap, tump::_apply,
             tump::add_const, tump::_dot, tump::make_unsigned
         >, functor2>,
         tump::exp<tump::exp<
@@ -81,7 +81,7 @@ TEST(TumpContainersTest, ApplicativeTest)
     // u <*> pure y = pure ($ y) <*> u
     constexpr auto case4 = std::is_same_v<
         tump::exp<applicative2, tump::_ap, tump::pure, char>,
-        tump::exp<tump::pure, tump::sec<tump::_doll, char>, tump::_ap, applicative2>
+        tump::exp<tump::pure, tump::sec<tump::_apply, char>, tump::_ap, applicative2>
     >;
     ASSERT_TRUE(case4);
 

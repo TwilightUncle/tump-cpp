@@ -36,7 +36,7 @@ using result_list = tump::exp<
     // パラメータパックのうち、整数型のみを符号なし定数に置き換える関数作成
     tump::exp<
         tump::map_if, tump::is_integral,
-        tump::_doll,
+        tump::_apply,
         tump::add_const, tump::_dot, tump::make_unsigned
     >,
     // 実行対象のパラメータパックを持つ型リスト
@@ -52,7 +52,7 @@ static_assert(std::is_same_v<
 int main() {}
 ```
 
-`tump::_doll`は左側のメタ関数を右側の型に適用するだけの演算子で、優先度が最も低いため、式の評価順序の制御に使います。  
+`tump::_apply`は左側のメタ関数を右側の型に適用するだけの演算子で、優先度が最も低いため、式の評価順序の制御に使います。  
 Haskell の `$` 演算子の模倣です。
 
 `tump::_dot`は左右のメタ関数を合成します。

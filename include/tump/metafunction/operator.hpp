@@ -150,7 +150,7 @@ namespace tump
     /**
      * haskell の $ 演算子と等価
     */
-    using _doll = _op<cbk<fn::apply, 2>, e_op_priority::r_0>;
+    using _apply = _op<cbk<fn::apply, 2>, e_op_priority::r_0>;
 
     /**
      * 関数合成を行う演算子
