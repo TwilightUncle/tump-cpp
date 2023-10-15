@@ -25,7 +25,9 @@ namespace tump
     /**
      * 型リストの最後尾に指定されたパラメータパックを挿入する
     */
-    using push_back = cbk<fn::push_back>;
+    template <unsigned int ArgsSize = 2>
+    requires (ArgsSize > 0)
+    using push_back = cbk<fn::push_back, ArgsSize>;
 
     /**
      * 型リストの最後尾に指定されたパラメータパックを挿入する
@@ -36,7 +38,9 @@ namespace tump
     /**
      * 型リストの先頭に指定されたパラメータパックを挿入する
     */
-    using push_front = cbk<fn::push_front>;
+    template <unsigned int ArgsSize = 2>
+    requires (ArgsSize > 0)
+    using push_front = cbk<fn::push_front, ArgsSize>;
 
     /**
      * 型リストの先頭に指定されたパラメータパックを挿入する
@@ -60,7 +64,7 @@ namespace tump
         struct push_back_if<F, List, T> : public invoke<
             std::conditional_t<
                 invoke_v<F, T>,
-                ::tump::push_back,
+                ::tump::push_back<>,
                 ::tump::left
             >,
             List,
@@ -85,7 +89,7 @@ namespace tump
         struct push_front_if<F, List, T> : public invoke<
             std::conditional_t<
                 invoke_v<F, T>,
-                ::tump::push_front,
+                ::tump::push_front<>,
                 ::tump::left
             >,
             List,
@@ -96,7 +100,9 @@ namespace tump
     /**
      * 指定さ入れたパラメータパックのうち、条件に合致する要素のみ型リストの最後尾に追加
     */
-    using push_back_if = cbk<fn::push_back_if>;
+    template <unsigned int ArgsSize = 3>
+    requires (ArgsSize > 1)
+    using push_back_if = cbk<fn::push_back_if, ArgsSize>;
 
     /**
      * 指定さ入れたパラメータパックのうち、条件に合致する要素のみ型リストの最後尾に追加
@@ -107,7 +113,9 @@ namespace tump
     /**
      * 指定さ入れたパラメータパックのうち、条件に合致する要素のみ型リストの先頭に追加
     */
-    using push_front_if = cbk<fn::push_front_if>;
+    template <unsigned int ArgsSize = 3>
+    requires (ArgsSize > 1)
+    using push_front_if = cbk<fn::push_front_if, ArgsSize>;
 
     /**
      * 指定さ入れたパラメータパックのうち、条件に合致する要素のみ型リストの先頭に追加
@@ -115,17 +123,17 @@ namespace tump
     template <InvocableArgN<1> F, TypeList List, class... Types>
     using push_front_if_t = typename fn::push_front_if<F, List, Types...>::type;
 
-    template <TypeList List, class... Types>
-    struct fn::mp_invoke_result<push_back, List, Types...> : public constraint_st_type_list<List> {};
+    template <unsigned int ArgsSize, TypeList List, class... Types>
+    struct fn::mp_invoke_result<push_back<ArgsSize>, List, Types...> : public constraint_st_type_list<List> {};
 
-    template <TypeList List, class... Types>
-    struct fn::mp_invoke_result<push_front, List, Types...> : public constraint_st_type_list<List> {};
+    template <unsigned int ArgsSize, TypeList List, class... Types>
+    struct fn::mp_invoke_result<push_front<ArgsSize>, List, Types...> : public constraint_st_type_list<List> {};
 
-    template <InvocableArgN<1> F, TypeList List, class... Types>
-    struct fn::mp_invoke_result<push_back_if, F, List, Types...> : public constraint_st_type_list<List> {};
+    template <unsigned int ArgsSize, InvocableArgN<1> F, TypeList List, class... Types>
+    struct fn::mp_invoke_result<push_back_if<ArgsSize>, F, List, Types...> : public constraint_st_type_list<List> {};
 
-    template <InvocableArgN<1> F, TypeList List, class... Types>
-    struct fn::mp_invoke_result<push_front_if, F, List, Types...> : public constraint_st_type_list<List> {};
+    template <unsigned int ArgsSize, InvocableArgN<1> F, TypeList List, class... Types>
+    struct fn::mp_invoke_result<push_front_if<ArgsSize>, F, List, Types...> : public constraint_st_type_list<List> {};
 }
 
 #endif

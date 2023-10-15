@@ -20,7 +20,9 @@ namespace tump
         struct mp_invoke_result<OuterF<InnerF, Args1...>, Args...> : public mp_invoke_result<InnerF, Args1..., Args...> {};
     }
 
-    using mp_invoke_result = cbk<fn::mp_invoke_result>;
+    template <unsigned int ArgsSize = 2>
+    requires (ArgsSize > 0)
+    using mp_invoke_result = cbk<fn::mp_invoke_result, ArgsSize>;
 
     /**
      * 戻り型の制約を返す。
@@ -82,8 +84,8 @@ namespace tump
 
     using constraint_size_constant = std::type_identity<is_size_constant>;
 
-    template <class... Args>
-    struct fn::mp_invoke_result<mp_invoke_result, Args...> : public constraint_callback_arg1 {};
+    template <unsigned int ArgsSize, class... Args>
+    struct fn::mp_invoke_result<mp_invoke_result<ArgsSize>, Args...> : public constraint_callback_arg1 {};
 
     template <class T>
     struct fn::mp_invoke_result<is_bool_constant, T> : public constraint_bool_constant {};

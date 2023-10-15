@@ -113,7 +113,7 @@ TEST(TumpMetafunctionTest, ComposeTest)
 TEST(TumpMetafunctionTest, ApplyTest)
 {
     using type1 = tump::apply_t<
-        tump::conjunction,
+        tump::conjunction<>,
         std::true_type,
         std::true_type
     >;

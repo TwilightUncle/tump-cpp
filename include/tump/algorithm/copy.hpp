@@ -13,7 +13,7 @@ namespace tump
         */
         template <TypeList Src, TypeList Dest>
         requires (!is_empty_v<Src>)
-        using copy = invoke_list<partial_apply<::tump::make_type_list, Dest>, Src>;
+        using copy = invoke_list<partial_apply<cbk<make_type_list>, Dest>, Src>;
     }
 
     /**

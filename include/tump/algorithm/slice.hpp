@@ -20,7 +20,7 @@ namespace tump
             struct slice_impl<List, Result, Start, Size, Stride> : public slice_impl<
                 pop_front_t<List>,
                 invoke_t<
-                    std::conditional_t<Start != 0, ::tump::left, ::tump::push_back>,
+                    std::conditional_t<Start != 0, ::tump::left, ::tump::push_back<>>,
                     Result,
                     get_front_t<List>
                 >,

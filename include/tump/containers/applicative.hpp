@@ -32,7 +32,7 @@ namespace tump
         // pure とアプリカティブクラスの実装
         template <Invocable F, class Applicative>
         struct ap<pure<F>, Applicative> : public fmap<
-            partial_apply<::tump::apply, F>, Applicative
+            partial_apply<::tump::apply<>, F>, Applicative
         > {};
 
         // リストの実装
@@ -46,7 +46,7 @@ namespace tump
         struct ap<FList, List> : public fn::unnorm_li<
             make_empty_t<
                 List,
-                mp_invoke_result_t<::tump::apply, get_front_t<FList>, get_front_t<List>>
+                mp_invoke_result_t<::tump::apply<>, get_front_t<FList>, get_front_t<List>>
             >,
             ap<to_norm_li_t<FList>, to_norm_li_t<List>>
         > {};
@@ -54,7 +54,7 @@ namespace tump
         template <Invocable... Funcs, class... Types>
         struct ap<list<Funcs...>, list<Types...>> : public fn::concat<
             fmap_t<
-                partial_apply<::tump::apply, Funcs>,
+                partial_apply<::tump::apply<>, Funcs>,
                 list<Types...>
             >...
         > {};

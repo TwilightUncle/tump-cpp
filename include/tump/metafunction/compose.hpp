@@ -17,7 +17,7 @@ namespace tump
                 ::tump::flip,
                 partial_apply<
                     ::tump::foldr,
-                    ::tump::apply
+                    cbk<apply>
                 >,
                 list<F, Funcs...>
             >
@@ -27,7 +27,9 @@ namespace tump
     /**
      * 関数の合成
     */
-    using compose = cbk<fn::compose, 2>;
+    template <unsigned int ArgsSize = 2>
+    requires (ArgsSize > 0)
+    using compose = cbk<fn::compose, ArgsSize>;
 
     /**
      * 関数の合成
@@ -36,7 +38,7 @@ namespace tump
     using compose_t = typename fn::compose<F, Funcs...>::type;
 
     template <std::size_t ArgsSize, Invocable F, Invocable... Funcs>
-    struct fn::mp_invoke_result<cbk<fn::compose, ArgsSize>, F, Funcs...> : public constraint_callback_arg1 {};
+    struct fn::mp_invoke_result<compose<ArgsSize>, F, Funcs...> : public constraint_callback_arg1 {};
 }
 
 #endif

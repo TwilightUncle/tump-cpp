@@ -73,7 +73,7 @@ TEST(TumpContainersTest, ApplicativeTest)
 
     // pure (.) <*> u <*> v <*> w = u <*> (v <*> w)
     constexpr auto case3 = std::is_same_v<
-        tump::exp<tump::pure, tump::compose, tump::_ap, applicative2, tump::_ap, applicative3, tump::_ap, applicative1>,
+        tump::exp<tump::pure, tump::compose<>, tump::_ap, applicative2, tump::_ap, applicative3, tump::_ap, applicative1>,
         tump::exp<applicative2, tump::_ap, tump::exp<applicative3, tump::_ap, applicative1>>
     >;
     ASSERT_TRUE(case3);
@@ -86,7 +86,7 @@ TEST(TumpContainersTest, ApplicativeTest)
     ASSERT_TRUE(case4);
 
     constexpr auto case5 = std::is_same_v<
-        tump::exp<tump::compose, tump::_fmap, applicative2, tump::_ap, applicative3, tump::_ap, applicative1>,
+        tump::exp<tump::compose<>, tump::_fmap, applicative2, tump::_ap, applicative3, tump::_ap, applicative1>,
         tump::list<
             const signed short, const signed long,
             const unsigned short, const unsigned long,

@@ -12,7 +12,7 @@ namespace tump
         */
         template <TypeListOrValueList List>
         struct reverse : public fn::unnorm_li<List, foldl_t<
-            ::tump::push_front,
+            ::tump::push_front<>,
             list<>,
             to_norm_li_t<List>
         >> {};

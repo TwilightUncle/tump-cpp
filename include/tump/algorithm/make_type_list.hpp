@@ -20,13 +20,15 @@ namespace tump
     /**
      * リストの中身を指定の要素に置き換える
     */
-    using make_type_list = cbk<fn::make_type_list>;
+    template <unsigned int ArgsSize = 2>
+    requires (ArgsSize > 0)
+    using make_type_list = cbk<fn::make_type_list, ArgsSize>;
 
     template <TypeList List, class... Types>
     using make_type_list_t = typename fn::make_type_list<List, Types...>::type;
 
-    template <TypeList List, class... Types>
-    struct fn::mp_invoke_result<make_type_list, List, Types...> : public constraint_st_type_list<List> {};
+    template <unsigned int ArgsSize, TypeList List, class... Types>
+    struct fn::mp_invoke_result<make_type_list<ArgsSize>, List, Types...> : public constraint_st_type_list<List> {};
 }
 
 #endif

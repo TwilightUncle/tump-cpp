@@ -30,7 +30,8 @@ namespace tump
         struct mp_if<Cond, list<T, F>> : public mp_if<Cond, T, F> {};
     }
 
-    using mp_if = cbk<fn::mp_if>;
+    using mp_if = cbk<fn::mp_if, 3>;
+    using mp_if_li = cbk<fn::mp_if, 2>;
 
     /**
      * conditional の第一引数が型バージョン
@@ -44,7 +45,7 @@ namespace tump
 
     template <VFunctional Cond, TypeList List>
     requires (len_v<List> == 2)
-    struct fn::mp_invoke_result<mp_if, Cond, List> : public std::type_identity<
+    struct fn::mp_invoke_result<mp_if_li, Cond, List> : public std::type_identity<
         partial_apply<::tump::flip, ::tump::exists, List>
     > {};
 }

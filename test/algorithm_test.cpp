@@ -50,7 +50,7 @@ TEST(TumpAlgorithmTest, MakeTypeListTest)
     ASSERT_TRUE(case5);
 
     using constraint1 = tump::mp_invoke_result_t<
-        tump::make_type_list,
+        tump::make_type_list<>,
         tump::st_list<tump::is_integral>
     >;
 
@@ -164,7 +164,7 @@ struct get_derived : std::conditional<std::is_base_of_v<L, R>, R, tump::mp_null_
 TEST(TumpAlgorithmTest, FoldTest)
 {
     using type1 = tump::foldl_t<
-        tump::conjunction,
+        tump::conjunction<>,
         std::true_type,
         tump::list<
             std::false_type,
@@ -173,7 +173,7 @@ TEST(TumpAlgorithmTest, FoldTest)
         >
     >;
     using type2 = tump::foldl_t<
-        tump::conjunction,
+        tump::conjunction<>,
         std::true_type,
         tump::list<
             std::true_type,
@@ -182,7 +182,7 @@ TEST(TumpAlgorithmTest, FoldTest)
         >
     >;
     using type3 = tump::foldl_t<
-        tump::conjunction,
+        tump::conjunction<>,
         std::true_type,
         tump::st_list<
             tump::is_bool_constant,
@@ -538,7 +538,7 @@ TEST(TumpAlgorithmTest, MpIfTest)
         double
     >;
     using constraint2 = tump::mp_invoke_result_t<
-        tump::mp_if,
+        tump::mp_if_li,
         std::true_type,
         tump::array<tump::is_arithmetic, 2, int, double>
     >;

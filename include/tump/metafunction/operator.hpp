@@ -150,22 +150,22 @@ namespace tump
     /**
      * haskell の $ 演算子と等価
     */
-    using _apply = _op<cbk<fn::apply, 2>, e_op_priority::r_0>;
+    using _apply = _op<apply<>, e_op_priority::r_0>;
 
     /**
      * 関数合成を行う演算子
     */
-    using _dot = _op<compose, e_op_priority::r_9>;
+    using _dot = _op<compose<>, e_op_priority::r_9>;
 
     /**
      * 論理和
     */
-    using _or = _op<cbk<std::disjunction, 2>, e_op_priority::r_2>;
+    using _or = _op<disjunction<>, e_op_priority::r_2>;
 
     /**
      * 論理積
     */
-    using _and = _op<cbk<std::conjunction, 2>, e_op_priority::r_3>;
+    using _and = _op<conjunction<>, e_op_priority::r_3>;
 
     /**
      * 等号
@@ -193,13 +193,13 @@ namespace tump
      * リストの結合
      * list1 _concat list2
     */
-    using _concat = _op<cbk<fn::concat, 2>, e_op_priority::r_5>;
+    using _concat = _op<concat<>, e_op_priority::r_5>;
 
     /**
      * 先頭に要素を追加
      * type _cons list
     */
-    using _cons = _op<partial_apply<flip, cbk<fn::push_front, 2>>, e_op_priority::r_5>;
+    using _cons = _op<partial_apply<flip, push_front<>>, e_op_priority::r_5>;
 
     /**
      * fmap の演算子バージョン

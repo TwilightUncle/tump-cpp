@@ -41,7 +41,9 @@ namespace tump
     /**
      * コールバック化したメタ関数を実行
     */
-    using invoke = cbk<fn::invoke>;
+    template <unsigned int ArgsSize = 2>
+    requires (ArgsSize > 0)
+    using invoke = cbk<fn::invoke, ArgsSize>;
 
     /**
      * コールバック化したメタ関数を実行

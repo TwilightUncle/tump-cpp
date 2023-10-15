@@ -24,7 +24,9 @@ namespace tump
      * @class
      * @brief 引数に対して、コールバック化したメタ関数の適用を行う。引数がすべて埋まっている or 引数の数が不明な場合はメタ関数を実行し、少ない場合は部分適用をする
     */
-    using apply = cbk<fn::apply>;
+    template <unsigned int ArgsSize = 2>
+    requires (ArgsSize > 0)
+    using apply = cbk<fn::apply, ArgsSize>;
 
     /**
      * @class

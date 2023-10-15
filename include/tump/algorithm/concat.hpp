@@ -42,7 +42,9 @@ namespace tump
      * 複数のリストを結合する
      * ただし、リストの側として利用されているテンプレート型は共通でなければいけない
     */
-    using concat = cbk<fn::concat>;
+    template <unsigned int ArgsSize = 2>
+    requires (ArgsSize > 0)
+    using concat = cbk<fn::concat, ArgsSize>;
 
     /**
      * 複数のリストを結合する
@@ -51,8 +53,8 @@ namespace tump
     template <TypeListOrValueList... Lists>
     using concat_t = typename fn::concat<Lists...>::type;
 
-    template <TypeListOrValueList List, TypeListOrValueList... Lists>
-    struct fn::mp_invoke_result<concat, List, Lists...> : public constraint_st_type_list<List> {};
+    template <unsigned int ArgsSize, TypeListOrValueList List, TypeListOrValueList... Lists>
+    struct fn::mp_invoke_result<concat<ArgsSize>, List, Lists...> : public constraint_st_type_list<List> {};
 }
 
 #endif

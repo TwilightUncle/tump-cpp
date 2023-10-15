@@ -14,7 +14,7 @@ namespace tump
         template <InvocableArgN<1> F, TypeList List>
         using filter = invoke_list<
             partial_apply<
-                ::tump::push_back_if,
+                cbk<push_back_if>,
                 F,
                 make_empty_t<List>
             >,
