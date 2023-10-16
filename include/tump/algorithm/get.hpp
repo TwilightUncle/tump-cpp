@@ -1,25 +1,13 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_GET_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_GET_HPP
 
+#include <tuple>
 #include TUMP_COMMON_INCLUDE(algorithm/len.hpp)
 
 namespace tump
 {
     namespace fn
     {
-        /**
-         * リストの先頭要素を取得
-        */
-        template <TypeListOrValueList List>
-        requires (!is_empty_v<List>)
-        struct get_front : public get_front<to_norm_li_t<List>> {};
-
-        template <auto Head, auto... Values>
-        struct get_front<vlist<Head, Values...>> : public vwrap<Head> {};
-
-        template <class Head, class... Types>
-        struct get_front<list<Head, Types...>> : public std::type_identity<Head> {};
-    
         /**
          * リストの N 番目の要素を取得
         */
@@ -30,12 +18,15 @@ namespace tump
         template <std::size_t N, auto... Values>
         struct get<N, vlist<Values...>> : public get<N, to_norm_li_t<vlist<Values...>>>::type {};
 
-        template <class... Types>
-        struct get<0, list<Types...>> : public get_front<list<Types...>> {};
-
         template <std::size_t N, class Head, class... Types>
-        requires (N != 0)
-        struct get<N, list<Head, Types...>> : public get<N - 1, list<Types...>> {};
+        struct get<N, list<Head, Types...>> : public std::tuple_element<N, std::tuple<Head, Types...>>{};
+
+        /**
+         * リストの先頭要素を取得
+        */
+        template <TypeListOrValueList List>
+        requires (!is_empty_v<List>)
+        using get_front = get<0, List>;
 
         /**
          * リストの末尾要素を取得
@@ -44,6 +35,18 @@ namespace tump
         requires (!is_empty_v<List>)
         using get_back = get<len_v<List> - 1, List>;
     }
+
+    /**
+     * リストの N 番目の要素を取得
+    */
+    template <std::size_t N, TypeListOrValueList List>
+    using get_t = typename fn::get<N, List>::type;
+
+    /**
+     * リストの N 番目の要素を取得
+    */
+    template <std::size_t N, TypeListOrValueList List>
+    constexpr auto get_v = fn::get<N, List>::value;
 
     /**
      * リストの先頭要素を取得
@@ -61,18 +64,6 @@ namespace tump
     */
     template <TypeListOrValueList List>
     constexpr auto get_front_v = fn::get_front<List>::value;
-
-    /**
-     * リストの N 番目の要素を取得
-    */
-    template <std::size_t N, TypeListOrValueList List>
-    using get_t = typename fn::get<N, List>::type;
-
-    /**
-     * リストの N 番目の要素を取得
-    */
-    template <std::size_t N, TypeListOrValueList List>
-    constexpr auto get_v = fn::get<N, List>::value;
 
     /**
      * リストの末尾要素を取得
