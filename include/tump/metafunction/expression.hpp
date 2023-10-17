@@ -1,6 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_EXPRESSION_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_EXPRESSION_HPP
 
+#include <utility>
 #include TUMP_COMMON_INCLUDE(metafunction/operator.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/pop.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/reverse.hpp)
@@ -64,40 +65,48 @@ namespace tump
         struct exp_n_impl<Cur, list<List, vwrap<Priority>>> : public exp_n_impl<list<List, vwrap<Priority>>, Cur> {};
 
         // 優先度毎の式の実装
-        template <e_op_priority Priority, TypeList List>
-        using exp_n = invoke_t<
-            compose_t<
-                std::conditional_t<
-                    is_infixr_v<vwrap<Priority>>,
-                    ::tump::type_identity,
-                    ::tump::reverse
-                >,
-                ::tump::get_front
+        template <e_op_priority Priority>
+        using exp_n = compose_t<
+            std::conditional_t<
+                is_infixr_v<vwrap<Priority>>,
+                ::tump::type_identity,
+                ::tump::reverse
             >,
-            apply_t<
+            ::tump::get_front,
+            partial_apply<
                 std::conditional_t<
                     is_infixr_v<vwrap<Priority>>,
                     ::tump::foldr,
                     ::tump::foldl
                 >,
                 cbk<exp_n_impl, 2>,
-                list<list<>, vwrap<Priority>>,
-                List
+                list<list<>, vwrap<Priority>>
             >
         >;
 
         // 式の実装
-        template <e_op_priority Priority, TypeList List>
-        struct exp_impl : exp_impl<decrement_op_priority(Priority), exp_n<Priority, List>> {};
+        template <TypeList List, class Seq, e_op_priority FirstPriority>
+        struct exp_impl;
 
-        template <TypeList List>
-        struct exp_impl<e_op_priority::r_0, List> : get_front<exp_n<e_op_priority::r_0, List>> {};
+        template <TypeList List, std::size_t... Priorities, e_op_priority FirstPriority>
+        struct exp_impl<List, std::index_sequence<Priorities...>, FirstPriority> : public invoke<
+            typename compose<
+                ::tump::get_front,
+                exp_n<static_cast<e_op_priority>(Priorities)>...,
+                exp_n<FirstPriority>
+            >::type,
+            List
+        > {};
 
         /**
          * 関数型言語っぽい式
         */
         template <class Head, class... Types>
-        struct exp : public exp_impl<e_op_priority::func, list<Head, Types...>> {};
+        struct exp : public exp_impl<
+            list<Head, Types...>,
+            std::make_index_sequence<static_cast<std::size_t>(e_op_priority::_9)>,
+            e_op_priority::func
+        > {};
 
         /**
          * 式か判定
@@ -107,13 +116,18 @@ namespace tump
 
         template <class Head, class... Types>
         struct is_exp<exp<Head, Types...>> : public std::true_type {};
-    }
 
-    /**
-     * 関数型言語っぽい式
-    */
-    template <class Head, class... Types>
-    using exp = typename fn::exp<Head, Types...>::type;
+        /**
+         * 再帰的に式を評価する
+        */
+        template <TypeList Expression>
+        requires (is_exp<Expression>::value)
+        struct eval_impl : public map_if_t<
+            cbk<is_exp, 1>,
+            cbk<eval_impl, 1>,
+            Expression
+        > {};
+    }
 
     /**
      * 式か判定
@@ -125,6 +139,18 @@ namespace tump
     */
     template <class T>
     constexpr auto is_exp_v = fn::is_exp<T>::value;
+
+    /**
+     * 関数型言語っぽい式
+    */
+    template <class Head, class... Types>
+    using exp = fn::exp<Head, Types...>;
+
+    /**
+     * 再帰的に式を評価する
+    */
+    template <class Head, class... Types>
+    using eval = typename fn::eval_impl<exp<Head, Types...>>::type;
 }
 
 #endif

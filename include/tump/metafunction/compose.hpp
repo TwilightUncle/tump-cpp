@@ -17,7 +17,7 @@ namespace tump
                 ::tump::flip,
                 partial_apply<
                     ::tump::foldr,
-                    cbk<apply>
+                    ::tump::apply<>
                 >,
                 list<F, Funcs...>
             >

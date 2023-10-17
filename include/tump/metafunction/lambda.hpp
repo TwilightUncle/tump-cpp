@@ -18,12 +18,6 @@ namespace tump
     using lambda_args = list<Head, Types...>;
 
     /**
-     * ラムダ式の、式
-    */
-    template <class Head, class... Types>
-    using lambda_exp = fn::exp<Head, Types...>;
-
-    /**
      * わかりやすいようにラムダ式用のそれっぽい仮引数の型を定義しておく
      * 別の型と識別させることが目的のため、テンプレートパラメータ自体には意味はない
     */
@@ -49,24 +43,29 @@ namespace tump
          * 仮引数を実引数に置き換える
         */
         template <TypeList ArgPaire, TypeList Expression>
-        struct lambda_impl;
-
-        template <class FormalArg, class ActualArg, TypeList Expression>
-        struct lambda_impl<list<FormalArg, ActualArg>, Expression> : public replace<FormalArg, ActualArg, Expression> {};
+        struct lambda_impl : public replace<
+            get_front_t<ArgPaire>,
+            get_back_t<ArgPaire>,
+            map_if_t<
+                ::tump::is_type_list,
+                partial_apply<cbk<lambda_impl, 2>, ArgPaire>,
+                Expression
+            >
+        > {};
         
         /**
          * ラムダ式生成
         */
         template <TypeList FormalArgList, TypeList Expression, class... ActualArgs>
         requires (!is_empty_v<FormalArgList> && is_exp_v<Expression> && len_v<FormalArgList> == sizeof...(ActualArgs))
-        using lambda = unnorm_li_t<
+        using lambda = eval_impl<unnorm_li_t<
             empty<exp>,
             foldr_t<
                 cbk<lambda_impl, 2>,
                 to_norm_li_t<Expression>,
                 zip_t<FormalArgList, list<ActualArgs...>>
             >
-        >;
+        >>;
     }
 
     /**

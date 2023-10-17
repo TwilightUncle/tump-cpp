@@ -150,8 +150,8 @@ TEST(TumpMetafunctionTest, InvokeResultTest)
 
 TEST(TumpMetafunctionTest, ExpressionTest)
 {
-    constexpr auto case1 = tump::exp<tump::is_integral, int>::value;
-    constexpr auto case2 = tump::exp<tump::is_same, int, int>::value;
+    constexpr auto case1 = tump::eval<tump::is_integral, int>::value;
+    constexpr auto case2 = tump::eval<tump::is_same, int, int>::value;
 
     constexpr auto case3 = std::is_same_v<
         tump::invoke_t<
@@ -161,28 +161,28 @@ TEST(TumpMetafunctionTest, ExpressionTest)
         const unsigned int
     >;
     constexpr auto case4 = std::is_same_v<
-        tump::invoke_t<tump::exp<tump::add_const, tump::_dot, tump::make_unsigned>, int>,
+        tump::invoke_t<tump::eval<tump::add_const, tump::_dot, tump::make_unsigned>, int>,
         const unsigned int
     >;
     constexpr auto case5 = std::is_same_v<
-        tump::exp<tump::add_const, tump::_dot, tump::make_unsigned, tump::_apply, int>,
+        tump::eval<tump::add_const, tump::_dot, tump::make_unsigned, tump::_apply, int>,
         const unsigned int
     >;
-    constexpr auto case6 = tump::exp<
+    constexpr auto case6 = tump::eval<
         tump::is_same, const unsigned int,
         tump::_apply,
         tump::add_const, tump::_dot, tump::make_unsigned,
         tump::_apply,
         int
     >::value;
-    constexpr auto case7 = tump::exp<
+    constexpr auto case7 = tump::eval<
         tump::is_same, const unsigned int,
         tump::_dot, tump::add_const, tump::_dot, tump::make_unsigned,
         tump::_apply,
         int
     >::value;
 
-    constexpr auto case8 = std::is_same_v<tump::exp<int>, int>;
+    constexpr auto case8 = std::is_same_v<tump::eval<int>, int>;
 
     ASSERT_TRUE(case1);
     ASSERT_TRUE(case2);
@@ -194,9 +194,9 @@ TEST(TumpMetafunctionTest, ExpressionTest)
     ASSERT_TRUE(case8);
     
     // 下記のような記載は文法エラー
-    // tump::exp<tump::is_integral, tump::_apply>;
-    // tump::exp<tump::_apply, int>;
-    // tump::exp<int, int>;
+    // tump::eval<tump::is_integral, tump::_apply>;
+    // tump::eval<tump::_apply, int>;
+    // tump::eval<int, int>;
 }
 
 TEST(TumpMetafunctionTest, LambdaTest)
@@ -207,7 +207,7 @@ TEST(TumpMetafunctionTest, LambdaTest)
     // 与えた引数と結果の比較テストを行うラムダ式
     using test_lambda = tump::lambda<
         tump::lambda_args<arg_expect, arg_value>,
-        tump::lambda_exp<
+        tump::exp<
             tump::is_same, arg_expect,
             tump::_dot, tump::add_const, tump::_dot, tump::make_unsigned,
             tump::_apply,
@@ -215,8 +215,8 @@ TEST(TumpMetafunctionTest, LambdaTest)
         >
     >;
 
-    constexpr auto case1 = tump::exp<test_lambda, const unsigned int, int>::value;
-    constexpr auto case2 = tump::exp<test_lambda, const unsigned long long, long long>::value;
+    constexpr auto case1 = tump::eval<test_lambda, const unsigned int, int>::value;
+    constexpr auto case2 = tump::eval<test_lambda, const unsigned long long, long long>::value;
     ASSERT_TRUE(case1);
     ASSERT_TRUE(case2);
 }
