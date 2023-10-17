@@ -120,7 +120,7 @@ namespace tump
         template <class Head, class... Types>
         struct exp : public exp_impl<
             list<eval_exp_t<Head>, eval_exp_t<Types>...>,
-            std::make_index_sequence<static_cast<std::size_t>(e_op_priority::_9)>,
+            std::make_index_sequence<static_cast<std::size_t>(e_op_priority::_9) + 1>,
             e_op_priority::func
         > {};
 
