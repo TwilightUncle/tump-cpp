@@ -99,34 +99,33 @@ namespace tump
         > {};
 
         /**
-         * 関数型言語っぽい式
-        */
-        template <class Head, class... Types>
-        struct exp : public exp_impl<
-            list<Head, Types...>,
-            std::make_index_sequence<static_cast<std::size_t>(e_op_priority::_9)>,
-            e_op_priority::func
-        > {};
-
-        /**
          * 式か判定
         */
         template <class T>
         struct is_exp : public std::false_type {};
 
-        template <class Head, class... Types>
-        struct is_exp<exp<Head, Types...>> : public std::true_type {};
-
         /**
          * 再帰的に式を評価する
         */
-        template <TypeList Expression>
-        requires (is_exp<Expression>::value)
-        struct eval_impl : public map_if_t<
-            cbk<is_exp, 1>,
-            cbk<eval_impl, 1>,
-            Expression
+        template <class T>
+        using eval_exp_t = typename std::conditional_t<
+            is_exp<T>::value,
+            T,
+            std::type_identity<T>
+        >::type;
+
+        /**
+         * 関数型言語っぽい式
+        */
+        template <class Head, class... Types>
+        struct exp : public exp_impl<
+            list<eval_exp_t<Head>, eval_exp_t<Types>...>,
+            std::make_index_sequence<static_cast<std::size_t>(e_op_priority::_9)>,
+            e_op_priority::func
         > {};
+
+        template <class Head, class... Types>
+        struct is_exp<exp<Head, Types...>> : public std::true_type {};
     }
 
     /**
@@ -147,10 +146,10 @@ namespace tump
     using exp = fn::exp<Head, Types...>;
 
     /**
-     * 再帰的に式を評価する
+     * 式を評価する
     */
     template <class Head, class... Types>
-    using eval = typename fn::eval_impl<exp<Head, Types...>>::type;
+    using eval = typename exp<Head, Types...>::type;
 }
 
 #endif

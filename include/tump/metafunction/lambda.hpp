@@ -58,14 +58,14 @@ namespace tump
         */
         template <TypeList FormalArgList, TypeList Expression, class... ActualArgs>
         requires (!is_empty_v<FormalArgList> && is_exp_v<Expression> && len_v<FormalArgList> == sizeof...(ActualArgs))
-        using lambda = eval_impl<unnorm_li_t<
+        using lambda = unnorm_li_t<
             empty<exp>,
             foldr_t<
                 cbk<lambda_impl, 2>,
                 to_norm_li_t<Expression>,
                 zip_t<FormalArgList, list<ActualArgs...>>
             >
-        >>;
+        >;
     }
 
     /**

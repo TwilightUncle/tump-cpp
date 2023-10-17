@@ -117,15 +117,6 @@ TEST(TumpContainersTest, MonadTest)
         monad1
     >;
     ASSERT_TRUE(case2);
-    
-    // using a =  tump::eval<
-    //     tump::exp<monad1, tump::_bind, func1>,
-    //     tump::_eq,
-    //     tump::list<unsigned short, unsigned long>
-    // >;
-
-    // constexpr auto b = a::value;
-    // ASSERT_TRUE(b);
 
     // m >>= (\x -> k x >>= h) = (m >>= k) >>= h
     constexpr auto case3 = std::is_same_v<
