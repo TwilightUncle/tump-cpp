@@ -215,8 +215,24 @@ TEST(TumpMetafunctionTest, LambdaTest)
         >
     >;
 
+    // ネストした式の中の引数も置き換わるか確認
+    using test_lambda2 = tump::lambda<
+        tump::lambda_args<arg_value, tump::_arg2>,
+        tump::exp<
+            tump::exp<
+                tump::exp<arg_value, tump::_eq, tump::_arg2>
+            >
+        >
+    >;
+
     constexpr auto case1 = tump::eval<test_lambda, const unsigned int, int>::value;
     constexpr auto case2 = tump::eval<test_lambda, const unsigned long long, long long>::value;
+    constexpr auto case3 = tump::eval<test_lambda2, int, int>::value;
+    constexpr auto case4 = tump::eval<test_lambda2, double, double>::value;
+    constexpr auto case5 = tump::eval<test_lambda2, double, long>::value;
     ASSERT_TRUE(case1);
     ASSERT_TRUE(case2);
+    ASSERT_TRUE(case3);
+    ASSERT_TRUE(case4);
+    ASSERT_FALSE(case5);
 }
