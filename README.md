@@ -32,7 +32,7 @@
 ```cpp
 #include <tump.hpp>
 
-using result_list = tump::exp<
+using result_list = tump::eval<
     // パラメータパックのうち、整数型のみを符号なし定数に置き換える関数作成
     tump::exp<
         tump::map_if, tump::is_integral,
