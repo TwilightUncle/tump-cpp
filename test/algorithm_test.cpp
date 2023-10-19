@@ -680,3 +680,11 @@ TEST(TumpAlgorithmTest, ZipTest)
 
     ASSERT_TRUE(case1);
 }
+
+TEST(TumpAlgorithmTest, CountIfTest)
+{
+    using list1 = tump::list<int, float, double, char, unsigned long, long double, void>;
+
+    constexpr auto case1 = tump::count_if_v<tump::is_integral, list1>;
+    ASSERT_EQ(case1, 3);
+}
