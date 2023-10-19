@@ -12,20 +12,13 @@ namespace tump
 {
     namespace fn
     {
-        // 詳細処理
+        // 隣り合った 2 つの型における詳細処理
+        // デフォルトは特に処理を行わず、評価対象を次の要素へ進めるだけ
         template <e_op_priority Priority, TypeList Result, class T>
-        struct exp_2;
-    
-        // 特に処理を行わず、次の要素へ進めるだけ
-        template <e_op_priority Priority, TypeList Result, class T>
-        requires (
-            is_empty_v<Result> && !is_operator_v<T> ||
-            !is_empty_v<Result> && is_operator_v<T> && !eq_op_priority_v<T, Priority> ||
-            !is_empty_v<Result> && !is_operator_v<T> && is_operator_v<get_front_t<Result>>
-        )
-        struct exp_2<Priority, Result, T> : fn::push_front<Result, T> {};
+        struct exp_2 : fn::push_front<Result, T> {};
 
-        // 関数適用
+        // 関数と、演算子を除く型が隣り合った場合
+        // 関数適用を行う
         template <e_op_priority Priority, TypeList Result, class T>
         requires (!is_empty_v<Result> && !is_operator_v<T> && Invocable<get_front_t<Result>>)
         struct exp_2<Priority, Result, T> : fn::push_front<
@@ -33,23 +26,21 @@ namespace tump
             apply_t<get_front_t<Result>, T>
         > {};
 
-        // 右結合以外の場合の演算子の関数化
+        // 演算子と演算子以外の型が隣り合った場合
+        // 演算時の部分適用により、演算子を関数に変換する
         template <e_op_priority Priority, TypeList Result, class T>
-        requires (!is_empty_v<Result> && is_operator_v<T> && eq_op_priority_v<T, Priority> && !is_infixr_v<vwrap<Priority>>)
+        requires (!is_empty_v<Result> && is_operator_v<T> && eq_op_priority_v<T, Priority>)
         struct exp_2<Priority, Result, T> : fn::push_front<
             pop_front_t<Result>,
-            ::tump::sec<get_front_t<Result>, T>
+            std::conditional_t<
+                is_infixr_v<vwrap<Priority>>,
+                ::tump::sec<T, get_front_t<Result>>,
+                ::tump::sec<get_front_t<Result>, T>
+            >
         > {};
 
-        // 右結合の場合の演算子の関数化
-        template <e_op_priority Priority, TypeList Result, class T>
-        requires (!is_empty_v<Result> && is_operator_v<T> && eq_op_priority_v<T, Priority> && is_infixr_v<vwrap<Priority>>)
-        struct exp_2<Priority, Result, T> : fn::push_front<
-            pop_front_t<Result>,
-            ::tump::sec<T, get_front_t<Result>>
-        > {};
-
-        // fold用
+        // foldl と foldr の違いを吸収
+        // 役割は exp_2 と exp_n の橋渡しのみ
         template <class Acc, class Cur>
         struct exp_n_impl;
 
@@ -65,26 +56,32 @@ namespace tump
         struct exp_n_impl<Cur, list<List, vwrap<Priority>>> : public exp_n_impl<list<List, vwrap<Priority>>, Cur> {};
 
         // 優先度毎の式の実装
+        // 演算子の結合性による処理の方向切り替えもここで行う
         template <e_op_priority Priority>
-        using exp_n = compose_t<
-            std::conditional_t<
-                is_infixr_v<vwrap<Priority>>,
-                ::tump::type_identity,
-                ::tump::reverse
-            >,
-            ::tump::get_front,
-            partial_apply<
-                std::conditional_t<
-                    is_infixr_v<vwrap<Priority>>,
+        using exp_n = std::conditional_t<
+            is_infixr_v<vwrap<Priority>>,
+            compose_t<
+                ::tump::get_front,
+                partial_apply<
                     ::tump::foldr,
-                    ::tump::foldl
-                >,
-                cbk<exp_n_impl, 2>,
-                list<list<>, vwrap<Priority>>
+                    cbk<exp_n_impl, 2>,
+                    list<list<>, vwrap<Priority>>
+                >
+            >,
+            compose_t<
+                ::tump::reverse,
+                ::tump::get_front,
+                partial_apply<
+                    ::tump::foldl,
+                    cbk<exp_n_impl, 2>,
+                    list<list<>, vwrap<Priority>>
+                >
             >
         >;
 
         // 式の実装
+        // 全ての演算子優先度における式の評価を合成する
+        // Seq は全ての優先度を符号なし整数として列挙していること
         template <TypeList List, class Seq, e_op_priority FirstPriority>
         struct exp_impl;
 
