@@ -12,7 +12,7 @@
 #include TUMP_COMMON_INCLUDE(algorithm/mp_if.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/remove_if.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/unique.hpp)
-#include TUMP_COMMON_INCLUDE(algorithm/find_if.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/index_of.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/replace_if.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/zip.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/through_if.hpp)

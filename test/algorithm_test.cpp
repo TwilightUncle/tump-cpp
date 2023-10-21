@@ -644,6 +644,16 @@ TEST(TumpAlgorithmTest, FindIfTest)
     ASSERT_EQ(case6, 2);
     ASSERT_TRUE(case7);
     ASSERT_EQ(case8, -1);
+
+    constexpr auto case9 = tump::index_of_if_v<tump::is_floating_point, list1>;
+    constexpr auto case10 = tump::index_of_if_v<tump::is_pointer, list1>;
+    constexpr auto case11 = tump::index_of_v<double, list1>;
+    constexpr auto case12 = tump::index_of_v<long long, list1>;
+
+    ASSERT_EQ(case9, 1);
+    ASSERT_EQ(case10, -1);
+    ASSERT_EQ(case11, 2);
+    ASSERT_EQ(case12, -1);
 }
 
 TEST(TumpAlgorithmTest, ReplaceIfTest)
