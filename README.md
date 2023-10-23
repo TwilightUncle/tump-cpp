@@ -42,7 +42,7 @@ using result_list = tump::eval<
         tump::_apply,
         tump::add_const, tump::_dot, tump::make_unsigned
     >,
-    // 実行対象のパラメータパックを持つ型リスト
+    // 実行対象の型リスト
     tump::list<int, float, void, long, char, double>
 >;
 
@@ -55,10 +55,10 @@ static_assert(std::is_same_v<
 int main() {}
 ```
 
-`tump::_apply`は左側のメタ関数を右側の型に適用するだけの演算子で、優先度が最も低いため、式の評価順序の制御に使います。  
+`tump::_apply`は左オペランドのメタ関数を右オペランドの型に適用するだけの演算子で、優先度が最も低いため、式の評価順序の制御に使います。  
 Haskell の `$` 演算子の模倣です。
 
-`tump::_dot`は左右のメタ関数を合成します。
+`tump::_dot`は左右のオペランドのメタ関数を合成します。
 
 ## 動作確認環境
 
