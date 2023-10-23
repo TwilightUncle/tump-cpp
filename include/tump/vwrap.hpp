@@ -11,7 +11,8 @@ namespace tump
     template <auto V>
     struct vwrap
     {
-        using type = decltype(V);
+        using value_type = decltype(V);
+        using type = vwrap<V>;
         static constexpr auto value = V;
     };
 
