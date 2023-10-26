@@ -1,4 +1,4 @@
-# tump-cpp
+# TumpCpp
 
 ヘッダオンリーの C++20 向け、テンプレートメタプログラミング支援ライブラリ。  
 本ライブラリを用いることで、テンプレートメタプログラミングへ関数型のパラダイムの式を導入し、複雑な型操作/型判定の実装を容易に行うことができます。
@@ -14,7 +14,8 @@
 
 ## ドキュメント
 
-https://twilightuncle.github.io/tump-cpp.doc/
+TumpCpp の機能リファレンスのリンクです。
+https://twilightuncle.github.io/tump-cpp/
 
 ## 使い方
 
