@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/style.css">
+        <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/vendor/prism.css">
+        <title>lambda - TumpCpp リファレンス</title>
+    </head>
+    <body>
+        <header id="header">
+            <div class="navigator"><h1>TumpCpp - C++20 Functional-TMP Library</h1>
+
+<!-- - <input type="text" placeholder="検索未実装"> -->
+
+<ul>
+<li><a href="https://github.com/TwilightUncle/tump-cpp">Repository (Github)</a></li>
+</ul>
+</div>
+            <ol class="breadcrumb">
+                <li><a href="https://twilightuncle.github.io/tump-cpp/index.html">Index</a></li>
+                
+                    
+                    <li class="delimiter">></li>
+                    <li>
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref.html">
+                            ref
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="delimiter">></li>
+                    <li>
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/expression.html">
+                            expression
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="delimiter">></li>
+                    <li>
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/expression/lambda.html">
+                            lambda
+                        </a>
+                    </li>
+                    
+                
+            </ol>
+        </header>
+        <div class="content">
+            <aside id="sidebar" class="sidebar">
+                <h3>メニュー</h3>
+                <ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/index.html">Index</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref.html">リファレンス</a>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression.html">式</a>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html">exp/eval</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/sec.html">sec</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/lambda.html">lambda</a></li>
+</ul></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable.html">メタ関数の第一級関数化と適用</a>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/callback.html">callback/cbk</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/partial_apply.html">partial_apply</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invocable.html">Invocable</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invoke.html">invoke</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invoke_list.html">invoke_list</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/apply.html">apply</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/flip.html">flip</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/compose.html">compose</a></li>
+</ul></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator.html">演算子</a>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/apply.html">関数適用</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/dot.html">関数の合成</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/compare.html">比較演算子</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/logical.html">論理演算子</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/elem.html">リスト要素の含有判定</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/concat.html">リスト結合・要素追加</a></li>
+<li>_fmap</li>
+<li>_ap</li>
+<li>_bind</li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/op.html">演算子を定義する</a></li>
+</ul></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container.html">コンテナ</a>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html">list</a>
+
+<ul>
+<li>リストの情報取得用メタ関数・概念
+
+<ul>
+<li>is_empty</li>
+<li>is_type_list</li>
+<li>TypeList</li>
+<li>TypeListOrValueList</li>
+<li>len</li>
+</ul></li>
+<li>リストの要素アクセス用メタ関数
+
+<ul>
+<li>count_if</li>
+<li>exists</li>
+<li>find_if</li>
+<li>get</li>
+<li>get_front</li>
+<li>get_back</li>
+<li>index_of</li>
+<li>index_of_if</li>
+<li>is_unique</li>
+</ul></li>
+<li>リスト操作用メタ関数
+
+<ul>
+<li>make_empty</li>
+<li>make_type_list</li>
+<li>concat</li>
+<li>copy</li>
+<li>filter</li>
+<li>foldl/foldr</li>
+<li>map</li>
+<li>map_if</li>
+<li>pop_front</li>
+<li>pop_back</li>
+<li>push_front</li>
+<li>push_back</li>
+<li>push_front_if</li>
+<li>push_back_if</li>
+<li>remove_if</li>
+<li>replace</li>
+<li>replace_if</li>
+<li>reverse</li>
+<li>slice</li>
+<li>unique</li>
+<li>zip</li>
+</ul></li>
+<li>その他のメタ関数
+
+<ul>
+<li>fmap</li>
+<li>pure</li>
+<li>ap</li>
+<li>ret</li>
+<li>bind</li>
+</ul></li>
+</ul></li>
+<li>vlist</li>
+<li>ファンクタ</li>
+<li>アプリカティブファンクタ</li>
+<li>モナド</li>
+</ul></li>
+<li>定義済みメタ関数
+
+<ul>
+<li>標準ライブラリのメタ関数の第一級関数</li>
+<li>to_true</li>
+<li>left/right</li>
+<li>mp_if</li>
+<li>through/block</li>
+<li>vwrap/block
+<!-- - [マクロ](https://twilightuncle.github.io/tump-cpp/ref/macro.html) --></li>
+</ul></li>
+</ul></li>
+</ul>
+
+            </aside>
+            <article>
+                <h1>lambda - TumpCpp リファレンス</h1>
+                <p></p>
+
+                <pre><code class="language-cpp">namespace tump {
+    template &lt;class FormalArgList, class Expression&gt;
+    using lambda = ...;
+
+    template &lt;class... Types&gt;
+    struct lambda_args;
+}
+</code></pre>
+
+<h2 id="概要">概要</h2>
+
+<p>ラムダ式(無名関数)として、第一級関数化したメタ関数を生成します。</p>
+
+<h2 id="使い方">使い方</h2>
+
+<p><code>tump::lambda</code>のテンプレートパラメータ<code>FormalArgList</code>には仮引数リスト、テンプレートパラメータ<code>Expression</code>には式を指定します。</p>
+
+<p><code>FormalArgList</code>には<code>tump::lambda_args</code>を通して仮引数を指定します。<br />
+<code>tump::lambda_args</code>のパラメータパックと同じ型が、<code>Expression</code>に指定した式の中で出現した場合、ラムダ式から生成されたメタ関数を適用した型で置換されます。<br />
+そのうえで、<code>Expression</code>の内容が式として評価されます。</p>
+
+<p><code>Expression</code>には<a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::exp</code></a>により式を記述します。<br />
+※<a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a>は仮引数周りの置換処理を行う前に、評価が完了してしまうため、ラムダ式で使用することはできません。</p>
+
+<p>なお、TumpCpp では、<code>tump::lambda_args</code>の仮引数として使用するための下記の型が定義されています。</p>
+
+<ul>
+<li><code>_arg1</code></li>
+<li><code>_arg2</code></li>
+<li><code>_arg3</code></li>
+<li><code>_arg4</code></li>
+<li><code>_argx</code></li>
+<li><code>_argy</code></li>
+<li><code>_argz</code></li>
+<li><code>_arga</code></li>
+<li><code>_argb</code></li>
+<li><code>_argc</code></li>
+</ul>
+
+<h2 id="例">例</h2>
+
+<pre><code class="language-cpp">#include &lt;tump.hpp&gt;
+
+// ラムダ式により、2 引数のメタ関数を生成
+using my_func = tump::lambda&lt;
+    tump::lambda_args&lt;tump::_arg1, tump::_arg2&gt;,
+    tump::exp&lt;
+        tump::_arg1, tump::_eq, int,
+        tump::_and,
+        tump::_arg2, tump::_ne, double
+    &gt;
+&gt;;
+
+// epx の _arg1 が long で、_arg2 が double で置き換えられた後、評価される
+static_assert(tump::eval&lt;my_func, long, double&gt;::value == false);
+
+// exp の _arg1 が int で、_arg2 が float で置き換えられた後、評価される
+static_assert(tump::eval&lt;my_func, int, float&gt;::value == true);
+
+int main() {}
+</code></pre>
+
+<h2 id="lambda_argsの注意点">lambda_argsの注意点</h2>
+
+<p><code>tump::lambda_args</code>のパラメータパックとして指定された型は、<code>Expression</code>に同じ型の記載がある場合、生成後のメタ関数の評価時に、全て引数で置き換えられます。<br />
+しかし、<code>tump::lambda_args</code>にはあらゆる型を指定することができるため、<code>Expression</code>の式中で意図しない引数の置換が起きてしまう可能性があります。</p>
+
+<p>例えば、下記のように<code>tump::lambda_args</code>に<code>int</code>型が指定されていた場合、<code>tump::exp</code>の内部で指定されていた<code>int</code>型はすべて、生成後のメタ関数の評価時に引数で置換されてしまいます。<br />
+指定する引数の内容によっては、別の引数の内容にまで影響を及ぼすことがありますので、ご注意ください。</p>
+
+<pre><code class="language-cpp">#include &lt;tump.hpp&gt;
+
+using my_func = tump::lambda&lt;
+    tump::lambda_args&lt;int, tump::_arga&gt;,
+    tump::exp&lt;int, tump::_eq, tump::_arga&gt;
+&gt;;
+
+// exp の int が long で、_arga が double で置き換えられた後、評価される
+static_assert(tump::eval&lt;my_func, long, double&gt;::value == false);
+
+// 実装における計算順序の都合上、
+// exp の _arga が int で、_arga 置換後の int も含めた int が double で置き換えられた後、評価される
+static_assert(tump::eval&lt;my_func, double, int&gt;::value == true);
+
+int main() {}
+</code></pre>
+
+<p>特定が難しい不具合となる可能性があるため、下記のような型以外の、仮引数以外の用途でも使う型を、仮引数として使用しないことを推奨します。</p>
+
+<ul>
+<li>TumpCpp で定義済みの仮引数用の型</li>
+
+<li><p>新たに仮引数専用の型を用意</p>
+
+<pre><code class="language-cpp">#include &lt;tump.hpp&gt;
+
+struct my_arg_t {};
+
+using my_func = tump::lambda&lt;
+tump::lambda_args&lt;my_arg_t, tump::_arga&gt;,
+tump::exp&lt;my_arg_t, tump::_eq, tump::_arga&gt;
+&gt;;
+
+// exp の 対応する位置の仮引数が引数で置き換えられた後、評価される
+static_assert(tump::eval&lt;my_func, long, double&gt;::value == false);
+static_assert(tump::eval&lt;my_func, long, long&gt;::value == true);
+
+int main() {}
+</code></pre></li>
+</ul>
+
+<h2 id="関連リンク">関連リンク</h2>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::exp</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/compare.html"><code>tump::_eq</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/compare.html"><code>tump::_ne</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/logical.html"><code>tump::_and</code></a></li>
+</ul>
+
+            </article>
+            <aside id="table_of_contents" class="table-of-contents">
+                <h3>目次</h3>
+                <ul>
+                    
+                        <li>
+                            <a href="#%e6%a6%82%e8%a6%81%0d">
+                                概要
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#%e4%bd%bf%e3%81%84%e6%96%b9%0d">
+                                使い方
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#%e4%be%8b%0d">
+                                例
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#lambda_args%e3%81%ae%e6%b3%a8%e6%84%8f%e7%82%b9%0d">
+                                lambda_argsの注意点
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#%e9%96%a2%e9%80%a3%e3%83%aa%e3%83%b3%e3%82%af%0d">
+                                関連リンク
+                            </a>
+                        </li>
+                    
+                </ul>
+            </aside>
+        </div>
+        <footer id="footer">
+            <div class="copyright">
+© 2023 TwilightUncle
+</div>
+
+        </footer>
+        </div>
+        <script type="module" src="https://twilightuncle.github.io/tump-cpp/assets/js/style.js"></script>
+        <script type="module" src="https://twilightuncle.github.io/tump-cpp/assets/js/toggle.js"></script>
+        <script type="text/javascript" src="https://twilightuncle.github.io/tump-cpp/assets/js/scroll.js"></script>
+        <script type="text/javascript" src="https://twilightuncle.github.io/tump-cpp/assets/js/vendor/prism.js"></script>
+    </body>
+</html>

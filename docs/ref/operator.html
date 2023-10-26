@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/style.css">
+        <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/vendor/prism.css">
+        <title>演算子 - TumpCpp リファレンス</title>
+    </head>
+    <body>
+        <header id="header">
+            <div class="navigator"><h1>TumpCpp - C++20 Functional-TMP Library</h1>
+
+<!-- - <input type="text" placeholder="検索未実装"> -->
+
+<ul>
+<li><a href="https://github.com/TwilightUncle/tump-cpp">Repository (Github)</a></li>
+</ul>
+</div>
+            <ol class="breadcrumb">
+                <li><a href="https://twilightuncle.github.io/tump-cpp/index.html">Index</a></li>
+                
+                    
+                    <li class="delimiter">></li>
+                    <li>
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref.html">
+                            ref
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="delimiter">></li>
+                    <li>
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/operator.html">
+                            operator
+                        </a>
+                    </li>
+                    
+                
+            </ol>
+        </header>
+        <div class="content">
+            <aside id="sidebar" class="sidebar">
+                <h3>メニュー</h3>
+                <ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/index.html">Index</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref.html">リファレンス</a>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression.html">式</a>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html">exp/eval</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/sec.html">sec</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/lambda.html">lambda</a></li>
+</ul></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable.html">メタ関数の第一級関数化と適用</a>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/callback.html">callback/cbk</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/partial_apply.html">partial_apply</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invocable.html">Invocable</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invoke.html">invoke</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invoke_list.html">invoke_list</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/apply.html">apply</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/flip.html">flip</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/compose.html">compose</a></li>
+</ul></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator.html">演算子</a>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/apply.html">関数適用</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/dot.html">関数の合成</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/compare.html">比較演算子</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/logical.html">論理演算子</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/elem.html">リスト要素の含有判定</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/concat.html">リスト結合・要素追加</a></li>
+<li>_fmap</li>
+<li>_ap</li>
+<li>_bind</li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/op.html">演算子を定義する</a></li>
+</ul></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container.html">コンテナ</a>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html">list</a>
+
+<ul>
+<li>リストの情報取得用メタ関数・概念
+
+<ul>
+<li>is_empty</li>
+<li>is_type_list</li>
+<li>TypeList</li>
+<li>TypeListOrValueList</li>
+<li>len</li>
+</ul></li>
+<li>リストの要素アクセス用メタ関数
+
+<ul>
+<li>count_if</li>
+<li>exists</li>
+<li>find_if</li>
+<li>get</li>
+<li>get_front</li>
+<li>get_back</li>
+<li>index_of</li>
+<li>index_of_if</li>
+<li>is_unique</li>
+</ul></li>
+<li>リスト操作用メタ関数
+
+<ul>
+<li>make_empty</li>
+<li>make_type_list</li>
+<li>concat</li>
+<li>copy</li>
+<li>filter</li>
+<li>foldl/foldr</li>
+<li>map</li>
+<li>map_if</li>
+<li>pop_front</li>
+<li>pop_back</li>
+<li>push_front</li>
+<li>push_back</li>
+<li>push_front_if</li>
+<li>push_back_if</li>
+<li>remove_if</li>
+<li>replace</li>
+<li>replace_if</li>
+<li>reverse</li>
+<li>slice</li>
+<li>unique</li>
+<li>zip</li>
+</ul></li>
+<li>その他のメタ関数
+
+<ul>
+<li>fmap</li>
+<li>pure</li>
+<li>ap</li>
+<li>ret</li>
+<li>bind</li>
+</ul></li>
+</ul></li>
+<li>vlist</li>
+<li>ファンクタ</li>
+<li>アプリカティブファンクタ</li>
+<li>モナド</li>
+</ul></li>
+<li>定義済みメタ関数
+
+<ul>
+<li>標準ライブラリのメタ関数の第一級関数</li>
+<li>to_true</li>
+<li>left/right</li>
+<li>mp_if</li>
+<li>through/block</li>
+<li>vwrap/block
+<!-- - [マクロ](https://twilightuncle.github.io/tump-cpp/ref/macro.html) --></li>
+</ul></li>
+</ul></li>
+</ul>
+
+            </aside>
+            <article>
+                <h1>演算子 - TumpCpp リファレンス</h1>
+                <p></p>
+
+                <p>TumpCpp の式で使用可能な、演算子についてのリファレンスです。</p>
+
+<h2 id="概要">概要</h2>
+
+<p>TumpCpp における演算子は、中置で、左右のオペランドの型に対し、演算子毎の規定の処理を行います。<br />
+型の配置順序が異なるだけで、2 引数のメタ関数と同じように機能します。</p>
+
+<ul>
+<li>メタ関数は前置: <code>tump::eval&lt;func, arg1, arg2&gt;</code></li>
+<li>演算子は中置: <code>tump::eval&lt;arg1, operator, arg2</code></li>
+</ul>
+
+<p>なお、一つの式の中で、演算子とメタ関数が同時に出現した場合は、評価可能なメタ関数の適用がすべて完了したのちに、演算子の評価が行われます。</p>
+
+<p>また、演算子はそれぞれ評価の優先順位と、結合性が設定されており、複数の演算子が一つの式の中で出現した際の評価順序に影響を及ぼします。<br />
+上記の性質を理解し、うまく使うことで簡潔に式を記述することができます。<br />
+詳細は後述の、<a href="#演算子の評価の優先度の詳細">演算子の評価の優先度の詳細</a>を参照ください。</p>
+
+<p>TumpCpp の演算子は、<a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code>または<code>tump::exp</code></a>で記述された式の中でしか、使用することができません。</p>
+
+<h2 id="演算子の部分適用">演算子の部分適用</h2>
+
+<p>TumpCpp では演算子を部分適用可能です。<br />
+詳細については、<a href="https://twilightuncle.github.io/tump-cpp/ref/expression/sec.html">sec のリファレンス</a>を参照ください。</p>
+
+<h2 id="演算子の評価の優先度の詳細">演算子の評価の優先度の詳細</h2>
+
+<p>演算子には 0 ~ 9 までの優先順位が設定されており、数字が大きいほど優先的に評価されます。<br />
+また、結合性には左結合、右結合、非結合の三種類あり、同じ優先度の演算子が出現した際の評価の順序が異なります。<br />
+さらに、1 つの式に同じ優先度かつ、異なる結合性の演算子が出現した際は、非結合、左結合、右結合の順に評価されます。</p>
+
+<table>
+<thead>
+<tr>
+<th>結合性の種類</th>
+<th>説明</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>非結合</td>
+<td>結合性に意味を持たない演算子に設定されます。<br>ただし、TumpCpp では、左結合と同様に演算子の評価が行われます。</td>
+</tr>
+
+<tr>
+<td>左結合</td>
+<td>1 つの式に同じ優先度、結合性の演算子が存在する場合、式の左側にあるものほど先に評価されます。</td>
+</tr>
+
+<tr>
+<td>右結合</td>
+<td>1 つの式に同じ優先度、結合性の演算子が存在する場合、式の右側にあるものほど先に評価されます。</td>
+</tr>
+</tbody>
+</table>
+
+<p>例えば、下記のような演算子が定義されているとします。</p>
+
+<ul>
+<li>優先度 1 で右結合の演算子<code>op1_R</code></li>
+<li>優先度 2 の演算子<code>op2</code></li>
+<li>優先度 3 の演算子<code>op3</code></li>
+</ul>
+
+<p>これらの演算子を用いて、下記の式を記述した場合、<code>result_1</code>と<code>result_2</code>は、まったく同じ処理となります。</p>
+
+<pre><code class="language-cpp">using result_1 = tump::eval&lt;int, op1_R, float, op3, char, op2, long, op1_R, short&gt;;
+
+// result_1 の式を分解
+using process_1 = tump::eval&lt;float, op3, char&gt;;
+using process_2 = tump::eval&lt;process_1, op2, long&gt;;
+using process_3 = tump::eval&lt;process_2, op1_R, short&gt;;
+using result_2 = tump::eval&lt;int, op1_R, process_3&gt;;
+</code></pre>
+
+<h2 id="一覧">一覧</h2>
+
+<table>
+<thead>
+<tr>
+<th>演算子</th>
+<th>結合性</th>
+<th>優先順位</th>
+<th>概要</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/dot.html">_dot</a></td>
+<td>右結合</td>
+<td>9</td>
+<td>関数を合成</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/concat.html">_cons</a></td>
+<td>右結合</td>
+<td>5</td>
+<td>リストの先頭に要素を挿入</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/concat.html">_concat</a></td>
+<td>右結合</td>
+<td>5</td>
+<td>リストの結合</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/compare.html">_eq</a></td>
+<td>非結合</td>
+<td>4</td>
+<td>比較演算子(等号)</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/compare.html">_ne</a></td>
+<td>非結合</td>
+<td>4</td>
+<td>比較演算子(不一致)</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/elem.html">_elem</a></td>
+<td>非結合</td>
+<td>4</td>
+<td>リストに指定の要素が含まれているかの判定</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/elem.html">_not_elem</a></td>
+<td>非結合</td>
+<td>4</td>
+<td>リストに指定の要素が含まれていないかの判定</td>
+</tr>
+
+<tr>
+<td>_fmap</td>
+<td>左結合</td>
+<td>4</td>
+<td>ファンクタに対するメタ関数持ち上げからの適用</td>
+</tr>
+
+<tr>
+<td>_ap</td>
+<td>左結合</td>
+<td>4</td>
+<td>アプリカティブファンクタに対するメタ関数適用</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/logical.html">_and</a></td>
+<td>右結合</td>
+<td>3</td>
+<td>論理積</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/logical.html">_or</a></td>
+<td>右結合</td>
+<td>2</td>
+<td>論理和</td>
+</tr>
+
+<tr>
+<td>_bind</td>
+<td>左結合</td>
+<td>1</td>
+<td>モナドのバインド演算子</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/apply.html">_apply</a></td>
+<td>右結合</td>
+<td>0</td>
+<td>メタ関数の適用</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/op.html">_op</a></td>
+<td>-</td>
+<td>-</td>
+<td>演算子を定義する</td>
+</tr>
+</tbody>
+</table>
+
+            </article>
+            <aside id="table_of_contents" class="table-of-contents">
+                <h3>目次</h3>
+                <ul>
+                    
+                        <li>
+                            <a href="#%e6%a6%82%e8%a6%81%0d">
+                                概要
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#%e6%bc%94%e7%ae%97%e5%ad%90%e3%81%ae%e9%83%a8%e5%88%86%e9%81%a9%e7%94%a8%0d">
+                                演算子の部分適用
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#%e6%bc%94%e7%ae%97%e5%ad%90%e3%81%ae%e8%a9%95%e4%be%a1%e3%81%ae%e5%84%aa%e5%85%88%e5%ba%a6%e3%81%ae%e8%a9%b3%e7%b4%b0%0d">
+                                演算子の評価の優先度の詳細
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#%e4%b8%80%e8%a6%a7%0d">
+                                一覧
+                            </a>
+                        </li>
+                    
+                </ul>
+            </aside>
+        </div>
+        <footer id="footer">
+            <div class="copyright">
+© 2023 TwilightUncle
+</div>
+
+        </footer>
+        </div>
+        <script type="module" src="https://twilightuncle.github.io/tump-cpp/assets/js/style.js"></script>
+        <script type="module" src="https://twilightuncle.github.io/tump-cpp/assets/js/toggle.js"></script>
+        <script type="text/javascript" src="https://twilightuncle.github.io/tump-cpp/assets/js/scroll.js"></script>
+        <script type="text/javascript" src="https://twilightuncle.github.io/tump-cpp/assets/js/vendor/prism.js"></script>
+    </body>
+</html>
