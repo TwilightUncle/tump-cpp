@@ -1,8 +1,8 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_REMOVE_IF_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_REMOVE_IF_HPP
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_REMOVE_IF_HPP 15
 
-#include TUMP_COMMON_INCLUDE(algorithm/filter.hpp)
-#include TUMP_COMMON_INCLUDE(metafunction/compose.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/filter.hpp) // 14
+#include TUMP_COMMON_INCLUDE(metafunction/compose.hpp) // 12
 
 namespace tump
 {

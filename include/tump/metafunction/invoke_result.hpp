@@ -1,8 +1,8 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_INVOKE_RESULT_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_INVOKE_RESULT_HPP
+#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_INVOKE_RESULT_HPP 4
 
-#include TUMP_COMMON_INCLUDE(algorithm/to_true.hpp)
-#include TUMP_COMMON_INCLUDE(metafunction/flip.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/to_true.hpp) // 1
+#include TUMP_COMMON_INCLUDE(metafunction/flip.hpp) // 3
 // TODO: 制約の合成と式からの制約の推論
 namespace tump
 {

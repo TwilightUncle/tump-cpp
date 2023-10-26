@@ -1,8 +1,8 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_HAS_TYPE_PARAMETERS_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_HAS_TYPE_PARAMETERS_HPP
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_HAS_TYPE_PARAMETERS_HPP 8
 
-#include TUMP_COMMON_INCLUDE(containers/vlist.hpp)
-#include TUMP_COMMON_INCLUDE(metafunction/std.hpp)
+#include TUMP_COMMON_INCLUDE(containers/vlist.hpp) // 7
+#include TUMP_COMMON_INCLUDE(metafunction/std.hpp) // 5
 
 namespace tump
 {

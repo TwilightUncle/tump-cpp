@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_ARRAY_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_ARRAY_HPP
+#define TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_ARRAY_HPP 8
 
-#include TUMP_COMMON_INCLUDE(containers/st_list.hpp)
+#include TUMP_COMMON_INCLUDE(containers/st_list.hpp) // 7
 
 namespace tump
 {

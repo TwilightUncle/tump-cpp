@@ -1,9 +1,9 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_METHODS_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_METHODS_HPP
+#define TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_METHODS_HPP 5
 
-#include TUMP_COMMON_INCLUDE(null.hpp)
-#include TUMP_COMMON_INCLUDE(empty.hpp)
-#include TUMP_COMMON_INCLUDE(metafunction/invoke_result.hpp)
+#include TUMP_COMMON_INCLUDE(null.hpp) // 0
+#include TUMP_COMMON_INCLUDE(empty.hpp) // 0
+#include TUMP_COMMON_INCLUDE(metafunction/invoke_result.hpp) // 4
 
 namespace tump
 {

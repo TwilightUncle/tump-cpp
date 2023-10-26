@@ -1,8 +1,8 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_COPY_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_COPY_HPP
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_COPY_HPP 10
 
-#include TUMP_COMMON_INCLUDE(algorithm/make_type_list.hpp)
-#include TUMP_COMMON_INCLUDE(metafunction/invoke_list.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/make_type_list.hpp) // 9
+#include TUMP_COMMON_INCLUDE(metafunction/invoke_list.hpp) // 3
 
 namespace tump
 {

@@ -1,8 +1,8 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_VLIST_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_VLIST_HPP
+#define TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_VLIST_HPP 7
 
-#include TUMP_COMMON_INCLUDE(vwrap.hpp)
-#include TUMP_COMMON_INCLUDE(containers/list.hpp)
+#include TUMP_COMMON_INCLUDE(vwrap.hpp) // 1
+#include TUMP_COMMON_INCLUDE(containers/list.hpp) // 6
 
 namespace tump
 {

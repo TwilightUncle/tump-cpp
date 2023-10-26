@@ -1,9 +1,9 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_OPERATOR_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_OPERATOR_HPP
+#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_OPERATOR_HPP 16
 
-#include TUMP_COMMON_INCLUDE(vwrap.hpp)
-#include TUMP_COMMON_INCLUDE(algorithm/push.hpp)
-#include TUMP_COMMON_INCLUDE(containers/monad.hpp)
+#include TUMP_COMMON_INCLUDE(vwrap.hpp) // 1
+#include TUMP_COMMON_INCLUDE(algorithm/push.hpp) // 13
+#include TUMP_COMMON_INCLUDE(containers/monad.hpp) // 15
 
 // TODO: invoke_result の特殊化を定義すること
 

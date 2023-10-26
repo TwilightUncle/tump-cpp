@@ -1,8 +1,8 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_STD_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_STD_HPP
+#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_STD_HPP 5
 
-#include TUMP_COMMON_INCLUDE(version.hpp)
-#include TUMP_COMMON_INCLUDE(metafunction/invoke_result.hpp)
+#include TUMP_COMMON_INCLUDE(version.hpp) // 0
+#include TUMP_COMMON_INCLUDE(metafunction/invoke_result.hpp) // 4
 
 namespace tump
 {

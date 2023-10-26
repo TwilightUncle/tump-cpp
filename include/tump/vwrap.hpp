@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_VWRAP_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_VWRAP_HPP
+#define TUMP_INCLUDE_GUARD_TUMP_VWRAP_HPP 1
 
-#include TUMP_COMMON_INCLUDE(metafunction/callback.hpp)
+#include TUMP_COMMON_INCLUDE(metafunction/callback.hpp) // 0
 
 namespace tump
 {

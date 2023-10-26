@@ -1,10 +1,10 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_EXPRESSION_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_EXPRESSION_HPP
+#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_EXPRESSION_HPP 17
 
 #include <utility>
-#include TUMP_COMMON_INCLUDE(metafunction/operator.hpp)
-#include TUMP_COMMON_INCLUDE(algorithm/pop.hpp)
-#include TUMP_COMMON_INCLUDE(algorithm/reverse.hpp)
+#include TUMP_COMMON_INCLUDE(metafunction/operator.hpp) // 16
+#include TUMP_COMMON_INCLUDE(algorithm/pop.hpp) // 14
+#include TUMP_COMMON_INCLUDE(algorithm/reverse.hpp) // 14
 
 // TODO: invoke_result の特殊化を定義すること
 

@@ -1,8 +1,8 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_REPLACE_IF_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_REPLACE_IF_HPP
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_REPLACE_IF_HPP 12
 
-#include TUMP_COMMON_INCLUDE(algorithm/map.hpp)
-#include TUMP_COMMON_INCLUDE(algorithm/left_right.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/map.hpp) // 11
+#include TUMP_COMMON_INCLUDE(algorithm/left_right.hpp) // 10
 
 namespace tump
 {
