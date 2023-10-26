@@ -14,7 +14,7 @@
 
 ## ドキュメント
 
-TumpCpp の機能リファレンスのリンクです。
+TumpCpp の機能リファレンスのリンクです。  
 https://twilightuncle.github.io/tump-cpp/
 
 ## 使い方
