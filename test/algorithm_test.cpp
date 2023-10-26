@@ -698,3 +698,18 @@ TEST(TumpAlgorithmTest, CountIfTest)
     constexpr auto case1 = tump::count_if_v<tump::is_integral, list1>;
     ASSERT_EQ(case1, 3);
 }
+
+TEST(TumpAlgorithmTest, FillTest)
+{
+    using list1 = tump::list<int, float>;
+    using list2 = tump::empty<std::tuple>;
+
+    constexpr auto case1 = std::is_same_v<
+        tump::fill_t<list1, tump::type_value<double, 4u>>,
+        tump::list<double, double, double, double>
+    >;
+    constexpr auto case2 = std::is_same_v<
+        tump::fill_t<list2, tump::fill_arg<long, 3>>,
+        std::tuple<long, long, long>
+    >;
+}

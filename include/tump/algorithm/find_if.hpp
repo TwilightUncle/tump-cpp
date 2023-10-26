@@ -14,11 +14,11 @@ namespace tump
 
             template <InvocableArgN<1> F, int N, TypeList List>
             requires (bool(invoke_v<F, get_front_t<List>>))
-            struct find_if_impl<F, N, List> : public type_vlaue<get_front_t<List>, N> {};
+            struct find_if_impl<F, N, List> : public type_value<get_front_t<List>, N> {};
 
             template <InvocableArgN<1> F, int N, TypeList List>
             requires (is_empty_v<List>)
-            struct find_if_impl<F, N, List> : public type_vlaue<mp_null_t, int(-1)> {};
+            struct find_if_impl<F, N, List> : public type_value<mp_null_t, int(-1)> {};
         }
 
         /**
