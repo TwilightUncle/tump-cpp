@@ -713,3 +713,24 @@ TEST(TumpAlgorithmTest, FillTest)
         std::tuple<long, long, long>
     >;
 }
+
+template <class T>
+using guard_test_func = tump::guard_t<
+    tump::if_clause<std::is_unsigned<T>, unsigned int>,
+    tump::if_clause<std::is_integral<T>, int>,
+    tump::if_clause<std::is_floating_point<T>, float>,
+    tump::otherwise<void>
+>;
+
+TEST(TumpAlgorithmTest, GuardTest)
+{
+    constexpr auto case1 = std::is_same_v<guard_test_func<std::size_t>, unsigned int>;
+    constexpr auto case2 = std::is_same_v<guard_test_func<char>, int>;
+    constexpr auto case3 = std::is_same_v<guard_test_func<double>, float>;
+    constexpr auto case4 = std::is_same_v<guard_test_func<std::tuple<int>>, void>;
+
+    ASSERT_TRUE(case1);
+    ASSERT_TRUE(case2);
+    ASSERT_TRUE(case3);
+    ASSERT_TRUE(case4);
+}

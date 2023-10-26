@@ -105,11 +105,14 @@ namespace tump
          * 再帰的に式を評価する
         */
         template <class T>
-        using eval_exp_t = typename std::conditional_t<
+        struct eval_exp : public std::conditional_t<
             is_exp<T>::value,
             T,
             std::type_identity<T>
-        >::type;
+        > {};
+
+        template <class T>
+        using eval_exp_t = typename eval_exp<T>::type;
 
         /**
          * 関数型言語っぽい式
@@ -135,6 +138,9 @@ namespace tump
     */
     template <class T>
     constexpr auto is_exp_v = fn::is_exp<T>::value;
+
+    template <class T>
+    concept TumpExpression = is_exp_v<T>;
 
     /**
      * 関数型言語っぽい式

@@ -26,6 +26,7 @@ if (CMAKE_PROJECT_NAME STREQUAL "tump")
         ${CMAKE_CURRENT_SOURCE_DIR}/metafunction_test.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/algorithm_test.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/containers_test.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/expression_test.cpp
     )
 
     target_include_directories(tumptest PRIVATE ${tump_SOURCE_DIR}/include)
