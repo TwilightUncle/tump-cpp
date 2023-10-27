@@ -1,8 +1,8 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_HAS_TYPE_PARAMETERS_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_HAS_TYPE_PARAMETERS_HPP 8
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_HAS_TYPE_PARAMETERS_HPP
 
-#include TUMP_COMMON_INCLUDE(containers/vlist.hpp) // 7
-#include TUMP_COMMON_INCLUDE(metafunction/std.hpp) // 5
+#include TUMP_COMMON_INCLUDE(containers/vlist.hpp)
+#include TUMP_COMMON_INCLUDE(metafunction/std.hpp)
 
 namespace tump
 {
@@ -71,12 +71,6 @@ namespace tump
     template <class T>
     constexpr auto is_type_list_v = fn::is_type_list<T>::value;
 
-    /**
-     * 型のリストであることの制約
-     * mp_invoke_resultによる返却型の定義に使用
-    */
-    using constraint_type_list = std::type_identity<is_type_list>;
-
     namespace fn
     {
         /**
@@ -87,8 +81,8 @@ namespace tump
 
         template <TypeList List1, TypeList List2>
         struct is_same_container<List1, List2> : public std::is_same<
-            make_empty_t<List1, get_container_constraint_t<List1>>,
-            make_empty_t<List2, get_container_constraint_t<List2>>
+            make_empty_t<List1>,
+            make_empty_t<List2>
         >::type {};
     }
 
@@ -102,22 +96,6 @@ namespace tump
     */
     template <class T1, class T2>
     constexpr auto is_same_container_v = fn::is_same_container<T1, T2>::value;
-
-    /**
-     * 引数のリストと同じコンテナであることの制約
-     * mp_invoke_resultによる返却型の定義に使用
-    */
-    template <TypeList T>
-    using constraint_st_type_list = std::type_identity<
-        partial_apply<is_same_container, T>
-    >;
-
-    template <class T>
-    struct fn::mp_invoke_result<has_type_parameters, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_type_list, T> : public constraint_bool_constant {};
-    template <class T1, class T2>
-    struct fn::mp_invoke_result<is_same_container, T1, T2> : public constraint_bool_constant {};
 }
 
 #endif

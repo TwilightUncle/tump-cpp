@@ -1,8 +1,8 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_VLIST_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_VLIST_HPP 7
+#define TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_VLIST_HPP
 
-#include TUMP_COMMON_INCLUDE(vwrap.hpp) // 1
-#include TUMP_COMMON_INCLUDE(containers/list.hpp) // 6
+#include TUMP_COMMON_INCLUDE(vwrap.hpp)
+#include TUMP_COMMON_INCLUDE(containers/list.hpp)
 
 namespace tump
 {
@@ -113,16 +113,10 @@ namespace tump
         struct unnorm_li<wraped_vlist<OldValue...>, list<WrapedValues...>> : public std::type_identity<wraped_vlist<WrapedValues...>> {};
 
         template <auto... Values>
-        struct get_container_constraint<vlist<Values...>> : public std::type_identity<::tump::to_true> {};
+        struct make_empty<vlist<Values...>> : public std::type_identity<vlist<>> {};
 
         template <VFunctional... WrapedValues>
-        struct get_container_constraint<wraped_vlist<WrapedValues...>> : public std::type_identity<::tump::to_true> {};
-
-        template <auto... Values, class _>
-        struct make_empty<vlist<Values...>, _> : public std::type_identity<vlist<>> {};
-
-        template <VFunctional... WrapedValues, class _>
-        struct make_empty<wraped_vlist<WrapedValues...>, _> : public std::type_identity<wraped_vlist<>> {};
+        struct make_empty<wraped_vlist<WrapedValues...>> : public std::type_identity<wraped_vlist<>> {};
 
         template <>
         struct is_empty<vlist<>> : public std::true_type {};

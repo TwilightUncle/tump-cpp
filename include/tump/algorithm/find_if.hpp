@@ -1,8 +1,8 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_FIND_IF_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_FIND_IF_HPP 15
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_FIND_IF_HPP
 
-#include TUMP_COMMON_INCLUDE(type_value.hpp) // 0
-#include TUMP_COMMON_INCLUDE(algorithm/pop.hpp) // 14
+#include TUMP_COMMON_INCLUDE(type_value.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/pop.hpp)
 
 namespace tump
 {
@@ -75,12 +75,6 @@ namespace tump
     */
     template <class Search, TypeList List>
     constexpr auto find_v = fn::find<Search, List>::value;
-
-    template <InvocableArgN<1> F, TypeList List>
-    struct fn::mp_invoke_result<find_if, F, List> : public std::type_identity<cbk<is_type_value, 1>> {};
-
-    template <class T, TypeList List>
-    struct fn::mp_invoke_result<find, T, List> : public std::type_identity<cbk<is_type_value, 1>> {};
 }
 
 #endif

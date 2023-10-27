@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_MONAD_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_MONAD_HPP 15
+#define TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_MONAD_HPP
 
-#include TUMP_COMMON_INCLUDE(containers/applicative.hpp) // 14
+#include TUMP_COMMON_INCLUDE(containers/applicative.hpp)
 
 namespace tump
 {

@@ -1,9 +1,9 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_METHODS_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_METHODS_HPP 5
+#define TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_METHODS_HPP
 
-#include TUMP_COMMON_INCLUDE(null.hpp) // 0
-#include TUMP_COMMON_INCLUDE(empty.hpp) // 0
-#include TUMP_COMMON_INCLUDE(metafunction/invoke_result.hpp) // 4
+#include TUMP_COMMON_INCLUDE(null.hpp)
+#include TUMP_COMMON_INCLUDE(empty.hpp)
+#include TUMP_COMMON_INCLUDE(metafunction/invoke.hpp)
 
 namespace tump
 {
@@ -22,16 +22,10 @@ namespace tump
         struct unnorm_li;
 
         /**
-         * コンテナが持つ要素の制約を取得
-        */
-        template <class T>
-        struct get_container_constraint;
-
-        /**
          * 指定したリストの側だけ取り出し、空のリストを作成する
          * 制約を持つコンテナに対して、任意の制約に置き換えることも可能
         */
-        template <class List, class Constraint = typename get_container_constraint<List>::type>
+        template <class List>
         struct make_empty;
 
         /**
@@ -67,28 +61,17 @@ namespace tump
     using unnorm_li_t = typename fn::unnorm_li<Container, NormalizedList>::type;
 
     /**
-     * コンテナが持つ要素の制約を取得
+     * 指定したリストの側だけ取り出し、空のリストを作成する
+     * 制約を持つコンテナに対して、任意の制約に置き換えることも可能
     */
-    using get_container_constraint = cbk<fn::get_container_constraint, 1>;
-
-    /**
-     * コンテナが持つ要素の制約を取得
-    */
-    template <class T>
-    using get_container_constraint_t = typename fn::get_container_constraint<T>::type;
+    using make_empty = cbk<fn::make_empty, 1>;
 
     /**
      * 指定したリストの側だけ取り出し、空のリストを作成する
      * 制約を持つコンテナに対して、任意の制約に置き換えることも可能
     */
-    using make_empty = cbk<fn::make_empty, 2>;
-
-    /**
-     * 指定したリストの側だけ取り出し、空のリストを作成する
-     * 制約を持つコンテナに対して、任意の制約に置き換えることも可能
-    */
-    template <class List, class Constraint = get_container_constraint_t<List>>
-    using make_empty_t = typename fn::make_empty<List, Constraint>::type;
+    template <class List>
+    using make_empty_t = typename fn::make_empty<List>::type;
 
     /**
      * 空のリストかどうか判定する
@@ -100,13 +83,6 @@ namespace tump
     */
     template <class T>
     constexpr auto is_empty_v = fn::is_empty<T>::value;
-
-    template <class T>
-    struct fn::mp_invoke_result<get_container_constraint, T> : public constraint_callback_arg1 {};
-    template <class List, class Container>
-    struct fn::mp_invoke_result<make_empty, List, Container> : public std::type_identity<::tump::is_empty> {};
-    template <class T>
-    struct fn::mp_invoke_result<is_empty, T> : public constraint_bool_constant {};
 }
 
 #endif

@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_FLIP_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_FLIP_HPP 3
+#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_FLIP_HPP
 
-#include TUMP_COMMON_INCLUDE(metafunction/invoke.hpp) // 2
+#include TUMP_COMMON_INCLUDE(metafunction/invoke.hpp)
 
 namespace tump
 {

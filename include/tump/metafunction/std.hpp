@@ -1,8 +1,8 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_STD_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_STD_HPP 5
+#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_STD_HPP
 
-#include TUMP_COMMON_INCLUDE(version.hpp) // 0
-#include TUMP_COMMON_INCLUDE(metafunction/invoke_result.hpp) // 4
+#include TUMP_COMMON_INCLUDE(version.hpp)
+#include TUMP_COMMON_INCLUDE(metafunction/callback.hpp)
 
 namespace tump
 {
@@ -61,35 +61,6 @@ namespace tump
     using is_class                      = cbk<std::is_class,                    1>;
     using is_function                   = cbk<std::is_function,                 1>;
 
-    template <class T>
-    struct fn::mp_invoke_result<is_void, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_null_pointer, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_integral, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_floating_point, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_array, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_pointer, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_lvalue_reference, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_rvalue_reference, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_member_object_pointer, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_member_function_pointer, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_enum, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_union, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_class, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_function, T> : public constraint_bool_constant {};
-
     using is_reference      = cbk<std::is_reference,        1>;
     using is_arithmetic     = cbk<std::is_arithmetic,       1>;
     using is_fundamental    = cbk<std::is_fundamental,      1>;
@@ -98,23 +69,6 @@ namespace tump
     using is_compound       = cbk<std::is_compound,         1>;
     using is_member_pointer = cbk<std::is_member_pointer,   1>;
     using is_scoped_enum    = cbk<fn::is_scoped_enum,       1>;
-
-    template <class T>
-    struct fn::mp_invoke_result<is_reference, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_arithmetic, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_fundamental, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_object, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_scalar, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_compound, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_member_pointer, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_scoped_enum, T> : public constraint_bool_constant {};
 
     using is_const                              = cbk<std::is_const,                            1>;
     using is_volatile                           = cbk<std::is_volatile,                         1>;
@@ -164,104 +118,10 @@ namespace tump
     using is_nothrow_swappable                  = cbk<std::is_nothrow_swappable,                1>;
     using has_unique_object_representations     = cbk<std::has_unique_object_representations,   1>;
 
-    template <class T>
-    struct fn::mp_invoke_result<is_const, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_volatile, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_trivial, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_trivially_copyable, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_standard_layout, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_polymorphic, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_abstract, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_final, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_aggregate, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_signed, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_unsigned, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_bounded_array, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_unbounded_array, T> : public constraint_bool_constant {};
-    template <unsigned int ArgsSize, class T, class... Args>
-    struct fn::mp_invoke_result<is_constructible<ArgsSize>, T, Args...> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_default_constructible, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_copy_constructible, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_move_constructible, T> : public constraint_bool_constant {};
-    template <class To, class From>
-    struct fn::mp_invoke_result<is_assignable, To, From> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_copy_assignable, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_move_assignable, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_destructible, T> : public constraint_bool_constant {};
-    template <unsigned int ArgsSize, class T, class... Args>
-    struct fn::mp_invoke_result<is_trivially_constructible<ArgsSize>, T, Args...> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_trivially_default_constructible, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_trivially_copy_constructible, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_trivially_move_constructible, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_trivially_assignable, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_trivially_copy_assignable, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_trivially_move_assignable, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_trivially_destructible, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_nothrow_constructible, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_nothrow_default_constructible, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_nothrow_copy_constructible, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_nothrow_move_constructible, T> : public constraint_bool_constant {};
-    template <class To, class From>
-    struct fn::mp_invoke_result<is_nothrow_assignable, To, From> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_nothrow_copy_assignable, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_nothrow_move_assignable, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_nothrow_destructible, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<has_virtual_destructor, T> : public constraint_bool_constant {};
-    template <class T1, class T2>
-    struct fn::mp_invoke_result<is_swappable_with, T1, T2> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_swappable, T> : public constraint_bool_constant {};
-    template <class T1, class T2>
-    struct fn::mp_invoke_result<is_nothrow_swappable_with, T1, T2> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<is_nothrow_swappable, T> : public constraint_bool_constant {};
-    template <class T>
-    struct fn::mp_invoke_result<has_unique_object_representations, T> : public constraint_bool_constant {};
-
     using alignment_of  = cbk<std::alignment_of,    1>;
     using rank          = cbk<std::rank,            1>;
     // テンプレートパラメータが未対応
     // using extent        = cbk<std::extent,          1>;
-
-    // template <class T>
-    // struct mp_invoke_result<alignment_of, T> : public {};
-    // template <class T>
-    // struct mp_invoke_result<rank, T> : public {};
-    // template <class T>
-    // struct mp_invoke_result<extent, T> : public {};
 
     using is_same                               = cbk<std::is_same,                             2>;
     using is_not_same                           = cbk<fn::is_not_same,                          2>;
@@ -276,27 +136,6 @@ namespace tump
     using reference_converts_from_temporary     = cbk<std::reference_converts_from_temporary,   2>;
 #endif
 
-    template <class T1, class T2>
-    struct fn::mp_invoke_result<is_same, T1, T2> : public constraint_bool_constant {};
-    template <class T1, class T2>
-    struct fn::mp_invoke_result<is_not_same, T1, T2> : public constraint_bool_constant {};
-    template <class Base, class Derived>
-    struct fn::mp_invoke_result<is_base_of, Base, Derived> : public constraint_bool_constant {};
-    template <class From, class To>
-    struct fn::mp_invoke_result<is_convertible, From, To> : public constraint_bool_constant {};
-    template <class From, class To>
-    struct fn::mp_invoke_result<is_nothrow_convertible, From, To> : public constraint_bool_constant {};
-    // template <class T1, class T2>
-    // struct mp_invoke_result<is_layout_compatible, T1, T2> : public constraint_bool_constant {};
-    // template <class T1, class T2>
-    // struct mp_invoke_result<is_pointer_interconvertible_base_of, T1, T2> : public constraint_bool_constant {};
-#ifdef TUMP_ENABLE_CPP23
-    template <class T1, class T2>
-    struct fn::mp_invoke_result<reference_constructs_from_temporary, T1, T2> : public constraint_bool_constant {};
-    template <class T1, class T2>
-    struct fn::mp_invoke_result<reference_converts_from_temporary, T1, T2> : public constraint_bool_constant {};
-#endif
-
     using remove_const      = cbk<std::remove_const,    1>;
     using remove_volatile   = cbk<std::remove_volatile, 1>;
     using remove_cv         = cbk<std::remove_cv,       1>;
@@ -304,53 +143,18 @@ namespace tump
     using add_volatile      = cbk<std::add_volatile,    1>;
     using add_cv            = cbk<std::add_cv,          1>;
 
-    // template <class T>
-    // struct mp_invoke_result<remove_const, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<remove_volatile, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<remove_cv, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<add_const, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<add_volatile, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<add_cv, T> : public constraint_bool_constant {};
-
     using remove_reference      = cbk<std::remove_reference,        1>;
     using add_lvalue_reference  = cbk<std::add_lvalue_reference,    1>;
     using add_rvalue_reference  = cbk<std::add_rvalue_reference,    1>;
 
-    // template <class T>
-    // struct mp_invoke_result<remove_reference, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<add_lvalue_reference, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<add_rvalue_reference, T> : public constraint_bool_constant {};
-
     using make_signed   = cbk<std::make_signed,     1>;
     using make_unsigned = cbk<std::make_unsigned,   1>;
-
-    // template <class T>
-    // struct mp_invoke_result<make_signed, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<make_unsigned, T> : public constraint_bool_constant {};
 
     using remove_extent         = cbk<std::remove_extent,       1>;
     using remove_all_extents    = cbk<std::remove_all_extents,  1>;
 
-    // template <class T>
-    // struct mp_invoke_result<remove_extent, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<remove_all_extents, T> : public constraint_bool_constant {};
-
     using add_pointer       = cbk<std::add_pointer,     1>;
     using remove_pointer    = cbk<std::remove_pointer,  1>;
-
-    // template <class T>
-    // struct mp_invoke_result<add_pointer, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<remove_pointer, T> : public constraint_bool_constant {};
 
     template <unsigned int ArgsSize = 2>
     requires (ArgsSize > 0)
@@ -364,15 +168,6 @@ namespace tump
     template <unsigned int ArgsSize = 3>
     requires (ArgsSize > 1)
     using is_nothrow_invocable_r    = cbk<std::is_nothrow_invocable_r,  ArgsSize>;
-
-    template <unsigned int ArgsSize, class Callable, class... Args>
-    struct fn::mp_invoke_result<is_invocable<ArgsSize>, Callable, Args...> : public constraint_bool_constant {};
-    template <unsigned int ArgsSize, class Rx, class Callable, class... Args>
-    struct fn::mp_invoke_result<is_invocable_r<ArgsSize>, Rx, Callable, Args...> : public constraint_bool_constant {};
-    template <unsigned int ArgsSize, class Callable, class... Args>
-    struct fn::mp_invoke_result<is_nothrow_invocable<ArgsSize>, Callable, Args...> : public constraint_bool_constant {};
-    template <unsigned int ArgsSize, class Rx, class Callable, class... Args>
-    struct fn::mp_invoke_result<is_nothrow_invocable_r<ArgsSize>, Rx, Callable, Args...> : public constraint_bool_constant {};
 
     using type_identity             = cbk<std::type_identity,           1>;
     using remove_cvref              = cbk<std::remove_cvref,            1>;
@@ -396,33 +191,6 @@ namespace tump
     using unwrap_reference          = cbk<std::unwrap_reference,        1>;
     using unwrap_ref_decay          = cbk<std::unwrap_ref_decay,        1>;
 
-    // template <class T>
-    // struct mp_invoke_result<type_identity, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<remove_cvref, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<decay, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<conditional, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<common_type, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<void_t, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<basic_common_reference, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<common_reference, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<underlying_type, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<result_of, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<mp_invoke_result, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<unwrap_reference, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<unwrap_ref_decay, T> : public constraint_bool_constant {};
-    
     template <unsigned int ArgsSize = 2>
     requires (ArgsSize > 0)
     using conjunction   = cbk<std::conjunction, ArgsSize>;
@@ -431,21 +199,9 @@ namespace tump
     using disjunction   = cbk<std::disjunction, ArgsSize>;
     using negation      = cbk<std::negation,    1>;
 
-    template <unsigned int ArgsSize, class... Traits>
-    struct fn::mp_invoke_result<conjunction<ArgsSize>, Traits...> : public constraint_bool_constant {};
-    template <unsigned int ArgsSize, class... Traits>
-    struct fn::mp_invoke_result<disjunction<ArgsSize>, Traits...> : public constraint_bool_constant {};
-    template <class Trait>
-    struct fn::mp_invoke_result<negation, Trait> : public constraint_bool_constant {};
-
     // なんかいない
     // using is_pointer_interconvertible_with_class = cbk<std::is_pointer_interconvertible_with_class, 2>;
     // using is_corresponding_member = cbk<std::is_corresponding_member, 4>;
-    
-    // template <class T>
-    // struct mp_invoke_result<is_pointer_interconvertible_with_class, T> : public constraint_bool_constant {};
-    // template <class T>
-    // struct mp_invoke_result<is_corresponding_member, T> : public constraint_bool_constant {};
 }
 
 #endif

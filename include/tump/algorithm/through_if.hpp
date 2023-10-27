@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_THROUGH_IF_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_THROUGH_IF_HPP 5
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_THROUGH_IF_HPP
 
-#include TUMP_COMMON_INCLUDE(metafunction/invoke_result.hpp) // 4
+#include TUMP_COMMON_INCLUDE(metafunction/invoke.hpp)
 
 namespace tump
 {

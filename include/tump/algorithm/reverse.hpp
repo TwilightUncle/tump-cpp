@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_REVERSE_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_REVERSE_HPP 14
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_REVERSE_HPP
 
-#include TUMP_COMMON_INCLUDE(algorithm/push.hpp) // 13
+#include TUMP_COMMON_INCLUDE(algorithm/push.hpp)
 
 namespace tump
 {
@@ -32,9 +32,6 @@ namespace tump
     */
     template <TypeListOrValueList List>
     using reverse_t = typename fn::reverse<List>::type;
-
-    template <TypeListOrValueList List>
-    struct fn::mp_invoke_result<reverse, List> : public constraint_st_type_list<List> {};
 }
 
 #endif

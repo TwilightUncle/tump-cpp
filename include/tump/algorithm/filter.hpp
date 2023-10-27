@@ -1,8 +1,8 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_FILTER_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_FILTER_HPP 14
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_FILTER_HPP
 
-#include TUMP_COMMON_INCLUDE(metafunction/invoke_list.hpp) // 3
-#include TUMP_COMMON_INCLUDE(algorithm/push.hpp) // 13
+#include TUMP_COMMON_INCLUDE(metafunction/invoke_list.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/push.hpp)
 
 namespace tump
 {
@@ -32,10 +32,6 @@ namespace tump
     */
     template <InvocableArgN<1> F, TypeList List>
     using filter_t = typename fn::filter<F, List>::type;
-
-    // TODO: Fによってリストの制約を変えるべきか考える
-    template <InvocableArgN<1> F, TypeList List>
-    struct fn::mp_invoke_result<filter, F, List> : public constraint_st_type_list<List> {};
 }
 
 #endif

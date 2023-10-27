@@ -1,8 +1,8 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_MP_IF_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_MP_IF_HPP 10
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_MP_IF_HPP
 
-#include TUMP_COMMON_INCLUDE(algorithm/len.hpp) // 9
-#include TUMP_COMMON_INCLUDE(algorithm/exists.hpp) // 9
+#include TUMP_COMMON_INCLUDE(algorithm/len.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/exists.hpp)
 
 namespace tump
 {
@@ -39,15 +39,6 @@ namespace tump
     */
     template <VFunctional Cond, class... Types>
     using mp_if_t = typename fn::mp_if<Cond, Types...>::type;
-
-    template <VFunctional Cond, class T, class F>
-    struct fn::mp_invoke_result<mp_if, Cond, T, F> : public constraint_or_types<T, F> {};
-
-    template <VFunctional Cond, TypeList List>
-    requires (len_v<List> == 2)
-    struct fn::mp_invoke_result<mp_if_li, Cond, List> : public std::type_identity<
-        partial_apply<::tump::flip, ::tump::exists, List>
-    > {};
 }
 
 #endif

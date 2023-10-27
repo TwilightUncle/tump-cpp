@@ -1,8 +1,8 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_FILL_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_FILL_HPP 10
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_FILL_HPP
 
-#include TUMP_COMMON_INCLUDE(type_value.hpp) // 0
-#include TUMP_COMMON_INCLUDE(algorithm/make_type_list.hpp) // 9
+#include TUMP_COMMON_INCLUDE(type_value.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/make_type_list.hpp)
 
 namespace tump
 {

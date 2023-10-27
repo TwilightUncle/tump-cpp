@@ -1,8 +1,8 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_REMOVE_IF_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_REMOVE_IF_HPP 15
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_REMOVE_IF_HPP
 
-#include TUMP_COMMON_INCLUDE(algorithm/filter.hpp) // 14
-#include TUMP_COMMON_INCLUDE(metafunction/compose.hpp) // 12
+#include TUMP_COMMON_INCLUDE(algorithm/filter.hpp)
+#include TUMP_COMMON_INCLUDE(metafunction/compose.hpp)
 
 namespace tump
 {
@@ -48,12 +48,6 @@ namespace tump
     */
     template <class Search, TypeList List>
     using remove_t = typename fn::remove<Search, List>::type;
-
-    // TODO: Fによってリストの制約を変えるべきか考える
-    template <InvocableArgN<1> F, TypeList List>
-    struct fn::mp_invoke_result<remove_if, F, List> : public constraint_st_type_list<List> {};
-    template <class Search, TypeList List>
-    struct fn::mp_invoke_result<remove, Search, List> : public constraint_st_type_list<List> {};
 }
 
 #endif

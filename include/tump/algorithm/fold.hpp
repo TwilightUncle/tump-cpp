@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_FOLD_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_FOLD_HPP 11
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_FOLD_HPP
 
-#include TUMP_COMMON_INCLUDE(algorithm/get.hpp) // 10
+#include TUMP_COMMON_INCLUDE(algorithm/get.hpp)
 
 namespace tump
 {
@@ -55,12 +55,6 @@ namespace tump
     */
     template <InvocableArgN<2> F, class Init, TypeList List>
     using foldr_t = typename fn::foldr<F, Init, List>::type;
-
-    template <InvocableArgN<2> F, class Init, TypeList List>
-    struct fn::mp_invoke_result<foldl, F, Init, List> : public mp_invoke_result<F, Init, get_front_t<List>> {};
-
-    template <InvocableArgN<2> F, class Init, TypeList List>
-    struct fn::mp_invoke_result<foldr, F, Init, List> : public mp_invoke_result<F, get_back_t<List>, Init> {};
 }
 
 #endif

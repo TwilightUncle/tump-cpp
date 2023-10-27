@@ -136,18 +136,6 @@ TEST(TumpMetafunctionTest, ApplyTest)
     ASSERT_FALSE(case7);
 }
 
-TEST(TumpMetafunctionTest, InvokeResultTest)
-{
-    using type2 = tump::mp_invoke_result_t<tump::cbk<std::is_same, 2>, int, int>;
-    constexpr auto case1 = tump::invoke_v<type2, std::true_type>;
-    constexpr auto case2 = tump::invoke_v<type2, std::false_type>;
-    constexpr auto case3 = tump::invoke_v<type2, int>;
-
-    ASSERT_TRUE(case1);
-    ASSERT_TRUE(case2);
-    ASSERT_FALSE(case3);
-}
-
 TEST(TumpMetafunctionTest, ExpressionTest)
 {
     constexpr auto case1 = tump::eval<tump::is_integral, int>::value;

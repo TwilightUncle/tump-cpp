@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_ZIP_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_ZIP_HPP 15
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_ZIP_HPP
 
-#include TUMP_COMMON_INCLUDE(algorithm/pop.hpp) // 14
+#include TUMP_COMMON_INCLUDE(algorithm/pop.hpp)
 
 namespace tump
 {
@@ -41,9 +41,6 @@ namespace tump
     */
     template <TypeList... Lists>
     using zip_t = typename fn::zip<Lists...>::type;
-
-    template <std::size_t ArgsSize, TypeList... Lists>
-    struct fn::mp_invoke_result<cbk<fn::zip, ArgsSize>, Lists...> : public constraint_st_type_list<list<>> {};
 }
 
 #endif

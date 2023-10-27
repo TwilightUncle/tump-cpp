@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_LIST_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_LIST_HPP 6
+#define TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_LIST_HPP
 
-#include TUMP_COMMON_INCLUDE(containers/methods.hpp) // 5
+#include TUMP_COMMON_INCLUDE(containers/methods.hpp)
 
 namespace tump
 {
@@ -39,21 +39,14 @@ namespace tump
         struct unnorm_li<empty<Outer>, list<Types...>> : public std::type_identity<Outer<Types...>> {};
 
         template <class... Types>
-        struct get_container_constraint<list<Types...>> : public std::type_identity<::tump::to_true> {};
+        struct make_empty<list<Types...>> : public std::type_identity<list<>> {};
 
-        template <class T>
-        requires (!std::is_base_of_v<::tump::_::base_list, T>)
-        struct get_container_constraint<T> : public std::type_identity<::tump::to_true> {};
-
-        template <class... Types, class Constraint>
-        struct make_empty<list<Types...>, Constraint> : public std::type_identity<list<>> {};
-
-        template <template <class...> class Outer, class... Types, class Constraint>
+        template <template <class...> class Outer, class... Types>
         requires (!std::is_base_of_v<::tump::_::base_list, Outer<Types...>>)
-        struct make_empty<Outer<Types...>, Constraint> : public std::type_identity<empty<Outer>> {};
+        struct make_empty<Outer<Types...>> : public std::type_identity<empty<Outer>> {};
 
-        template <template <class...> class Outer, class Constraint>
-        struct make_empty<empty<Outer>, Constraint> : public std::type_identity<empty<Outer>> {};
+        template <template <class...> class Outer>
+        struct make_empty<empty<Outer>> : public std::type_identity<empty<Outer>> {};
 
         template <>
         struct is_empty<list<>> : public std::true_type {};

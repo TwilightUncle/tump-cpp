@@ -1,8 +1,8 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_GUARD_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_GUARD_HPP 16
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_GUARD_HPP
 
-#include TUMP_COMMON_INCLUDE(algorithm/find_if.hpp) // 15
-#include TUMP_COMMON_INCLUDE(metafunction/expression.hpp) // 11
+#include TUMP_COMMON_INCLUDE(algorithm/find_if.hpp)
+#include TUMP_COMMON_INCLUDE(metafunction/expression.hpp)
 
 namespace tump
 {

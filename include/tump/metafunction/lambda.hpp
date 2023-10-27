@@ -1,10 +1,10 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_LAMBDA_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_LAMBDA_HPP 18
+#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_LAMBDA_HPP
 
-#include TUMP_COMMON_INCLUDE(metafunction/expression.hpp) // 17
-#include TUMP_COMMON_INCLUDE(algorithm/unique.hpp) // 15
-#include TUMP_COMMON_INCLUDE(algorithm/replace_if.hpp) // 12
-#include TUMP_COMMON_INCLUDE(algorithm/zip.hpp) // 15
+#include TUMP_COMMON_INCLUDE(metafunction/expression.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/unique.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/replace_if.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/zip.hpp)
 
 // TODO: invoke_resultの特殊化を書く
 

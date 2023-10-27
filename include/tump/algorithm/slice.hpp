@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_SLICE_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_SLICE_HPP 15
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_SLICE_HPP
 
-#include TUMP_COMMON_INCLUDE(algorithm/pop.hpp) // 14
+#include TUMP_COMMON_INCLUDE(algorithm/pop.hpp)
 
 namespace tump
 {
@@ -65,10 +65,6 @@ namespace tump
     */
     template <TypeListOrValueList List, class SizeArgs>
     using slice_t = typename fn::slice<List, SizeArgs>::type;
-
-    template <TypeListOrValueList List, std::size_t... Sizes>
-    requires (sizeof...(Sizes) > 0 && sizeof...(Sizes) <= 3)
-    struct fn::mp_invoke_result<slice, List, size_args<Sizes...>> : public constraint_st_type_list<List> {};
 }
 
 #endif

@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_CONCAT_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_CONCAT_HPP 12
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_CONCAT_HPP
 
-#include TUMP_COMMON_INCLUDE(algorithm/fold.hpp) // 11
+#include TUMP_COMMON_INCLUDE(algorithm/fold.hpp)
 
 namespace tump
 {
@@ -52,9 +52,6 @@ namespace tump
     */
     template <TypeListOrValueList... Lists>
     using concat_t = typename fn::concat<Lists...>::type;
-
-    template <unsigned int ArgsSize, TypeListOrValueList List, TypeListOrValueList... Lists>
-    struct fn::mp_invoke_result<concat<ArgsSize>, List, Lists...> : public constraint_st_type_list<List> {};
 }
 
 #endif

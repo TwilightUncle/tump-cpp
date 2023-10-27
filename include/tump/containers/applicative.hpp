@@ -1,11 +1,11 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_APPLICATIVE_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_APPLICATIVE_HPP 14
+#define TUMP_INCLUDE_GUARD_TUMP_CONTAINERS_APPLICATIVE_HPP
 
-#include TUMP_COMMON_INCLUDE(containers/functor.hpp) // 13
-#include TUMP_COMMON_INCLUDE(metafunction/apply.hpp) // 5
-#include TUMP_COMMON_INCLUDE(algorithm/concat.hpp) // 12
-#include TUMP_COMMON_INCLUDE(algorithm/left_right.hpp) // 10
-#include TUMP_COMMON_INCLUDE(algorithm/make_type_list.hpp) // 9
+#include TUMP_COMMON_INCLUDE(containers/functor.hpp)
+#include TUMP_COMMON_INCLUDE(metafunction/apply.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/concat.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/left_right.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/make_type_list.hpp)
 
 namespace tump
 {
@@ -44,10 +44,7 @@ namespace tump
 
         template <TypeList FList, TypeList List>
         struct ap<FList, List> : public fn::unnorm_li<
-            make_empty_t<
-                List,
-                mp_invoke_result_t<::tump::apply<>, get_front_t<FList>, get_front_t<List>>
-            >,
+            make_empty_t<List>,
             ap<to_norm_li_t<FList>, to_norm_li_t<List>>
         > {};
 

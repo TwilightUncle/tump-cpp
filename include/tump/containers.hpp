@@ -5,7 +5,7 @@
 #define TUMP_COMMON_INCLUDE(path) <tump/path>
 #endif
 
-#include TUMP_COMMON_INCLUDE(containers/array.hpp)
+#include TUMP_COMMON_INCLUDE(containers/vlist.hpp)
 #include TUMP_COMMON_INCLUDE(containers/monad.hpp)
 
 #endif

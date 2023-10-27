@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_APPLY_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_APPLY_HPP 5
+#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_APPLY_HPP
 
-#include TUMP_COMMON_INCLUDE(metafunction/invoke_result.hpp) // 4
+#include TUMP_COMMON_INCLUDE(metafunction/invoke.hpp)
 
 namespace tump
 {
@@ -34,8 +34,6 @@ namespace tump
     */
     template <Invocable F, class... Args>
     using apply_t = typename fn::apply<F, Args...>::type;
-
-    // TODO: mp_invoke_result 定義
 }
 
 #endif

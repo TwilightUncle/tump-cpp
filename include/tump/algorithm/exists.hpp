@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_EXISTS_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_EXISTS_HPP 9
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_EXISTS_HPP
 
-#include TUMP_COMMON_INCLUDE(algorithm/has_type_parameters.hpp) // 8
+#include TUMP_COMMON_INCLUDE(algorithm/has_type_parameters.hpp)
 
 namespace tump
 {
@@ -44,16 +44,6 @@ namespace tump
 
     template <class Search, TypeList List>
     constexpr auto not_exists_v = fn::not_exists<Search, List>::value;
-
-    template <class... Types>
-    using constraint_or_types = std::type_identity<
-        partial_apply<flip, exists, list<Types...>>
-    >;
-
-    template <class Search, TypeList List>
-    struct fn::mp_invoke_result<exists, Search, List> : public constraint_bool_constant {};
-    template <class Search, TypeList List>
-    struct fn::mp_invoke_result<not_exists, Search, List> : public constraint_bool_constant {}; 
 }
 
 #endif

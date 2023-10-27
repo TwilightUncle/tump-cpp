@@ -1,8 +1,9 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_RELAY_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_RELAY_HPP 12
+#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_RELAY_HPP
 
-#include TUMP_COMMON_INCLUDE(algorithm/fold.hpp) // 11
-#include TUMP_COMMON_INCLUDE(metafunction/apply.hpp) // 5
+#include TUMP_COMMON_INCLUDE(algorithm/fold.hpp)
+#include TUMP_COMMON_INCLUDE(metafunction/apply.hpp)
+#include TUMP_COMMON_INCLUDE(metafunction/flip.hpp)
 
 namespace tump
 {
@@ -36,9 +37,6 @@ namespace tump
     */
     template <Invocable F, Invocable... Funcs>
     using compose_t = typename fn::compose<F, Funcs...>::type;
-
-    template <std::size_t ArgsSize, Invocable F, Invocable... Funcs>
-    struct fn::mp_invoke_result<compose<ArgsSize>, F, Funcs...> : public constraint_callback_arg1 {};
 }
 
 #endif

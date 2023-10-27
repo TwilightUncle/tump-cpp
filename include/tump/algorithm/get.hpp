@@ -1,9 +1,8 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_GET_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_GET_HPP 10
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_GET_HPP
 
 #include <tuple>
-#include TUMP_COMMON_INCLUDE(algorithm/len.hpp) // 9
-
+#include TUMP_COMMON_INCLUDE(algorithm/len.hpp)
 namespace tump
 {
     namespace fn
@@ -81,14 +80,6 @@ namespace tump
     */
     template <TypeListOrValueList List>
     using get_back_t = typename fn::get_back<List>::type;
-
-    template <TypeListOrValueList List>
-    struct fn::mp_invoke_result<get_front, List> : public fn::get_container_constraint<List> {};
-
-    // TODO: get の戻り値制約についても考える(本メタ関数を格納可能なcallbackを定義か？)
-
-    template <TypeListOrValueList List>
-    struct fn::mp_invoke_result<get_back, List> : public fn::get_container_constraint<List> {}; 
 }
 
 #endif

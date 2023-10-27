@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_LEN_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_LEN_HPP 9
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_LEN_HPP
 
-#include TUMP_COMMON_INCLUDE(algorithm/has_type_parameters.hpp) // 8
+#include TUMP_COMMON_INCLUDE(algorithm/has_type_parameters.hpp)
 
 namespace tump
 {
@@ -25,13 +25,16 @@ namespace tump
         {};
     }
 
+    /**
+     * リストの長さを取得
+    */
     using len = cbk<fn::len, 1>;
 
+    /**
+     * リストの長さを取得
+    */
     template <TypeListOrValueList List>
     constexpr auto len_v = fn::len<List>::value;
-
-    template <class T>
-    struct fn::mp_invoke_result<len, T> : public constraint_size_constant {};
 }
 
 #endif

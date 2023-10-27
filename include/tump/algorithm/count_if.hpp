@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_COUNT_IF_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_COUNT_IF_HPP 15
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_COUNT_IF_HPP
 
-#include TUMP_COMMON_INCLUDE(algorithm/filter.hpp) // 14
+#include TUMP_COMMON_INCLUDE(algorithm/filter.hpp)
 
 namespace tump
 {

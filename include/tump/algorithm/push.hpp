@@ -1,9 +1,10 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_PUSH_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_PUSH_HPP 13
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_PUSH_HPP
 
-#include TUMP_COMMON_INCLUDE(algorithm/make_type_list.hpp) // 9
-#include TUMP_COMMON_INCLUDE(algorithm/left_right.hpp) // 10
-#include TUMP_COMMON_INCLUDE(algorithm/concat.hpp) // 12
+#include TUMP_COMMON_INCLUDE(algorithm/make_type_list.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/left_right.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/concat.hpp)
+#include TUMP_COMMON_INCLUDE(metafunction/flip.hpp)
 
 namespace tump
 {
@@ -122,18 +123,6 @@ namespace tump
     */
     template <InvocableArgN<1> F, TypeList List, class... Types>
     using push_front_if_t = typename fn::push_front_if<F, List, Types...>::type;
-
-    template <unsigned int ArgsSize, TypeList List, class... Types>
-    struct fn::mp_invoke_result<push_back<ArgsSize>, List, Types...> : public constraint_st_type_list<List> {};
-
-    template <unsigned int ArgsSize, TypeList List, class... Types>
-    struct fn::mp_invoke_result<push_front<ArgsSize>, List, Types...> : public constraint_st_type_list<List> {};
-
-    template <unsigned int ArgsSize, InvocableArgN<1> F, TypeList List, class... Types>
-    struct fn::mp_invoke_result<push_back_if<ArgsSize>, F, List, Types...> : public constraint_st_type_list<List> {};
-
-    template <unsigned int ArgsSize, InvocableArgN<1> F, TypeList List, class... Types>
-    struct fn::mp_invoke_result<push_front_if<ArgsSize>, F, List, Types...> : public constraint_st_type_list<List> {};
 }
 
 #endif

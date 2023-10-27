@@ -1,8 +1,8 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_UNIQUE_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_UNIQUE_HPP 15
+#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_UNIQUE_HPP
 
-#include TUMP_COMMON_INCLUDE(algorithm/filter.hpp) // 14
-#include TUMP_COMMON_INCLUDE(metafunction/compose.hpp) // 12
+#include TUMP_COMMON_INCLUDE(algorithm/filter.hpp)
+#include TUMP_COMMON_INCLUDE(metafunction/compose.hpp)
 
 namespace tump
 {
@@ -64,12 +64,6 @@ namespace tump
     */
     template <TypeListOrValueList List>
     constexpr auto is_unique_v = fn::is_unique<List>::value;
-
-    template <TypeListOrValueList List>
-    struct fn::mp_invoke_result<unique, List> : public constraint_st_type_list<List> {};
-
-    template <TypeListOrValueList List>
-    struct fn::mp_invoke_result<is_unique, List> : public constraint_bool_constant {};
 }
 
 #endif
