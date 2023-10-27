@@ -6,7 +6,6 @@
 #endif
 
 #include TUMP_COMMON_INCLUDE(algorithm/copy.hpp)
-#include TUMP_COMMON_INCLUDE(algorithm/map.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/slice.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/reverse.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/mp_if.hpp)
