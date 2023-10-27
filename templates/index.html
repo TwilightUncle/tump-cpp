@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="ja">
     <head>
+        {{ if eq .base_url "https://twilightuncle.github.io/tump-cpp" }}
+            <!-- Google tag (gtag.js) -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-HC3V49QTQ8"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', 'G-HC3V49QTQ8');
+            </script>
+        {{ end }}
+
         <meta charset="utf-8" />
         <link rel="stylesheet" href="{{ .assets_path }}/css/style.css">
         <link rel="stylesheet" href="{{ .assets_path }}/css/vendor/prism.css">
