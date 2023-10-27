@@ -1,8 +1,8 @@
-#ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_EXPRESSION_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_EXPRESSION_HPP
+#ifndef TUMP_INCLUDE_GUARD_TUMP_EXPRESSION_EXPRESSION_HPP
+#define TUMP_INCLUDE_GUARD_TUMP_EXPRESSION_EXPRESSION_HPP
 
 #include <utility>
-#include TUMP_COMMON_INCLUDE(metafunction/operator.hpp)
+#include TUMP_COMMON_INCLUDE(expression/operator.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/pop.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/reverse.hpp)
 
@@ -141,6 +141,9 @@ namespace tump
 
     template <class T>
     concept TumpExpression = is_exp_v<T>;
+
+    template <class T>
+    concept MpCondition = VFunctional<T> || TumpExpression<T>;
 
     /**
      * 関数型言語っぽい式

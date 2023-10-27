@@ -442,18 +442,6 @@ TEST(TumpAlgorithmTest, ExistsTest)
     ASSERT_FALSE(case2);
 }
 
-TEST(TumpAlgorithmTest, MpIfTest)
-{
-    constexpr auto case1 = std::is_same_v<tump::mp_if_t<std::true_type, int, double>, int>;
-    constexpr auto case2 = std::is_same_v<tump::mp_if_t<std::false_type, int, double>, double>;
-    constexpr auto case3 = std::is_same_v<tump::mp_if_t<std::true_type, tump::list<int, double>>, int>;
-    constexpr auto case4 = std::is_same_v<tump::mp_if_t<std::false_type, tump::list<int, double>>, double>;
-    ASSERT_TRUE(case1);
-    ASSERT_TRUE(case2);
-    ASSERT_TRUE(case3);
-    ASSERT_TRUE(case4);
-}
-
 TEST(TumpAlgorithmTest, FilterTest)
 {
     using list1 = tump::list<int, float, double, char, unsigned long>;
@@ -609,25 +597,4 @@ TEST(TumpAlgorithmTest, FillTest)
         tump::fill_t<list2, tump::fill_arg<long, 3>>,
         std::tuple<long, long, long>
     >;
-}
-
-template <class T>
-using guard_test_func = tump::guard_t<
-    tump::if_clause<std::is_unsigned<T>, unsigned int>,
-    tump::if_clause<std::is_integral<T>, int>,
-    tump::if_clause<std::is_floating_point<T>, float>,
-    tump::otherwise<void>
->;
-
-TEST(TumpAlgorithmTest, GuardTest)
-{
-    constexpr auto case1 = std::is_same_v<guard_test_func<std::size_t>, unsigned int>;
-    constexpr auto case2 = std::is_same_v<guard_test_func<char>, int>;
-    constexpr auto case3 = std::is_same_v<guard_test_func<double>, float>;
-    constexpr auto case4 = std::is_same_v<guard_test_func<std::tuple<int>>, void>;
-
-    ASSERT_TRUE(case1);
-    ASSERT_TRUE(case2);
-    ASSERT_TRUE(case3);
-    ASSERT_TRUE(case4);
 }

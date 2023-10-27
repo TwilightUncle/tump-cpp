@@ -1,8 +1,7 @@
-#ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_MP_IF_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_MP_IF_HPP
+#ifndef TUMP_INCLUDE_GUARD_TUMP_EXPRESSION_MP_IF_HPP
+#define TUMP_INCLUDE_GUARD_TUMP_EXPRESSION_MP_IF_HPP
 
-#include TUMP_COMMON_INCLUDE(algorithm/len.hpp)
-#include TUMP_COMMON_INCLUDE(algorithm/exists.hpp)
+#include TUMP_COMMON_INCLUDE(expression/expression.hpp)
 
 namespace tump
 {
@@ -12,21 +11,21 @@ namespace tump
          * conditional の第一引数が型バージョン
          * (valueメンバ定数がboolへ変換可能であること)
         */
-        template <VFunctional Cond, class... Types>
+        template <MpCondition Cond, class... Types>
         struct mp_if;
 
-        template <VFunctional Cond, class T, class F>
-        requires std::convertible_to<decltype(Cond::value), bool>
-        struct mp_if<Cond, T, F> : public std::conditional<Cond::value, T, F> {};
+        template <MpCondition Cond, class T, class F>
+        requires std::convertible_to<decltype(eval_exp_t<Cond>::value), bool>
+        struct mp_if<Cond, T, F> : public std::conditional<eval_exp_t<Cond>::value, T, F> {};
 
         /**
          * 二つの要素のリストを受け取るバージョン
         */
-        template <VFunctional Cond, TypeList List>
+        template <MpCondition Cond, TypeList List>
         requires (len_v<List> == 2)
         struct mp_if<Cond, List> : public mp_if<Cond, to_norm_li_t<List>> {};
 
-        template <VFunctional Cond, class T, class F>
+        template <MpCondition Cond, class T, class F>
         struct mp_if<Cond, list<T, F>> : public mp_if<Cond, T, F> {};
     }
 
@@ -37,7 +36,7 @@ namespace tump
      * conditional の第一引数が型バージョン
      * (valueメンバ定数がboolへ変換可能であること)
     */
-    template <VFunctional Cond, class... Types>
+    template <MpCondition Cond, class... Types>
     using mp_if_t = typename fn::mp_if<Cond, Types...>::type;
 }
 

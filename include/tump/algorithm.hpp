@@ -8,7 +8,6 @@
 #include TUMP_COMMON_INCLUDE(algorithm/copy.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/slice.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/reverse.hpp)
-#include TUMP_COMMON_INCLUDE(algorithm/mp_if.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/remove_if.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/unique.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/index_of.hpp)
@@ -17,6 +16,5 @@
 #include TUMP_COMMON_INCLUDE(algorithm/through_if.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/count_if.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/fill.hpp)
-#include TUMP_COMMON_INCLUDE(algorithm/guard.hpp)
 
 #endif

@@ -7,6 +7,6 @@
 
 #include TUMP_COMMON_INCLUDE(metafunction/invoke_list.hpp)
 #include TUMP_COMMON_INCLUDE(metafunction/std.hpp)
-#include TUMP_COMMON_INCLUDE(metafunction/lambda.hpp)
+#include TUMP_COMMON_INCLUDE(metafunction/compose.hpp)
 
 #endif

@@ -1,18 +1,15 @@
-#ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_GUARD_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_GUARD_HPP
+#ifndef TUMP_INCLUDE_GUARD_TUMP_EXPRESSION_GUARD_HPP
+#define TUMP_INCLUDE_GUARD_TUMP_EXPRESSION_GUARD_HPP
 
 #include TUMP_COMMON_INCLUDE(algorithm/find_if.hpp)
-#include TUMP_COMMON_INCLUDE(metafunction/expression.hpp)
+#include TUMP_COMMON_INCLUDE(expression/expression.hpp)
 
 namespace tump
 {
-    template <class T>
-    concept GuardCondition = VFunctional<T> || TumpExpression<T>;
-
     /**
      * ガードにおける条件分岐節
     */
-    template <GuardCondition Cond, class Expression>
+    template <MpCondition Cond, class Expression>
     struct if_clause {};
 
     /**
@@ -26,7 +23,7 @@ namespace tump
         template <class T>
         struct is_guard_clause : public std::false_type {};
 
-        template <GuardCondition Cond, class Expression>
+        template <MpCondition Cond, class Expression>
         struct is_guard_clause<if_clause<Cond, Expression>> : public std::true_type {};
     }
 

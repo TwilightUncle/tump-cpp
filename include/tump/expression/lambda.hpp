@@ -1,7 +1,7 @@
-#ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_LAMBDA_HPP
-#define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_LAMBDA_HPP
+#ifndef TUMP_INCLUDE_GUARD_TUMP_EXPRESSION_LAMBDA_HPP
+#define TUMP_INCLUDE_GUARD_TUMP_EXPRESSION_LAMBDA_HPP
 
-#include TUMP_COMMON_INCLUDE(metafunction/expression.hpp)
+#include TUMP_COMMON_INCLUDE(expression/expression.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/unique.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/replace_if.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/zip.hpp)
