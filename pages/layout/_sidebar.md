@@ -4,6 +4,8 @@
         - [{exp/eval|ref/expression/exp}]
         - [{sec|ref/expression/sec}]
         - [{lambda|ref/expression/lambda}]
+        - [{mp_if|ref/expression/mp_if}]
+        - [{guard|ref/expression/guard}]
     - [{メタ関数の第一級関数化と適用|ref/invocable}]
         - [{callback/cbk|ref/invocable/callback}]
         - [{partial_apply|ref/invocable/partial_apply}]
@@ -45,6 +47,7 @@
             - リスト操作用メタ関数
                 - [{make_empty|ref/container/list/make_empty}]
                 - [{make_type_list|ref/container/list/make_type_list}]
+                - [{fill|ref/container/list/fill}]
                 - [{concat|ref/container/list/concat}]
                 - [{copy|ref/container/list/copy}]
                 - [{filter|ref/container/list/filter}]
@@ -78,7 +81,6 @@
         - [{標準ライブラリのメタ関数の第一級関数|ref/metafunction/std}]
         - [{to_true|ref/metafunction/to_true}]
         - [{left/right|ref/metafunction/left_right}]
-        - [{mp_if|ref/metafunction/mp_if}]
         - [{through/block|ref/metafunction/through_block}]
-        - [{vwrap/block|ref/metafunction/vwrap}]
+        - [{vwrap|ref/metafunction/vwrap}]
     <!-- - [{マクロ|ref/macro}] -->

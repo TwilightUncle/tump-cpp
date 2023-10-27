@@ -11,7 +11,7 @@ overview: TumpCpp のリファレンスTOPです。
 
 | 機能の分類 | 概要 | 該当するクラス・関数・概念 |
 | --- | :--- | :--- |
-| [{式|ref/expression}] | TumpCpp における式のリファレンスです。 | [{exp|ref/expression/exp}], [{sec|ref/expression/sec}], [{lambda|ref/expression/lambda}] |
+| [{式|ref/expression}] | TumpCpp における式のリファレンスです。 | [{exp|ref/expression/exp}], [{sec|ref/expression/sec}], [{lambda|ref/expression/lambda}], [{mp_if|ref/expression/mp_if}], [{guard|ref/expression/guard}] |
 | [{メタ関数の第一級関数化と適用|ref/invocable}] | メタ関数を第一級関数として扱うためのリファレンスです。<br>第一級関数への変換、第一級関数の適用(実行)、部分適用が含まれます。 | [{callback|ref/invocable/callback}], [{cbk|ref/invocable/callback}], [{partial_apply|ref/invocable/partial_apply}], [{Invocable|ref/invocable/invocable}] [{invoke|ref/invocable/invoke}], [{invoke_list|ref/invocable/invoke_list}], [{apply|ref/invocable/apply}], [{flip|ref/invocable/flip}], [{compose|ref/invocable/compose}] |
 | [{演算子|ref/operator}] | TumpCpp の式で扱う演算子のリファレンスです。 | [{_apply|ref/operator/apply}], [{_dot|ref/operator/dot}], [{_eq|ref/operator/compare}], [{_ne|ref/operator/compare}], [{_or|ref/operator/logical}], [{_and|ref/operator/logical}], [{_elem|ref/operator/elem}], [{_not_elem|ref/operator/elem}], [{_concat|ref/operator/concat}], [{_cons|ref/operator/concat}], [{_fmap|ref/operator/fmap}], [{_ap|ref/operator/ap}], [{_bind|ref/operator/bind}],  [{_op|ref/operator/op}] |
 | [{コンテナ|ref/container}] | テンプレートメタプログラミングで利用することができる、リストや木構造などの構造的なテンプレートクラスと、関連する概念のリファレンスです。<br>また、各テンプレートクラスの項には、そのテンプレートクラス用に定義されたメタ関数の説明が含まれる場合があります。 | [{list|ref/container/list}], [{vlist|ref/container/vlist}], [{ファンクタ|ref/container/functor}], [{アプリカティブファンクタ|ref/container/applicative}], [{モナド|ref/container/monad}] |

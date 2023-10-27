@@ -19,4 +19,6 @@ TumpCpp の式は、プログラム言語 Haskell を参考とした文法とす
 | [{exp/eval|ref/expression/exp}] | テンプレートパラメータの内容を式として評価し、結果を返却します。 |
 | [{sec|ref/expression/sec}] | 演算子のオペランドを部分適用します。 |
 | [{lambda|ref/expression/lambda}] | ラムダ式を記述するためのメタ関数。第一級関数として使用可能なメタ関数が返却される。 |
+| [{mp_if|ref/expression/mp_if}] | 条件分岐を行う。条件の真偽によって 2 通りの結果を返す。 |
+| [{guard|ref/expression/guard}] | 条件分岐を行う。任意数の条件分岐を行うことが可能で、最初に真と判定された条件の結果を返却する。 |
 

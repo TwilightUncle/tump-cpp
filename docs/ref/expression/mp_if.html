@@ -16,7 +16,7 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/style.css">
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/vendor/prism.css">
-        <title>式 - TumpCpp リファレンス</title>
+        <title>mp_if - TumpCpp リファレンス</title>
     </head>
     <body>
         <header id="header">
@@ -45,6 +45,15 @@
                     <li>
                         <a href="https://twilightuncle.github.io/tump-cpp/ref/expression.html">
                             expression
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="delimiter">></li>
+                    <li>
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/expression/mp_if.html">
+                            mp_if
                         </a>
                     </li>
                     
@@ -178,58 +187,70 @@
 
             </aside>
             <article>
-                <h1>式 - TumpCpp リファレンス</h1>
-                <p><p>TumpCpp における式のリファレンスです。</p>
-</p>
+                <h1>mp_if - TumpCpp リファレンス</h1>
+                <p></p>
 
-                <p>TumpCpp において式とは、第一級関数化したメタ関数や、演算子の適用を行い、最終的に 1 つの型を結果として返却するメタ関数です。<br />
-式の実装の主な目的は、下記の課題を解決することです。</p>
+                <pre><code class="language-cpp">namespace tump {
+    namespace fn {
+        // 大元のメタ関数定義
+        template &lt;class Cond, class T, class F&gt;
+        struct mp_if {};
+    }
 
-<ol>
-<li>複雑な処理を一発で書こうとすると、深いネストが生まれる</li>
-<li>ネストを回避しようとするとテンプレートクラスや型エイリアスの定義が増えてしまい、名前空間が汚染されてしまう</li>
-</ol>
+    // 第一級関数化
+    using mp_if = cbk&lt;fn::mp_if, 3&gt;;
 
-<p>TumpCpp の式は、プログラム言語 Haskell を参考とした文法とすることで、第一級関数や部分適用などを活用し、上記課題を解決に導きます。<br />
-使い方や文法について詳しくは <a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html">exp/eval の項</a>を参照ください。</p>
+    // メンバ型 type 呼び出し省略のエイリアステンプレート
+    template &lt;MpCondition Cond, class T, class F&gt;
+    using mp_if_t = typename fn::mp_if&lt;Cond, T, F&gt;::type;
+}
+</code></pre>
 
-<h2 id="一覧">一覧</h2>
+<h3 id="パラメータ">パラメータ</h3>
 
-<table>
-<thead>
-<tr>
-<th>メタ関数名</th>
-<th align="left">概要</th>
-</tr>
-</thead>
+<ul>
+<li>Cond - <code>std::bool_constant</code>を継承した型</li>
+<li>T - 任意の型</li>
+<li>F - 任意の型</li>
+</ul>
 
-<tbody>
-<tr>
-<td><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html">exp/eval</a></td>
-<td align="left">テンプレートパラメータの内容を式として評価し、結果を返却します。</td>
-</tr>
+<h2 id="概要">概要</h2>
 
-<tr>
-<td><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/sec.html">sec</a></td>
-<td align="left">演算子のオペランドを部分適用します。</td>
-</tr>
+<p><code>tump::mp_if</code>は、三項演算子のように動作する条件分岐の式です。<br />
+型パラメータ<code>Cond</code>が真と判定される際は、型パラメータ<code>T</code>に指定された型を、偽と判定された際は、型パラメータ<code>F</code>に指定された型を返却します。</p>
 
-<tr>
-<td><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/lambda.html">lambda</a></td>
-<td align="left">ラムダ式を記述するためのメタ関数。第一級関数として使用可能なメタ関数が返却される。</td>
-</tr>
+<p>なお、標準ライブラリにも似た機能を持つ<code>std::conditional</code>がありますが、<code>tump::mp_if</code>は以下の点が異なります。</p>
 
-<tr>
-<td><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/mp_if.html">mp_if</a></td>
-<td align="left">条件分岐を行う。条件の真偽によって 2 通りの結果を返す。</td>
-</tr>
+<ul>
+<li><code>std::conditional</code>は条件を非型パラメータとして受け取るが、<code>tump::mp_if</code>は<code>std::bool_constant</code>のような型で受け取る。</li>
+<li><code>tump::mp_if</code>は全ての引数において、<code>tump::exp</code>による式を受け取った際に、評価結果を使用する</li>
+</ul>
 
-<tr>
-<td>guard</td>
-<td align="left">条件分岐を行う。任意数の条件分岐を行うことが可能で、最初に真と判定された条件の結果を返却する。</td>
-</tr>
-</tbody>
-</table>
+<h2 id="例">例</h2>
+
+<pre><code class="language-cpp">#include &lt;tump.hpp&gt;
+
+static_assert(std::is_same_v&lt;tump::mp_if_t&lt;std::true_type, int, double&gt;, int&gt; == true);
+static_assert(std::is_same_v&lt;tump::mp_if_t&lt;std::false_type, int, double&gt;, double&gt; == true);
+
+// exp による式は、あらかじめ評価を完了したうえで、
+// 評価結果による判定や返却を行う
+static_assert(std::is_same_v&lt;tump::mp_if_t&lt;
+    tump::exp&lt;int, tump::_eq, int&gt;,
+    tump::exp&lt;tump::make_unsigned, int&gt;,
+    double
+&gt;, unsigned int&gt; == true);
+
+int main() {}
+</code></pre>
+
+<h2 id="関連リンク">関連リンク</h2>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::exp</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/compare.html"><code>tump::_eq</code></a></li>
+<li><code>tump::make_unsigned</code></li>
+</ul>
 
             </article>
             <aside id="table_of_contents" class="table-of-contents">
@@ -237,8 +258,20 @@
                 <ul>
                     
                         <li>
-                            <a href="#%e4%b8%80%e8%a6%a7%0d">
-                                一覧
+                            <a href="#%e6%a6%82%e8%a6%81%0d">
+                                概要
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#%e4%be%8b%0d">
+                                例
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#%e9%96%a2%e9%80%a3%e3%83%aa%e3%83%b3%e3%82%af%0d">
+                                関連リンク
                             </a>
                         </li>
                     
