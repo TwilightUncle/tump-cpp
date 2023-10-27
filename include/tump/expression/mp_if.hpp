@@ -16,7 +16,11 @@ namespace tump
 
         template <MpCondition Cond, class T, class F>
         requires std::convertible_to<decltype(eval_exp_t<Cond>::value), bool>
-        struct mp_if<Cond, T, F> : public std::conditional<eval_exp_t<Cond>::value, T, F> {};
+        struct mp_if<Cond, T, F> : public std::conditional<
+            eval_exp_t<Cond>::value,
+            eval_exp_t<T>,
+            eval_exp_t<F>
+        > {};
 
         /**
          * 二つの要素のリストを受け取るバージョン

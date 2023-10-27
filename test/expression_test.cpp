@@ -68,9 +68,9 @@ TEST(TumpExpressionTest, MpIfTest)
 
     constexpr auto case5 = std::is_same_v<tump::mp_if_t<
         tump::exp<int, tump::_eq, int>,
-        int,
+        tump::exp<tump::add_const, int>,
         double
-    >, int>;
+    >, const int>;
     ASSERT_TRUE(case5);
 }
 
