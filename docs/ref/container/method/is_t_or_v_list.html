@@ -16,7 +16,7 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/style.css">
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/vendor/prism.css">
-        <title>マクロ - TumpCpp リファレンス</title>
+        <title>TypeListOrValueList - TumpCpp リファレンス</title>
     </head>
     <body>
         <header id="header">
@@ -43,8 +43,26 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/ref/macro.html">
-                            macro
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/container.html">
+                            container
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="delimiter">></li>
+                    <li>
+                        
+                            method
+                        
+                    </li>
+                    
+                
+                    
+                    <li class="delimiter">></li>
+                    <li>
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_t_or_v_list.html">
+                            is_t_or_v_list
                         </a>
                     </li>
                     
@@ -215,68 +233,90 @@
 
             </aside>
             <article>
-                <h1>マクロ - TumpCpp リファレンス</h1>
+                <h1>TypeListOrValueList - TumpCpp リファレンス</h1>
                 <p></p>
 
-                <p>TumpCpp のプリプロセッサマクロについてのリファレンスです。<br />
-ライブラリの配置やインクルードパスの設定など、コンパイルする構成の制御を行います。</p>
-
-<h2 id="TUMP_COMMON_INCLUDE">TUMP_COMMON_INCLUDE</h2>
-
-<pre><code class="language-cpp">#define TUMP_COMMON_INCLUDE(path)
-</code></pre>
-
-<h3 id="概要">概要</h3>
-
-<p>このマクロ関数は、TumpCpp におけるヘッダファイルのインクルードパスを制御します。</p>
-
-<p>TumpCpp のライブラリ内では、標準ライブラリを除いた全てのインクルードが本マクロを用いて行われています。<br />
-そのため、本ライブラリを読み込むより先にこのマクロ関数を定義することで、本ライブラリにインクルードの基準のパスを伝えることができます。</p>
-
-<p>具体的には、プロジェクトへの追加インクルードパスの設定を避けたり、インクルードを行う際の基準のディレクトリをずらすような場合に、本ライブラリを利用する側のソースであらかじめこのマクロ関数を定義してください。</p>
-
-<p>デフォルトでは、下記ソースのように展開されます。</p>
-
-<pre><code class="language-cpp">// デフォルトでは、下記 2 つのインクルードが等価
-#include TUMP_COMMON_INCLUDE(path/to/header.hpp)
-#include &lt;tump/path/to/header.hpp&gt;
+                <pre><code class="language-cpp">namespace tump {
+    // 制約
+    template &lt;class T&gt;
+    concept TypeListOrValueList = ...;
+}
 </code></pre>
 
 <h3 id="パラメータ">パラメータ</h3>
 
 <ul>
-<li><code>path</code> : 基準となるディレクトリ以降のファイルパスを指定します。</li>
+<li>T - 任意の型</li>
 </ul>
 
-<h3 id="例">例</h3>
+<h2 id="概要">概要</h2>
 
-<p>本ライブラリを利用するプロジェクトディレクトリ配下に、本ライブラリを直接展開し、追加のインクルードディレクトリの設定を行わない場合を想定します。<br />
-下記のようなディレクトリ構成とします。</p>
+<p>指定のテンプレートパラメータ<code>T</code>が、<strong>型</strong>を保持するテンプレート型または、<code>tump::vlist</code>であるかを判定します。<br />
+なお、テンプレートテンプレートパラメータや、型と非型などが入り混じったテンプレートパラメータを受け取るテンプレート型は、偽と判定されます。</p>
 
-<pre><code class="language-Tree">path/to/project/
-├── submodules/
-│   └── tump-cpp/include/
-│       ├── tump.hpp
-└── main.cpp
-</code></pre>
+<h2 id="例">例</h2>
 
-<p>下記の<code>main.cpp</code>では、先頭で<code>TUMP_COMMON_INCLUDE</code>を定義することで、インクルードパスの設定なしで TumpCpp を使用できるようにしています。</p>
+<pre><code class="language-cpp">#include &lt;tuple&gt;
+#include &lt;vector&gt;
+#include &lt;tump.hpp&gt;
 
-<!-- TODO: 下記のビルドを検証すること -->
+// テンプレートパラメータなしまたは、
+// テンプレートパラメータについて型と非型が入り混じっている場合などは偽と判定される。
+struct A {};
+template &lt;auto V, class T&gt;
+struct B {};
+template &lt;template &lt;class&gt; class T, class U&gt;
+struct C {};
 
-<pre><code class="language-cpp">// main.hpp
+// テンプレートパラメータが全て型のクラスは真と判定される
+template &lt;class T, class U&gt;
+struct D {};
 
-// tump.hpp の読み込み前にマクロ定義
-#define TUMP_COMMON_INCLUDE(path) #submodules/tump/include/path
+// 偽と判定されるものの例
+static_assert(tump::TypeListOrValueList&lt;int&gt; == false);
+static_assert(tump::TypeListOrValueList&lt;A&gt; == false);
+static_assert(tump::TypeListOrValueList&lt;B&lt;int(1), float&gt;&gt; == false);
+static_assert(tump::TypeListOrValueList&lt;C&lt;std::vector, float&gt;&gt; == false);
+static_assert(tump::TypeListOrValueList&lt;std::array&lt;int, 2&gt;&gt; == false);
 
-// #include &quot;submodules/tump/include/tump.hpp&quot; と等価
-#include TUMP_COMMON_INCLUDE(tump.hpp)
+// 真と判定されるもの例
+static_assert(tump::TypeListOrValueList&lt;tump::list&lt;int, float&gt;&gt; == true);
+static_assert(tump::TypeListOrValueList&lt;tump::vlist&lt;int(1), float(2), double(3)&gt;&gt; == true);
+static_assert(tump::TypeListOrValueList&lt;tump::list&lt;&gt;&gt; == true);
+static_assert(tump::TypeListOrValueList&lt;tump::vlist&lt;&gt;&gt; == true);
+static_assert(tump::TypeListOrValueList&lt;D&lt;int, float&gt;&gt; == true);
+static_assert(tump::TypeListOrValueList&lt;std::vector&lt;int&gt;&gt; == true);
+static_assert(tump::TypeListOrValueList&lt;tump::make_empty_t&lt;std::tuple&lt;int, float&gt;&gt;&gt; == true);
 
-using result_type = tump::eval&lt;tump::is_same, int, int&gt;;
-static_assert(result_type::value);
+// コンセプト TypeList によるテンプレートパラメータの制約
+template &lt;tump::TypeListOrValueList List&gt;
+struct E {};
+
+E&lt;tump::list&lt;&gt;&gt;;
+E&lt;tump::vlist&lt;1, nullptr&gt;&gt;;
+E&lt;std::vector&lt;int&gt;&gt;;
+E&lt;std::tuple&lt;int, float, double&gt;&gt;;
+E&lt;tump::make_empty_t&lt;std::tuple&lt;int, float&gt;&gt;&gt;;
+
+// 下記は TypeList の制約に抵触するため、
+// コメントアウトを外すとコンパイルエラー
+
+// E&lt;int&gt;;
+// E&lt;A&gt;;
+// E&lt;B&lt;int(1), float&gt;&gt;;
+// E&lt;C&lt;std::vector, float&gt;&gt;;
 
 int main() {}
 </code></pre>
+
+<h2 id="関連リンク">関連リンク</h2>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a></li>
+<li><code>tump::vlist</code></li>
+<li><code>tump::make_empty</code></li>
+</ul>
 
             </article>
             <aside id="table_of_contents" class="table-of-contents">
@@ -284,8 +324,20 @@ int main() {}
                 <ul>
                     
                         <li>
-                            <a href="#TUMP_COMMON_INCLUDE%0d">
-                                TUMP_COMMON_INCLUDE
+                            <a href="#%e6%a6%82%e8%a6%81%0d">
+                                概要
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#%e4%be%8b%0d">
+                                例
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#%e9%96%a2%e9%80%a3%e3%83%aa%e3%83%b3%e3%82%af%0d">
+                                関連リンク
                             </a>
                         </li>
                     

@@ -144,8 +144,8 @@
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_empty.html">is_empty</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html">is_type_list</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html">TypeList</a></li>
-<li>TypeListOrValueList</li>
-<li>len</li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_t_or_v_list.html">TypeListOrValueList</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/len.html">len</a></li>
 </ul></li>
 <li>リストの要素アクセス用メタ関数
 
@@ -270,7 +270,7 @@
 <p><code>tump::guard</code>を実行する際、<code>Clauses</code>は先頭から順番に評価されます。<br />
 <code>Clauses</code>の評価中最初に見つかった、パラメータ<code>Cond</code>が真と評価された<code>tump::if_clause</code>または<code>tump::otherwise</code>の、パラメータ<code>T</code>が<code>tump::guard</code>の結果として返却されます。</p>
 
-<p><code>Clauses</code>の一番最後に<code>tump::otherwise</code>を指定することで、全ての<code>tump::if_clause</code>に該当しない結果を指定することができます。</p>
+<p><code>Clauses</code>の一番最後に<code>tump::otherwise</code>を指定することで、全ての<code>tump::if_clause</code>に該当しない場合の結果を指定することができます。</p>
 
 <p>テンプレートパラメータ<code>Cond</code>および<code>T</code>には、<a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::exp</code></a>による式も指定可能です。<br />
 <a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::exp</code></a>を指定した際は、<code>tump::guard</code>を実行する際に、先に<code>tump::exp</code>が評価され、その結果を判定したり、返却します。</p>

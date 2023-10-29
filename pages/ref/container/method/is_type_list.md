@@ -1,5 +1,5 @@
 ---
-title: is_type_list/TypeList - TumpCpp リファレンス
+title: is_type_list・TypeList - TumpCpp リファレンス
 ---
 
 ```cpp

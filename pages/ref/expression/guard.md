@@ -44,7 +44,7 @@ namespace tump {
 `tump::guard`を実行する際、`Clauses`は先頭から順番に評価されます。  
 `Clauses`の評価中最初に見つかった、パラメータ`Cond`が真と評価された`tump::if_clause`または`tump::otherwise`の、パラメータ`T`が`tump::guard`の結果として返却されます。
 
-`Clauses`の一番最後に`tump::otherwise`を指定することで、全ての`tump::if_clause`に該当しない結果を指定することができます。
+`Clauses`の一番最後に`tump::otherwise`を指定することで、全ての`tump::if_clause`に該当しない場合の結果を指定することができます。
 
 テンプレートパラメータ`Cond`および`T`には、[{`tump::exp`|ref/expression/exp}]による式も指定可能です。  
 [{`tump::exp`|ref/expression/exp}]を指定した際は、`tump::guard`を実行する際に、先に`tump::exp`が評価され、その結果を判定したり、返却します。
