@@ -177,8 +177,6 @@ namespace tump
     template <unsigned int ArgsSize = 2>
     requires (ArgsSize > 0)
     using common_type               = cbk<std::common_type,      ArgsSize>;
-    template <unsigned int ArgsSize = 1>
-    using void_t                    = cbk<std::void_t,           ArgsSize>;
     // テンプレートパラメータが未対応
     // using basic_common_reference    = cbk<std::basic_common_reference,  1>;
     template <unsigned int ArgsSize = 2>
