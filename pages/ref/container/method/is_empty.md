@@ -64,7 +64,7 @@ int main() {}
 
 ## 関連リンク
 
-- [{`tump::eval`|ref/expression/eval}]
+- [{`tump::eval`|ref/expression/exp}]
 - [{`tump::list`|ref/container/list}]
 - [{`tump::vlist`|ref/container/vlist}]
 - [{`tump::make_empty`|ref/container/method/make_empty}]
