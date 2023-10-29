@@ -34,7 +34,7 @@ TumpCpp では、`tump::list`を主な対象とした、いくつかのリスト
 | [{`tump::is_type_list`|ref/container/method/is_type_list}] | 型のリストとして利用できるテンプレート型かどうか判定します。 |
 | [{`tump::TypeList`|ref/container/method/is_type_list}] | 型のリストとして利用できるテンプレート型かどうか判定する制約です。 |
 | [{`tump::TypeListOrValueList`|ref/container/method/is_t_or_v_list}] | 型または、値のリストとして利用できるテンプレート型かどうか判定します。 |
-| [{`tump::len`|ref/container/method/is_t_or_v_list}] | リストの長さを取得します。 |
+| [{`tump::len`|ref/container/method/len}] | リストの長さを取得します。 |
 
 ### 要素アクセス
 

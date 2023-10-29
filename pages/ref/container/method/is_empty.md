@@ -33,6 +33,8 @@ namespace tump {
 - [{`tump::list<>`|ref/container/list}]
 - [{`tump::vlist<>`|ref/container/vlist}]
 
+標準ライブラリの`<type_traits>`に定義されている`std::is_empty`とは異なる結果となるのでご注意ください。
+
 ## 例
 
 ```cpp

@@ -94,3 +94,4 @@ int main() {}
 - [{`tump::list`|ref/container/list}]
 - [{`tump::vlist`|ref/container/vlist}]
 - [{`tump::make_empty`|ref/container/method/make_empty}]
+- [{`tump::_apply`|ref/operator/apply}]
