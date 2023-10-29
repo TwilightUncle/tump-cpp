@@ -16,7 +16,7 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/style.css">
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/vendor/prism.css">
-        <title>invoke_list - TumpCpp リファレンス</title>
+        <title>guard - TumpCpp リファレンス</title>
     </head>
     <body>
         <header id="header">
@@ -43,8 +43,8 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/ref/invocable.html">
-                            invocable
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/expression.html">
+                            expression
                         </a>
                     </li>
                     
@@ -52,8 +52,8 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invoke_list.html">
-                            invoke_list
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/expression/guard.html">
+                            guard
                         </a>
                     </li>
                     
@@ -224,58 +224,107 @@
 
             </aside>
             <article>
-                <h1>invoke_list - TumpCpp リファレンス</h1>
+                <h1>guard - TumpCpp リファレンス</h1>
                 <p></p>
 
                 <pre><code class="language-cpp">namespace tump {
+    template &lt;class Cond, class T&gt;
+    struct if_clause {};
+    
+    template &lt;class T&gt;
+    using otherwise = if_clause&lt;std::true_type, T&gt;;
+
     namespace fn {
         // 大元のメタ関数定義
-        template &lt;Invocable F, class ArgList&gt;
-        struct invoke_list;
+        template &lt;class... Clauses&gt;
+        struct guard {};
     }
 
     // 第一級関数化
-    using invoke_list = cbk&lt;fn::invoke_list, 2&gt;;
-    
-    // メンバ型 type 呼び出し省略のエイリアステンプレート
-    template &lt;Invocable F, class ArgList&gt;
-    using invoke_list_t = typename fn::invoke_list&lt;F, ArgList&gt;::type;
+    template &lt;std::size_t ArgsSize = 2&gt;
+    using guard = cbk&lt;fn::guard, ArgsSize&gt;;
 
-    // 定数メンバ value 呼び出し省略のエイリアステンプレート
-    template &lt;Invocable F, class ArgList&gt;
-    constexpr auto invoke_list_v = fn::invoke_list&lt;F, ArgList&gt;::value;
+    // メンバ型 type 呼び出し省略のエイリアステンプレート
+    template &lt;class... Clauses&gt;
+    using guard_t = typename fn::guard&lt;Clauses...&gt;::type;
 }
 </code></pre>
 
-<h3 id="パラメータ">パラメータ</h3>
+<h3 id="クラス・パラメータ">クラス・パラメータ</h3>
 
 <ul>
-<li>F - 第一級関数化したメタ関数。<a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invocable.html"><code>tump::Invocable</code></a>で真と判定されなければいけない。</li>
-<li>ArgList - 型のテンプレートパラメータパックを指定したテンプレートクラス</li>
+<li>if_clause - <code>guard</code>に指定する if 節。<code>if-else if-else</code>の<code>if</code>や<code>else</code>に該当</li>
+<li>otherwise - <code>guard</code>に指定する otherwise 節。<code>if-elseif-else</code>の<code>else</code>や、<code>switch</code>の<code>default</code>に該当</li>
+<li>Cond - <code>std::bool_constant</code>を継承した型</li>
+<li>T - 任意の型</li>
+<li>ArgsSize - <code>guard</code> に指定する<code>if_clause</code>や<code>otherwise</code>の数を指定</li>
+<li>Clauses - テンプレートパラメータパック。<code>if_clause</code>と<code>otherwise</code>のみ指定可能</li>
 </ul>
 
 <h2 id="概要">概要</h2>
 
-<p>第一級関数化したメタ関数に引数を渡して実行するメタ関数です。</p>
+<p><code>tump::guard</code>は、<code>if-elseif-else</code>のような任意数の条件分岐を行うメタ関数です。<br />
+<code>tump::guard</code>が受け取る、型テンプレートパラメータパック<code>Clauses</code>に指定可能な型は、<code>tump::if_clause</code>と<code>tump::otherwise</code>のみです。<br />
+※<code>tump::otherwise</code>も実装上は<code>tump::if_clause</code>の型エイリアスであり、厳密には<code>tump::if_clause</code>とその別名のみ<code>Clauses</code>に指定可能。</p>
 
-<p>ほとんど、<a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invoke.html"><code>tump::invoke</code></a>と機能は同じですが、メタ関数を適用する引数の渡し方が異なります。<br />
-<a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invoke.html"><code>tump::invoke</code></a>が直接引数のテンプレートパラメータパックを受け取るのに対して、<code>tump::invoke_list</code>は型のテンプレートパラメータパックを持つテンプレート型により、引数を渡します。</p>
+<p><code>tump::guard</code>を実行する際、<code>Clauses</code>は先頭から順番に評価されます。<br />
+<code>Clauses</code>の評価中最初に見つかった、パラメータ<code>Cond</code>が真と評価された<code>tump::if_clause</code>または<code>tump::otherwise</code>の、パラメータ<code>T</code>が<code>tump::guard</code>の結果として返却されます。</p>
+
+<p><code>Clauses</code>の一番最後に<code>tump::otherwise</code>を指定することで、全ての<code>tump::if_clause</code>に該当しない結果を指定することができます。</p>
+
+<p>テンプレートパラメータ<code>Cond</code>および<code>T</code>には、<a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::exp</code></a>による式も指定可能です。<br />
+<a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::exp</code></a>を指定した際は、<code>tump::guard</code>を実行する際に、先に<code>tump::exp</code>が評価され、その結果を判定したり、返却します。</p>
+
+<p>なお、<code>tump::if_clause</code>および<code>tump::otherwise</code>は<strong>メタ関数ではありません</strong>。<br />
+あくまでも、<code>tump::guard</code>のパラメータ<code>Clauses</code>でしか利用できないテンプレートクラスとなりますので、ご注意ください。</p>
 
 <h2 id="例">例</h2>
 
-<pre><code class="language-cpp">#include &lt;tuple&gt;
-#include &lt;tump.hpp&gt;
+<pre><code class="language-cpp">#include &lt;tump.hpp&gt;
 
-// 引数リストは 型のテンプレートパラメータを持つテンプレートクラスであれば何でもよい
-static_assert(tump::invoke_list_v&lt;tump::is_same, tump::list&lt;int, int&gt;&gt; == true);
-static_assert(tump::invoke_list_v&lt;tump::is_same, std::tuple&lt;int, int&gt;&gt; == true);
+// 符号なし整数、整数、浮動小数点、それ以外と型を判定し、
+// それぞれの条件に合致した場合の型を返却。
+template &lt;class T&gt;
+using sample_guard1_t = tump::guard_t&lt;
+    tump::if_clause&lt;std::is_unsigned&lt;T&gt;, unsigned int&gt;,
+    tump::if_clause&lt;std::is_integral&lt;T&gt;, int&gt;,
+    tump::if_clause&lt;std::is_floating_point&lt;T&gt;, float&gt;,
+    tump::otherwise&lt;void&gt;
+&gt;;
 
-// invoke による、上記と同様の処理。
-// invoke_list と異なり、直接テンプレートパラメータを渡す
-static_assert(tump::invoke_v&lt;tump::is_same, int, int&gt; == true);
+static_assert(std::is_same_v&lt;sample_guard1_t&lt;std::size_t&gt;, unsigned int&gt; == true);
+static_assert(std::is_same_v&lt;sample_guard1_t&lt;char&gt;, int&gt; == true);
+static_assert(std::is_same_v&lt;sample_guard1_t&lt;double&gt;, float&gt; == true);
+static_assert(std::is_same_v&lt;sample_guard1_t&lt;std::tuple&lt;int&gt;&gt;, void&gt; == true);
 
-// 第一級関数としての使用
-static_assert(tump::eval&lt;tump::invoke_list, tump::is_same, tump::list&lt;int, int&gt;&gt;::value == true);
+// ラムダ式における guard の条件分岐の使用例。
+// if_clause や otherwise のパラメータに指定された exp は先に評価される。
+using sample_guard2 = tump::lambda&lt;
+    tump::lambda_args&lt;tump::_arg1, tump::_arg2&gt;,
+    tump::exp&lt;
+        tump::guard&lt;3&gt;,
+        // 2 つの引数が等しい場合、std::true_type を返却
+        tump::if_clause&lt;
+            std::is_same&lt;tump::_arg1, tump::_arg2&gt;,
+            tump::exp&lt;tump::_arg1, tump::_eq, tump::_arg2&gt;
+        &gt;,
+        // 2 つの引数が異なり、第一引数が整数の場合 int を返却
+        tump::if_clause&lt;
+            tump::exp&lt;
+                tump::is_not_same, tump::_arg1, tump::_arg2,
+                tump::_and,
+                tump::is_integral, tump::_arg1
+            &gt;,
+            int
+        &gt;,
+        // 上記 2 つの条件に一致しない場合、void を返却
+        tump::otherwise&lt;void&gt;
+    &gt;
+&gt;;
+
+static_assert(tump::eval&lt;sample_guard2, int, int&gt;::value == true);
+static_assert(tump::eval&lt;sample_guard2, long, double, tump::_eq, int&gt;::value == true);
+static_assert(tump::eval&lt;sample_guard2, tump::list&lt;&gt;, double, tump::_eq, void&gt;::value == true);
 
 int main() {}
 </code></pre>
@@ -283,9 +332,13 @@ int main() {}
 <h2 id="関連リンク">関連リンク</h2>
 
 <ul>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invocable.html"><code>tump::Invocable</code></a></li>
-<li><code>tump::is_same</code></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::exp</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/compare.html"><code>tump::_eq</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/logical.html"><code>tump::_and</code></a></li>
+<li><code>tump::is_unsigned</code></li>
+<li><code>tump::is_integral</code></li>
+<li><code>tump::is_floating_point</code></li>
 </ul>
 
             </article>

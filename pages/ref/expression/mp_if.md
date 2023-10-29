@@ -14,7 +14,7 @@ namespace tump {
     using mp_if = cbk<fn::mp_if, 3>;
 
     // メンバ型 type 呼び出し省略のエイリアステンプレート
-    template <MpCondition Cond, class T, class F>
+    template <class Cond, class T, class F>
     using mp_if_t = typename fn::mp_if<Cond, T, F>::type;
 }
 ```
@@ -51,6 +51,18 @@ static_assert(std::is_same_v<tump::mp_if_t<
     double
 >, unsigned int> == true);
 
+// 整数型が渡されたらそのまま、
+// それ以外が渡されたら int を返却するメタ関数生成
+template <class T>
+using my_make_integral_t = tump::eval<
+    tump::mp_if,
+    tump::exp<tump::is_integral, T>,
+    T,
+    int
+>;
+static_assert(std::is_same_v<my_make_integral_t<unsigned long>, unsigned long> == true);
+static_assert(std::is_same_v<my_make_integral_t<void>, int> == true);
+
 int main() {}
 ```
 
@@ -59,3 +71,4 @@ int main() {}
 - [{`tump::exp`|ref/expression/exp}]
 - [{`tump::_eq`|ref/operator/compare}]
 - [{`tump::make_unsigned`|ref/metafunction/std}]
+- [{`tump::is_integral`|ref/metafunction/std}]

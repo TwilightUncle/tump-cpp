@@ -16,7 +16,7 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/style.css">
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/vendor/prism.css">
-        <title>invoke_list - TumpCpp リファレンス</title>
+        <title>is_empty - TumpCpp リファレンス</title>
     </head>
     <body>
         <header id="header">
@@ -43,8 +43,8 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/ref/invocable.html">
-                            invocable
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/container.html">
+                            container
                         </a>
                     </li>
                     
@@ -52,8 +52,17 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invoke_list.html">
-                            invoke_list
+                        
+                            method
+                        
+                    </li>
+                    
+                
+                    
+                    <li class="delimiter">></li>
+                    <li>
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_empty.html">
+                            is_empty
                         </a>
                     </li>
                     
@@ -224,58 +233,67 @@
 
             </aside>
             <article>
-                <h1>invoke_list - TumpCpp リファレンス</h1>
+                <h1>is_empty - TumpCpp リファレンス</h1>
                 <p></p>
 
                 <pre><code class="language-cpp">namespace tump {
     namespace fn {
         // 大元のメタ関数定義
-        template &lt;Invocable F, class ArgList&gt;
-        struct invoke_list;
+        template &lt;class T&gt;
+        struct is_empty {};
     }
 
     // 第一級関数化
-    using invoke_list = cbk&lt;fn::invoke_list, 2&gt;;
-    
-    // メンバ型 type 呼び出し省略のエイリアステンプレート
-    template &lt;Invocable F, class ArgList&gt;
-    using invoke_list_t = typename fn::invoke_list&lt;F, ArgList&gt;::type;
+    using is_empty = cbk&lt;fn::is_empty, 1&gt;;
 
     // 定数メンバ value 呼び出し省略のエイリアステンプレート
-    template &lt;Invocable F, class ArgList&gt;
-    constexpr auto invoke_list_v = fn::invoke_list&lt;F, ArgList&gt;::value;
+    template &lt;class T&gt;
+    constexpr auto is_empty_v = fn::is_empty&lt;T&gt;::value;
 }
 </code></pre>
 
 <h3 id="パラメータ">パラメータ</h3>
 
 <ul>
-<li>F - 第一級関数化したメタ関数。<a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invocable.html"><code>tump::Invocable</code></a>で真と判定されなければいけない。</li>
-<li>ArgList - 型のテンプレートパラメータパックを指定したテンプレートクラス</li>
+<li>T - 任意の型</li>
 </ul>
 
 <h2 id="概要">概要</h2>
 
-<p>第一級関数化したメタ関数に引数を渡して実行するメタ関数です。</p>
+<p>指定のテンプレートパラメータ<code>T</code>が空か判定し、空の場合は<code>std::true_type</code>、それ以外の場合は<code>std::false_type</code>を継承します。</p>
 
-<p>ほとんど、<a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invoke.html"><code>tump::invoke</code></a>と機能は同じですが、メタ関数を適用する引数の渡し方が異なります。<br />
-<a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invoke.html"><code>tump::invoke</code></a>が直接引数のテンプレートパラメータパックを受け取るのに対して、<code>tump::invoke_list</code>は型のテンプレートパラメータパックを持つテンプレート型により、引数を渡します。</p>
+<p>下記のような型が空と判定されます。</p>
+
+<ul>
+<li><code>tump::make_empty</code>で生成された型</li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list&lt;&gt;</code></a></li>
+<li><code>tump::vlist&lt;&gt;</code></li>
+</ul>
 
 <h2 id="例">例</h2>
 
 <pre><code class="language-cpp">#include &lt;tuple&gt;
 #include &lt;tump.hpp&gt;
 
-// 引数リストは 型のテンプレートパラメータを持つテンプレートクラスであれば何でもよい
-static_assert(tump::invoke_list_v&lt;tump::is_same, tump::list&lt;int, int&gt;&gt; == true);
-static_assert(tump::invoke_list_v&lt;tump::is_same, std::tuple&lt;int, int&gt;&gt; == true);
+using not_empty1 = tump::list&lt;int, float&gt;;
+using not_empty2 = tump::vlist&lt;int(0), float(1), nullptr&gt;;
+using not_empty3 = int;
+using not_empty4 = std::tuple&lt;int&gt;;
 
-// invoke による、上記と同様の処理。
-// invoke_list と異なり、直接テンプレートパラメータを渡す
-static_assert(tump::invoke_v&lt;tump::is_same, int, int&gt; == true);
+using empty1 = tump::list&lt;&gt;;
+using empty2 = tump::vlist&lt;&gt;;
+using empty3 = tump::make_empty_t&lt;not_empty1&gt;;
+using empty4 = tump::make_empty_t&lt;not_empty4&gt;;
 
-// 第一級関数としての使用
-static_assert(tump::eval&lt;tump::invoke_list, tump::is_same, tump::list&lt;int, int&gt;&gt;::value == true);
+static_assert(tump::is_empty_v&lt;not_empty1&gt; == false);
+static_assert(tump::is_empty_v&lt;not_empty2&gt; == false);
+static_assert(tump::eval&lt;tump::is_empty, not_empty3&gt;::value == false);
+static_assert(tump::eval&lt;tump::is_empty, not_empty4&gt;::value == false);
+
+static_assert(tump::is_empty_v&lt;empty1&gt; == true);
+static_assert(tump::is_empty_v&lt;empty2&gt; == true);
+static_assert(tump::eval&lt;tump::is_empty, empty3&gt;::value == true);
+static_assert(tump::eval&lt;tump::is_empty, empty4&gt;::value == true);
 
 int main() {}
 </code></pre>
@@ -283,9 +301,10 @@ int main() {}
 <h2 id="関連リンク">関連リンク</h2>
 
 <ul>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invocable.html"><code>tump::Invocable</code></a></li>
-<li><code>tump::is_same</code></li>
+<li><code>tump::eval</code></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a></li>
+<li><code>tump::vlist</code></li>
+<li><code>tump::make_empty</code></li>
 </ul>
 
             </article>

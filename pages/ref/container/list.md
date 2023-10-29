@@ -30,61 +30,61 @@ TumpCpp では、`tump::list`を主な対象とした、いくつかのリスト
 
 | メタ関数・概念の名称 | 説明 |
 | --- | --- |
-| [{`tump::is_empty`|ref/container/list/is_empty}] | リストが空か判定します。 |
-| [{`tump::is_type_list`|ref/container/list/is_type_list}] | 型のリストとして利用できるテンプレート型かどうか判定します。 |
-| [{`tump::TypeList`|ref/container/list/is_type_list}] | 型のリストとして利用できるテンプレート型かどうか判定する制約です。 |
-| [{`tump::TypeListOrValueList`|ref/container/list/is_t_or_v_list}] | 型または、値のリストとして利用できるテンプレート型かどうか判定します。 |
-| [{`tump::len`|ref/container/list/is_t_or_v_list}] | リストの長さを取得します。 |
+| [{`tump::is_empty`|ref/container/method/is_empty}] | リストが空か判定します。 |
+| [{`tump::is_type_list`|ref/container/method/is_type_list}] | 型のリストとして利用できるテンプレート型かどうか判定します。 |
+| [{`tump::TypeList`|ref/container/method/is_type_list}] | 型のリストとして利用できるテンプレート型かどうか判定する制約です。 |
+| [{`tump::TypeListOrValueList`|ref/container/method/is_t_or_v_list}] | 型または、値のリストとして利用できるテンプレート型かどうか判定します。 |
+| [{`tump::len`|ref/container/method/is_t_or_v_list}] | リストの長さを取得します。 |
 
 ### 要素アクセス
 
 | メタ関数の名称 | 説明 |
 | --- | --- |
-| [{`tump::count_if`|ref/container/list/count_if}] | 指定の条件に合致する要素の数を数えます。 |
-| [{`tump::exists`|ref/container/list/exists}] | リストの要素に指定の型が含まれるかどうか判定します。 |
-| [{`tump::find_if`|ref/container/list/find_if}] | リストの要素から、指定の条件に合致する最初の型を取得します。 |
-| [{`tump::get`|ref/container/list/get}] | リスト要素のうち、指定の位置の型を取得します。 |
-| [{`tump::get_front`|ref/container/list/get_front}] | リスト要素の先頭の型を取得します。 |
-| [{`tump::get_back`|ref/container/list/get_back}] | リスト要素の最後尾の型を取得します。 |
-| [{`tump::index_of`|ref/container/list/index_of}] | リストの要素から、指定の型が最初に見つかった位置を取得します。 |
-| [{`tump::index_of_if`|ref/container/list/index_of_if}] | リストの要素から、指定の条件に合致する最初の型が見つかった位置を取得します。 |
-| [{`tump::is_unique`|ref/container/list/is_unique}] | リストの要素の、重複の有無を判定します。 |
+| [{`tump::count_if`|ref/container/method/count_if}] | 指定の条件に合致する要素の数を数えます。 |
+| [{`tump::exists`|ref/container/method/exists}] | リストの要素に指定の型が含まれるかどうか判定します。 |
+| [{`tump::find_if`|ref/container/method/find_if}] | リストの要素から、指定の条件に合致する最初の型を取得します。 |
+| [{`tump::get`|ref/container/method/get}] | リスト要素のうち、指定の位置の型を取得します。 |
+| [{`tump::get_front`|ref/container/method/get_front}] | リスト要素の先頭の型を取得します。 |
+| [{`tump::get_back`|ref/container/method/get_back}] | リスト要素の最後尾の型を取得します。 |
+| [{`tump::index_of`|ref/container/method/index_of}] | リストの要素から、指定の型が最初に見つかった位置を取得します。 |
+| [{`tump::index_of_if`|ref/container/method/index_of_if}] | リストの要素から、指定の条件に合致する最初の型が見つかった位置を取得します。 |
+| [{`tump::is_unique`|ref/container/method/is_unique}] | リストの要素の、重複の有無を判定します。 |
 
 ### リスト操作
 
 | メタ関数の名称 | 説明 |
 | --- | --- |
-| [{`tump::make_empty`|ref/container/list/make_empty}] | 空のリストを作成します。 |
-| [{`tump::make_type_list`|ref/container/list/make_type_list}] | 新しいリストを作成します。 |
-| [{`tump::concat`|ref/container/list/concat}] | 複数のリストを結合します。 |
-| [{`tump::copy`|ref/container/list/copy}] | リストが持つテンプレートパラメータの内容を、別のリストに写します。 |
-| [{`tump::filter`|ref/container/list/filter}] | リストが持つテンプレートパラメータから、条件に合致する要素のみ抽出します。 |
-| [{`tump::foldl`・`tump::foldr`|ref/container/list/fold}] | 畳み込みを行います。 |
-| [{`tump::map`|ref/container/list/map}] | リストが持つ全ての要素に任意の処理を適用します。 |
-| [{`tump::map_if`|ref/container/list/map_if}] | リストが持つ要素のうち、指定の条件に合致する要素すべてに、任意の処理を適用します。 |
-| [{`tump::pop_front`|ref/container/list/pop_front}] | リストの先頭の要素を削除します。 |
-| [{`tump::pop_back`|ref/container/list/pop_back}] | リストの最後尾の要素を削除します。 |
-| [{`tump::push_front`|ref/container/list/push_front}] | リストの先頭に要素を挿入します。 |
-| [{`tump::push_back`|ref/container/list/push_back}] | リストの最後尾に要素を挿入します。 |
-| [{`tump::push_front_if`|ref/container/list/push_front_if}] | リストの先頭に、指定の条件に一致する要素を挿入します。 |
-| [{`tump::push_back_if`|ref/container/list/push_back_if}] | リストの先頭に、指定の条件に一致する要素を挿入します。 |
-| [{`tump::remove_if`|ref/container/list/remove_if}] | リストが持つテンプレートパラメータから、条件に合致する要素のみ削除します。 |
-| [{`tump::replace`|ref/container/list/replace}] | リストが持つ要素のうち、指定の型を新しい型で置き換えます。 |
-| [{`tump::replace_if`|ref/container/list/replace_if}] | リストが持つ要素のうち、指定の条件に合致する型を新しい型で置き換えます。 |
-| [{`tump::reverse`|ref/container/list/reverse}] | リストの要素の並びを反転します。 |
-| [{`tump::slice`|ref/container/list/slice}] | リストの指定の範囲を切り出します。 |
-| [{`tump::unique`|ref/container/list/unique}] | リストの重複している要素を削除します。 |
-| [{`tump::zip`|ref/container/list/zip}] | 2 つのリストから要素を 1 つずつ取り出した組のリストを生成します。 |
+| [{`tump::make_empty`|ref/container/method/make_empty}] | 空のリストを作成します。 |
+| [{`tump::make_type_list`|ref/container/method/make_type_list}] | 新しいリストを作成します。 |
+| [{`tump::concat`|ref/container/method/concat}] | 複数のリストを結合します。 |
+| [{`tump::copy`|ref/container/method/copy}] | リストが持つテンプレートパラメータの内容を、別のリストに写します。 |
+| [{`tump::filter`|ref/container/method/filter}] | リストが持つテンプレートパラメータから、条件に合致する要素のみ抽出します。 |
+| [{`tump::foldl`・`tump::foldr`|ref/container/method/fold}] | 畳み込みを行います。 |
+| [{`tump::map`|ref/container/method/map}] | リストが持つ全ての要素に任意の処理を適用します。 |
+| [{`tump::map_if`|ref/container/method/map_if}] | リストが持つ要素のうち、指定の条件に合致する要素すべてに、任意の処理を適用します。 |
+| [{`tump::pop_front`|ref/container/method/pop_front}] | リストの先頭の要素を削除します。 |
+| [{`tump::pop_back`|ref/container/method/pop_back}] | リストの最後尾の要素を削除します。 |
+| [{`tump::push_front`|ref/container/method/push_front}] | リストの先頭に要素を挿入します。 |
+| [{`tump::push_back`|ref/container/method/push_back}] | リストの最後尾に要素を挿入します。 |
+| [{`tump::push_front_if`|ref/container/method/push_front_if}] | リストの先頭に、指定の条件に一致する要素を挿入します。 |
+| [{`tump::push_back_if`|ref/container/method/push_back_if}] | リストの先頭に、指定の条件に一致する要素を挿入します。 |
+| [{`tump::remove_if`|ref/container/method/remove_if}] | リストが持つテンプレートパラメータから、条件に合致する要素のみ削除します。 |
+| [{`tump::replace`|ref/container/method/replace}] | リストが持つ要素のうち、指定の型を新しい型で置き換えます。 |
+| [{`tump::replace_if`|ref/container/method/replace_if}] | リストが持つ要素のうち、指定の条件に合致する型を新しい型で置き換えます。 |
+| [{`tump::reverse`|ref/container/method/reverse}] | リストの要素の並びを反転します。 |
+| [{`tump::slice`|ref/container/method/slice}] | リストの指定の範囲を切り出します。 |
+| [{`tump::unique`|ref/container/method/unique}] | リストの重複している要素を削除します。 |
+| [{`tump::zip`|ref/container/method/zip}] | 2 つのリストから要素を 1 つずつ取り出した組のリストを生成します。 |
 
 ### その他
 
 | メタ関数の名称 | 説明 |
 | --- | --- |
-| [{`tump::fmap`|ref/container/list/fmap}] | リストがファンクタとして振舞うためのメタ関数です。機能は[{`tump::map`|ref/container/list/map}]とまったく同じです。 |
-| [{`tump::pure`|ref/container/list/pure}] | メタ関数を、アプリカティブファンクタに適用可能な形に持ち上げます。 |
-| [{`tump::ap`|ref/container/list/ap}] | リストがアプリカティブファンクタとして振舞うためのメタ関数です。アプリカティブファンクタに持ち上げられたメタ関数を、アプリカティブファンクタに適用します。 |
-| [{`tump::ret`|ref/container/list/ret}] | メタ関数を、モナドに適用可能な形に持ち上げます。[{`tump::pure`|ref/container/list/pure}]の別名です。 |
-| [{`tump::bind`|ref/container/list/bind}] | モナドから値を取り出し、モナドを返却するメタ関数に食わせます。 |
+| [{`tump::fmap`|ref/container/method/fmap}] | リストがファンクタとして振舞うためのメタ関数です。機能は[{`tump::map`|ref/container/method/map}]とまったく同じです。 |
+| [{`tump::pure`|ref/container/method/pure}] | メタ関数を、アプリカティブファンクタに適用可能な形に持ち上げます。 |
+| [{`tump::ap`|ref/container/method/ap}] | リストがアプリカティブファンクタとして振舞うためのメタ関数です。アプリカティブファンクタに持ち上げられたメタ関数を、アプリカティブファンクタに適用します。 |
+| [{`tump::ret`|ref/container/method/ret}] | メタ関数を、モナドに適用可能な形に持ち上げます。[{`tump::pure`|ref/container/method/pure}]の別名です。 |
+| [{`tump::bind`|ref/container/method/bind}] | モナドから値を取り出し、モナドを返却するメタ関数に食わせます。 |
 
 ## 例
 

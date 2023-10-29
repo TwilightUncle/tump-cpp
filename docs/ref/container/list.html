@@ -75,12 +75,13 @@
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/sec.html">sec</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/lambda.html">lambda</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/mp_if.html">mp_if</a></li>
-<li>guard</li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/guard.html">guard</a></li>
 </ul></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable.html">メタ関数の第一級関数化と適用</a>
 
 <ul>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/callback.html">callback/cbk</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/callback.html">callback</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/callback.html">cbk</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/partial_apply.html">partial_apply</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invocable.html">Invocable</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invoke.html">invoke</a></li>
@@ -92,12 +93,40 @@
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator.html">演算子</a>
 
 <ul>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/apply.html">関数適用</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/dot.html">関数の合成</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/compare.html">比較演算子</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/logical.html">論理演算子</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/elem.html">リスト要素の含有判定</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/concat.html">リスト結合・要素追加</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/apply.html">関数適用</a>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/apply.html">_apply</a></li>
+</ul></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/dot.html">関数の合成</a>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/dot.html">_dot</a></li>
+</ul></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/compare.html">比較演算子</a>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/compare.html">_eq</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/compare.html">_ne</a></li>
+</ul></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/logical.html">論理演算子</a>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/logical.html">_and</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/logical.html">_or</a></li>
+</ul></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/elem.html">リスト要素の含有判定</a>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/elem.html">_elem</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/elem.html">_not_elem</a></li>
+</ul></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/concat.html">リスト結合・要素追加</a>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/concat.html">_cons</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/concat.html">_concat</a></li>
+</ul></li>
 <li>_fmap</li>
 <li>_ap</li>
 <li>_bind</li>
@@ -112,9 +141,9 @@
 <li>リストの情報取得用メタ関数・概念
 
 <ul>
-<li>is_empty</li>
-<li>is_type_list</li>
-<li>TypeList</li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_empty.html">is_empty</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html">is_type_list</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html">TypeList</a></li>
 <li>TypeListOrValueList</li>
 <li>len</li>
 </ul></li>
@@ -167,7 +196,15 @@
 <li>bind</li>
 </ul></li>
 </ul></li>
-<li>vlist</li>
+<li>vlist
+
+<ul>
+<li>リストの情報取得用メタ関数・概念
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_empty.html">is_empty</a></li>
+</ul></li>
+</ul></li>
 <li>ファンクタ</li>
 <li>アプリカティブファンクタ</li>
 <li>モナド</li>
@@ -225,17 +262,17 @@
 
 <tbody>
 <tr>
-<td><code>tump::is_empty</code></td>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_empty.html"><code>tump::is_empty</code></a></td>
 <td>リストが空か判定します。</td>
 </tr>
 
 <tr>
-<td><code>tump::is_type_list</code></td>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::is_type_list</code></a></td>
 <td>型のリストとして利用できるテンプレート型かどうか判定します。</td>
 </tr>
 
 <tr>
-<td><code>tump::TypeList</code></td>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::TypeList</code></a></td>
 <td>型のリストとして利用できるテンプレート型かどうか判定する制約です。</td>
 </tr>
 
