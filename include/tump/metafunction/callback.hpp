@@ -6,28 +6,28 @@
 
 namespace tump
 {
-    namespace _
-    {
-        template <unsigned int ArgsSize, bool IsCheckArgsSize>
-        struct args_size_members
-        {
-            static constexpr auto is_check_args_size = IsCheckArgsSize;
-            static constexpr auto args_size = ArgsSize;
-        };
-
-        template <class T>
-        concept DerivedAsArgSizeMembers = requires {
-            { T::is_check_args_size } -> std::convertible_to<bool>;
-            { T::args_size } -> std::convertible_to<unsigned int>;
-        };
-    }
-
     namespace fn
     {
+        namespace impl
+        {
+            template <unsigned int ArgsSize, bool IsCheckArgsSize>
+            struct args_size_members
+            {
+                static constexpr auto is_check_args_size = IsCheckArgsSize;
+                static constexpr auto args_size = ArgsSize;
+            };
+
+            template <class T>
+            concept DerivedAsArgSizeMembers = requires {
+                { T::is_check_args_size } -> std::convertible_to<bool>;
+                { T::args_size } -> std::convertible_to<unsigned int>;
+            };
+        }
+
         template <unsigned int ArgsSize, class F>
         struct is_allowed_args_size : public std::false_type {};
 
-        template <unsigned int ArgsSize, ::tump::_::DerivedAsArgSizeMembers F>
+        template <unsigned int ArgsSize, impl::DerivedAsArgSizeMembers F>
         struct is_allowed_args_size<ArgsSize, F> : public std::bool_constant<
             !F::is_check_args_size || F::args_size >= ArgsSize
         > {};
@@ -35,7 +35,7 @@ namespace tump
         template <unsigned int ArgsSize, class F>
         struct eq_args_size : public std::false_type {};
 
-        template <unsigned int ArgsSize, ::tump::_::DerivedAsArgSizeMembers F>
+        template <unsigned int ArgsSize, impl::DerivedAsArgSizeMembers F>
         struct eq_args_size<ArgsSize, F> : public std::bool_constant<
             !F::is_check_args_size || F::args_size == ArgsSize
         > {};
@@ -48,7 +48,7 @@ namespace tump
      * @tparam ArgsSize MetaFuncで指定したメタ関数の引数の数を指定。0の場合はメタ関数実行時に引数の数のチェックを行わない
     */
     template <template <class...> class MetaFunc, unsigned int ArgsSize = 0>
-    struct callback : public _::args_size_members<ArgsSize, bool(ArgsSize)> {};
+    struct callback : public fn::impl::args_size_members<ArgsSize, bool(ArgsSize)> {};
 
     /**
      * callback のエイリアス
@@ -61,7 +61,7 @@ namespace tump
 
     namespace fn
     {
-        namespace _
+        namespace impl
         {
             template <class F, unsigned int CheckArgsSize, bool IsCheckArgsSize>
             using is_callback_impl = std::disjunction<
@@ -78,7 +78,7 @@ namespace tump
 
         template <template <class...> class MetaFunc, unsigned int ArgsSize, unsigned int CheckArgsSize, bool IsCheckArgsSize>
         struct is_callback<callback<MetaFunc, ArgsSize>, optional_args_for_is_callback<CheckArgsSize, IsCheckArgsSize>>
-            : public _::is_callback_impl<callback<MetaFunc, ArgsSize>, CheckArgsSize, IsCheckArgsSize>
+            : public impl::is_callback_impl<callback<MetaFunc, ArgsSize>, CheckArgsSize, IsCheckArgsSize>
         {};
     }
 

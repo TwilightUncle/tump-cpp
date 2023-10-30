@@ -39,19 +39,22 @@ namespace tump
 
     namespace fn
     {
-        /**
-         * 仮引数を実引数に置き換える
-        */
-        template <TypeList ArgPaire, TypeList Expression>
-        struct lambda_impl : public replace<
-            get_front_t<ArgPaire>,
-            get_back_t<ArgPaire>,
-            map_if_t<
-                ::tump::is_type_list,
-                partial_apply<cbk<lambda_impl, 2>, ArgPaire>,
-                Expression
-            >
-        > {};
+        namespace impl
+        {
+            /**
+             * 仮引数を実引数に置き換える
+            */
+            template <TypeList ArgPaire, TypeList Expression>
+            struct lambda_impl : public replace<
+                get_front_t<ArgPaire>,
+                get_back_t<ArgPaire>,
+                map_if_t<
+                    ::tump::is_type_list,
+                    partial_apply<cbk<lambda_impl, 2>, ArgPaire>,
+                    Expression
+                >
+            > {};
+        }
         
         /**
          * ラムダ式生成
@@ -61,7 +64,7 @@ namespace tump
         using lambda = unnorm_li_t<
             empty<exp>,
             foldr_t<
-                cbk<lambda_impl, 2>,
+                cbk<impl::lambda_impl, 2>,
                 to_norm_li_t<Expression>,
                 zip_t<FormalArgList, list<ActualArgs...>>
             >

@@ -78,7 +78,7 @@ namespace tump
 
     namespace fn
     {
-        namespace _
+        namespace impl
         {
             // 剰余で結合性チェック
             template <class T, std::size_t Rem>
@@ -95,13 +95,13 @@ namespace tump
         }
 
         template <class Op>
-        using is_infixr = _::check_infix_base<Op, 0u>;
+        using is_infixr = impl::check_infix_base<Op, 0u>;
 
         template <class Op>
-        using is_infixl = _::check_infix_base<Op, 1u>;
+        using is_infixl = impl::check_infix_base<Op, 1u>;
 
         template <class Op>
-        using is_infix = _::check_infix_base<Op, 2u>;
+        using is_infix = impl::check_infix_base<Op, 2u>;
     }
 
     /**

@@ -7,18 +7,18 @@
 namespace tump
 {
     namespace fn {
-        namespace _
+        namespace impl
         {
             template <InvocableArgN<1> F, int N, TypeList List>
-            struct find_if_impl : public find_if_impl<F, N + 1, pop_front_t<to_norm_li_t<List>>> {};
+            struct find_if : public find_if<F, N + 1, pop_front_t<to_norm_li_t<List>>> {};
 
             template <InvocableArgN<1> F, int N, TypeList List>
             requires (bool(invoke_v<F, get_front_t<List>>))
-            struct find_if_impl<F, N, List> : public type_value<get_front_t<List>, N> {};
+            struct find_if<F, N, List> : public type_value<get_front_t<List>, N> {};
 
             template <InvocableArgN<1> F, int N, TypeList List>
             requires (is_empty_v<List>)
-            struct find_if_impl<F, N, List> : public type_value<mp_null_t, int(-1)> {};
+            struct find_if<F, N, List> : public type_value<mp_null_t, int(-1)> {};
         }
 
         /**
@@ -26,7 +26,7 @@ namespace tump
          * 見つからなかった場合、type = mp_null_t, value = -1 となる
         */
         template <InvocableArgN<1> F, TypeList List>
-        using find_if = _::find_if_impl<F, 0, List>;
+        using find_if = impl::find_if<F, 0, List>;
         
         /**
          * 一致する型および、位置をListの中から検索する

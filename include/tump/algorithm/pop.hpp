@@ -24,10 +24,10 @@ namespace tump
             list<>
         > {};
 
-        namespace _
+        namespace impl
         {
             template <TypeList List, TypeList Result, std::size_t N>
-            struct pop_back_impl : public pop_back_impl<
+            struct pop_back : public pop_back<
                 List,
                 push_back_t<Result, get_t<N, List>>,
                 N + 1
@@ -35,11 +35,11 @@ namespace tump
 
             template <TypeList List, TypeList Result, std::size_t N>
             requires (len_v<List> == 1)
-            struct pop_back_impl<List, Result, N> : public fn::make_empty<List> {};
+            struct pop_back<List, Result, N> : public fn::make_empty<List> {};
 
             template <TypeList List, TypeList Result, std::size_t N>
             requires (len_v<List> - 1 == N && N > 0)
-            struct pop_back_impl<List, Result, N> : public std::type_identity<Result> {};
+            struct pop_back<List, Result, N> : public std::type_identity<Result> {};
         }
 
         /**
@@ -49,7 +49,7 @@ namespace tump
         requires (!is_empty_v<List>)
         using pop_back = unnorm_li<
             List,
-            typename _::pop_back_impl<
+            typename impl::pop_back<
                 to_norm_li_t<List>,
                 list<>,
                 0

@@ -10,14 +10,14 @@ namespace tump
 
     namespace fn
     {
-        namespace _
+        namespace impl
         {
             template <TypeList List, TypeList Result, std::size_t Start, std::size_t Size, std::size_t Stride>
-            struct slice_impl;
+            struct slice;
 
             template <TypeList List, TypeList Result, std::size_t Start, std::size_t Size, std::size_t Stride>
             requires (!is_empty_v<List> && Size > 0 && len_v<List> > Start)
-            struct slice_impl<List, Result, Start, Size, Stride> : public slice_impl<
+            struct slice<List, Result, Start, Size, Stride> : public slice<
                 pop_front_t<List>,
                 invoke_t<
                     std::conditional_t<Start != 0, ::tump::left, ::tump::push_back<>>,
@@ -31,7 +31,7 @@ namespace tump
 
             template <TypeList List, TypeList Result, std::size_t Start, std::size_t Size, std::size_t Stride>
             requires (is_empty_v<List> || !Size || len_v<List> <= Start)
-            struct slice_impl<List, Result, Start, Size, Stride> : public std::type_identity<Result> {};
+            struct slice<List, Result, Start, Size, Stride> : public std::type_identity<Result> {};
         }
 
         /**
@@ -43,7 +43,7 @@ namespace tump
         template <TypeListOrValueList List, std::size_t Start, std::size_t Size, std::size_t Stride>
         struct slice<List, size_args<Start, Size, Stride>> : public unnorm_li<
             List,
-            typename _::slice_impl<
+            typename impl::slice<
                 to_norm_li_t<List>, list<>, Start, Size, Stride
             >::type
         > {};

@@ -8,10 +8,10 @@ namespace tump
 {
     namespace fn
     {
-        namespace _
+        namespace impl
         {
             template <TypeList Acc, class Cur>
-            using unique_impl = push_back_if<
+            using unique = push_back_if<
                 compose_t<
                     negation,
                     partial_apply<::tump::flip, ::tump::exists, Acc>
@@ -28,7 +28,7 @@ namespace tump
         using unique = unnorm_li<
             List,
             foldl_t<
-                cbk<_::unique_impl, 2>,
+                cbk<impl::unique, 2>,
                 list<>,
                 to_norm_li_t<List>>
             >;
