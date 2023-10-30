@@ -83,7 +83,7 @@ E<tump::make_empty_t<std::tuple<int, float>>>;
 // E<A>;
 // E<B<int(1), float>>;
 // E<C<std::vector, float>>;
-// E<tump::vlist<int(1), float(2), double(3)>>;
+// E<tump::vlist<int(1), long(2), double(3)>>;
 
 int main() {}
 ```

@@ -50,7 +50,7 @@ namespace tump {
 [{`tump::exp`|ref/expression/exp}]を指定した際は、`tump::guard`を実行する際に、先に`tump::exp`が評価され、その結果を判定したり、返却します。
 
 なお、`tump::if_clause`および`tump::otherwise`は**メタ関数ではありません**。  
-あくまでも、`tump::guard`のパラメータ`Clauses`でしか利用できないテンプレートクラスとなりますので、ご注意ください。
+あくまでも、`tump::guard`のパラメータ`Clauses`用に定義されたテンプレートクラスとなりますので、ご注意ください。
 
 ## 例
 

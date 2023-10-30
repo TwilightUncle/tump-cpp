@@ -26,7 +26,7 @@ namespace tump {
 
 ## 概要
 
-`tump::count_if`は、テンプレートパラメータ`List`が保持するパラメータパックのうち、テンプレートパラメータ`Pred`のメタ関数を適用した結果真と判定されるような。パラメータの数を数えます。
+`tump::count_if`は、テンプレートパラメータ`List`が保持するパラメータパックのうち、テンプレートパラメータ`Pred`のメタ関数を適用した結果、真と判定されるようなパラメータの数を数えます。
 
 ## 例
 
@@ -55,7 +55,7 @@ int main() {}
 ## 関連リンク
 
 - [{`tump::eval`|ref/expression/exp}]
-- [{`tump::InvocableArgN<1>`|ref/invocable/invocable}]
+- [{`tump::InvocableArgN`|ref/invocable/invocable}]
 - [{`tump::TypeList`|ref/container/method/is_type_list}]
 - [{`tump::list`|ref/container/list}]
 - [{`tump::make_empty`|ref/container/method/make_empty}]

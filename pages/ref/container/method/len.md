@@ -35,7 +35,7 @@ namespace tump {
 #include <tump.hpp>
 
 using list1 = tump::list<int, float>;
-using list2 = tump::vlist<int(0), float(1), nullptr>;
+using list2 = tump::vlist<int(0), long(1), nullptr>;
 using list3 = std::vector<int>;
 using list4 = tump::make_empty_t<std::tuple<int>>;
 using list5 = tump::vlist<>;

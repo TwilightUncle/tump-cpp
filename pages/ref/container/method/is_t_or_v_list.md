@@ -47,7 +47,7 @@ static_assert(tump::TypeListOrValueList<std::array<int, 2>> == false);
 
 // 真と判定されるもの例
 static_assert(tump::TypeListOrValueList<tump::list<int, float>> == true);
-static_assert(tump::TypeListOrValueList<tump::vlist<int(1), float(2), double(3)>> == true);
+static_assert(tump::TypeListOrValueList<tump::vlist<int(1), long(2), double(3)>> == true);
 static_assert(tump::TypeListOrValueList<tump::list<>> == true);
 static_assert(tump::TypeListOrValueList<tump::vlist<>> == true);
 static_assert(tump::TypeListOrValueList<D<int, float>> == true);

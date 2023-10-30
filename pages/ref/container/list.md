@@ -56,6 +56,7 @@ TumpCpp では、`tump::list`を主な対象とした、いくつかのリスト
 | --- | --- |
 | [{`tump::make_empty`|ref/container/method/make_empty}] | 空のリストを作成します。 |
 | [{`tump::make_type_list`|ref/container/method/make_type_list}] | 新しいリストを作成します。 |
+| [{`tump::fill`|ref/container/method/fill}] | 新しいリストを作成します。 |
 | [{`tump::concat`|ref/container/method/concat}] | 複数のリストを結合します。 |
 | [{`tump::copy`|ref/container/method/copy}] | リストが持つテンプレートパラメータの内容を、別のリストに写します。 |
 | [{`tump::filter`|ref/container/method/filter}] | リストが持つテンプレートパラメータから、条件に合致する要素のみ抽出します。 |

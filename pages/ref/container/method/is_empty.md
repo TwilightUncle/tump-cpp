@@ -42,7 +42,7 @@ namespace tump {
 #include <tump.hpp>
 
 using not_empty1 = tump::list<int, float>;
-using not_empty2 = tump::vlist<int(0), float(1), nullptr>;
+using not_empty2 = tump::vlist<int(0), long(1), nullptr>;
 using not_empty3 = int;
 using not_empty4 = std::tuple<int>;
 
