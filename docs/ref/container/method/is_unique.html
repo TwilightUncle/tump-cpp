@@ -16,7 +16,7 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/style.css">
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/vendor/prism.css">
-        <title></title>
+        <title>is_unique - TumpCpp リファレンス</title>
     </head>
     <body>
         <header id="header">
@@ -34,8 +34,26 @@
                     
                     <li class="delimiter">></li>
                     <li>
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref.html">
+                            ref
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="delimiter">></li>
+                    <li>
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/container.html">
+                            container
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="delimiter">></li>
+                    <li>
                         
-                            layout
+                            method
                         
                     </li>
                     
@@ -43,8 +61,8 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/layout/_header.html">
-                            _header
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_unique.html">
+                            is_unique
                         </a>
                     </li>
                     
@@ -215,21 +233,94 @@
 
             </aside>
             <article>
-                <h1></h1>
+                <h1>is_unique - TumpCpp リファレンス</h1>
                 <p></p>
 
-                <h1 id="TumpCpp - C++20 Functional-TMP Library">TumpCpp - C++20 Functional-TMP Library</h1>
+                <pre><code class="language-cpp">namespace tump {
+    namespace fn {
+        // メタ関数定義
+        template &lt;TypeListOrValueList List&gt;
+        using is_unique = ...;
+    }
 
-<!-- - <input type="text" placeholder="検索未実装"> -->
+    // 第一級関数化
+    using is_unique = cbk&lt;fn::is_unique, 1&gt;;
+
+    // 定数メンバ value 呼び出し省略のエイリアステンプレート
+    template &lt;class T&gt;
+    constexpr auto is_unique_v = fn::is_unique&lt;T&gt;::value;
+}
+</code></pre>
+
+<h3 id="パラメータ">パラメータ</h3>
 
 <ul>
-<li><a href="https://github.com/TwilightUncle/tump-cpp">Repository (Github)</a></li>
+<li>List - <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_t_or_v_list.html"><code>tump::TypeListOrValueList</code></a>で真と判定される型</li>
+</ul>
+
+<h2 id="概要">概要</h2>
+
+<p><code>tump::is_unique</code>は、<code>List</code>に指定された型が持つテンプレートパックに、重複がないことを判定するメタ関数です。</p>
+
+<p>リストがが空の場合は真となります。</p>
+
+<h2 id="例">例</h2>
+
+<pre><code class="language-cpp">#include &lt;tuple&gt;
+#include &lt;vector&gt;
+#include &lt;tump.hpp&gt;
+
+class A {};
+
+using list1 = tump::list&lt;int, float, void, std::vector&lt;int&gt;, char&gt;;
+using list2 = std::tuple&lt;int, float, A, int, double&gt;;
+using list3 = tump::vlist&lt;int(1), long(2), int(1)&gt;;
+using list4 = tump::vlist&lt;int(1), long(2), int(3), long(4)&gt;;
+using list5 = tump::make_empty_t&lt;std::tuple&lt;int&gt;&gt;;
+using list6 = tump::vlist&lt;&gt;;
+
+static_assert(tump::is_unique_v&lt;list1&gt; == true);
+static_assert(tump::is_unique_v&lt;list3&gt; == false);
+static_assert(tump::is_unique_v&lt;list5&gt; == true);
+
+static_assert(tump::eval&lt;tump::is_unique, list2&gt;::value == false);
+static_assert(tump::eval&lt;tump::is_unique, list4&gt;::value == true);
+static_assert(tump::eval&lt;tump::is_unique, list6&gt;::value == true);
+
+int main() {}
+</code></pre>
+
+<h2 id="関連リンク">関連リンク</h2>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a></li>
+<li><code>tump::vlist</code></li>
+<li><code>tump::make_empty</code></li>
 </ul>
 
             </article>
             <aside id="table_of_contents" class="table-of-contents">
                 <h3>目次</h3>
                 <ul>
+                    
+                        <li>
+                            <a href="#%e6%a6%82%e8%a6%81%0d">
+                                概要
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#%e4%be%8b%0d">
+                                例
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#%e9%96%a2%e9%80%a3%e3%83%aa%e3%83%b3%e3%82%af%0d">
+                                関連リンク
+                            </a>
+                        </li>
                     
                 </ul>
             </aside>

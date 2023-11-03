@@ -16,7 +16,7 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/style.css">
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/vendor/prism.css">
-        <title></title>
+        <title>index_of - TumpCpp リファレンス</title>
     </head>
     <body>
         <header id="header">
@@ -34,8 +34,26 @@
                     
                     <li class="delimiter">></li>
                     <li>
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref.html">
+                            ref
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="delimiter">></li>
+                    <li>
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/container.html">
+                            container
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="delimiter">></li>
+                    <li>
                         
-                            layout
+                            method
                         
                     </li>
                     
@@ -43,8 +61,8 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/layout/_header.html">
-                            _header
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/index_of.html">
+                            index_of
                         </a>
                     </li>
                     
@@ -215,21 +233,91 @@
 
             </aside>
             <article>
-                <h1></h1>
+                <h1>index_of - TumpCpp リファレンス</h1>
                 <p></p>
 
-                <h1 id="TumpCpp - C++20 Functional-TMP Library">TumpCpp - C++20 Functional-TMP Library</h1>
+                <pre><code class="language-cpp">namespace tump {
+    namespace fn {
+        // 大元のメタ関数定義
+        template &lt;class Search, TypeList List&gt;
+        using index_of = ...;
+    }
 
-<!-- - <input type="text" placeholder="検索未実装"> -->
+    // 第一級関数化
+    using index_of = cbk&lt;fn::find_if, 2&gt;;
+
+    // 定数メンバ value 呼び出し省略のエイリアステンプレート
+    template &lt;class Search, TypeList List&gt;
+    constexpr auto index_of_v = fn::index_of&lt;Search, List&gt;::value;
+}
+</code></pre>
+
+<h3 id="パラメータ">パラメータ</h3>
 
 <ul>
-<li><a href="https://github.com/TwilightUncle/tump-cpp">Repository (Github)</a></li>
+<li>Search - 任意の型</li>
+<li>List - <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::TypeList</code></a>で真と判定される型のリスト</li>
+</ul>
+
+<h2 id="概要">概要</h2>
+
+<p><code>tump::index_of</code>は、テンプレートパラメータ<code>List</code>が保持するパラメータパックのうち、テンプレートパラメータ<code>Search</code>を最初に見つけた位置を整数で返却します。</p>
+
+<p>該当する型が見つからなかった場合、結果の値は<code>-1</code>となります。</p>
+
+<h2 id="例">例</h2>
+
+<pre><code class="language-cpp">#include &lt;tuple&gt;
+#include &lt;vector&gt;
+#include &lt;tump.hpp&gt;
+
+class A {};
+
+using list1 = tump::list&lt;int, float, void, std::vector&lt;int&gt;, char&gt;;
+using list2 = std::tuple&lt;int, float, A, std::vector&lt;int&gt;, double&gt;;
+using list3 = tump::make_empty_t&lt;std::tuple&lt;int&gt;&gt;;
+
+static_assert(tump::index_of_v&lt;float, list1&gt; == 1);
+static_assert(tump::index_of_v&lt;double, list1&gt; == -1);
+
+static_assert(tump::eval&lt;tump::index_of, std::vector&lt;int&gt;, list2&gt;::value == 3);
+static_assert(tump::eval&lt;tump::index_of, long long, list2&gt;::value == -1);
+static_assert(tump::eval&lt;tump::index_of, int, list3&gt;::value == -1);
+
+int main() {}
+</code></pre>
+
+<h2 id="関連リンク">関連リンク</h2>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::TypeList</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a></li>
+<li><code>tump::make_empty</code></li>
 </ul>
 
             </article>
             <aside id="table_of_contents" class="table-of-contents">
                 <h3>目次</h3>
                 <ul>
+                    
+                        <li>
+                            <a href="#%e6%a6%82%e8%a6%81%0d">
+                                概要
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#%e4%be%8b%0d">
+                                例
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#%e9%96%a2%e9%80%a3%e3%83%aa%e3%83%b3%e3%82%af%0d">
+                                関連リンク
+                            </a>
+                        </li>
                     
                 </ul>
             </aside>

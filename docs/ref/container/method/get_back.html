@@ -16,7 +16,7 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/style.css">
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/vendor/prism.css">
-        <title>関数適用の演算子 - TumpCpp リファレンス</title>
+        <title>get_back - TumpCpp リファレンス</title>
     </head>
     <body>
         <header id="header">
@@ -43,8 +43,8 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/ref/operator.html">
-                            operator
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/container.html">
+                            container
                         </a>
                     </li>
                     
@@ -52,8 +52,17 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/ref/operator/apply.html">
-                            apply
+                        
+                            method
+                        
+                    </li>
+                    
+                
+                    
+                    <li class="delimiter">></li>
+                    <li>
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/get_back.html">
+                            get_back
                         </a>
                     </li>
                     
@@ -224,57 +233,67 @@
 
             </aside>
             <article>
-                <h1>関数適用の演算子 - TumpCpp リファレンス</h1>
+                <h1>get_back - TumpCpp リファレンス</h1>
                 <p></p>
 
                 <pre><code class="language-cpp">namespace tump {
-    using _apply = _op&lt;apply&lt;&gt;, e_op_priority::r_0&gt;;
+    namespace fn {
+        // 大元のメタ関数定義
+        template &lt;TypeListOrValueList List&gt;
+        requires (!is_empty_v&lt;List&gt;)
+        using get_back = ...;
+    }
+
+    // 第一級関数化
+    using get_back = cbk&lt;fn::get_back, 1&gt;;
+
+    // 定数メンバ value 呼び出し省略のエイリアステンプレート
+    template &lt;TypeListOrValueList List&gt;
+    using get_back_t = typename fn::get_back&lt;List&gt;::type;
+    
+    // 定数メンバ value 呼び出し省略のエイリアステンプレート
+    template &lt;TypeListOrValueList List&gt;
+    constexpr auto get_back_v = fn::get_back&lt;List&gt;::value;
 }
 </code></pre>
 
-<h3 id="_apply">_apply</h3>
+<h3 id="パラメータ">パラメータ</h3>
 
 <ul>
-<li>結合性 : 右結合</li>
-<li>優先度 : 0</li>
-<li>左オペランド : 第一級関数化したメタ関数。<a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invocable.html"><code>tump::Invocable</code></a>で真と判定されなければいけない。</li>
-<li>右オペランド : 任意の型</li>
-<li>機能 : 左オペランドのメタ関数を、右オペランドへ適用</li>
+<li>List - <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_t_or_v_list.html"><code>tump::TypeListOrValueList</code></a>で真と判定される型</li>
 </ul>
 
 <h2 id="概要">概要</h2>
 
-<p><code>tump::_apply</code>は左オペランドのメタ関数を、右オペランドの型に適用する機能を持ち、評価されるタイミングが最も遅い演算子です。</p>
+<p><code>tump::get_back</code>は、テンプレートパラメータ<code>List</code>が保持するパラメータパックのうち、最後尾の要素を取得するメタ関数です。</p>
 
-<h2 id="使い方">使い方</h2>
+<p>パラメータ<code>List</code>には、型テンプレートパラメータパックを持つ任意の型または、<code>tump::vlist</code>を指定することができます。</p>
 
-<p><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a>で記述された式において、メタ関数の適用は自動的に行われます。<br />
-そのため、<code>tump::_apply</code>をメタ関数の適用目的のみで使用することはありません。</p>
-
-<p><code>tump::_apply</code>を使う目的は、自動的に行われる関数適用と、<code>tump::_apply</code>の評価の優先順位の違いにあります。</p>
-
-<p>自動的に行われるメタ関数の適用は、式の左側から、演算子の評価よりも先におこなわれます。<br />
-一方で、<code>tump::_apply</code>の評価の優先順位は最も低く、式の右側から評価される動作となり、順序が真逆です。<br />
-つまり、メタ関数の適用を行う際に、<code>tump::_apply</code>を使うことで、<code>tump::_apply</code>の左右のオペランドの全ての評価が完了するまで、関数適用を遅らせることができます。</p>
-
-<p>上記を応用し、関数適用のタイミングを遅らせることで、式の中で行われる評価の順序を制御することが可能です。</p>
+<p>なお、<code>List</code>に空のリストを渡した場合は、制約によりコンパイルエラーとなります。</p>
 
 <h2 id="例">例</h2>
 
-<pre><code class="language-cpp">#include &lt;tump.hpp&gt;
+<pre><code class="language-cpp">#include &lt;tuple&gt;
+#include &lt;vector&gt;
+#include &lt;tump.hpp&gt;
 
-// _apply を用いない場合。
-// 左から順番に is_same を適用するため、case1 の式は、
-// add_const と int を比較した結果異なることから、std::false_type が返却される。
-using case1 = tump::eval&lt;tump::is_same, tump::add_const, int&gt;;
-static_assert(case1::value == false);
+class A {};
 
-// _apply を用いた場合。
-// case2 の式は、is_same と add_const の間に _apply をはさむことにより、
-// int への add_const の適用が最初に行われる。
-// 結果、is_same が const int を部分適用したメタ関数が返却される
-using case2 = tump::eval&lt;tump::is_same, tump::_apply, tump::add_const, int&gt;;
-static_assert(tump::eval&lt;case2, const int&gt;::value == true);
+using list1 = tump::list&lt;int, float, void, std::vector&lt;int&gt;, char&gt;;
+using list2 = std::tuple&lt;int, float, A, std::vector&lt;int&gt;, double&gt;;
+using list3 = tump::vlist&lt;int(1), long(2), char(3)&gt;;
+using list4 = tump::make_empty_t&lt;std::tuple&lt;int&gt;&gt;;
+using list5 = tump::vlist&lt;&gt;;
+
+static_assert(std::is_same_v&lt;tump::get_back_t&lt;list1&gt;, char&gt; == true);
+static_assert(tump::get_back_v&lt;list3&gt; == char(3));
+static_assert(tump::eval&lt;tump::get_back, list2, tump::_eq, double&gt;::value == true);
+static_assert(tump::eval&lt;tump::get_back, list3&gt;::value == char(3));
+
+// 下記は空のリストを指定しているため、
+// コメントアウトを外すとコンパイルエラー。
+// tump::get_back_t&lt;list4&gt;;
+// tump::eval&lt;tump::get_back, list5&gt;::value;
 
 int main() {}
 </code></pre>
@@ -283,11 +302,11 @@ int main() {}
 
 <ul>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::exp</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/op.html"><code>tump::_op</code></a></li>
-<li><code>tump::apply</code></li>
-<li><code>tump::add_const</code></li>
-<li><code>tump::is_same</code></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::TypeListOrValueList</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a></li>
+<li><code>tump::vlist</code></li>
+<li><code>tump::make_empty</code></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/compare.html"><code>tump::_eq</code></a></li>
 </ul>
 
             </article>
@@ -298,12 +317,6 @@ int main() {}
                         <li>
                             <a href="#%e6%a6%82%e8%a6%81%0d">
                                 概要
-                            </a>
-                        </li>
-                    
-                        <li>
-                            <a href="#%e4%bd%bf%e3%81%84%e6%96%b9%0d">
-                                使い方
                             </a>
                         </li>
                     
