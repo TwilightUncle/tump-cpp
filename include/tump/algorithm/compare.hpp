@@ -15,19 +15,14 @@ namespace tump
         struct comparing_type;
 
         template <class Ord, class L, class R>
-        struct is_comparing_type : public std::false_type {};
+        struct is_fn_comparing_type : public std::false_type {};
 
         template <InvocableArgN<2> Compare, InvocableArgN<1> Constraint, class L, class R>
         requires (invoke_v<Constraint, L> && invoke_v<Constraint, R>)
-        struct is_comparing_type<comparing_type<Compare, Constraint>, L, R> : public std::is_signed<
+        struct is_fn_comparing_type<comparing_type<Compare, Constraint>, L, R> : public std::is_signed<
             decltype(invoke_v<Compare, L, R>)
         > {};
     }
-
-    using is_comparing_type = cbk<fn::is_comparing_type, 3>;
-
-    template <class Ord, class L, class R>
-    constexpr auto is_comparing_type_v = fn::is_comparing_type<Ord, L, R>::value;
 
     namespace fn
     {
@@ -35,7 +30,7 @@ namespace tump
         struct comparing_type
         {
             template <class L, class R>
-            requires (is_comparing_type_v<comparing_type<Compare, Constraint>, L, R>)
+            requires (fn::is_fn_comparing_type<comparing_type<Compare, Constraint>, L, R>::value)
             static constexpr int compare_base_v = invoke_v<Compare, L, R>;
 
             template <class L, class R>
@@ -61,6 +56,20 @@ namespace tump
 
             template <class L, class R>
             struct ne : public std::negation<eq<L, R>> {};
+
+            template <class L, class R>
+            struct get_grater : public std::conditional<
+                lt<L, R>::value,
+                R,
+                L
+            > {};
+
+            template <class L, class R>
+            struct get_less : public std::conditional<
+                lt<L, R>::value,
+                L,
+                R
+            > {};
         };
     }
 
@@ -77,21 +86,56 @@ namespace tump
         using ge = cbk<fn::template ge, 2>;
         using eq = cbk<fn::template eq, 2>;
         using ne = cbk<fn::template ne, 2>;
+
+        using get_grater = cbk<fn::template get_grater, 2>;
+        using get_less = cbk<fn::template get_less, 2>;
     };
 
     namespace fn
     {
-        // size_of の 結果による比較
+        /**
+         * comparing_type かどうか比較
+        */
+        template <class T>
+        struct is_comparing_type : public std::false_type {};
+
+        template <InvocableArgN<2> Compare, InvocableArgN<1> Constraint>
+        struct is_comparing_type<::tump::comparing_type<Compare, Constraint>> : public std::true_type {};
+
+        /**
+         * size_of の 結果による比較
+        */
         template <class L, class R>
         struct compare_size : public vwrap<
             static_cast<int>(sizeof(L)) - static_cast<int>(sizeof(R))
         > {};
     }
 
-    // size_of の 結果による比較
+    /**
+     * comparing_type かどうか比較
+    */
+    using is_comparing_type = cbk<fn::is_comparing_type, 1>;
+
+    /**
+     * comparing_type かどうか比較
+    */
+    template <class T>
+    constexpr auto is_comparing_type_v = fn::is_comparing_type<T>::value;
+
+    /**
+     * comparing_type かどうか比較
+    */
+    template <class T>
+    concept TumpComparing = is_comparing_type_v<T>;
+
+    /**
+     * size_of の 結果による比較
+    */
     using compare_size = cbk<fn::compare_size, 2>;
 
-    // size_of の 結果による比較メタ関数の導出
+    /**
+     * size_of の 結果による比較
+    */
     using comparing_size = comparing_type<compare_size>;
 }
 

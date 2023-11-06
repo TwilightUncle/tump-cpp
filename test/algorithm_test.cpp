@@ -597,4 +597,24 @@ TEST(TumpAlgorithmTest, FillTest)
         tump::fill_t<list2, tump::fill_arg<long, 3>>,
         std::tuple<long, long, long>
     >;
+
+    ASSERT_TRUE(case1);
+    ASSERT_TRUE(case2);
+}
+
+TEST(TumpAlgorithmTest, MpMaxMinTest)
+{
+    using list1 = tump::list<std::int32_t, std::uint64_t, std::int8_t, std::uint16_t>;
+
+    constexpr auto case1 = std::is_same_v<
+        tump::mp_max_t<list1>,
+        std::uint64_t
+    >;
+    constexpr auto case2 = std::is_same_v<
+        tump::mp_min_t<list1>,
+        std::int8_t
+    >;
+
+    ASSERT_TRUE(case1);
+    ASSERT_TRUE(case2);
 }
