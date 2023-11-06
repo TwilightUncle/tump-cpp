@@ -3,9 +3,8 @@
 
 #include TUMP_COMMON_INCLUDE(vwrap.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/push.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/compare.hpp)
 #include TUMP_COMMON_INCLUDE(containers/monad.hpp)
-
-// TODO: invoke_result の特殊化を定義すること
 
 namespace tump
 {
@@ -61,11 +60,17 @@ namespace tump
     template <class T>
     constexpr auto is_operator_v = fn::is_operator<T>::value;
 
+    /**
+     * 演算子かどうか判定
+    */
     template <class T>
     concept TumpOperator = is_operator_v<T>;
 
     namespace fn
     {
+        /**
+         * 演算子の優先度を比較可能な型かどうか判定
+        */
         template <class T>
         struct is_compatible_op_priority : public std::false_type {};
 
@@ -76,14 +81,23 @@ namespace tump
         struct is_compatible_op_priority<_op<F, Priority>> : public std::true_type {};
     }
 
+    /**
+     * 演算子の優先度を比較可能な型かどうか判定
+    */
     template <class T>
     constexpr auto is_compatible_op_priority_v = fn::is_compatible_op_priority<T>::value;
 
+    /**
+     * 演算子の優先度を比較可能な型かどうか判定
+    */
     template <class T>
     concept CompatibleOpPriority = is_compatible_op_priority_v<T>;
 
     namespace fn
     {
+        /**
+         * CompatibleOpPriority の制約を満たす型から、e_op_priority 型の値を取得する
+        */
         template <CompatibleOpPriority T>
         struct get_op_priority;
 
@@ -94,36 +108,44 @@ namespace tump
         struct get_op_priority<_op<F, Priority>> : public vwrap<Priority> {};
     }
 
+    /**
+     * CompatibleOpPriority の制約を満たす型から、e_op_priority 型の値を取得する
+    */
     template <CompatibleOpPriority T>
-    using get_op_priority_t = fn::get_op_priority<T>::type;
+    using get_op_priority_t = typename fn::get_op_priority<T>::type;
 
+    /**
+     * CompatibleOpPriority の制約を満たす型から、e_op_priority 型の値を取得する
+    */
     template <CompatibleOpPriority T>
     constexpr auto get_op_priority_v = fn::get_op_priority<T>::value;
     
     namespace fn
     {
+        /**
+         * 演算子の優先度について、型を三方比較する
+        */
         template <CompatibleOpPriority L, CompatibleOpPriority R>
-        struct gt_op_priority : public std::bool_constant<
-            ((get_op_priority_v<L>) > (get_op_priority_v<R>))
+        struct compare_op_priority : public vwrap<
+            static_cast<int>(get_op_priority_v<L>) - static_cast<int>(get_op_priority_v<R>)
         > {};
+    }
 
-        template <CompatibleOpPriority L, CompatibleOpPriority R>
-        struct lt_op_priority : public gt_op_priority<R, L> {};
+    /**
+     * 演算子の優先度についての比較関数を生成する
+    */
+    using comparing_op_priority = type_comparing<
+        cbk<fn::compare_op_priority, 2>,
+        cbk<fn::is_compatible_op_priority, 1>
+    >;
 
+    namespace fn
+    {
+        /**
+         * 演算子の優先度が指定のものと一致しているか確認
+        */
         template <CompatibleOpPriority L, CompatibleOpPriority R>
-        struct ge_op_priotity : public std::negation<lt_op_priority<L, R>> {};
-
-        template <CompatibleOpPriority L, CompatibleOpPriority R>
-        struct le_op_priority : public std::negation<gt_op_priority<L, R>> {};
-
-        template <CompatibleOpPriority L, CompatibleOpPriority R>
-        struct eq_op_priority : public std::conjunction<
-            ge_op_priotity<L, R>,
-            le_op_priority<L, R>
-        > {};
-
-        template <CompatibleOpPriority L, CompatibleOpPriority R>
-        struct ne_op_priority : public std::negation<eq_op_priority<L, R>> {};
+        using eq_op_priority = typename comparing_op_priority::eq<L, R>;
     }
 
     /**
