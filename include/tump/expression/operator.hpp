@@ -61,19 +61,75 @@ namespace tump
     template <class T>
     constexpr auto is_operator_v = fn::is_operator<T>::value;
 
+    template <class T>
+    concept TumpOperator = is_operator_v<T>;
+
     namespace fn
     {
-        template <class T, e_op_priority Priority>
-        struct eq_op_priority : public std::false_type {};
+        template <class T>
+        struct is_compatible_op_priority : public std::false_type {};
 
-        template <InvocableArgN<2> F, e_op_priority OpPriority, e_op_priority CompPriority>
-        struct eq_op_priority<_op<F, OpPriority>, CompPriority> : public std::bool_constant<OpPriority == CompPriority> {};
+        template <e_op_priority Priority>
+        struct is_compatible_op_priority<vwrap<Priority>> : public std::true_type {};
+
+        template <class F, e_op_priority Priority>
+        struct is_compatible_op_priority<_op<F, Priority>> : public std::true_type {};
+    }
+
+    template <class T>
+    constexpr auto is_compatible_op_priority_v = fn::is_compatible_op_priority<T>::value;
+
+    template <class T>
+    concept CompatibleOpPriority = is_compatible_op_priority_v<T>;
+
+    namespace fn
+    {
+        template <CompatibleOpPriority T>
+        struct get_op_priority;
+
+        template <e_op_priority Priority>
+        struct get_op_priority<vwrap<Priority>> : public vwrap<Priority> {};
+
+        template <class F, e_op_priority Priority>
+        struct get_op_priority<_op<F, Priority>> : public vwrap<Priority> {};
+    }
+
+    template <CompatibleOpPriority T>
+    using get_op_priority_t = fn::get_op_priority<T>::type;
+
+    template <CompatibleOpPriority T>
+    constexpr auto get_op_priority_v = fn::get_op_priority<T>::value;
+    
+    namespace fn
+    {
+        template <CompatibleOpPriority L, CompatibleOpPriority R>
+        struct gt_op_priority : public std::bool_constant<
+            ((get_op_priority_v<L>) > (get_op_priority_v<R>))
+        > {};
+
+        template <CompatibleOpPriority L, CompatibleOpPriority R>
+        struct lt_op_priority : public gt_op_priority<R, L> {};
+
+        template <CompatibleOpPriority L, CompatibleOpPriority R>
+        struct ge_op_priotity : public std::negation<lt_op_priority<L, R>> {};
+
+        template <CompatibleOpPriority L, CompatibleOpPriority R>
+        struct le_op_priority : public std::negation<gt_op_priority<L, R>> {};
+
+        template <CompatibleOpPriority L, CompatibleOpPriority R>
+        struct eq_op_priority : public std::conjunction<
+            ge_op_priotity<L, R>,
+            le_op_priority<L, R>
+        > {};
+
+        template <CompatibleOpPriority L, CompatibleOpPriority R>
+        struct ne_op_priority : public std::negation<eq_op_priority<L, R>> {};
     }
 
     /**
      * 演算子の優先度が指定のものと一致しているか確認
     */
-    template <class T, e_op_priority Priority>
+    template <class T, class Priority>
     constexpr auto eq_op_priority_v = fn::eq_op_priority<T, Priority>::value;
 
     namespace fn

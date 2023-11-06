@@ -30,8 +30,8 @@ namespace tump
 
             // 演算子と演算子以外の型が隣り合った場合
             // 演算時の部分適用により、演算子を関数に変換する
-            template <e_op_priority Priority, TypeList Result, class T>
-            requires (!is_empty_v<Result> && is_operator_v<T> && eq_op_priority_v<T, Priority>)
+            template <e_op_priority Priority, TypeList Result, TumpOperator T>
+            requires (!is_empty_v<Result> && eq_op_priority_v<T, vwrap<Priority>>)
             struct exp_2<Priority, Result, T> : fn::push_front<
                 pop_front_t<Result>,
                 std::conditional_t<
