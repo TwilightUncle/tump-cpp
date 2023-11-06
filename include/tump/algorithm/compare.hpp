@@ -70,13 +70,13 @@ namespace tump
     template <InvocableArgN<2> Compare, InvocableArgN<1> Constraint = to_true>
     struct comparing_type
     {
-        using funcs = fn::comparing_type<Compare, Constraint>;
-        using lt = cbk<funcs::template lt, 2>;
-        using gt = cbk<funcs::template gt, 2>;
-        using le = cbk<funcs::template le, 2>;
-        using ge = cbk<funcs::template ge, 2>;
-        using eq = cbk<funcs::template eq, 2>;
-        using ne = cbk<funcs::template ne, 2>;
+        using fn = fn::comparing_type<Compare, Constraint>;
+        using lt = cbk<fn::template lt, 2>;
+        using gt = cbk<fn::template gt, 2>;
+        using le = cbk<fn::template le, 2>;
+        using ge = cbk<fn::template ge, 2>;
+        using eq = cbk<fn::template eq, 2>;
+        using ne = cbk<fn::template ne, 2>;
     };
 
     namespace fn
