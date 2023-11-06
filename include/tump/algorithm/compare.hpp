@@ -7,58 +7,76 @@
 
 namespace tump
 {
-    // 2 引数メタ関数と、制約による比較関数生成クラス
-    // Compare は メンバ定数 value で 符号付き整数 を返却しなければいけない
-    template <InvocableArgN<2> Compare, InvocableArgN<1> Constraint = to_true>
-    struct type_comparing;
-
     namespace fn
     {
+        // 2 引数メタ関数と、制約による比較関数生成クラス
+        // Compare は メンバ定数 value で 符号付き整数 を返却しなければいけない
+        template <InvocableArgN<2> Compare, InvocableArgN<1> Constraint = ::tump::to_true>
+        struct comparing_type;
+
         template <class Ord, class L, class R>
-        struct is_type_comparing : public std::false_type {};
+        struct is_comparing_type : public std::false_type {};
 
         template <InvocableArgN<2> Compare, InvocableArgN<1> Constraint, class L, class R>
         requires (invoke_v<Constraint, L> && invoke_v<Constraint, R>)
-        struct is_type_comparing<type_comparing<Compare, Constraint>, L, R> : public std::is_signed<
+        struct is_comparing_type<comparing_type<Compare, Constraint>, L, R> : public std::is_signed<
             decltype(invoke_v<Compare, L, R>)
         > {};
     }
 
-    using is_type_comparing = cbk<fn::is_type_comparing, 3>;
+    using is_comparing_type = cbk<fn::is_comparing_type, 3>;
 
     template <class Ord, class L, class R>
-    constexpr auto is_type_comparing_v = fn::is_type_comparing<Ord, L, R>::value;
+    constexpr auto is_comparing_type_v = fn::is_comparing_type<Ord, L, R>::value;
 
-    template <InvocableArgN<2> Compare, InvocableArgN<1> Constraint>
-    struct type_comparing
+    namespace fn
     {
-        template <class L, class R>
-        requires (is_type_comparing_v<type_comparing<Compare, Constraint>, L, R>)
-        static constexpr int compare_base_v = invoke_v<Compare, L, R>;
+        template <InvocableArgN<2> Compare, InvocableArgN<1> Constraint>
+        struct comparing_type
+        {
+            template <class L, class R>
+            requires (is_comparing_type_v<comparing_type<Compare, Constraint>, L, R>)
+            static constexpr int compare_base_v = invoke_v<Compare, L, R>;
 
-        template <class L, class R>
-        struct lt : public std::bool_constant<
-            (compare_base_v<L, R> < 0)
-        > {};
+            template <class L, class R>
+            struct lt : public std::bool_constant<
+                (compare_base_v<L, R> < 0)
+            > {};
 
-        template <class L, class R>
-        struct gt : public std::bool_constant<
-            (compare_base_v<L, R> > 0)
-        > {};
+            template <class L, class R>
+            struct gt : public std::bool_constant<
+                (compare_base_v<L, R> > 0)
+            > {};
 
-        template <class L, class R>
-        struct le : public std::negation<gt<L, R>> {};
+            template <class L, class R>
+            struct le : public std::negation<gt<L, R>> {};
 
-        template <class L, class R>
-        struct ge : public std::negation<lt<L, R>> {};
+            template <class L, class R>
+            struct ge : public std::negation<lt<L, R>> {};
 
-        template <class L, class R>
-        struct eq : public std::bool_constant<
-            (compare_base_v<L, R> == 0)
-        > {};
+            template <class L, class R>
+            struct eq : public std::bool_constant<
+                (compare_base_v<L, R> == 0)
+            > {};
 
-        template <class L, class R>
-        struct ne : public std::negation<eq<L, R>> {};
+            template <class L, class R>
+            struct ne : public std::negation<eq<L, R>> {};
+        };
+    }
+
+    // 2 引数メタ関数と、制約による比較関数生成クラス
+    // Compare は メンバ定数 value で 符号付き整数 を返却しなければいけない
+    // メンバのメタ関数は全て cbk を適用したもの
+    template <InvocableArgN<2> Compare, InvocableArgN<1> Constraint = to_true>
+    struct comparing_type
+    {
+        using funcs = fn::comparing_type<Compare, Constraint>;
+        using lt = cbk<funcs::template lt, 2>;
+        using gt = cbk<funcs::template gt, 2>;
+        using le = cbk<funcs::template le, 2>;
+        using ge = cbk<funcs::template ge, 2>;
+        using eq = cbk<funcs::template eq, 2>;
+        using ne = cbk<funcs::template ne, 2>;
     };
 
     namespace fn
@@ -74,7 +92,7 @@ namespace tump
     using compare_size = cbk<fn::compare_size, 2>;
 
     // size_of の 結果による比較メタ関数の導出
-    using comparing_size = type_comparing<compare_size>;
+    using comparing_size = comparing_type<compare_size>;
 }
 
 #endif
