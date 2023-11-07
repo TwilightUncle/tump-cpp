@@ -22,10 +22,7 @@ namespace tump
         struct is_fn_comparing_type<comparing_type<Compare, Constraint>, L, R> : public std::is_signed<
             decltype(invoke_v<Compare, L, R>)
         > {};
-    }
 
-    namespace fn
-    {
         template <InvocableArgN<2> Compare, InvocableArgN<1> Constraint>
         struct comparing_type
         {
@@ -59,27 +56,23 @@ namespace tump
 
             template <class L, class R>
             struct get_grater : public std::conditional<
-                lt<L, R>::value,
-                R,
-                L
+                lt<L, R>::value, R, L
             > {};
 
             template <class L, class R>
             struct get_less : public std::conditional<
-                lt<L, R>::value,
-                L,
-                R
+                lt<L, R>::value, L, R
             > {};
         };
     }
 
     // 2 引数メタ関数と、制約による比較関数生成クラス
     // Compare は メンバ定数 value で 符号付き整数 を返却しなければいけない
-    // メンバのメタ関数は全て cbk を適用したもの
     template <InvocableArgN<2> Compare, InvocableArgN<1> Constraint = to_true>
     struct comparing_type
     {
         using fn = fn::comparing_type<Compare, Constraint>;
+
         using lt = cbk<fn::template lt, 2>;
         using gt = cbk<fn::template gt, 2>;
         using le = cbk<fn::template le, 2>;
@@ -87,8 +80,26 @@ namespace tump
         using eq = cbk<fn::template eq, 2>;
         using ne = cbk<fn::template ne, 2>;
 
+        template <class L, class R>
+        static constexpr bool lt_v = fn::template lt<L, R>::value;
+        template <class L, class R>
+        static constexpr bool gt_v = fn::template gt<L, R>::value;
+        template <class L, class R>
+        static constexpr bool le_v = fn::template le<L, R>::value;
+        template <class L, class R>
+        static constexpr bool ge_v = fn::template ge<L, R>::value;
+        template <class L, class R>
+        static constexpr bool eq_v = fn::template eq<L, R>::value;
+        template <class L, class R>
+        static constexpr bool ne_v = fn::template ne<L, R>::value;
+
         using get_grater = cbk<fn::template get_grater, 2>;
         using get_less = cbk<fn::template get_less, 2>;
+
+        template <class L, class R>
+        using get_grater_t = typename fn::template get_grater<L, R>::type;
+        template <class L, class R>
+        using get_less_t = typename fn::template get_less<L, R>::type;
     };
 
     namespace fn
