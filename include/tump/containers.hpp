@@ -6,6 +6,7 @@
 #endif
 
 #include TUMP_COMMON_INCLUDE(containers/vlist.hpp)
+#include TUMP_COMMON_INCLUDE(containers/btree.hpp)
 #include TUMP_COMMON_INCLUDE(containers/monad.hpp)
 
 #endif

@@ -2,6 +2,26 @@
 #include <tump/containers.hpp>
 #include <tump/expression/lambda.hpp>
 
+TEST(TumpContainersTest, BtreeTest)
+{
+    using list1 = tump::list<std::int32_t, std::uint64_t, std::int8_t, std::uint16_t>;
+    using tree1 = tump::to_btree_t<list1>;
+
+    constexpr auto case1 = std::is_same_v<
+        tree1,
+        tump::btree<tump::bnode<std::int32_t, std::uint64_t, tump::bnode<std::int8_t, std::uint16_t, tump::mp_null_t>>>
+    >;
+    constexpr auto case2 = std::is_same_v<tump::to_btree_t<tree1>, tree1>;
+    constexpr auto case3 = std::is_same_v<
+        tump::flatten_t<tree1>,
+        tump::list<std::int8_t, std::uint16_t, std::int32_t, std::uint64_t>
+    >;
+
+    ASSERT_TRUE(case1);
+    ASSERT_TRUE(case2);
+    ASSERT_TRUE(case3);
+}
+
 TEST(TumpContainersTest, FunctorTest)
 {
     // function
