@@ -129,27 +129,15 @@ namespace tump
         struct compare_op_priority : public vwrap<
             static_cast<int>(get_op_priority_v<L>) - static_cast<int>(get_op_priority_v<R>)
         > {};
-
-        /**
-         * 演算子の優先度についての比較関数を生成する
-        */
-        using comparing_op_priority = comparing_type<
-            cbk<fn::compare_op_priority, 2>,
-            cbk<fn::is_compatible_op_priority, 1>
-        >;
-
-        /**
-         * 演算子の優先度が指定のものと一致しているか確認
-        */
-        template <CompatibleOpPriority L, CompatibleOpPriority R>
-        using eq_op_priority = typename comparing_op_priority::eq<L, R>;
     }
 
     /**
-     * 演算子の優先度が指定のものと一致しているか確認
+     * 演算子優先度についての比較メタ関数群
     */
-    template <class T, class Priority>
-    constexpr auto eq_op_priority_v = fn::eq_op_priority<T, Priority>::value;
+    using comparing_op_priority = comparing_type<
+        cbk<fn::compare_op_priority, 2>,
+        cbk<fn::is_compatible_op_priority, 1>
+    >;
 
     namespace fn
     {

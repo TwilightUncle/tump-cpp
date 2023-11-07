@@ -6,8 +6,6 @@
 #include TUMP_COMMON_INCLUDE(algorithm/replace_if.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/zip.hpp)
 
-// TODO: invoke_resultの特殊化を書く
-
 namespace tump
 {
     /**

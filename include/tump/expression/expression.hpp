@@ -5,8 +5,8 @@
 #include TUMP_COMMON_INCLUDE(expression/operator.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/pop.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/reverse.hpp)
-
-// TODO: invoke_result の特殊化を定義すること
+#include TUMP_COMMON_INCLUDE(algorithm/unique.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/sort.hpp)
 
 namespace tump
 {
@@ -31,7 +31,7 @@ namespace tump
             // 演算子と演算子以外の型が隣り合った場合
             // 演算時の部分適用により、演算子を関数に変換する
             template <e_op_priority Priority, TypeList Result, TumpOperator T>
-            requires (!is_empty_v<Result> && eq_op_priority_v<T, vwrap<Priority>>)
+            requires (!is_empty_v<Result> && comparing_op_priority::eq_v<T, vwrap<Priority>>)
             struct exp_2<Priority, Result, T> : fn::push_front<
                 pop_front_t<Result>,
                 std::conditional_t<
@@ -59,15 +59,15 @@ namespace tump
 
             // 優先度毎の式の実装
             // 演算子の結合性による処理の方向切り替えもここで行う
-            template <e_op_priority Priority>
+            template <class Priority>
             using exp_n = std::conditional_t<
-                is_infixr_v<vwrap<Priority>>,
+                is_infixr_v<Priority>,
                 compose_t<
                     ::tump::get_front,
                     partial_apply<
                         ::tump::foldr,
                         cbk<exp_n_impl, 2>,
-                        list<list<>, vwrap<Priority>>
+                        list<list<>, Priority>
                     >
                 >,
                 compose_t<
@@ -76,7 +76,7 @@ namespace tump
                     partial_apply<
                         ::tump::foldl,
                         cbk<exp_n_impl, 2>,
-                        list<list<>, vwrap<Priority>>
+                        list<list<>, Priority>
                     >
                 >
             >;
@@ -84,16 +84,32 @@ namespace tump
             // 式の実装
             // 全ての演算子優先度における式の評価を合成する
             // Seq は全ての優先度を符号なし整数として列挙していること
-            template <TypeList List, class Seq, e_op_priority FirstPriority>
+            template <TypeList List, class Priorities, e_op_priority FirstPriority>
             struct exp_impl;
 
-            template <TypeList List, std::size_t... Priorities, e_op_priority FirstPriority>
-            struct exp_impl<List, std::index_sequence<Priorities...>, FirstPriority> : public invoke<
+            template <TypeList List, class... Priorities, e_op_priority FirstPriority>
+            struct exp_impl<List, list<Priorities...>, FirstPriority> : public invoke<
                 typename compose<
                     ::tump::get_front,
-                    exp_n<static_cast<e_op_priority>(Priorities)>...,
-                    exp_n<FirstPriority>
+                    exp_n<Priorities>...,
+                    exp_n<vwrap<FirstPriority>>
                 >::type,
+                List
+            > {};
+
+            // 式から優先度順で整列済みの演算子優先度を抽出
+            template <TypeList List>
+            struct extract_sorted_op_priority : public invoke<
+                compose_t<
+                    partial_apply<
+                        ::tump::flip,
+                        ::tump::sort,
+                        comparing_op_priority
+                    >,
+                    ::tump::unique,
+                    tump::partial_apply<::tump::map, cbk<get_op_priority, 1>>,
+                    tump::partial_apply<::tump::filter, cbk<is_operator, 1>>
+                >,
                 List
             > {};
         }
@@ -123,7 +139,9 @@ namespace tump
         template <class Head, class... Types>
         struct exp : public impl::exp_impl<
             list<eval_exp_t<Head>, eval_exp_t<Types>...>,
-            std::make_index_sequence<static_cast<std::size_t>(e_op_priority::_9) + 1>,
+            typename impl::extract_sorted_op_priority<
+                list<eval_exp_t<Head>, eval_exp_t<Types>...>
+            >::type,
             e_op_priority::func
         > {};
 
