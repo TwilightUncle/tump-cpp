@@ -618,3 +618,15 @@ TEST(TumpAlgorithmTest, MpMaxMinTest)
     ASSERT_TRUE(case1);
     ASSERT_TRUE(case2);
 }
+
+TEST(TumpAlgorithmTest, SortTest)
+{
+    using list1 = tump::list<std::int32_t, std::uint64_t, std::int8_t, std::uint16_t, std::uint8_t, std::int64_t>;
+
+    constexpr auto case1 = std::is_same_v<
+        tump::sort_t<list1>,
+        tump::list<std::uint8_t, std::int8_t, std::uint16_t, std::int32_t, std::int64_t, std::uint64_t>
+    >;
+
+    ASSERT_TRUE(case1);
+}
