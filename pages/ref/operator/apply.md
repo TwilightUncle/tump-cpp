@@ -59,6 +59,6 @@ int main() {}
 - [{`tump::eval`|ref/expression/exp}]
 - [{`tump::exp`|ref/expression/exp}]
 - [{`tump::_op`|ref/operator/op}]
-- [{`tump::apply`|re/invocable/apply}]
+- [{`tump::apply`|ref/invocable/apply}]
 - [{`tump::add_const`|ref/metafunction/std}]
 - [{`tump::is_same`|ref/metafunction/std}]

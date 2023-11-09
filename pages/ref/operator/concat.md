@@ -64,5 +64,5 @@ int main() {}
 - [{`tump::list`|ref/container/list}]
 - [{`tump::partial_apply`|ref/invocable/partial_apply}]
 - [{`tump::flip`|ref/invocable/flip}]
-- [{`tump::concat`|ref/metafunction/list_op/concat}]
-- [{`tump::push_front`|ref/metafunction/list_op/push}]
+- [{`tump::concat`|ref/container/method/concat}]
+- [{`tump::push_front`|ref/container/method/push}]

@@ -16,7 +16,7 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/style.css">
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/vendor/prism.css">
-        <title>count_if - TumpCpp リファレンス</title>
+        <title>標準ライブラリのメタ関数の第一級関数 - TumpCpp リファレンス</title>
     </head>
     <body>
         <header id="header">
@@ -43,8 +43,8 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/ref/container.html">
-                            container
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction.html">
+                            metafunction
                         </a>
                     </li>
                     
@@ -52,17 +52,8 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        
-                            method
-                        
-                    </li>
-                    
-                
-                    
-                    <li class="delimiter">></li>
-                    <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/count_if.html">
-                            count_if
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/std.html">
+                            std
                         </a>
                     </li>
                     
@@ -286,74 +277,563 @@
 
             </aside>
             <article>
-                <h1>count_if - TumpCpp リファレンス</h1>
+                <h1>標準ライブラリのメタ関数の第一級関数 - TumpCpp リファレンス</h1>
                 <p></p>
 
-                <pre><code class="language-cpp">namespace tump {
-    namespace fn {
-        // 大元のメタ関数定義
-        template &lt;InvocableArgN&lt;1&gt; Pred, TypeList List&gt;
-        using count_if = ...;
-    }
+                <h2 id="概要">概要</h2>
 
-    // 第一級関数化
-    using count_if = cbk&lt;fn::count_if, 2&gt;;
+<p>TumpCpp では、<a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code>や<code>tump::exp</code></a>ですぐに使えるように、主に<code>&lt;type_traits&gt;</code>で定義されているメタ関数を第一級関数化する定義を行っています。<br />
+名前空間<code>tump</code>の下に定義されており、メタ関数の名称が標準ライブラリと同じものは、機能も標準ライブラリのものと同様になります。<br />
+例えば、<code>tump::is_same</code>は<code>std::is_same</code>を第一級関数化したメタ関数です。</p>
 
-    // 定数メンバ value 呼び出し省略のエイリアステンプレート
-    template &lt;InvocableArgN&lt;1&gt; Pred, TypeList List&gt;
-    constexpr auto count_if_v = fn::count_if&lt;Pred, List&gt;::value;
-}
-</code></pre>
+<p>第一級関数化された可変長引数のメタ関数は、受け取る引数の数をテンプレートパラメータで指定してやる必要があります。</p>
 
-<h3 id="パラメータ">パラメータ</h3>
-
-<ul>
-<li>Pred - <a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invocable.html"><code>tump::InvocableArgN&lt;1&gt;</code></a>で真と判定されるメタ関数</li>
-<li>List - <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::TypeList</code></a>で真と判定される型のリスト</li>
-</ul>
-
-<h2 id="概要">概要</h2>
-
-<p><code>tump::count_if</code>は、テンプレートパラメータ<code>List</code>が保持するパラメータパックのうち、テンプレートパラメータ<code>Pred</code>のメタ関数を適用した結果、真と判定されるようなパラメータの数を数えます。</p>
+<p>また、引数に非型テンプレートパラメータが含まれているようなメタ関数については、第一級メタ関数化の定義を行っていませんのでご注意ください。</p>
 
 <h2 id="例">例</h2>
 
-<pre><code class="language-cpp">#include &lt;tuple&gt;
-#include &lt;vector&gt;
-#include &lt;tump.hpp&gt;
+<pre><code class="language-cpp">#include &lt;tump.hpp&gt;
 
-class A {};
+// 引数の数が固定のメタ関数の実行例
+static_assert(tump::eval&lt;tump::is_void, void&gt;::value == true);
+static_assert(tump::eval&lt;tump::is_void, int&gt;::value == false);
+static_assert(tump::eval&lt;tump::is_same, int, int&gt;::value == true);
 
-using list1 = tump::list&lt;int, float, void, std::vector&lt;int&gt;, char&gt;;
-using list2 = std::tuple&lt;int, float, A, std::vector&lt;int&gt;, double&gt;;
-using list3 = tump::make_empty_t&lt;std::tuple&lt;int&gt;&gt;;
-using list4 = tump::to_btree_t&lt;list1&gt;;
-
-static_assert(tump::count_if_v&lt;tump::is_integral, list1&gt; == 2);
-static_assert(tump::count_if_v&lt;tump::is_integral, list2&gt; == 1);
-static_assert(tump::count_if_v&lt;tump::is_integral, list3&gt; == 0);
-static_assert(tump::count_if_v&lt;tump::is_integral, list4&gt; == 2);
-
-static_assert(tump::eval&lt;tump::count_if, tump::is_arithmetic, list1&gt;::value == 3);
-static_assert(tump::eval&lt;tump::count_if, tump::is_arithmetic, list2&gt;::value == 3);
-static_assert(tump::eval&lt;tump::count_if, tump::is_arithmetic, list3&gt;::value == 0);
-static_assert(tump::eval&lt;tump::count_if, tump::is_arithmetic, list4&gt;::value == 3);
+// 可変長引数のメタ関数
+// テンプレートパラメータを指定しない場合、デフォルトの引数を受け取る
+static_assert(tump::eval&lt;tump::conjunction&lt;&gt;, std::true_type, std::false_type&gt;::value == false);
+static_assert(tump::eval&lt;tump::conjunction&lt;3&gt;, std::true_type, std::true_type, std::true_type&gt;::value == false);
 
 int main() {}
 </code></pre>
+
+<h2 id="第一級関数化されたメタ関数の一覧">第一級関数化されたメタ関数の一覧</h2>
+
+<table>
+<thead>
+<tr>
+<th>識別子</th>
+<th>受け取るメタ関数の数</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>tump::is_void</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_null_pointer</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_integral</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_floating_point</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_array</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_pointer</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_lvalue_reference</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_rvalue_reference</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_member_object_pointer</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_member_function_pointer</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_enum</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_union</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_class</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_function</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_reference</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_arithmetic</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_fundamental</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_object</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_scalar</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_compound</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_member_pointer</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_scoped_enum</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_const</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_volatile</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_trivial</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_trivially_copyable</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_standard_layout</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_polymorphic</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_abstract</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_final</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_aggregate</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_signed</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_unsigned</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_bounded_array</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_unbounded_array</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_constructible</code></td>
+<td>1 つ以上の可変長引数。デフォルトは 2。</td>
+</tr>
+
+<tr>
+<td><code>tump::is_default_constructible</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_copy_constructible</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_move_constructible</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_assignable</code></td>
+<td>2</td>
+</tr>
+
+<tr>
+<td><code>tump::is_copy_assignable</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_move_assignable</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_destructible</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_trivially_constructible</code></td>
+<td>1 つ以上の可変長引数。デフォルトは 2。</td>
+</tr>
+
+<tr>
+<td><code>tump::is_trivially_default_constructible</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_trivially_copy_constructible</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_trivially_move_constructible</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_trivially_assignable</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_trivially_copy_assignable</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_trivially_move_assignable</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_trivially_destructible</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_nothrow_constructible</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_nothrow_default_constructible</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_nothrow_copy_constructible</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_nothrow_move_constructible</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_nothrow_assignable</code></td>
+<td>2</td>
+</tr>
+
+<tr>
+<td><code>tump::is_nothrow_copy_assignable</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_nothrow_move_assignable</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_nothrow_destructible</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::has_virtual_destructor</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_swappable_with</code></td>
+<td>2</td>
+</tr>
+
+<tr>
+<td><code>tump::is_swappable</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_nothrow_swappable_with</code></td>
+<td>2</td>
+</tr>
+
+<tr>
+<td><code>tump::is_nothrow_swappable</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::has_unique_object_representations</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::alignment_of</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::rank</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_same</code></td>
+<td>2</td>
+</tr>
+
+<tr>
+<td><code>tump::is_base_of</code></td>
+<td>2</td>
+</tr>
+
+<tr>
+<td><code>tump::is_convertible</code></td>
+<td>2</td>
+</tr>
+
+<tr>
+<td><code>tump::is_nothrow_convertible</code></td>
+<td>2</td>
+</tr>
+
+<tr>
+<td><code>tump::remove_const</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::remove_volatile</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::remove_cv</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::add_const</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::add_volatile</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::add_cv</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::remove_reference</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::add_lvalue_reference</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::add_rvalue_reference</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::make_signed</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::make_unsigned</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::remove_extent</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::remove_all_extents</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::add_pointer</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::remove_pointer</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::is_invocable</code></td>
+<td>1 つ以上の可変長引数。デフォルトは 2。</td>
+</tr>
+
+<tr>
+<td><code>tump::is_invocable_r</code></td>
+<td>1 つ以上の可変長引数。デフォルトは 3。</td>
+</tr>
+
+<tr>
+<td><code>tump::is_nothrow_invocable</code></td>
+<td>1 つ以上の可変長引数。デフォルトは 2。</td>
+</tr>
+
+<tr>
+<td><code>tump::is_nothrow_invocable_r</code></td>
+<td>1 つ以上の可変長引数。デフォルトは 3。</td>
+</tr>
+
+<tr>
+<td><code>tump::type_identity</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::remove_cvref</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::decay</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::common_type</code></td>
+<td>1 つ以上の可変長引数。デフォルトは 2。</td>
+</tr>
+
+<tr>
+<td><code>tump::common_reference</code></td>
+<td>1 つ以上の可変長引数。デフォルトは 2。</td>
+</tr>
+
+<tr>
+<td><code>tump::underlying_type</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::invoke_result</code></td>
+<td>1 つ以上の可変長引数。デフォルトは 2。</td>
+</tr>
+
+<tr>
+<td><code>tump::unwrap_reference</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::unwrap_ref_decay</code></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td><code>tump::conjunction</code></td>
+<td>1 つ以上の可変長引数。デフォルトは 2。</td>
+</tr>
+
+<tr>
+<td><code>tump::disjunction</code></td>
+<td>1 つ以上の可変長引数。デフォルトは 2。</td>
+</tr>
+
+<tr>
+<td><code>tump::negation</code></td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
 
 <h2 id="関連リンク">関連リンク</h2>
 
 <ul>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invocable.html"><code>tump::InvocableArgN</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::TypeList</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a></li>
-<li><code>tump::btree</code></li>
-<li><code>tump::make_empty</code></li>
-<li><code>tump::to_btree</code></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/std.html"><code>tump::is_integral</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/std.html"><code>tump::is_arithmetic</code></a></li>
 </ul>
 
             </article>
@@ -370,6 +850,12 @@ int main() {}
                         <li>
                             <a href="#%e4%be%8b%0d">
                                 例
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#%e7%ac%ac%e4%b8%80%e7%b4%9a%e9%96%a2%e6%95%b0%e5%8c%96%e3%81%95%e3%82%8c%e3%81%9f%e3%83%a1%e3%82%bf%e9%96%a2%e6%95%b0%e3%81%ae%e4%b8%80%e8%a6%a7%0d">
+                                第一級関数化されたメタ関数の一覧
                             </a>
                         </li>
                     

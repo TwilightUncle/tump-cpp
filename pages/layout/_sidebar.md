@@ -128,8 +128,10 @@
     - [{定義済みメタ関数|ref/metafunction}]
         - [{標準ライブラリのメタ関数の第一級関数|ref/metafunction/std}]
         - [{to_true|ref/metafunction/to_true}]
-        - [{left/right|ref/metafunction/left_right}]
-        - [{through/block|ref/metafunction/through_block}]
+        - [{left|ref/metafunction/left}]
+        - [{right|ref/metafunction/right}]
+        - [{through_if|ref/metafunction/through_if}]
+        - [{block_if|ref/metafunction/block_if}]
         - [{vwrap|ref/metafunction/vwrap}]
-        - [{compare|ref/metafunction/compare}]
+        - [{comparing_type|ref/metafunction/comparing_type}]
     <!-- - [{マクロ|ref/macro}] -->

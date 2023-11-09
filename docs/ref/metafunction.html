@@ -16,7 +16,7 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/style.css">
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/vendor/prism.css">
-        <title>count_if - TumpCpp リファレンス</title>
+        <title>定義済みメタ関数 - TumpCpp リファレンス</title>
     </head>
     <body>
         <header id="header">
@@ -43,26 +43,8 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/ref/container.html">
-                            container
-                        </a>
-                    </li>
-                    
-                
-                    
-                    <li class="delimiter">></li>
-                    <li>
-                        
-                            method
-                        
-                    </li>
-                    
-                
-                    
-                    <li class="delimiter">></li>
-                    <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/count_if.html">
-                            count_if
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction.html">
+                            metafunction
                         </a>
                     </li>
                     
@@ -286,75 +268,63 @@
 
             </aside>
             <article>
-                <h1>count_if - TumpCpp リファレンス</h1>
+                <h1>定義済みメタ関数 - TumpCpp リファレンス</h1>
                 <p></p>
 
-                <pre><code class="language-cpp">namespace tump {
-    namespace fn {
-        // 大元のメタ関数定義
-        template &lt;InvocableArgN&lt;1&gt; Pred, TypeList List&gt;
-        using count_if = ...;
-    }
+                <p>TumpCpp で定義されたメタ関数についてのリファレンスです。</p>
 
-    // 第一級関数化
-    using count_if = cbk&lt;fn::count_if, 2&gt;;
+<h2 id="一覧">一覧</h2>
 
-    // 定数メンバ value 呼び出し省略のエイリアステンプレート
-    template &lt;InvocableArgN&lt;1&gt; Pred, TypeList List&gt;
-    constexpr auto count_if_v = fn::count_if&lt;Pred, List&gt;::value;
-}
-</code></pre>
+<table>
+<thead>
+<tr>
+<th>メタ関数・テンプレートクラス名</th>
+<th align="left">概要</th>
+</tr>
+</thead>
 
-<h3 id="パラメータ">パラメータ</h3>
+<tbody>
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/std.html">標準ライブラリのメタ関数の第一級関数</a></td>
+<td align="left">主に、標準ライブラリの<code>&lt;type_traits&gt;</code>に定義されたメタ関数を第一級関数化したものを定義しています。</td>
+</tr>
 
-<ul>
-<li>Pred - <a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invocable.html"><code>tump::InvocableArgN&lt;1&gt;</code></a>で真と判定されるメタ関数</li>
-<li>List - <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::TypeList</code></a>で真と判定される型のリスト</li>
-</ul>
+<tr>
+<td>to_true</td>
+<td align="left">必ず<code>std::true_type</code>を返却します。</td>
+</tr>
 
-<h2 id="概要">概要</h2>
+<tr>
+<td>left</td>
+<td align="left">2 つの引数を受け取り、常に第一引数の型を返却します。</td>
+</tr>
 
-<p><code>tump::count_if</code>は、テンプレートパラメータ<code>List</code>が保持するパラメータパックのうち、テンプレートパラメータ<code>Pred</code>のメタ関数を適用した結果、真と判定されるようなパラメータの数を数えます。</p>
+<tr>
+<td>right</td>
+<td align="left">2 つの引数を受け取り、常に第二引数の型を返却します。</td>
+</tr>
 
-<h2 id="例">例</h2>
+<tr>
+<td>through_if</td>
+<td align="left">条件に合致する型が指定された場合、その型をそのまま返却します。そうでなければデフォルトの型を返却します。</td>
+</tr>
 
-<pre><code class="language-cpp">#include &lt;tuple&gt;
-#include &lt;vector&gt;
-#include &lt;tump.hpp&gt;
+<tr>
+<td>block_if</td>
+<td align="left">条件に合致しない型が指定された場合、その型をそのまま返却します。そうでなければデフォルトの型を返却します。</td>
+</tr>
 
-class A {};
+<tr>
+<td>vwrap</td>
+<td align="left">非型テンプレートパラメータを包み込んで、型として利用できるようにします。</td>
+</tr>
 
-using list1 = tump::list&lt;int, float, void, std::vector&lt;int&gt;, char&gt;;
-using list2 = std::tuple&lt;int, float, A, std::vector&lt;int&gt;, double&gt;;
-using list3 = tump::make_empty_t&lt;std::tuple&lt;int&gt;&gt;;
-using list4 = tump::to_btree_t&lt;list1&gt;;
-
-static_assert(tump::count_if_v&lt;tump::is_integral, list1&gt; == 2);
-static_assert(tump::count_if_v&lt;tump::is_integral, list2&gt; == 1);
-static_assert(tump::count_if_v&lt;tump::is_integral, list3&gt; == 0);
-static_assert(tump::count_if_v&lt;tump::is_integral, list4&gt; == 2);
-
-static_assert(tump::eval&lt;tump::count_if, tump::is_arithmetic, list1&gt;::value == 3);
-static_assert(tump::eval&lt;tump::count_if, tump::is_arithmetic, list2&gt;::value == 3);
-static_assert(tump::eval&lt;tump::count_if, tump::is_arithmetic, list3&gt;::value == 0);
-static_assert(tump::eval&lt;tump::count_if, tump::is_arithmetic, list4&gt;::value == 3);
-
-int main() {}
-</code></pre>
-
-<h2 id="関連リンク">関連リンク</h2>
-
-<ul>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invocable.html"><code>tump::InvocableArgN</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::TypeList</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a></li>
-<li><code>tump::btree</code></li>
-<li><code>tump::make_empty</code></li>
-<li><code>tump::to_btree</code></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/std.html"><code>tump::is_integral</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/std.html"><code>tump::is_arithmetic</code></a></li>
-</ul>
+<tr>
+<td>comparing_type</td>
+<td align="left">型の比較を行うメタ関数群を生成します。</td>
+</tr>
+</tbody>
+</table>
 
             </article>
             <aside id="table_of_contents" class="table-of-contents">
@@ -362,20 +332,8 @@ int main() {}
                 <ul>
                     
                         <li>
-                            <a href="#%e6%a6%82%e8%a6%81%0d">
-                                概要
-                            </a>
-                        </li>
-                    
-                        <li>
-                            <a href="#%e4%be%8b%0d">
-                                例
-                            </a>
-                        </li>
-                    
-                        <li>
-                            <a href="#%e9%96%a2%e9%80%a3%e3%83%aa%e3%83%b3%e3%82%af%0d">
-                                関連リンク
+                            <a href="#%e4%b8%80%e8%a6%a7%0d">
+                                一覧
                             </a>
                         </li>
                     

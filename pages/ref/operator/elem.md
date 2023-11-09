@@ -54,5 +54,5 @@ int main() {}
 - [{`tump::eval`|ref/expression/exp}]
 - [{`tump::_op`|ref/operator/op}]
 - [{`tump::list`|ref/container/list}]
-- [{`tump::exists`|ref/metafunction/list_compare/exists}]
-- [{`tump::not_exists`|ref/metafunction/list_compare/exists}]
+- [{`tump::exists`|ref/container/method/exists}]
+- [{`tump::not_exists`|ref/container/method/exists}]
