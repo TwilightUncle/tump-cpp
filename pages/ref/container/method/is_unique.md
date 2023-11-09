@@ -44,14 +44,18 @@ using list3 = tump::vlist<int(1), long(2), int(1)>;
 using list4 = tump::vlist<int(1), long(2), int(3), long(4)>;
 using list5 = tump::make_empty_t<std::tuple<int>>;
 using list6 = tump::vlist<>;
+using list7 = tump::to_btree_t<list1>;
+using list8 = tump::to_btree_t<list2>;
 
 static_assert(tump::is_unique_v<list1> == true);
 static_assert(tump::is_unique_v<list3> == false);
 static_assert(tump::is_unique_v<list5> == true);
+static_assert(tump::is_unique_v<list7> == true);
 
 static_assert(tump::eval<tump::is_unique, list2>::value == false);
 static_assert(tump::eval<tump::is_unique, list4>::value == true);
 static_assert(tump::eval<tump::is_unique, list6>::value == true);
+static_assert(tump::eval<tump::is_unique, list8>::value == false);
 
 int main() {}
 ```
@@ -61,4 +65,6 @@ int main() {}
 - [{`tump::eval`|ref/expression/exp}]
 - [{`tump::list`|ref/container/list}]
 - [{`tump::vlist`|ref/container/vlist}]
+- [{`tump::btree`|ref/container/btree}]
 - [{`tump::make_empty`|ref/container/method/make_empty}]
+- [{`tump::to_btree`|ref/container/method/to_btree}]

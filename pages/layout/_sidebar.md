@@ -39,13 +39,13 @@
         - [{演算子を定義する|ref/operator/op}]
     - [{コンテナ|ref/container}]
         - [{list|ref/container/list}]
-            - リストの情報取得用メタ関数・概念
+            - 情報取得用メタ関数・概念
                 - [{is_empty|ref/container/method/is_empty}]
                 - [{is_type_list|ref/container/method/is_type_list}]
                 - [{TypeList|ref/container/method/is_type_list}]
                 - [{TypeListOrValueList|ref/container/method/is_t_or_v_list}]
                 - [{len|ref/container/method/len}]
-            - リストの要素アクセス用メタ関数
+            - 要素アクセス用メタ関数
                 - [{count_if|ref/container/method/count_if}]
                 - [{exists|ref/container/method/exists}]
                 - [{find_if|ref/container/method/find_if}]
@@ -55,7 +55,9 @@
                 - [{index_of|ref/container/method/index_of}]
                 - [{index_of_if|ref/container/method/index_of_if}]
                 - [{is_unique|ref/container/method/is_unique}]
-            - リスト操作用メタ関数
+                - [{mp_min|ref/container/method/mp_min}]
+                - [{mp_max|ref/container/method/mp_max}]
+            - 操作用メタ関数
                 - [{make_empty|ref/container/method/make_empty}]
                 - [{make_type_list|ref/container/method/make_type_list}]
                 - [{fill|ref/container/method/fill}]
@@ -78,6 +80,8 @@
                 - [{slice|ref/container/method/slice}]
                 - [{unique|ref/container/method/unique}]
                 - [{zip|ref/container/method/zip}]
+                - [{to_btree|ref/container/method/to_btree}]
+                - [{sort|ref/container/method/sort}]
             - その他のメタ関数
                 - [{fmap|ref/container/method/fmap}]
                 - [{pure|ref/container/method/pure}]
@@ -85,8 +89,39 @@
                 - [{ret|ref/container/method/ret}]
                 - [{bind|ref/container/method/bind}]
         - [{vlist|ref/container/vlist}]
-            - リストの情報取得用メタ関数・概念
+            - 情報取得用メタ関数・概念
                 - [{is_empty|ref/container/method/is_empty}]
+                - [{TypeListOrValueList|ref/container/method/is_t_or_v_list}]
+                - [{len|ref/container/method/len}]
+            - 要素アクセス用メタ関数
+                - [{get|ref/container/method/get}]
+                - [{get_front|ref/container/method/get_front}]
+                - [{get_back|ref/container/method/get_back}]
+                - [{is_unique|ref/container/method/is_unique}]
+        - [{btree|ref/container/btree}]
+            - 情報取得用メタ関数・概念
+                - [{is_empty|ref/container/method/is_empty}]
+                - [{is_type_list|ref/container/method/is_type_list}]
+                - [{TypeList|ref/container/method/is_type_list}]
+                - [{TypeListOrValueList|ref/container/method/is_t_or_v_list}]
+                - [{len|ref/container/method/len}]
+            - 要素アクセス用メタ関数
+                - [{count_if|ref/container/method/count_if}]
+                - [{exists|ref/container/method/exists}]
+                - [{find_if|ref/container/method/find_if}]
+                - [{get|ref/container/method/get}]
+                - [{get_front|ref/container/method/get_front}]
+                - [{get_back|ref/container/method/get_back}]
+                - [{index_of|ref/container/method/index_of}]
+                - [{index_of_if|ref/container/method/index_of_if}]
+                - [{is_unique|ref/container/method/is_unique}]
+                - [{get_min|ref/container/method/get_min}]
+                - [{get_max|ref/container/method/get_max}]
+            - 操作用メタ関数
+                - [{push|ref/container/method/btree_push}]
+                - [{pop_min|ref/container/method/pop_min}]
+                - [{pop_max|ref/container/method/pop_max}]
+                - [{flatten|ref/container/method/flatten}]
         - [{ファンクタ|ref/container/functor}]
         - [{アプリカティブファンクタ|ref/container/applicative}]
         - [{モナド|ref/container/monad}]
@@ -96,4 +131,5 @@
         - [{left/right|ref/metafunction/left_right}]
         - [{through/block|ref/metafunction/through_block}]
         - [{vwrap|ref/metafunction/vwrap}]
+        - [{compare|ref/metafunction/compare}]
     <!-- - [{マクロ|ref/macro}] -->

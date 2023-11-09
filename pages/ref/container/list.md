@@ -49,6 +49,8 @@ TumpCpp では、`tump::list`を主な対象とした、いくつかのリスト
 | [{`tump::index_of`|ref/container/method/index_of}] | リストの要素から、指定の型が最初に見つかった位置を取得します。 |
 | [{`tump::index_of_if`|ref/container/method/index_of_if}] | リストの要素から、指定の条件に合致する最初の型が見つかった位置を取得します。 |
 | [{`tump::is_unique`|ref/container/method/is_unique}] | リストの要素の、重複の有無を判定します。 |
+| [{`tump::mp_min`|ref/container/method/mp_min}] | リストの要素のうち、最小と判定される型を取得します。 |
+| [{`tump::mp_max`|ref/container/method/mp_max}] | リストの要素のうち、最大と判定される型を取得します。 |
 
 ### リスト操作
 
@@ -76,6 +78,8 @@ TumpCpp では、`tump::list`を主な対象とした、いくつかのリスト
 | [{`tump::slice`|ref/container/method/slice}] | リストの指定の範囲を切り出します。 |
 | [{`tump::unique`|ref/container/method/unique}] | リストの重複している要素を削除します。 |
 | [{`tump::zip`|ref/container/method/zip}] | 2 つのリストから要素を 1 つずつ取り出した組のリストを生成します。 |
+| [{`tump::to_btree`|ref/container/method/to_btree}] | 型のリストを型のバイナリツリーに変換します。 |
+| [{`tump::sort`|ref/container/method/sort}] | 型のリストを昇順に並び替えます。 |
 
 ### その他
 

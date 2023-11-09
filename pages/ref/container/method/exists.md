@@ -37,11 +37,14 @@ namespace tump {
 
 using list1 = tump::list<int, float, void, std::vector<int>, char>;
 using list2 = tump::make_empty_t<std::tuple<int>>;
+using list3 = tump::to_btree_t<list1>;
 
 static_assert(tump::exists_v<float, list1> == true);
 static_assert(tump::exists_v<float, list2> == false);
+static_assert(tump::exists_v<float, list3> == true);
 
 static_assert(tump::eval<tump::exists, double, list1>::value == false);
+static_assert(tump::eval<tump::exists, double, list3>::value == false);
 
 int main() {}
 ```
@@ -51,4 +54,6 @@ int main() {}
 - [{`tump::eval`|ref/expression/exp}]
 - [{`tump::TypeList`|ref/container/method/is_type_list}]
 - [{`tump::list`|ref/container/list}]
+- [{`tump::btree`|ref/container/btree}]
 - [{`tump::make_empty`|ref/container/method/make_empty}]
+- [{`tump::to_btree`|ref/container/method/to_btree}]

@@ -39,12 +39,15 @@ using list2 = tump::vlist<int(0), long(1), nullptr>;
 using list3 = std::vector<int>;
 using list4 = tump::make_empty_t<std::tuple<int>>;
 using list5 = tump::vlist<>;
+using list6 = tump::to_btree_t<list1>;
 
 static_assert(tump::len_v<list1> == 2);
 static_assert(tump::len_v<list2> == 3);
 static_assert(tump::len_v<list3> == 2);
 static_assert(tump::eval<tump::len, list4>::value == 0);
 static_assert(tump::eval<tump::len, list5>::value == 0);
+static_assert(tump::eval<tump::len, list6>::value == 2);
+static_assert(tump::eval<tump::len, tump::empty_btree<>>::value == 0);
 
 int main() {}
 ```
@@ -55,4 +58,7 @@ int main() {}
 - [{`tump::TypeListOrValueList`|ref/container/method/is_t_or_v_list}]
 - [{`tump::list`|ref/container/list}]
 - [{`tump::vlist`|ref/container/vlist}]
+- [{`tump::btree`|ref/container/btree}]
+- [{`tump::empty_btree`|ref/container/btree}]
 - [{`tump::make_empty`|ref/container/method/make_empty}]
+- [{`tump::to_btree`|ref/container/method/to_btree}]

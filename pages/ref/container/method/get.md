@@ -50,10 +50,13 @@ using list2 = std::tuple<int, float, A, std::vector<int>, double>;
 using list3 = tump::vlist<int(1), long(2), char(3)>;
 using list4 = tump::make_empty_t<std::tuple<int>>;
 using list5 = tump::vlist<>;
+using list6 = tump::to_btree_t<list1>;
 
 static_assert(std::is_same_v<tump::get_t<0, list1>, int> == true);
 static_assert(std::is_same_v<tump::get_t<3, list2>, std::vector<int>> == true);
 static_assert(tump::get_v<2, list3> == char(3));
+static_assert(std::is_same_v<tump::get_t<0, list6>, void> == true);
+static_assert(std::is_same_v<tump::get_t<1, list6>, char> == true);
 
 // 下記は リストのサイズ以上のインデックスまたは、
 // 空のリストを指定しているため、コメントアウトを外すとコンパイルエラー
@@ -70,4 +73,6 @@ int main() {}
 - [{`tump::TypeListOrValueList`|ref/container/method/is_t_or_v_list}]
 - [{`tump::list`|ref/container/list}]
 - [{`tump::vlist`|ref/container/vlist}]
+- [{`tump::btree`|ref/container/btree}]
 - [{`tump::make_empty`|ref/container/method/make_empty}]
+- [{`tump::to_btree`|ref/container/method/to_btree}]

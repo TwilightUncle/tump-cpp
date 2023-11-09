@@ -113,7 +113,7 @@
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html">list</a>
 
 <ul>
-<li>リストの情報取得用メタ関数・概念
+<li>情報取得用メタ関数・概念
 
 <ul>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_empty.html">is_empty</a></li>
@@ -122,7 +122,7 @@
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_t_or_v_list.html">TypeListOrValueList</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/len.html">len</a></li>
 </ul></li>
-<li>リストの要素アクセス用メタ関数
+<li>要素アクセス用メタ関数
 
 <ul>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/count_if.html">count_if</a></li>
@@ -134,8 +134,10 @@
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/index_of.html">index_of</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/index_of_if.html">index_of_if</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_unique.html">is_unique</a></li>
+<li>mp_min</li>
+<li>mp_max</li>
 </ul></li>
-<li>リスト操作用メタ関数
+<li>操作用メタ関数
 
 <ul>
 <li>make_empty</li>
@@ -160,6 +162,8 @@
 <li>slice</li>
 <li>unique</li>
 <li>zip</li>
+<li>to_btree</li>
+<li>sort</li>
 </ul></li>
 <li>その他のメタ関数
 
@@ -174,10 +178,56 @@
 <li>vlist
 
 <ul>
-<li>リストの情報取得用メタ関数・概念
+<li>情報取得用メタ関数・概念
 
 <ul>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_empty.html">is_empty</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_t_or_v_list.html">TypeListOrValueList</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/len.html">len</a></li>
+</ul></li>
+<li>要素アクセス用メタ関数
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/get.html">get</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/get_front.html">get_front</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/get_back.html">get_back</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_unique.html">is_unique</a></li>
+</ul></li>
+</ul></li>
+<li>btree
+
+<ul>
+<li>情報取得用メタ関数・概念
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_empty.html">is_empty</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html">is_type_list</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html">TypeList</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_t_or_v_list.html">TypeListOrValueList</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/len.html">len</a></li>
+</ul></li>
+<li>要素アクセス用メタ関数
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/count_if.html">count_if</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/exists.html">exists</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/find_if.html">find_if</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/get.html">get</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/get_front.html">get_front</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/get_back.html">get_back</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/index_of.html">index_of</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/index_of_if.html">index_of_if</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_unique.html">is_unique</a></li>
+<li>get_min</li>
+<li>get_max</li>
+</ul></li>
+<li>操作用メタ関数
+
+<ul>
+<li>push</li>
+<li>pop_min</li>
+<li>pop_max</li>
+<li>flatten</li>
 </ul></li>
 </ul></li>
 <li>ファンクタ</li>
@@ -191,7 +241,8 @@
 <li>to_true</li>
 <li>left/right</li>
 <li>through/block</li>
-<li>vwrap
+<li>vwrap</li>
+<li>compare
 <!-- - [マクロ](https://twilightuncle.github.io/tump-cpp/ref/macro.html) --></li>
 </ul></li>
 </ul></li>

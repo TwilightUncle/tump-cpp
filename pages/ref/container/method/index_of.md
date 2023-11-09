@@ -42,6 +42,7 @@ class A {};
 using list1 = tump::list<int, float, void, std::vector<int>, char>;
 using list2 = std::tuple<int, float, A, std::vector<int>, double>;
 using list3 = tump::make_empty_t<std::tuple<int>>;
+using list4 = tump::to_btree_t<list1>;
 
 static_assert(tump::index_of_v<float, list1> == 1);
 static_assert(tump::index_of_v<double, list1> == -1);
@@ -49,6 +50,8 @@ static_assert(tump::index_of_v<double, list1> == -1);
 static_assert(tump::eval<tump::index_of, std::vector<int>, list2>::value == 3);
 static_assert(tump::eval<tump::index_of, long long, list2>::value == -1);
 static_assert(tump::eval<tump::index_of, int, list3>::value == -1);
+static_assert(tump::eval<tump::index_of, void, list4>::value == 0);
+static_assert(tump::eval<tump::index_of, std::vector<int>, list4>::value == 4);
 
 int main() {}
 ```
@@ -58,4 +61,6 @@ int main() {}
 - [{`tump::eval`|ref/expression/exp}]
 - [{`tump::TypeList`|ref/container/method/is_type_list}]
 - [{`tump::list`|ref/container/list}]
+- [{`tump::btree`|ref/container/btree}]
 - [{`tump::make_empty`|ref/container/method/make_empty}]
+- [{`tump::to_btree`|ref/container/method/to_btree}]

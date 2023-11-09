@@ -45,6 +45,7 @@ using not_empty1 = tump::list<int, float>;
 using not_empty2 = tump::vlist<int(0), long(1), nullptr>;
 using not_empty3 = int;
 using not_empty4 = std::tuple<int>;
+using not_empty5 = tump::to_btree<not_empty1>;
 
 using empty1 = tump::list<>;
 using empty2 = tump::vlist<>;
@@ -55,11 +56,13 @@ static_assert(tump::is_empty_v<not_empty1> == false);
 static_assert(tump::is_empty_v<not_empty2> == false);
 static_assert(tump::eval<tump::is_empty, not_empty3>::value == false);
 static_assert(tump::eval<tump::is_empty, not_empty4>::value == false);
+static_assert(tump::eval<tump::is_empty, not_empty5>::value == false);
 
 static_assert(tump::is_empty_v<empty1> == true);
 static_assert(tump::is_empty_v<empty2> == true);
 static_assert(tump::eval<tump::is_empty, empty3>::value == true);
 static_assert(tump::eval<tump::is_empty, empty4>::value == true);
+static_assert(tump::eval<tump::is_empty, tump::empty_btree<>>::value == true);
 
 int main() {}
 ```
@@ -69,4 +72,7 @@ int main() {}
 - [{`tump::eval`|ref/expression/exp}]
 - [{`tump::list`|ref/container/list}]
 - [{`tump::vlist`|ref/container/vlist}]
+- [{`tump::btree`|ref/container/btree}]
+- [{`tump::empty_btree`|ref/container/btree}]
 - [{`tump::make_empty`|ref/container/method/make_empty}]
+- [{`tump::to_btree`|ref/container/method/to_btree}]

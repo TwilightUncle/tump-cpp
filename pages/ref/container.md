@@ -11,6 +11,7 @@ TumpCpp では、複数の型をまとめて構造的に扱ったり、特定の
 | --- | :--- |
 | [{list|ref/container/list}] | 型のパラメータパックを持ち、型のリストのように振舞います。 |
 | [{vlist|ref/container/vlist}] | 非型のパラメータパックを持ち、値のリストのように振舞います。 |
+| [{btree|ref/container/btree}] | 型パラメータのバイナリツリー。 |
 | [{ファンクタ|ref/container/functor}] | ファンクタとして扱うことができるコンテナの説明です。 |
 | [{アプリカティブファンクタ|ref/container/applicative}] | アプリカティブファンクタとして扱うことができるコンテナの説明です。 |
 | [{モナド|ref/container/monad}] | モナドにとして扱うことができるコンテナの説明です。 |

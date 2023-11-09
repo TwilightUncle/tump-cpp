@@ -42,13 +42,16 @@ class A {};
 using list1 = tump::list<int, float, void, std::vector<int>, char>;
 using list2 = std::tuple<int, float, A, std::vector<int>, double>;
 using list3 = tump::make_empty_t<std::tuple<int>>;
+using list4 = tump::to_btree_t<list1>;
 
 static_assert(std::is_same_v<tump::find_if_t<tump::is_integral, list1>, int> == true);
 static_assert(std::is_same_v<tump::find_if_t<tump::is_floating_point, list2>, float> == true);
 static_assert(std::is_same_v<tump::find_if_t<tump::to_true, list3>, tump::mp_null_t> == true);
+static_assert(std::is_same_v<tump::find_if_t<tump::is_integral, list4>, char> == true);
 
 static_assert(tump::eval<tump::find_if, tump::is_type_list, list1, tump::_eq, std::vector<int>>::value == true);
 static_assert(tump::eval<tump::find_if, tump::is_void, list2, tump::_eq, tump::mp_null_t>::value == true);
+static_assert(tump::eval<tump::find_if, tump::is_type_list, list4, tump::_eq, std::vector<int>>::value == true);
 
 int main() {}
 ```
@@ -60,7 +63,9 @@ int main() {}
 - [{`tump::TypeList`|ref/container/method/is_type_list}]
 - [{`tump::is_type_list`|ref/container/method/is_type_list}]
 - [{`tump::list`|ref/container/list}]
+- [{`tump::btree`|ref/container/btree}]
 - [{`tump::make_empty`|ref/container/method/make_empty}]
+- [{`tump::to_btree`|ref/container/method/to_btree}]
 - [{`tump::to_true`|ref/metafunction/to_true}]
 - [{`tump::_eq`|ref/operator/compare}]
 - [{`tump::is_integral`|ref/metafunction/std}]
