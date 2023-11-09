@@ -120,6 +120,16 @@ namespace tump
         struct compare_size : public vwrap<
             static_cast<int>(sizeof(L)) - static_cast<int>(sizeof(R))
         > {};
+
+        // void は sizeof できないので、別途特殊化定義
+        template <class L>
+        struct compare_size<L, void> : public vwrap<int(1)> {};
+
+        template <class R>
+        struct compare_size<void, R> : public vwrap<int(-1)> {};
+
+        template <>
+        struct compare_size<void, void> : public vwrap<int(0)> {};
     }
 
     /**

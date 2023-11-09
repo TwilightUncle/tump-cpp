@@ -11,7 +11,7 @@ namespace tump
     /**
      * バイナリツリーの節
     */
-    template <class T, class Grater = mp_null_t, class Less = mp_null_t>
+    template <tump::NotSameAs<mp_null_t> T, class Grater = mp_null_t, class Less = mp_null_t>
     struct bnode {};
 
     /**

@@ -41,6 +41,8 @@ namespace tump
     template <class T1, class T2>
     constexpr auto is_not_same_v = fn::is_not_same<T1, T2>::value;
 
+    template <class T1, class T2>
+    concept NotSameAs = is_not_same_v<T1, T2>;
 
     // -------------------------------------------------------------------
     // 標準ライブラリのメタ関数をあらかじめコールバック化
