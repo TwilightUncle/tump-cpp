@@ -16,12 +16,12 @@ namespace tump
         {
             // 隣り合った 2 つの型における詳細処理
             // デフォルトは特に処理を行わず、評価対象を次の要素へ進めるだけ
-            template <e_op_priority Priority, TypeList Result, class T>
+            template <class Priority, TypeList Result, class T>
             struct exp_2 : fn::push_front<Result, T> {};
 
             // 関数と、演算子を除く型が隣り合った場合
             // 関数適用を行う
-            template <e_op_priority Priority, TypeList Result, class T>
+            template <class Priority, TypeList Result, class T>
             requires (!is_empty_v<Result> && !is_operator_v<T> && Invocable<get_front_t<Result>>)
             struct exp_2<Priority, Result, T> : fn::push_front<
                 pop_front_t<Result>,
@@ -30,12 +30,12 @@ namespace tump
 
             // 演算子と演算子以外の型が隣り合った場合
             // 演算時の部分適用により、演算子を関数に変換する
-            template <e_op_priority Priority, TypeList Result, TumpOperator T>
-            requires (!is_empty_v<Result> && comparing_op_priority::eq_v<T, vwrap<Priority>>)
+            template <class Priority, TypeList Result, TumpOperator T>
+            requires (!is_empty_v<Result> && comparing_op_priority::eq_v<T, Priority>)
             struct exp_2<Priority, Result, T> : fn::push_front<
                 pop_front_t<Result>,
                 std::conditional_t<
-                    is_infixr_v<vwrap<Priority>>,
+                    is_infixr_v<Priority>,
                     ::tump::sec<T, get_front_t<Result>>,
                     ::tump::sec<get_front_t<Result>, T>
                 >
@@ -47,15 +47,15 @@ namespace tump
             struct exp_n_impl;
 
             // foldl用
-            template <e_op_priority Priority, TypeList List, class Cur>
-            struct exp_n_impl<list<List, vwrap<Priority>>, Cur> : public std::type_identity<list<
+            template <class Priority, TypeList List, class Cur>
+            struct exp_n_impl<list<List, Priority>, Cur> : public std::type_identity<list<
                 typename exp_2<Priority, List, Cur>::type,
-                vwrap<Priority>
+                Priority
             >> {};
 
             // foldr用
-            template <e_op_priority Priority, TypeList List, class Cur>
-            struct exp_n_impl<Cur, list<List, vwrap<Priority>>> : public exp_n_impl<list<List, vwrap<Priority>>, Cur> {};
+            template <class Priority, TypeList List, class Cur>
+            struct exp_n_impl<Cur, list<List, Priority>> : public exp_n_impl<list<List, Priority>, Cur> {};
 
             // 優先度毎の式の実装
             // 演算子の結合性による処理の方向切り替えもここで行う
