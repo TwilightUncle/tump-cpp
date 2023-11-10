@@ -16,7 +16,7 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/style.css">
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/vendor/prism.css">
-        <title>関数適用の演算子 - TumpCpp リファレンス</title>
+        <title>vwrap - TumpCpp リファレンス</title>
     </head>
     <body>
         <header id="header">
@@ -43,8 +43,8 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/ref/operator.html">
-                            operator
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction.html">
+                            metafunction
                         </a>
                     </li>
                     
@@ -52,8 +52,8 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/ref/operator/apply.html">
-                            apply
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/vwrap.html">
+                            vwrap
                         </a>
                     </li>
                     
@@ -277,71 +277,34 @@
 
             </aside>
             <article>
-                <h1>関数適用の演算子 - TumpCpp リファレンス</h1>
+                <h1>vwrap - TumpCpp リファレンス</h1>
                 <p></p>
 
                 <pre><code class="language-cpp">namespace tump {
-    using _apply = _op&lt;apply&lt;&gt;, e_op_priority::r_0&gt;;
+    template &lt;auto V&gt;
+    struct vwrap
+    {
+        using value_type = decltype(V);
+        using type = vwrap&lt;V&gt;;
+        static constexpr auto value = V;
+    };
 }
 </code></pre>
 
-<h3 id="_apply">_apply</h3>
+<h3 id="パラメータ・メンバ">パラメータ・メンバ</h3>
 
 <ul>
-<li>結合性 : 右結合</li>
-<li>優先度 : 0</li>
-<li>左オペランド : 第一級関数化したメタ関数。<a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invocable.html"><code>tump::Invocable</code></a>で真と判定されなければいけない。</li>
-<li>右オペランド : 任意の型</li>
-<li>機能 : 左オペランドのメタ関数を、右オペランドへ適用</li>
+<li>V - 任意の非型パラメータ</li>
+<li>value_type - 包んだパラメータの型</li>
+<li>type - 自身をそのまま格納</li>
+<li>value - 包んだ値をそのまま格納</li>
 </ul>
 
 <h2 id="概要">概要</h2>
 
-<p><code>tump::_apply</code>は左オペランドのメタ関数を、右オペランドの型に適用する機能を持ち、評価されるタイミングが最も遅い演算子です。</p>
+<p><code>tump::vwrap</code>は、任意の非型パラメータを型の文脈で扱うことができるように包みます。</p>
 
-<h2 id="使い方">使い方</h2>
-
-<p><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a>で記述された式において、メタ関数の適用は自動的に行われます。<br />
-そのため、<code>tump::_apply</code>をメタ関数の適用目的のみで使用することはありません。</p>
-
-<p><code>tump::_apply</code>を使う目的は、自動的に行われる関数適用と、<code>tump::_apply</code>の評価の優先順位の違いにあります。</p>
-
-<p>自動的に行われるメタ関数の適用は、式の左側から、演算子の評価よりも先におこなわれます。<br />
-一方で、<code>tump::_apply</code>の評価の優先順位は最も低く、式の右側から評価される動作となり、順序が真逆です。<br />
-つまり、メタ関数の適用を行う際に、<code>tump::_apply</code>を使うことで、<code>tump::_apply</code>の左右のオペランドの全ての評価が完了するまで、関数適用を遅らせることができます。</p>
-
-<p>上記を応用し、関数適用のタイミングを遅らせることで、式の中で行われる評価の順序を制御することが可能です。</p>
-
-<h2 id="例">例</h2>
-
-<pre><code class="language-cpp">#include &lt;tump.hpp&gt;
-
-// _apply を用いない場合。
-// 左から順番に is_same を適用するため、case1 の式は、
-// add_const と int を比較した結果異なることから、std::false_type が返却される。
-using case1 = tump::eval&lt;tump::is_same, tump::add_const, int&gt;;
-static_assert(case1::value == false);
-
-// _apply を用いた場合。
-// case2 の式は、is_same と add_const の間に _apply をはさむことにより、
-// int への add_const の適用が最初に行われる。
-// 結果、is_same が const int を部分適用したメタ関数が返却される
-using case2 = tump::eval&lt;tump::is_same, tump::_apply, tump::add_const, int&gt;;
-static_assert(tump::eval&lt;case2, const int&gt;::value == true);
-
-int main() {}
-</code></pre>
-
-<h2 id="関連リンク">関連リンク</h2>
-
-<ul>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::exp</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/op.html"><code>tump::_op</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/apply.html"><code>tump::apply</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/std.html"><code>tump::add_const</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/std.html"><code>tump::is_same</code></a></li>
-</ul>
+<p><code>std::integral_constant</code>と同じように使いますが、特に型を指定する必要はありません。</p>
 
             </article>
             <aside id="table_of_contents" class="table-of-contents">
@@ -351,24 +314,6 @@ int main() {}
                         <li>
                             <a href="#%e6%a6%82%e8%a6%81%0d">
                                 概要
-                            </a>
-                        </li>
-                    
-                        <li>
-                            <a href="#%e4%bd%bf%e3%81%84%e6%96%b9%0d">
-                                使い方
-                            </a>
-                        </li>
-                    
-                        <li>
-                            <a href="#%e4%be%8b%0d">
-                                例
-                            </a>
-                        </li>
-                    
-                        <li>
-                            <a href="#%e9%96%a2%e9%80%a3%e3%83%aa%e3%83%b3%e3%82%af%0d">
-                                関連リンク
                             </a>
                         </li>
                     

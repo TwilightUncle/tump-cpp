@@ -16,7 +16,7 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/style.css">
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/vendor/prism.css">
-        <title>関数適用の演算子 - TumpCpp リファレンス</title>
+        <title>left - TumpCpp リファレンス</title>
     </head>
     <body>
         <header id="header">
@@ -43,8 +43,8 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/ref/operator.html">
-                            operator
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction.html">
+                            metafunction
                         </a>
                     </li>
                     
@@ -52,8 +52,8 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/ref/operator/apply.html">
-                            apply
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/left.html">
+                            left
                         </a>
                     </li>
                     
@@ -277,57 +277,66 @@
 
             </aside>
             <article>
-                <h1>関数適用の演算子 - TumpCpp リファレンス</h1>
+                <h1>left - TumpCpp リファレンス</h1>
                 <p></p>
 
                 <pre><code class="language-cpp">namespace tump {
-    using _apply = _op&lt;apply&lt;&gt;, e_op_priority::r_0&gt;;
+    namespace fn {
+        // 大元のメタ関数定義
+        template &lt;class L, class R&gt;
+        struct left : public std::type_identity&lt;L&gt; {};
+    }
+
+    // 第一級関数化
+    using left = cbk&lt;fn::left, 2&gt;;
+    
+    // メンバ型 type 呼び出し省略のエイリアステンプレート
+    template &lt;class L, class R&gt;
+    using left_t = typename fn::left&lt;L, R&gt;::type;
 }
 </code></pre>
 
-<h3 id="_apply">_apply</h3>
+<h3 id="パラメータ">パラメータ</h3>
 
 <ul>
-<li>結合性 : 右結合</li>
-<li>優先度 : 0</li>
-<li>左オペランド : 第一級関数化したメタ関数。<a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invocable.html"><code>tump::Invocable</code></a>で真と判定されなければいけない。</li>
-<li>右オペランド : 任意の型</li>
-<li>機能 : 左オペランドのメタ関数を、右オペランドへ適用</li>
+<li>L - 任意の型</li>
+<li>R - 任意の型</li>
 </ul>
 
 <h2 id="概要">概要</h2>
 
-<p><code>tump::_apply</code>は左オペランドのメタ関数を、右オペランドの型に適用する機能を持ち、評価されるタイミングが最も遅い演算子です。</p>
+<p><code>tump::left</code>は、引数として任意の型を 2 つ受け取り、必ず左側(第一引数)の型<code>L</code>を返却するメタ関数です。</p>
 
-<h2 id="使い方">使い方</h2>
-
-<p><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a>で記述された式において、メタ関数の適用は自動的に行われます。<br />
-そのため、<code>tump::_apply</code>をメタ関数の適用目的のみで使用することはありません。</p>
-
-<p><code>tump::_apply</code>を使う目的は、自動的に行われる関数適用と、<code>tump::_apply</code>の評価の優先順位の違いにあります。</p>
-
-<p>自動的に行われるメタ関数の適用は、式の左側から、演算子の評価よりも先におこなわれます。<br />
-一方で、<code>tump::_apply</code>の評価の優先順位は最も低く、式の右側から評価される動作となり、順序が真逆です。<br />
-つまり、メタ関数の適用を行う際に、<code>tump::_apply</code>を使うことで、<code>tump::_apply</code>の左右のオペランドの全ての評価が完了するまで、関数適用を遅らせることができます。</p>
-
-<p>上記を応用し、関数適用のタイミングを遅らせることで、式の中で行われる評価の順序を制御することが可能です。</p>
+<p>形式的に 2 引数メタ関数を指定する必要があり、かつ、右側の引数を破棄したいような場合に使用することを想定しています。</p>
 
 <h2 id="例">例</h2>
 
 <pre><code class="language-cpp">#include &lt;tump.hpp&gt;
 
-// _apply を用いない場合。
-// 左から順番に is_same を適用するため、case1 の式は、
-// add_const と int を比較した結果異なることから、std::false_type が返却される。
-using case1 = tump::eval&lt;tump::is_same, tump::add_const, int&gt;;
-static_assert(case1::value == false);
+// どのような型を渡しても真となる
+static_assert(std::is_same_v&lt;tump::left_t&lt;int, float&gt;, int&gt; == true);
+static_assert(tump::eval&lt;tump::left, int, float, tump::_eq, int&gt;::value == true);
 
-// _apply を用いた場合。
-// case2 の式は、is_same と add_const の間に _apply をはさむことにより、
-// int への add_const の適用が最初に行われる。
-// 結果、is_same が const int を部分適用したメタ関数が返却される
-using case2 = tump::eval&lt;tump::is_same, tump::_apply, tump::add_const, int&gt;;
-static_assert(tump::eval&lt;case2, const int&gt;::value == true);
+// 引数を同じ型で全て埋めたうえで勝手に実行するメタ関数を定義
+// 再帰による部分適用により、実装
+template &lt;tump::Invocable F, class FillType&gt;
+struct fill_apply : public tump::exp&lt;
+    tump::flip,
+    std::conditional_t&lt;
+        tump::InvocableArgN&lt;F, 1&gt;,
+        tump::left,
+        tump::cbk&lt;fill_apply, 2&gt;
+    &gt;,
+    FillType,
+    tump::_apply,
+    F, FillType
+&gt; {};
+
+// std::is_same_v&lt;int, int&gt; と同じ
+static_assert(fill_apply&lt;tump::is_same, int&gt;::type::value == true);
+
+// std::conjunction_v&lt;std::true_type, std::true_type, std::true_type, std::true_type&gt; と同じ
+static_assert(fill_apply&lt;tump::conjunction&lt;4&gt;, std::true_type&gt;::type::value == true);
 
 int main() {}
 </code></pre>
@@ -337,10 +346,12 @@ int main() {}
 <ul>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::exp</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/op.html"><code>tump::_op</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/apply.html"><code>tump::apply</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/std.html"><code>tump::add_const</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/std.html"><code>tump::is_same</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invocable.html"><code>tump::Invocable</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invocable.html"><code>tump::InvocableArgN</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/callback.html"><code>tump::cbk</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/flip.html"><code>tump::flip</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/compare.html"><code>tump::_eq</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/apply.html"><code>tump::_apply</code></a></li>
 </ul>
 
             </article>
@@ -351,12 +362,6 @@ int main() {}
                         <li>
                             <a href="#%e6%a6%82%e8%a6%81%0d">
                                 概要
-                            </a>
-                        </li>
-                    
-                        <li>
-                            <a href="#%e4%bd%bf%e3%81%84%e6%96%b9%0d">
-                                使い方
                             </a>
                         </li>
                     

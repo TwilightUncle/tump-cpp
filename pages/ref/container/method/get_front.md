@@ -14,7 +14,7 @@ namespace tump {
     // 第一級関数化
     using get_front = cbk<fn::get_front, 1>;
 
-    // 定数メンバ value 呼び出し省略のエイリアステンプレート
+    // メンバ型 type 呼び出し省略のエイリアステンプレート
     template <TypeListOrValueList List>
     using get_front_t = typename fn::get_front<List>::type;
     

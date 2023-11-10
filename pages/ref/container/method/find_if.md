@@ -13,7 +13,7 @@ namespace tump {
     // 第一級関数化
     using find_if = cbk<fn::find_if, 2>;
 
-    // 定数メンバ value 呼び出し省略のエイリアステンプレート
+    // メンバ型 type 呼び出し省略のエイリアステンプレート
     template <InvocableArgN<1> F, TypeList List>
     using find_if_t = typename fn::find_if<F, List>::type;
 }

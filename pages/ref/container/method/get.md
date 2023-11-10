@@ -11,7 +11,7 @@ namespace tump {
         struct get {};
     }
 
-    // 定数メンバ value 呼び出し省略のエイリアステンプレート
+    // メンバ型 type 呼び出し省略のエイリアステンプレート
     template <std::size_t N, TypeListOrValueList List>
     using get_t = typename fn::get<N, List>::type;
 

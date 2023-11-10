@@ -16,7 +16,7 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/style.css">
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/vendor/prism.css">
-        <title>関数適用の演算子 - TumpCpp リファレンス</title>
+        <title>to_true - TumpCpp リファレンス</title>
     </head>
     <body>
         <header id="header">
@@ -43,8 +43,8 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/ref/operator.html">
-                            operator
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction.html">
+                            metafunction
                         </a>
                     </li>
                     
@@ -52,8 +52,8 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/ref/operator/apply.html">
-                            apply
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/to_true.html">
+                            to_true
                         </a>
                     </li>
                     
@@ -277,57 +277,89 @@
 
             </aside>
             <article>
-                <h1>関数適用の演算子 - TumpCpp リファレンス</h1>
+                <h1>to_true - TumpCpp リファレンス</h1>
                 <p></p>
 
                 <pre><code class="language-cpp">namespace tump {
-    using _apply = _op&lt;apply&lt;&gt;, e_op_priority::r_0&gt;;
+    namespace fn {
+        // 大元のメタ関数定義
+        template &lt;class T&gt;
+        using to_true = std::true_type;
+    }
+
+    // 第一級関数化
+    using to_true = cbk&lt;fn::to_true, 1&gt;;
+    
+    // 定数メンバ value 呼び出し省略のエイリアステンプレート
+    template &lt;class T&gt;
+    constexpr auto to_true_v = fn::to_true&lt;T&gt;::value;
 }
 </code></pre>
 
-<h3 id="_apply">_apply</h3>
+<h3 id="パラメータ">パラメータ</h3>
 
 <ul>
-<li>結合性 : 右結合</li>
-<li>優先度 : 0</li>
-<li>左オペランド : 第一級関数化したメタ関数。<a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invocable.html"><code>tump::Invocable</code></a>で真と判定されなければいけない。</li>
-<li>右オペランド : 任意の型</li>
-<li>機能 : 左オペランドのメタ関数を、右オペランドへ適用</li>
+<li>T - 任意の型</li>
 </ul>
 
 <h2 id="概要">概要</h2>
 
-<p><code>tump::_apply</code>は左オペランドのメタ関数を、右オペランドの型に適用する機能を持ち、評価されるタイミングが最も遅い演算子です。</p>
+<p><code>tump::to_true</code>は、引数として任意の型を 1 つだけ受け取り、常に真として、<code>std::true_type</code>を返却するメタ関数です。</p>
 
-<h2 id="使い方">使い方</h2>
+<p>どのような型を渡しても真と判定されることから、型制約を指定する際に、制限がないことを明示的に示すような用途を想定しています。</p>
 
-<p><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a>で記述された式において、メタ関数の適用は自動的に行われます。<br />
-そのため、<code>tump::_apply</code>をメタ関数の適用目的のみで使用することはありません。</p>
-
-<p><code>tump::_apply</code>を使う目的は、自動的に行われる関数適用と、<code>tump::_apply</code>の評価の優先順位の違いにあります。</p>
-
-<p>自動的に行われるメタ関数の適用は、式の左側から、演算子の評価よりも先におこなわれます。<br />
-一方で、<code>tump::_apply</code>の評価の優先順位は最も低く、式の右側から評価される動作となり、順序が真逆です。<br />
-つまり、メタ関数の適用を行う際に、<code>tump::_apply</code>を使うことで、<code>tump::_apply</code>の左右のオペランドの全ての評価が完了するまで、関数適用を遅らせることができます。</p>
-
-<p>上記を応用し、関数適用のタイミングを遅らせることで、式の中で行われる評価の順序を制御することが可能です。</p>
+<p>例えば、TumpCpp では、比較用のメタ関数を定義する<code>tump::comparing_type</code>を定義しており、使用する際には比較可能な型の制約を行うメタ関数の指定が必要です。<br />
+その際、あらゆる型で比較可能な処理を定義する場合は、<code>tump::to_true</code>を制約として指定することになります。</p>
 
 <h2 id="例">例</h2>
 
-<pre><code class="language-cpp">#include &lt;tump.hpp&gt;
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;tump.hpp&gt;
 
-// _apply を用いない場合。
-// 左から順番に is_same を適用するため、case1 の式は、
-// add_const と int を比較した結果異なることから、std::false_type が返却される。
-using case1 = tump::eval&lt;tump::is_same, tump::add_const, int&gt;;
-static_assert(case1::value == false);
+// どのような型を渡しても真となる
+static_assert(tump::to_true_v&lt;void&gt; == true);
+static_assert(tump::to_true_v&lt;int*&gt; == true);
+static_assert(tump::eval&lt;tump::to_true, std::vector&lt;int&gt;&gt;::value == true);
+static_assert(tump::eval&lt;tump::to_true, tump::to_true&gt;::value == true);
 
-// _apply を用いた場合。
-// case2 の式は、is_same と add_const の間に _apply をはさむことにより、
-// int への add_const の適用が最初に行われる。
-// 結果、is_same が const int を部分適用したメタ関数が返却される
-using case2 = tump::eval&lt;tump::is_same, tump::_apply, tump::add_const, int&gt;;
-static_assert(tump::eval&lt;case2, const int&gt;::value == true);
+// 例として、grater &gt; 任意の型のサイズ となるような比較メタ関数を生成
+template &lt;class T&gt; struct grater {};
+
+template &lt;class L, class R&gt;
+struct my_compare : public std::integral_constant&lt;
+    int, sizeof(L) - sizeof(R)
+&gt; {};
+template &lt;class L, class R&gt;
+struct my_compare&lt;grater&lt;L&gt;, R&gt; : public std::integral_constant&lt;int, 1&gt; {};
+template &lt;class L, class R&gt;
+struct my_compare&lt;L, grater&lt;R&gt;&gt; : public std::integral_constant&lt;int, -1&gt; {};
+template &lt;class L, class R&gt;
+struct my_compare&lt;grater&lt;L&gt;, grater&lt;R&gt;&gt; : public my_compare&lt;L, R&gt; {};
+template &lt;class T&gt;
+struct my_compare&lt;T, void&gt; : public std::integral_constant&lt;int, 1&gt; {};
+template &lt;class T&gt;
+struct my_compare&lt;void, T&gt; : public std::integral_constant&lt;int, -1&gt; {};
+
+// 比較メタ関数の生成
+// 全ての型で比較可能なように、第二引数に to_true を制約として指定
+using my_comparing = tump::comparing_type&lt;
+    tump::cbk&lt;my_compare, 2&gt;,
+    tump::to_true
+&gt;;
+
+static_assert(my_comparing::lt_v&lt;void, int&gt; == true);
+static_assert(my_comparing::lt_v&lt;int, int&gt; == false);
+static_assert(my_comparing::le_v&lt;std::int8_t, std::int16_t&gt; == true);
+static_assert(my_comparing::le_v&lt;std::int8_t, std::int8_t&gt; == true);
+static_assert(my_comparing::eq_v&lt;void, int&gt; == false);
+static_assert(my_comparing::eq_v&lt;int, int&gt; == true);
+
+static_assert(tump::eval&lt;my_comparing::gt, grater&lt;void&gt;, int&gt;::value == true);
+static_assert(tump::eval&lt;my_comparing::gt, grater&lt;int&gt;, grater&lt;int&gt;&gt;::value == false);
+static_assert(tump::eval&lt;my_comparing::ge, std::int16_t, grater&lt;std::int16_t&gt;&gt;::value == false);
+static_assert(tump::eval&lt;my_comparing::ge, std::int8_t, std::int8_t&gt;::value == true);
+static_assert(tump::eval&lt;my_comparing::ne, std::int8_t, std::int8_t&gt;::value == false);
+static_assert(tump::eval&lt;my_comparing::ne, grater&lt;std::int8_t&gt;, std::int8_t&gt;::value == true);
 
 int main() {}
 </code></pre>
@@ -336,11 +368,8 @@ int main() {}
 
 <ul>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::exp</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/op.html"><code>tump::_op</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/apply.html"><code>tump::apply</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/std.html"><code>tump::add_const</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/std.html"><code>tump::is_same</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/callback.html"><code>tump::cbk</code></a></li>
+<li><code>tump::comparing_type</code></li>
 </ul>
 
             </article>
@@ -351,12 +380,6 @@ int main() {}
                         <li>
                             <a href="#%e6%a6%82%e8%a6%81%0d">
                                 概要
-                            </a>
-                        </li>
-                    
-                        <li>
-                            <a href="#%e4%bd%bf%e3%81%84%e6%96%b9%0d">
-                                使い方
                             </a>
                         </li>
                     
