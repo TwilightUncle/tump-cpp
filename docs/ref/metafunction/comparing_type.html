@@ -16,7 +16,7 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/style.css">
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/vendor/prism.css">
-        <title>TumpCpp リファレンス</title>
+        <title>comparing_type - TumpCpp リファレンス</title>
     </head>
     <body>
         <header id="header">
@@ -36,6 +36,24 @@
                     <li>
                         <a href="https://twilightuncle.github.io/tump-cpp/ref.html">
                             ref
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="delimiter">></li>
+                    <li>
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction.html">
+                            metafunction
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li class="delimiter">></li>
+                    <li>
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/comparing_type.html">
+                            comparing_type
                         </a>
                     </li>
                     
@@ -259,125 +277,242 @@
 
             </aside>
             <article>
-                <h1>TumpCpp リファレンス</h1>
-                <p><p>TumpCpp のリファレンスTOPです。</p>
-</p>
+                <h1>comparing_type - TumpCpp リファレンス</h1>
+                <p></p>
 
-                <h2 id="概要">概要</h2>
+                <pre><code class="language-cpp">namespace tump {
+    template &lt;InvocableArgN&lt;2&gt; Compare, InvocableArgN&lt;1&gt; Constraint = to_true&gt;
+    struct comparing_type
+    {
+        struct fn
+        {
+            template &lt;class L, class R&gt;
+            struct lt {};
+            template &lt;class L, class R&gt;
+            struct gt {};
+            template &lt;class L, class R&gt;
+            struct le {};
+            template &lt;class L, class R&gt;
+            struct ge {};
+            template &lt;class L, class R&gt;
+            struct eq {};
+            template &lt;class L, class R&gt;
+            struct ne {};
+            
+            template &lt;class L, class R&gt;
+            struct get_grater {};
+            template &lt;class L, class R&gt;
+            struct get_less {};
+        };
 
-<p>リファレンスでは、TumpCpp で実装された各機能の定義や、使い方のサンプルを掲載しています。</p>
+        using lt = cbk&lt;fn::lt, 2&gt;;
+        using gt = cbk&lt;fn::gt, 2&gt;;
+        using le = cbk&lt;fn::le, 2&gt;;
+        using ge = cbk&lt;fn::ge, 2&gt;;
+        using eq = cbk&lt;fn::eq, 2&gt;;
+        using ne = cbk&lt;fn::ne, 2&gt;;
 
-<h2 id="項目一覧">項目一覧</h2>
+        template &lt;class L, class R&gt;
+        static constexpr bool lt_v = fn::lt&lt;L, R&gt;::value;
+        template &lt;class L, class R&gt;
+        static constexpr bool gt_v = fn::gt&lt;L, R&gt;::value;
+        template &lt;class L, class R&gt;
+        static constexpr bool le_v = fn::le&lt;L, R&gt;::value;
+        template &lt;class L, class R&gt;
+        static constexpr bool ge_v = fn::ge&lt;L, R&gt;::value;
+        template &lt;class L, class R&gt;
+        static constexpr bool eq_v = fn::eq&lt;L, R&gt;::value;
+        template &lt;class L, class R&gt;
+        static constexpr bool ne_v = fn::ne&lt;L, R&gt;::value;
 
-<table>
-<thead>
-<tr>
-<th>機能の分類</th>
-<th align="left">概要</th>
-<th align="left">該当するクラス・関数・概念</th>
-</tr>
-</thead>
+        using get_grater = cbk&lt;fn::get_grater, 2&gt;;
+        using get_less = cbk&lt;fn::get_less, 2&gt;;
 
-<tbody>
-<tr>
-<td><a href="https://twilightuncle.github.io/tump-cpp/ref/expression.html">式</a></td>
-<td align="left">TumpCpp における式のリファレンスです。</td>
-<td align="left"><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html">exp</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/expression/sec.html">sec</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/expression/lambda.html">lambda</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/expression/mp_if.html">mp_if</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/expression/guard.html">guard</a></td>
-</tr>
+        template &lt;class L, class R&gt;
+        using get_grater_t = typename fn::get_grater&lt;L, R&gt;::type;
+        template &lt;class L, class R&gt;
+        using get_less_t = typename fn::get_less&lt;L, R&gt;::type;
+    };
+    
+    // sizeof の結果による型の比較を行う
+    using comparing_size = comparing_type&lt;...&gt;;
+}
+</code></pre>
 
-<tr>
-<td><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable.html">メタ関数の第一級関数化と適用</a></td>
-<td align="left">メタ関数を第一級関数として扱うためのリファレンスです。<br>第一級関数への変換、第一級関数の適用(実行)、部分適用が含まれます。</td>
-<td align="left"><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/callback.html">callback</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/callback.html">cbk</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/partial_apply.html">partial_apply</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invocable.html">Invocable</a> <a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invoke.html">invoke</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invoke_list.html">invoke_list</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/apply.html">apply</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/flip.html">flip</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/compose.html">compose</a></td>
-</tr>
-
-<tr>
-<td><a href="https://twilightuncle.github.io/tump-cpp/ref/operator.html">演算子</a></td>
-<td align="left">TumpCpp の式で扱う演算子のリファレンスです。</td>
-<td align="left"><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/apply.html">_apply</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/operator/dot.html">_dot</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/operator/compare.html">_eq</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/operator/compare.html">_ne</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/operator/logical.html">_or</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/operator/logical.html">_and</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/operator/elem.html">_elem</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/operator/elem.html">_not_elem</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/operator/concat.html">_concat</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/operator/concat.html">_cons</a>, _fmap, _ap, _bind,  <a href="https://twilightuncle.github.io/tump-cpp/ref/operator/op.html">_op</a></td>
-</tr>
-
-<tr>
-<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container.html">コンテナ</a></td>
-<td align="left">テンプレートメタプログラミングで利用することができる、リストや木構造などの構造的なテンプレートクラスと、関連する概念のリファレンスです。<br>また、各テンプレートクラスの項には、そのテンプレートクラス用に定義されたメタ関数の説明が含まれる場合があります。</td>
-<td align="left"><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html">list</a>, vlist, btree, ファンクタ, アプリカティブファンクタ, モナド</td>
-</tr>
-
-<tr>
-<td><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction.html">定義済みメタ関数</a></td>
-<td align="left">TumpCpp で定義されているメタ関数のリファレンスです。</td>
-<td align="left"><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/std.html">標準ライブラリのメタ関数の第一級関数</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/to_true.html">to_true</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/left.html">left</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/right.html">right</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/through_if.html">through_if</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/block_if.html">block_if</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/vwrap.html">vwrap</a>, <a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/comparing_type.html">comparing_type</a></td>
-</tr>
-
-<tr>
-<td><!--[マクロ](https://twilightuncle.github.io/tump-cpp/ref/macro.html)-->マクロ</td>
-<td align="left">TumpCpp に影響を及ぼすプリプロセッサマクロ定義についてのリファレンスです。</td>
-<td align="left"></td>
-</tr>
-</tbody>
-</table>
-
-<h2 id="名前空間">名前空間</h2>
-
-<p>全ての機能は名前空間<code>tump</code>の下に定義されており、TumpCpp の機能は名前空間<code>tump</code>直下に所属している識別子のみの利用で完結できます。<br />
-しかし、TumpCpp における<a href="https://twilightuncle.github.io/tump-cpp/ref/expression.html">式</a>の機能を利用せず、定義されているメタ関数のみを利用したい場合は少し異なります。</p>
-
-<h3 id="標準ライブラリのメタ関数との、定義内容や命名の違い">標準ライブラリのメタ関数との、定義内容や命名の違い</h3>
-
-<p>TumpCpp では、メタ関数について、下記の定義が行われています。</p>
-
-<ol>
-<li>メタ関数の大元の定義</li>
-<li>メタ関数の評価結果の型を得るための、<code>::type</code>呼び出しを省略するエイリアステンプレート定義</li>
-<li>メタ関数の評価結果の値を得るための、<code>::value</code>呼び出しを省略する変数テンプレート定義</li>
-</ol>
-
-<p>しかし、上記に加えて、TumpCpp では下記の定義も行っています。</p>
+<h3 id="パラメータ">パラメータ</h3>
 
 <ul>
-<li><strong>1</strong> を第一級関数化した型エイリアス定義</li>
+<li>Compare - 2 つの型を受け取り、三方比較を行うメタ関数</li>
+<li>Constraint - 比較可能な型の制約を行うメタ関数</li>
+<li>L - 任意の型</li>
+<li>R - 任意の型</li>
 </ul>
 
-<p>本ライブラリは、通常のメタ関数を利用することによる煩雑さの軽減を目的の 1 つとして、式の中で第一級関数化したメタ関数を利用するような使い方を想定しています。</p>
+<h2 id="概要">概要</h2>
 
-<p>そのため、通常のメタ関数の定義は、TumpCpp の機能の実装のために最低限必要なものと位置づけ、ネストした名前空間<code>tump::fn</code>の下で定義しています。<br />
-ほとんどのメタ関数は、下記のような形式で所属する名前空間が決まっています。</p>
+<p><code>tump::comparing_type</code>は、三方比較のメタ関数<code>Compare</code>を受け取り、2 つの型を比較するメタ関数を生成するテンプレートクラスです。</p>
+
+<p>下記のメタ関数が<code>tump::comparing_type</code>のテンプレートメンバ型として使用できます。</p>
 
 <table>
 <thead>
 <tr>
-<th align="left">メタ関数の状態</th>
-<th align="left">識別子の命名規則</th>
-<th>所属する名前空間</th>
+<th>メンバ関数名</th>
+<th>概要</th>
 </tr>
 </thead>
 
 <tbody>
 <tr>
-<td align="left">基本的なメタ関数</td>
-<td align="left">メタ関数名そのまま</td>
-<td><code>tump::fn</code></td>
+<td><code>lt</code></td>
+<td>型<code>L</code>と<code>R</code>を比較し、<code>L</code>の大きさが<code>R</code>未満かどうか判定します。</td>
 </tr>
 
 <tr>
-<td align="left">直接結果型を返却する、メタ関数のエイリアステンプレート</td>
-<td align="left">メタ関数名の末尾に<code>_t</code>が付与されている</td>
-<td><code>tump</code></td>
+<td><code>gt</code></td>
+<td>型<code>L</code>と<code>R</code>を比較し、<code>L</code>の大きさが<code>R</code>超かどうか判定します。</td>
 </tr>
 
 <tr>
-<td align="left">直接結果の値を返却する、メタ関数の変数テンプレート</td>
-<td align="left">　メタ関数の末尾に<code>_v</code>が付与されている</td>
-<td><code>tump</code></td>
+<td><code>le</code></td>
+<td>型<code>L</code>と<code>R</code>を比較し、<code>L</code>の大きさが<code>R</code>以下かどうか判定します。</td>
 </tr>
 
 <tr>
-<td align="left"><strong>第一級関数化したメタ関数</strong></td>
-<td align="left"><strong>メタ関数名そのまま</strong></td>
-<td><code>tump</code></td>
+<td><code>ge</code></td>
+<td>型<code>L</code>と<code>R</code>を比較し、<code>L</code>の大きさが<code>R</code>以上かどうか判定します。</td>
+</tr>
+
+<tr>
+<td><code>eq</code></td>
+<td>型<code>L</code>と<code>R</code>を比較し、<code>L</code>と<code>R</code>が等しい大きさか判定します。</td>
+</tr>
+
+<tr>
+<td><code>ne</code></td>
+<td>型<code>L</code>と<code>R</code>を比較し、<code>L</code>と<code>R</code>が異なる大きさか判定します。</td>
+</tr>
+
+<tr>
+<td><code>get_grater</code></td>
+<td>型<code>L</code>と<code>R</code>を比較し、大きいほうの型を返します。</td>
+</tr>
+
+<tr>
+<td><code>get_less</code></td>
+<td>型<code>L</code>と<code>R</code>を比較し、小さいほうの型を返します。</td>
 </tr>
 </tbody>
 </table>
+
+<p>なお、<code>sizeof</code>による型の大きさの比較用に、<code>tump::comparing_type</code>を利用した<code>tump::comparing_size</code>が定義済みです。</p>
+
+<h2 id="三方比較のメタ関数">三方比較のメタ関数</h2>
+
+<p><code>tump::comparing_type</code>は三方比較のメタ関数<code>Compare</code>により、任意の基準で大小比較を行います。<br />
+ただし、メタ関数<code>Compare</code>は下記の機能を持っている必要があります。</p>
+
+<ol>
+<li>2 引数を受け取る第一級メタ関数</li>
+<li>型<code>L</code>と<code>R</code>を渡した結果、<code>L</code>の大きさが<code>R</code>未満の時負の整数を返却</li>
+<li>型<code>L</code>と<code>R</code>を渡した結果、<code>L</code>の大きさが<code>R</code>超の時正の整数を返却</li>
+<li>型<code>L</code>と<code>R</code>を渡した結果、<code>L</code>の大きさが<code>R</code>と等しい場合整数の<code>0</code>を返却</li>
+</ol>
+
+<p>例えば、あらゆる型に対して<code>sizeof</code>による大小比較を行う<code>tump::comparing_size</code>は、下記のように定義された三方比較のメタ関数<code>compare_size</code>により定義されています。</p>
+
+<pre><code class="language-cpp">namespace tump
+{
+    namespace fn
+    {
+        template &lt;class L, class R&gt;
+        struct compare_size : public vwrap&lt;
+            static_cast&lt;int&gt;(sizeof(L)) - static_cast&lt;int&gt;(sizeof(R))
+        &gt; {};
+
+        // void は sizeof できないので、別途特殊化定義
+        template &lt;class L&gt;
+        struct compare_size&lt;L, void&gt; : public vwrap&lt;int(1)&gt; {};
+
+        template &lt;class R&gt;
+        struct compare_size&lt;void, R&gt; : public vwrap&lt;int(-1)&gt; {};
+
+        template &lt;&gt;
+        struct compare_size&lt;void, void&gt; : public vwrap&lt;int(0)&gt; {};
+    }
+    
+    using compare_size = cbk&lt;fn::compare_size, 2&gt;;
+
+    // compare_size と comparing_type により、comparing_size を定義
+    using comparing_size = comparing_type&lt;compare_size&gt;;
+}
+</code></pre>
+
+<h2 id="比較可能な型の制約">比較可能な型の制約</h2>
+
+<p>比較の基準によっては、比較できない型が存在する場合があります。<br />
+そのような場合に、任意の型に対して審議判定を行うメタ関数<code>Constraint</code>によって制約を行うことができます。</p>
+
+<p>制約が不要な場合は、デフォルトで<code>tump::to_true</code>が指定されているため、三方比較を行うメタ関数<code>Compare</code>の指定だけで<code>tump::comparing_type</code>を使用することができます。</p>
+
+<h2 id="例">例</h2>
+
+<p>例として、下記ではテンプレート型に指定された、テンプレートパラメータパックの長さを比較するメタ関数を生成しています。</p>
+
+<pre><code class="language-cpp">#include &lt;tuple&gt;
+#include &lt;tump.hpp&gt;
+
+template &lt;class L, class R&gt;
+struct compare_list_size : public tump::vwrap&lt;
+    int(tump::len_v&lt;L&gt;) - int(tump::len_v&lt;R&gt;)
+&gt; {};
+
+using comparing_list_size = tump::comparing_type&lt;
+    tump::cbk&lt;compare_list_size, 2&gt;,
+    tump::is_type_list
+&gt;;
+
+using list1 = tump::list&lt;&gt;;
+using list2 = tump::list&lt;int&gt;;
+using list3 = std::tuple&lt;int, void&gt;;
+using list4 = tump::to_btree_t&lt;tump::list&lt;int, void, float&gt;&gt;;
+using list5 = tump::list&lt;int, void&gt;;
+
+static_assert(comparing_list_size::lt_v&lt;list1, list2&gt; == true);
+static_assert(comparing_list_size::lt_v&lt;list3, list5&gt; == false);
+static_assert(comparing_list_size::le_v&lt;list2, list3&gt; == true);
+static_assert(comparing_list_size::le_v&lt;list3, list5&gt; == true);
+static_assert(comparing_list_size::eq_v&lt;list3, list4&gt; == false);
+static_assert(comparing_list_size::eq_v&lt;list3, list5&gt; == true);
+
+static_assert(tump::eval&lt;comparing_list_size::gt, list4, list3&gt;::value == true);
+static_assert(tump::eval&lt;comparing_list_size::gt, list3, list5&gt;::value == false);
+static_assert(tump::eval&lt;comparing_list_size::ge, list3, list2&gt;::value == true);
+static_assert(tump::eval&lt;comparing_list_size::ge, list3, list5&gt;::value == true);
+static_assert(tump::eval&lt;comparing_list_size::ne, list1, list2&gt;::value == true);
+static_assert(tump::eval&lt;comparing_list_size::ne, list3, list5&gt;::value == false);
+
+// 下記は is_type_list の制約に抵触する型を比較しているため、
+// コメントアウトを外すとコンパイルエラー
+// comparing_list_size::lt_v&lt;list1, int&gt;;
+// tump::eval&lt;comparing_list_size::gt, void, list5&gt;::value;
+
+int main() {}
+</code></pre>
+
+<h2 id="関連リンク">関連リンク</h2>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invocable.html"><code>tump::InvocableArgN</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/to_true.html"><code>tump::to_true</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/vwrap.html"><code>tump::vwrap</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a></li>
+<li><code>tump::btree</code></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::is_type_list</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/len.html"><code>tump::len</code></a></li>
+<li><code>tump::to_btree</code></li>
+</ul>
 
             </article>
             <aside id="table_of_contents" class="table-of-contents">
@@ -391,14 +526,26 @@
                         </li>
                     
                         <li>
-                            <a href="#%e9%a0%85%e7%9b%ae%e4%b8%80%e8%a6%a7%0d">
-                                項目一覧
+                            <a href="#%e4%b8%89%e6%96%b9%e6%af%94%e8%bc%83%e3%81%ae%e3%83%a1%e3%82%bf%e9%96%a2%e6%95%b0%0d">
+                                三方比較のメタ関数
                             </a>
                         </li>
                     
                         <li>
-                            <a href="#%e5%90%8d%e5%89%8d%e7%a9%ba%e9%96%93%0d">
-                                名前空間
+                            <a href="#%e6%af%94%e8%bc%83%e5%8f%af%e8%83%bd%e3%81%aa%e5%9e%8b%e3%81%ae%e5%88%b6%e7%b4%84%0d">
+                                比較可能な型の制約
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#%e4%be%8b%0d">
+                                例
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#%e9%96%a2%e9%80%a3%e3%83%aa%e3%83%b3%e3%82%af%0d">
+                                関連リンク
                             </a>
                         </li>
                     
