@@ -44,12 +44,12 @@ namespace tump
     /**
      * メモリ上のサイズが最大の型を取得
     */
-    using mp_size_max = partial_apply<flip, mp_max, compare_size>;
+    using mp_size_max = partial_apply<flip, mp_max, comparing_size>;
 
     /**
      * メモリ上のサイズが最小の型を取得
     */
-    using mp_size_min = partial_apply<flip, mp_min, compare_size>;
+    using mp_size_min = partial_apply<flip, mp_min, comparing_size>;
 
     /**
      * 最大と判定される型を取得する
