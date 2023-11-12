@@ -1,5 +1,5 @@
 ---
-title: mp_min - TumpCpp リファレンス
+title: mp_max - TumpCpp リファレンス
 ---
 
 ```cpp
@@ -8,18 +8,18 @@ namespace tump {
         // 大元のメタ関数定義
         template <TypeList List, class Comparing = comparing_size>
         requires (len_v<List> > 1)
-        struct mp_min {};
+        struct mp_max {};
     }
 
     // 第一級関数化
-    using mp_min = cbk<fn::mp_min, 2>;
+    using mp_max = cbk<fn::mp_max, 2>;
 
     // 第一級関数化した際にデフォルト引数を使えないため、そのための定義
-    using mp_size_min = partial_apply<flip, mp_min, comparing_size>;
+    using mp_size_max = partial_apply<flip, mp_max, comparing_size>;
 
     // 定数メンバ value 呼び出し省略のエイリアステンプレート
     template <TypeList List, class Comparing = comparing_size>
-    using mp_min_t = typename fn::mp_min<List, Comparing>::type;
+    using mp_max_t = typename fn::mp_max<List, Comparing>::type;
 }
 ```
 
@@ -30,10 +30,10 @@ namespace tump {
 
 ## 概要
 
-`tump::mp_min`は、テンプレートパラメータ`List`が保持するパラメータパックのうち、最も小さいと判定される型を返すメタ関数です。  
+`tump::mp_max`は、テンプレートパラメータ`List`が保持するパラメータパックのうち、最も大きいと判定される型を返すメタ関数です。  
 テンプレートパラメータ`Comparing`に対して、[{`tump::comparing_type`|ref/metafunction/comparing_type}]で作成した、型の比較クラスを指定することで、任意の基準で大小比較を行うことが可能です。
 
-デフォルトでは、パラメータ`Comparing`に`tump::comparing_size`が指定されており、パラメータ`List`のみでも`tump::mp_min`を使用することができます。  
+デフォルトでは、パラメータ`Comparing`に`tump::comparing_size`が指定されており、パラメータ`List`のみでも`tump::mp_max`を使用することができます。  
 パラメータ`Comparing`に`tump::comparing_size`が指定されている場合は、該当の型を`sizeof`した結果の大小により比較を行います。
 
 なお、`List`に指定した型は、2 つ以上の要素を持っていない場合、制約によりコンパイルエラーとなります。
@@ -46,12 +46,12 @@ namespace tump {
 
 using list1 = tump::list<std::int16_t, std::int64_t, std::int8_t, std::int32_t>;
 
-// デフォルトの比較基準による mp_min の利用例
-static_assert(std::is_same_v<tump::mp_min_t<list1>, std::int8_t> == true);
-static_assert(tump::eval<tump::mp_size_min, list1, tump::_eq, std::int8_t>::value == true);
+// デフォルトの比較基準による mp_max の利用例
+static_assert(std::is_same_v<tump::mp_max_t<list1>, std::int64_t> == true);
+static_assert(tump::eval<tump::mp_size_max, list1, tump::_eq, std::int64_t>::value == true);
 
 // ユーザー指定の評価基準を指定する例
-// 最もパラメータパックが少ないものを取り出す
+// 最もパラメータパックが多いものを取り出す
 
 template <class L, class R>
 struct compare_list_size : public tump::vwrap<
@@ -64,8 +64,8 @@ using comparing_list_size = tump::comparing_type<
 >;
 
 template <tump::TypeList Lists>
-using get_min_list_impl = tump::fn::mp_min<Lists, comparing_list_size>;
-using get_min_list = tump::cbk<get_min_list_impl, 1>;
+using get_max_list_impl = tump::fn::mp_max<Lists, comparing_list_size>;
+using get_max_list = tump::cbk<get_max_list_impl, 1>;
 
 using list2 = tump::list<
     tump::list<int, float>,
@@ -74,7 +74,7 @@ using list2 = tump::list<
     std::tuple<int>
 >;
 
-static_assert(tump::eval<get_min_list, list2, tump::_eq, tump::list<>>::value == true);
+static_assert(tump::eval<get_max_list, list2, tump::_eq, std::tuple<int, float, char>>::value == true);
 
 int main() {}
 ```

@@ -98,6 +98,8 @@
                 - [{get_front|ref/container/method/get_front}]
                 - [{get_back|ref/container/method/get_back}]
                 - [{is_unique|ref/container/method/is_unique}]
+            - 操作用メタ関数
+                - [{make_empty|ref/container/method/make_empty}]
         - [{btree|ref/container/btree}]
             - 情報取得用メタ関数・概念
                 - [{is_empty|ref/container/method/is_empty}]
@@ -118,6 +120,7 @@
                 - [{get_min|ref/container/method/get_min}]
                 - [{get_max|ref/container/method/get_max}]
             - 操作用メタ関数
+                - [{make_empty|ref/container/method/make_empty}]
                 - [{push|ref/container/method/btree_push}]
                 - [{pop_min|ref/container/method/pop_min}]
                 - [{pop_max|ref/container/method/pop_max}]

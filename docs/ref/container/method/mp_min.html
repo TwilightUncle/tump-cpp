@@ -169,14 +169,14 @@
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/index_of_if.html">index_of_if</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_unique.html">is_unique</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/mp_min.html">mp_min</a></li>
-<li>mp_max</li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/mp_max.html">mp_max</a></li>
 </ul></li>
 <li>操作用メタ関数
 
 <ul>
-<li>make_empty</li>
-<li>make_type_list</li>
-<li>fill</li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/make_empty.html">make_empty</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/make_type_list.html">make_type_list</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/fill.html">fill</a></li>
 <li>concat</li>
 <li>copy</li>
 <li>filter</li>
@@ -227,6 +227,11 @@
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/get_back.html">get_back</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_unique.html">is_unique</a></li>
 </ul></li>
+<li>操作用メタ関数
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/make_empty.html">make_empty</a></li>
+</ul></li>
 </ul></li>
 <li>btree
 
@@ -258,6 +263,7 @@
 <li>操作用メタ関数
 
 <ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/make_empty.html">make_empty</a></li>
 <li>push</li>
 <li>pop_min</li>
 <li>pop_max</li>
@@ -292,63 +298,76 @@
                 <pre><code class="language-cpp">namespace tump {
     namespace fn {
         // 大元のメタ関数定義
-        template &lt;TypeList List&gt;
-        requires (!is_empty_v&lt;List&gt;)
-        using mp_min = ...;
+        template &lt;TypeList List, class Comparing = comparing_size&gt;
+        requires (len_v&lt;List&gt; &gt; 1)
+        struct mp_min {};
     }
 
     // 第一級関数化
-    using get_front = cbk&lt;fn::get_front, 1&gt;;
+    using mp_min = cbk&lt;fn::mp_min, 2&gt;;
+
+    // 第一級関数化した際にデフォルト引数を使えないため、そのための定義
+    using mp_size_min = partial_apply&lt;flip, mp_min, comparing_size&gt;;
 
     // 定数メンバ value 呼び出し省略のエイリアステンプレート
-    template &lt;TypeListOrValueList List&gt;
-    using get_front_t = typename fn::get_front&lt;List&gt;::type;
-    
-    // 定数メンバ value 呼び出し省略のエイリアステンプレート
-    template &lt;TypeListOrValueList List&gt;
-    constexpr auto get_front_v = fn::get_front&lt;List&gt;::value;
+    template &lt;TypeList List, class Comparing = comparing_size&gt;
+    using mp_min_t = typename fn::mp_min&lt;List, Comparing&gt;::type;
 }
 </code></pre>
 
 <h3 id="パラメータ">パラメータ</h3>
 
 <ul>
-<li>List - <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_t_or_v_list.html"><code>tump::TypeListOrValueList</code></a>で真と判定される型</li>
+<li>List - <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::TypeList</code></a>で真と判定される型</li>
+<li>Comparing - <a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/comparing_type.html"><code>tump::comparing_type</code></a>で作成した、型の比較クラス</li>
 </ul>
 
 <h2 id="概要">概要</h2>
 
-<p><code>tump::get_front</code>は、テンプレートパラメータ<code>List</code>が保持するパラメータパックのうち、先頭要素を取得するメタ関数です。</p>
+<p><code>tump::mp_min</code>は、テンプレートパラメータ<code>List</code>が保持するパラメータパックのうち、最も小さいと判定される型を返すメタ関数です。<br />
+テンプレートパラメータ<code>Comparing</code>に対して、<a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/comparing_type.html"><code>tump::comparing_type</code></a>で作成した、型の比較クラスを指定することで、任意の基準で大小比較を行うことが可能です。</p>
 
-<p>パラメータ<code>List</code>には、型テンプレートパラメータパックを持つ任意の型または、<code>tump::vlist</code>を指定することができます。</p>
+<p>デフォルトでは、パラメータ<code>Comparing</code>に<code>tump::comparing_size</code>が指定されており、パラメータ<code>List</code>のみでも<code>tump::mp_min</code>を使用することができます。<br />
+パラメータ<code>Comparing</code>に<code>tump::comparing_size</code>が指定されている場合は、該当の型を<code>sizeof</code>した結果の大小により比較を行います。</p>
 
-<p>なお、<code>List</code>に空のリストを渡した場合は、制約によりコンパイルエラーとなります。</p>
+<p>なお、<code>List</code>に指定した型は、2 つ以上の要素を持っていない場合、制約によりコンパイルエラーとなります。</p>
 
 <h2 id="例">例</h2>
 
 <pre><code class="language-cpp">#include &lt;tuple&gt;
-#include &lt;vector&gt;
 #include &lt;tump.hpp&gt;
 
-class A {};
+using list1 = tump::list&lt;std::int16_t, std::int64_t, std::int8_t, std::int32_t&gt;;
 
-using list1 = tump::list&lt;int, float, void, std::vector&lt;int&gt;, char&gt;;
-using list2 = std::tuple&lt;int, float, A, std::vector&lt;int&gt;, double&gt;;
-using list3 = tump::vlist&lt;int(1), long(2), char(3)&gt;;
-using list4 = tump::make_empty_t&lt;std::tuple&lt;int&gt;&gt;;
-using list5 = tump::vlist&lt;&gt;;
-using list6 = tump::to_btree_t&lt;list1&gt;;
+// デフォルトの比較基準による mp_min の利用例
+static_assert(std::is_same_v&lt;tump::mp_min_t&lt;list1&gt;, std::int8_t&gt; == true);
+static_assert(tump::eval&lt;tump::mp_size_min, list1, tump::_eq, std::int8_t&gt;::value == true);
 
-static_assert(std::is_same_v&lt;tump::get_front_t&lt;list1&gt;, int&gt; == true);
-static_assert(tump::get_front_v&lt;list3&gt; == int(1));
-static_assert(tump::eval&lt;tump::get_front, list2, tump::_eq, int&gt;::value == true);
-static_assert(tump::eval&lt;tump::get_front, list3&gt;::value == int(1));
-static_assert(tump::eval&lt;tump::get_front, list6, tump::_eq, void&gt;::value == true);
+// ユーザー指定の評価基準を指定する例
+// 最もパラメータパックが少ないものを取り出す
 
-// 下記は空のリストを指定しているため、
-// コメントアウトを外すとコンパイルエラー。
-// tump::get_front_t&lt;list4&gt;;
-// tump::eval&lt;tump::get_front, list5&gt;::value;
+template &lt;class L, class R&gt;
+struct compare_list_size : public tump::vwrap&lt;
+    int(tump::len_v&lt;L&gt;) - int(tump::len_v&lt;R&gt;)
+&gt; {};
+
+using comparing_list_size = tump::comparing_type&lt;
+    tump::cbk&lt;compare_list_size, 2&gt;,
+    tump::is_type_list
+&gt;;
+
+template &lt;tump::TypeList Lists&gt;
+using get_min_list_impl = tump::fn::mp_min&lt;Lists, comparing_list_size&gt;;
+using get_min_list = tump::cbk&lt;get_min_list_impl, 1&gt;;
+
+using list2 = tump::list&lt;
+    tump::list&lt;int, float&gt;,
+    tump::list&lt;&gt;,
+    std::tuple&lt;int, float, char&gt;,
+    std::tuple&lt;int&gt;
+&gt;;
+
+static_assert(tump::eval&lt;get_min_list, list2, tump::_eq, tump::list&lt;&gt;&gt;::value == true);
 
 int main() {}
 </code></pre>
@@ -357,12 +376,12 @@ int main() {}
 
 <ul>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::TypeListOrValueList</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::TypeList</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/vwrap.html"><code>tump::vwrap</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/comparing_type.html"><code>tump::comparing_type</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/comparing_type.html"><code>tump::comparing_size</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/len.html"><code>tump::len</code></a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a></li>
-<li><code>tump::vlist</code></li>
-<li><code>tump::btree</code></li>
-<li><code>tump::make_empty</code></li>
-<li><code>tump::to_btree</code></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/compare.html"><code>tump::_eq</code></a></li>
 </ul>
 

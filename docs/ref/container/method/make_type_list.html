@@ -16,7 +16,7 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/style.css">
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/vendor/prism.css">
-        <title>リスト要素の含有判定 - TumpCpp リファレンス</title>
+        <title>make_type_list - TumpCpp リファレンス</title>
     </head>
     <body>
         <header id="header">
@@ -43,8 +43,8 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/ref/operator.html">
-                            operator
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/container.html">
+                            container
                         </a>
                     </li>
                     
@@ -52,8 +52,17 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/ref/operator/elem.html">
-                            elem
+                        
+                            method
+                        
+                    </li>
+                    
+                
+                    
+                    <li class="delimiter">></li>
+                    <li>
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/make_type_list.html">
+                            make_type_list
                         </a>
                     </li>
                     
@@ -283,54 +292,58 @@
 
             </aside>
             <article>
-                <h1>リスト要素の含有判定 - TumpCpp リファレンス</h1>
+                <h1>make_type_list - TumpCpp リファレンス</h1>
                 <p></p>
 
                 <pre><code class="language-cpp">namespace tump {
-    using _elem = _op&lt;exists, e_op_priority::_4&gt;;
-    using _not_elem = _op&lt;not_exists, e_op_priority::_4&gt;;
+    namespace fn {
+        // 大元のメタ関数定義
+        template &lt;TypeList List, class... Types&gt;
+        struct make_type_list {};
+    }
+
+    // 第一級関数化
+    template &lt;unsigned int ArgsSize = 2&gt;
+    requires (ArgsSize &gt; 0)
+    using make_type_list = cbk&lt;fn::make_type_list, ArgsSize&gt;;
+
+    // 定数メンバ type 呼び出し省略のエイリアステンプレート
+    template &lt;TypeList List, class... Types&gt;
+    using make_type_list_t = typename fn::make_type_list&lt;List, Types...&gt;::type;
 }
 </code></pre>
 
-<h3 id="_elem">_elem</h3>
+<h3 id="パラメータ">パラメータ</h3>
 
 <ul>
-<li>結合性 : 非結合</li>
-<li>優先度 : 4</li>
-<li>左オペランド : 任意の型</li>
-<li>右オペランド : 型のパラメータパックを持つテンプレート型</li>
-<li>機能 : 左ぺランドの型が右オペランドのパラメータパックに含まれるか判定</li>
-</ul>
-
-<h3 id="_not_elem">_not_elem</h3>
-
-<ul>
-<li>結合性 : 非結合</li>
-<li>優先度 : 4</li>
-<li>左オペランド : 任意の型</li>
-<li>右オペランド : 型のパラメータパックを持つテンプレート型</li>
-<li>機能 : 左ぺランドの型が右オペランドのパラメータパックに含まれないか判定</li>
+<li>List - <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::TypeList</code></a>で真と判定される型</li>
+<li>Types - 任意数の型のテンプレートパラメータパック</li>
 </ul>
 
 <h2 id="概要">概要</h2>
 
-<p><code>tump::_elem</code>は、 左ぺランドの型が右オペランドのパラメータパックに含まれるか判定する演算子です。<br />
-<code>tump::_not_elem</code>は、<code>tump::_elem</code>と同様のオペランドをとりますが、反対の結果になります。</p>
+<p><code>tump::make_type_list</code>は、引数<code>List</code>が持つ要素を、テンプレートパラメータパック<code>Types</code>で置き換えます。</p>
 
 <h2 id="例">例</h2>
 
 <pre><code class="language-cpp">#include &lt;tuple&gt;
 #include &lt;tump.hpp&gt;
 
-static_assert(tump::eval&lt;int, tump::_elem, tump::list&lt;float, int, void, double&gt;&gt;::value == true);
-static_assert(tump::eval&lt;int, tump::_elem, tump::list&lt;float, char, void, double&gt;&gt;::value == false);
-static_assert(tump::eval&lt;int, tump::_elem, std::tuple&lt;float, int, void, double&gt;&gt;::value == true);
-static_assert(tump::eval&lt;int, tump::_elem, std::tuple&lt;float, char, void, double&gt;&gt;::value == false);
+using list1 = tump::list&lt;int, float, char&gt;;
+using list2 = tump::make_empty_t&lt;std::tuple&lt;int, float, char&gt;&gt;;
 
-static_assert(tump::eval&lt;int, tump::_not_elem, tump::list&lt;float, int, void, double&gt;&gt;::value == false);
-static_assert(tump::eval&lt;int, tump::_not_elem, tump::list&lt;float, char, void, double&gt;&gt;::value == true);
-static_assert(tump::eval&lt;int, tump::_not_elem, std::tuple&lt;float, int, void, double&gt;&gt;::value == false);
-static_assert(tump::eval&lt;int, tump::_not_elem, std::tuple&lt;float, char, void, double&gt;&gt;::value == true);
+static_assert(std::is_same_v&lt;
+    tump::make_type_list_t&lt;list1, float, void, double&gt;,
+    tump::list&lt;float, void, double&gt;
+&gt; == true);
+
+static_assert(tump::eval&lt;
+    tump::make_type_list&lt;4&gt;,
+    list2,
+    double, std::size_t, long long,
+    tump::_eq,
+    std::tuple&lt;double, std::size_t, long long&gt;
+&gt;::value == true);
 
 int main() {}
 </code></pre>
@@ -339,10 +352,11 @@ int main() {}
 
 <ul>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/op.html"><code>tump::_op</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::TypeList</code></a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/exists.html"><code>tump::exists</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/exists.html"><code>tump::not_exists</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_empty.html"><code>tump::is_empty</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/make_empty.html"><code>tump::make_empty</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/compare.html"><code>tump::_eq</code></a></li>
 </ul>
 
             </article>

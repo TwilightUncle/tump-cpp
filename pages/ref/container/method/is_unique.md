@@ -63,6 +63,7 @@ int main() {}
 ## 関連リンク
 
 - [{`tump::eval`|ref/expression/exp}]
+- [{`tump::TypeListOrValueList`|ref/container/method/is_t_or_v_list}]
 - [{`tump::list`|ref/container/list}]
 - [{`tump::vlist`|ref/container/vlist}]
 - [{`tump::btree`|ref/container/btree}]
