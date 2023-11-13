@@ -47,15 +47,15 @@ namespace tump
             struct exp_n_impl;
 
             // foldl用
-            template <class Priority, TypeList List, class Cur>
-            struct exp_n_impl<list<List, Priority>, Cur> : public std::type_identity<list<
-                typename exp_2<Priority, List, Cur>::type,
-                Priority
+            template <e_op_priority Priority, TypeList List, class Cur>
+            struct exp_n_impl<list<List, vwrap<Priority>>, Cur> : public std::type_identity<list<
+                typename exp_2<vwrap<Priority>, List, Cur>::type,
+                vwrap<Priority>
             >> {};
 
             // foldr用
-            template <class Priority, TypeList List, class Cur>
-            struct exp_n_impl<Cur, list<List, Priority>> : public exp_n_impl<list<List, Priority>, Cur> {};
+            template <e_op_priority Priority, TypeList List, class Cur>
+            struct exp_n_impl<Cur, list<List, vwrap<Priority>>> : public exp_n_impl<list<List, vwrap<Priority>>, Cur> {};
 
             // 優先度毎の式の実装
             // 演算子の結合性による処理の方向切り替えもここで行う
