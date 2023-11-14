@@ -6,7 +6,7 @@ title: filter - TumpCpp リファレンス
 namespace tump {
     namespace fn {
         // 大元のメタ関数定義
-        template <InvocableArgN<1> F, TypeList List>
+        template <InvocableArgN<1> Pred, TypeList List>
         using filter = ...;
     }
 
@@ -14,8 +14,8 @@ namespace tump {
     using filter = cbk<fn::filter, 2>;
 
     // メンバ型 type 呼び出し省略のエイリアステンプレート
-    template <InvocableArgN<1> F, TypeList List>
-    using filter_t = typename fn::filter<F, List>::type;
+    template <InvocableArgN<1> Pred, TypeList List>
+    using filter_t = typename fn::filter<Pred, List>::type;
 }
 ```
 
