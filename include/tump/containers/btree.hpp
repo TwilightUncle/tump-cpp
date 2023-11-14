@@ -271,6 +271,11 @@ namespace tump
     using to_btree = cbk<fn::to_btree, 2>;
 
     /**
+     * sizeof した時の値を基準としたバイナリツリーにリストを変換する
+    */
+    using to_size_btree = partial_apply<flip, to_btree, comparing_size>;
+
+    /**
      * リストをバイナリツリーに変換
     */
     template <TypeList List, TumpComparing Comparing = comparing_size>

@@ -14,6 +14,7 @@ namespace tump
         template <TypeList List, TumpComparing Comparing = comparing_size>
         struct sort : public invoke<
             compose_t<
+                partial_apply<::tump::unnorm_li, List>,
                 ::tump::flatten,
                 partial_apply<
                     ::tump::flip,
@@ -33,7 +34,7 @@ namespace tump
 
     /**
      * 型が占有するメモリのサイズにおける昇順でソート。
-s    */
+    */
     using sort_size = partial_apply<flip, sort, comparing_size>;
 
     /**

@@ -24,15 +24,14 @@ namespace tump
             template <class... ZipedElements, TypeList... Lists>
             requires (std::is_same_v<list<>, Lists> && ...)
             struct zip<list<ZipedElements...>, Lists...> : public std::type_identity<list<ZipedElements...>> {};
+        }
 
-            }
-
-            /**
-             * 2 つのリストから同じインデックスの型を 1 つずつ取り出し、ペアとした要素を持つリストを作成する
-            */
-            template <TypeList... Lists>
-            requires ((len_v<Lists> == ...) && sizeof...(Lists) >= 2)
-            using zip = impl::zip<list<>, Lists...>;
+        /**
+         * 2 つのリストから同じインデックスの型を 1 つずつ取り出し、ペアとした要素を持つリストを作成する
+        */
+        template <TypeList... Lists>
+        requires ((len_v<Lists> == ...) && sizeof...(Lists) >= 2)
+        using zip = impl::zip<list<>, Lists...>;
     }
 
     /**
