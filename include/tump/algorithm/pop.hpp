@@ -1,6 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_POP_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_POP_HPP
 
+#include TUMP_COMMON_INCLUDE(algorithm/get.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/push.hpp)
 
 namespace tump
