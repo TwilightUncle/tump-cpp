@@ -6,7 +6,7 @@ title: mp_min - TumpCpp リファレンス
 namespace tump {
     namespace fn {
         // 大元のメタ関数定義
-        template <TypeList List, class Comparing = comparing_size>
+        template <TypeListOrValueList List, class Comparing = comparing_size>
         requires (len_v<List> > 1)
         struct mp_min {};
     }
@@ -18,14 +18,18 @@ namespace tump {
     using mp_size_min = partial_apply<flip, mp_min, comparing_size>;
 
     // 定数メンバ value 呼び出し省略のエイリアステンプレート
-    template <TypeList List, class Comparing = comparing_size>
+    template <TypeListOrValueList List, class Comparing = comparing_size>
     using mp_min_t = typename fn::mp_min<List, Comparing>::type;
+
+    // 定数メンバ value 呼び出し省略のエイリアステンプレート
+    template <TypeListOrValueList List, class Comparing = comparing_size>
+    constexpr auto mp_max_v = fn::mp_max<N, List>::value;
 }
 ```
 
 ### パラメータ
 
-- List - [{`tump::TypeList`|ref/container/method/is_type_list}]で真と判定される型
+- List - [{`tump::TypeListOrValueList`|ref/container/method/is_t_or_v_list}]で真と判定される型
 - Comparing - [{`tump::comparing_type`|ref/metafunction/comparing_type}]で作成した、型の比較クラス
 
 ## 概要
@@ -45,10 +49,14 @@ namespace tump {
 #include <tump.hpp>
 
 using list1 = tump::list<std::int16_t, std::int64_t, std::int8_t, std::int32_t>;
+using list2 = tump::vlist<int(1), std::uint16_t(5), char(-3), std::int64_t(-2)>;
 
 // デフォルトの比較基準による mp_min の利用例
 static_assert(std::is_same_v<tump::mp_min_t<list1>, std::int8_t> == true);
 static_assert(tump::eval<tump::mp_size_min, list1, tump::_eq, std::int8_t>::value == true);
+
+// 最小値を取得
+static_assert(tump::mp_min_v<list2, tump::comparing_value_member> == char(-3));
 
 // ユーザー指定の評価基準を指定する例
 // 最もパラメータパックが少ないものを取り出す
@@ -67,14 +75,14 @@ template <tump::TypeList Lists>
 using get_min_list_impl = tump::fn::mp_min<Lists, comparing_list_size>;
 using get_min_list = tump::cbk<get_min_list_impl, 1>;
 
-using list2 = tump::list<
+using list3 = tump::list<
     tump::list<int, float>,
     tump::list<>,
     std::tuple<int, float, char>,
     std::tuple<int>
 >;
 
-static_assert(tump::eval<get_min_list, list2, tump::_eq, tump::list<>>::value == true);
+static_assert(tump::eval<get_min_list, list3, tump::_eq, tump::list<>>::value == true);
 
 int main() {}
 ```
@@ -82,10 +90,11 @@ int main() {}
 ## 関連リンク
 
 - [{`tump::eval`|ref/expression/exp}]
-- [{`tump::TypeList`|ref/container/method/is_type_list}]
+- [{`tump::TypeListOrValueList`|ref/container/method/is_t_or_v_list}]
 - [{`tump::vwrap`|ref/metafunction/vwrap}]
 - [{`tump::comparing_type`|ref/metafunction/comparing_type}]
 - [{`tump::comparing_size`|ref/metafunction/comparing_type}]
 - [{`tump::len`|ref/container/method/len}]
 - [{`tump::list`|ref/container/list}]
+- [{`tump::vlist`|ref/container/vlist}]
 - [{`tump::_eq`|ref/operator/compare}]

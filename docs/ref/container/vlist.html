@@ -16,7 +16,7 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/style.css">
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/vendor/prism.css">
-        <title>remove_if - TumpCpp リファレンス</title>
+        <title>list - TumpCpp リファレンス</title>
     </head>
     <body>
         <header id="header">
@@ -52,17 +52,8 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        
-                            method
-                        
-                    </li>
-                    
-                
-                    
-                    <li class="delimiter">></li>
-                    <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/remove_if.html">
-                            remove_if
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/container/vlist.html">
+                            vlist
                         </a>
                     </li>
                     
@@ -269,83 +260,144 @@
 
             </aside>
             <article>
-                <h1>remove_if - TumpCpp リファレンス</h1>
+                <h1>list - TumpCpp リファレンス</h1>
                 <p></p>
 
                 <pre><code class="language-cpp">namespace tump {
-    namespace fn {
-        // 大元のメタ関数定義
-        template &lt;InvocableArgN&lt;1&gt; Pred, TypeList List&gt;
-        using remove_if = ...;
-    }
-
-    // 第一級関数化
-    using remove_if = cbk&lt;fn::remove_if, 2&gt;;
-
-    // メンバ型 type 呼び出し省略のエイリアステンプレート
-    template &lt;InvocableArgN&lt;1&gt; Pred, TypeList List&gt;
-    using remove_if_t = typename fn::remove_if&lt;Pred, List&gt;::type;
+    template &lt;auto... Values&gt;
+    struct vlist {};
 }
 </code></pre>
 
-<h3 id="パラメータ">パラメータ</h3>
-
-<ul>
-<li>Pred - <a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invocable.html"><code>tump::InvocableArgN&lt;1&gt;</code></a>で真と判定されるメタ関数</li>
-<li>List - <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::TypeList</code></a>で真と判定される型のリスト</li>
-</ul>
-
 <h2 id="概要">概要</h2>
 
-<p><code>tump::remove_if</code>は、テンプレートパラメータ<code>List</code>が保持するパラメータパックのうち、テンプレートパラメータ<code>Pred</code>のメタ関数を適用した結果、真と判定されるような型を全て除去するメタ関数です。</p>
+<p>型のテンプレートパラメータパック<code>Values</code>に指定した、任意の数の非型パラメータ(値)を要素として保持します。</p>
 
-<h2 id="例">例</h2>
+<h2 id="使い方">使い方</h2>
 
-<pre><code class="language-cpp">#include &lt;tuple&gt;
-#include &lt;vector&gt;
-#include &lt;tump.hpp&gt;
+<p><code>tump::vlist</code>は複数の非型パラメータをまとめて扱ったり、一括で処理を適用したい場合に使います。<br />
+非型パラメータを保持しながらも、型であるため、テンプレートメタプログラミングにおけるタプルとして使用します。</p>
 
-class A {};
+<p><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a>と一部のメタ関数を共有しており、<a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_t_or_v_list.html"><code>tump::TypeListOrValueList</code></a>の制約の場所で使用することができます。<br />
+<a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::TypeList</code></a>の制約の場所では、<code>tump::vlist</code>を使用できません。</p>
 
-using list1 = tump::list&lt;int, float, void, std::vector&lt;int&gt;, char&gt;;
-using list2 = std::tuple&lt;int, float, A, std::vector&lt;int&gt;, double&gt;;
+<h2 id="リスト用メタ関数・概念">リスト用メタ関数・概念</h2>
 
-static_assert(std::is_same_v&lt;
-    tump::remove_if_t&lt;tump::is_integral, list1&gt;,
-    tump::list&lt;float, void, std::vector&lt;int&gt;&gt;
-&gt; == true);
-static_assert(std::is_same_v&lt;
-    tump::remove_if_t&lt;tump::is_floating_point, list2&gt;,
-    std::tuple&lt;int, A, std::vector&lt;int&gt;&gt;
-&gt; == true);
+<p><code>tump::vlist</code>および、型テンプレートパラメータを持つ、任意のテンプレート型に対して使用するためのメタ関数の一覧です。</p>
 
-static_assert(tump::eval&lt;
-    tump::remove_if, tump::is_void, list1,
-    tump::_eq,
-    tump::list&lt;int, float, std::vector&lt;int&gt;, char&gt;
-&gt;::value == true);
-static_assert(tump::eval&lt;
-    tump::remove_if, tump::is_arithmetic, list2,
-    tump::_eq,
-    std::tuple&lt;A, std::vector&lt;int&gt;&gt;
-&gt;::value == true);
+<h3 id="情報取得">情報取得</h3>
 
-int main() {}
-</code></pre>
+<table>
+<thead>
+<tr>
+<th>メタ関数・概念の名称</th>
+<th>説明</th>
+</tr>
+</thead>
 
-<h2 id="関連リンク">関連リンク</h2>
+<tbody>
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_empty.html"><code>tump::is_empty</code></a></td>
+<td>リストが空か判定します。</td>
+</tr>
 
-<ul>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/invocable/invocable.html"><code>tump::InvocableArgN</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::TypeList</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/compare.html"><code>tump::_eq</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/std.html"><code>tump::is_integral</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/std.html"><code>tump::is_floating_point</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/std.html"><code>tump::is_void</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/std.html"><code>tump::is_arithmetic</code></a></li>
-</ul>
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_t_or_v_list.html"><code>tump::TypeListOrValueList</code></a></td>
+<td>型または、値のリストとして利用できるテンプレート型かどうか判定します。</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/len.html"><code>tump::len</code></a></td>
+<td>リストの長さを取得します。</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="要素アクセス">要素アクセス</h3>
+
+<table>
+<thead>
+<tr>
+<th>メタ関数の名称</th>
+<th>説明</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/get.html"><code>tump::get</code></a></td>
+<td>リスト要素のうち、指定の位置の型を取得します。</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/get_front.html"><code>tump::get_front</code></a></td>
+<td>リスト要素の先頭の型を取得します。</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/get_back.html"><code>tump::get_back</code></a></td>
+<td>リスト要素の最後尾の型を取得します。</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_unique.html"><code>tump::is_unique</code></a></td>
+<td>リストの要素の、重複の有無を判定します。</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/mp_min.html"><code>tump::mp_min</code></a></td>
+<td>リストの要素のうち、最小と判定される型を取得します。</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/mp_max.html"><code>tump::mp_max</code></a></td>
+<td>リストの要素のうち、最大と判定される型を取得します。</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="リスト操作">リスト操作</h3>
+
+<table>
+<thead>
+<tr>
+<th>メタ関数の名称</th>
+<th>説明</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/make_empty.html"><code>tump::make_empty</code></a></td>
+<td>空のリストを作成します。</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/fill.html"><code>tump::fill</code></a></td>
+<td>全て同じ要素で埋めた状態の、新しいリストを作成します。</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/concat.html"><code>tump::concat</code></a></td>
+<td>複数のリストを結合します。</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/reverse.html"><code>tump::reverse</code></a></td>
+<td>リストの要素の並びを反転します。</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/slice.html"><code>tump::slice</code></a></td>
+<td>リストの指定の範囲を切り出します。</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/unique.html"><code>tump::unique</code></a></td>
+<td>リストの重複している要素を削除します。</td>
+</tr>
+</tbody>
+</table>
 
             </article>
             <aside id="table_of_contents" class="table-of-contents">
@@ -359,14 +411,14 @@ int main() {}
                         </li>
                     
                         <li>
-                            <a href="#%e4%be%8b%0d">
-                                例
+                            <a href="#%e4%bd%bf%e3%81%84%e6%96%b9%0d">
+                                使い方
                             </a>
                         </li>
                     
                         <li>
-                            <a href="#%e9%96%a2%e9%80%a3%e3%83%aa%e3%83%b3%e3%82%af%0d">
-                                関連リンク
+                            <a href="#%e3%83%aa%e3%82%b9%e3%83%88%e7%94%a8%e3%83%a1%e3%82%bf%e9%96%a2%e6%95%b0%e3%83%bb%e6%a6%82%e5%bf%b5%0d">
+                                リスト用メタ関数・概念
                             </a>
                         </li>
                     
