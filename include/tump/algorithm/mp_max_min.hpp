@@ -11,7 +11,7 @@ namespace tump
         /**
          * 最大と判定される型を取得する
         */
-        template <TypeList List, TumpComparing Comparing = comparing_size>
+        template <TypeListOrValueList List, TumpComparing Comparing = comparing_size>
         requires (len_v<List> > 1)
         struct mp_max : public foldl<
             typename Comparing::get_grater,
@@ -19,16 +19,22 @@ namespace tump
             pop_front_t<List>
         > {};
 
+        template <template <auto...> class Outer, auto... Values, TumpComparing Comparing>
+        struct mp_max<Outer<Values...>, Comparing> : public mp_max<to_norm_li_t<Outer<Values...>>, Comparing>::type {};
+
         /**
          * 最小と判定される型を取得する
         */
-        template <TypeList List, TumpComparing Comparing = comparing_size>
+        template <TypeListOrValueList List, TumpComparing Comparing = comparing_size>
         requires (len_v<List> > 1)
         struct mp_min : public foldl<
             typename Comparing::get_less,
             get_front_t<List>,
             pop_front_t<List>
         > {};
+
+        template <template <auto...> class Outer, auto... Values, TumpComparing Comparing>
+        struct mp_min<Outer<Values...>, Comparing> : public mp_min<to_norm_li_t<Outer<Values...>>, Comparing>::type {};
     }
 
     /**
@@ -54,14 +60,26 @@ namespace tump
     /**
      * 最大と判定される型を取得する
     */
-    template <TypeList List, TumpComparing Comparing = comparing_size>
+    template <TypeListOrValueList List, TumpComparing Comparing = comparing_size>
     using mp_max_t = typename fn::mp_max<List, Comparing>::type;
 
     /**
      * 最小と判定される型を取得する
     */
-    template <TypeList List, TumpComparing Comparing = comparing_size>
+    template <TypeListOrValueList List, TumpComparing Comparing = comparing_size>
     using mp_min_t = typename fn::mp_min<List, Comparing>::type;
+
+    /**
+     * 最大と判定される値を取得する
+    */
+    template <TypeListOrValueList List, TumpComparing Comparing = comparing_size>
+    constexpr auto mp_max_v = fn::mp_max<List, Comparing>::value;
+    
+    /**
+     * 最小と判定される値を取得する
+    */
+    template <TypeListOrValueList List, TumpComparing Comparing = comparing_size>
+    constexpr auto mp_min_v = fn::mp_min<List, Comparing>::value;
 }
 
 #endif

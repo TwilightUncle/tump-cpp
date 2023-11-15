@@ -1,6 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_STD_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_METAFUNCTION_STD_HPP
 
+#include <concepts>
 #include TUMP_COMMON_INCLUDE(version.hpp)
 #include TUMP_COMMON_INCLUDE(metafunction/callback.hpp)
 
@@ -30,19 +31,50 @@ namespace tump
         */
         template <class T1, class T2>
         using is_not_same = typename std::negation<std::is_same<T1, T2>>::type;
+
+        // 標準ライブラリの concept からメタ関数生成
+
+        template <class T>
+        struct is_equality_comparable : public std::bool_constant<
+            std::equality_comparable<T>
+        > {};
+        template <class T1, class T2>
+        struct is_equality_comparable_with : public std::bool_constant<
+            std::equality_comparable_with<T1, T2>
+        > {};
+        template <class T>
+        struct is_totally_ordered : public std::bool_constant<
+            std::totally_ordered<T>
+        > {};
+        template <class T1, class T2>
+        struct is_totally_ordered_with : public std::bool_constant<
+            std::totally_ordered_with<T1, T2>
+        > {};
     }
 
-    /**
-     * scoped enum判定
-    */
+    // エイリアス宣言
+
     template <class T>
     constexpr auto is_scoped_enum_v = fn::is_scoped_enum<T>::value;
-
     template <class T1, class T2>
     constexpr auto is_not_same_v = fn::is_not_same<T1, T2>::value;
+    template <class T>
+    constexpr auto is_equality_comparable_v = fn::is_equality_comparable<T>::value;
+    template <class T1, class T2>
+    constexpr auto is_equality_comparable_with_v = fn::is_equality_comparable_with<T1, T2>::value;
+    template <class T>
+    constexpr auto is_totally_ordered_v = fn::is_totally_ordered<T>::value;
+    template <class T1, class T2>
+    constexpr auto is_totally_ordered_with_v = fn::is_totally_ordered_with<T1, T2>::value;
+
+    // コンセプト定義
 
     template <class T1, class T2>
     concept NotSameAs = is_not_same_v<T1, T2>;
+    template <class T>
+    concept Enumeration = std::is_enum_v<T>;
+    template <class T>
+    concept ScopedEnumeration = is_scoped_enum_v<T>;
 
     // -------------------------------------------------------------------
     // 標準ライブラリのメタ関数をあらかじめコールバック化
@@ -202,6 +234,11 @@ namespace tump
     // なんかいない
     // using is_pointer_interconvertible_with_class = cbk<std::is_pointer_interconvertible_with_class, 2>;
     // using is_corresponding_member = cbk<std::is_corresponding_member, 4>;
+
+    using is_equality_comparable        = cbk<fn::is_equality_comparable,       1>;
+    using is_equality_comparable_with   = cbk<fn::is_equality_comparable_with,  2>;
+    using is_totally_ordered            = cbk<fn::is_totally_ordered,           1>;
+    using is_totally_ordered_with       = cbk<fn::is_totally_ordered_with,      2>;
 }
 
 #endif

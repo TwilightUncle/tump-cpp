@@ -130,6 +130,20 @@ namespace tump
 
         template <>
         struct compare_size<void, void> : public vwrap<int(0)> {};
+
+        /**
+         * value メンバを持つ型同士での比較
+        */
+        template <VFunctional L, VFunctional R>
+        requires (std::totally_ordered_with<decltype(L::value), decltype(R::value)>)
+        struct compare_value_member : public vwrap<
+            L::value == R::value
+                ? int(0)
+                : (L::value < R::value
+                    ? int(-1)
+                    : int(1)
+                )
+        > {};
     }
 
     /**
@@ -158,6 +172,16 @@ namespace tump
      * size_of の 結果による比較
     */
     using comparing_size = comparing_type<compare_size>;
+
+    /**
+     * value メンバを持つもの同士での比較
+    */
+    using compare_value_member = cbk<fn::compare_value_member, 2>;
+
+    /**
+     * value メンバを持つもの同士での比較
+    */
+    using comparing_value_member = comparing_type<compare_value_member, tump::is_vfunctional>;
 }
 
 #endif

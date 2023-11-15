@@ -588,35 +588,46 @@ TEST(TumpAlgorithmTest, FillTest)
 {
     using list1 = tump::list<int, float>;
     using list2 = tump::empty<std::tuple>;
+    using list3 = tump::vlist<>;
 
     constexpr auto case1 = std::is_same_v<
         tump::fill_t<list1, tump::type_value<double, 4u>>,
         tump::list<double, double, double, double>
     >;
     constexpr auto case2 = std::is_same_v<
-        tump::fill_t<list2, tump::fill_arg<long, 3>>,
+        tump::fill_t<list2, tump::fill_type_arg<long, 3>>,
         std::tuple<long, long, long>
+    >;
+    constexpr auto case3 = std::is_same_v<
+        tump::fill_t<list3, tump::fill_value_arg<long(3), 3u>>,
+        tump::vlist<long(3), long(3), long(3)>
     >;
 
     ASSERT_TRUE(case1);
     ASSERT_TRUE(case2);
+    ASSERT_TRUE(case3);
 }
 
 TEST(TumpAlgorithmTest, MpMaxMinTest)
 {
     using list1 = tump::list<std::int32_t, std::uint64_t, std::int8_t, std::uint16_t>;
+    using list2 = tump::vlist<int(1), std::uint16_t(5), char(-3), std::int64_t(-2)>;
 
     constexpr auto case1 = std::is_same_v<
         tump::mp_max_t<list1>,
         std::uint64_t
     >;
-    constexpr auto case2 = std::is_same_v<
+    constexpr auto case2 = tump::mp_max_v<list2, tump::comparing_value_member>;
+    constexpr auto case3 = std::is_same_v<
         tump::mp_min_t<list1>,
         std::int8_t
     >;
+    constexpr auto case4 = tump::mp_min_v<list2, tump::comparing_value_member>;
 
     ASSERT_TRUE(case1);
-    ASSERT_TRUE(case2);
+    ASSERT_EQ(case2, std::uint16_t(5));
+    ASSERT_TRUE(case3);
+    ASSERT_EQ(case4, char(-3));
 }
 
 TEST(TumpAlgorithmTest, SortTest)

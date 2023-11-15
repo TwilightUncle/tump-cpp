@@ -36,6 +36,13 @@ namespace tump
 
         template <Invocable InnerF, class... Args1, class... Args2>
         struct invoke<partial_apply<InnerF, Args1...>, Args2...> : public invoke<InnerF, Args1..., Args2...> {};
+
+        template <class F>
+        struct is_vfunctional : public std::bool_constant<VFunctional<F>> {};
+        template <class F>
+        struct is_tfunctional : public std::bool_constant<TFunctional<F>> {};
+        template <class F>
+        struct is_functional : public std::disjunction<is_vfunctional<F>, is_tfunctional<F>> {};
     }
 
     /**
@@ -52,12 +59,23 @@ namespace tump
     requires TFunctional<fn::invoke<F, Args...>>
     using invoke_t = typename fn::invoke<F, Args...>::type;
 
+    using is_vfunctional = cbk<fn::is_vfunctional, 1>;
+    using is_tfunctional = cbk<fn::is_tfunctional, 1>;
+    using is_functional = cbk<fn::is_functional, 1>;
+
     /**
      * コールバック化したメタ関数を実行
     */
     template <Invocable F, class... Args>
     requires VFunctional<fn::invoke<F, Args...>>
     constexpr auto invoke_v = fn::invoke<F, Args...>::value;
+
+    template <class F>
+    constexpr auto is_vfunctional_v = fn::is_vfunctional<F>::value;
+    template <class F>
+    constexpr auto is_tfunctional_v = fn::is_tfunctional<F>::value;
+    template <class F>
+    constexpr auto is_functional_v = fn::is_functional<F>::value;
 
     namespace fn
     {
