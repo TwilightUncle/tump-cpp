@@ -59,6 +59,9 @@ namespace tump {
     
     // sizeof の結果による型の比較を行う
     using comparing_size = comparing_type<...>;
+
+    // 型の持つ value メンバを不等号で比較
+    using comparing_value_member = comparing_type<...>;
 }
 ```
 
@@ -86,7 +89,8 @@ namespace tump {
 | `get_grater` | 型`L`と`R`を比較し、大きいほうの型を返します。 |
 | `get_less` | 型`L`と`R`を比較し、小さいほうの型を返します。 |
 
-なお、`sizeof`による型の大きさの比較用に、`tump::comparing_type`を利用した`tump::comparing_size`が定義済みです。
+なお、`sizeof`による型の大きさの比較用に、`tump::comparing_type`を利用した`tump::comparing_size`が定義済みです。  
+さらに、比較可能な値の型同士のみとなりますが、`value`メンバを不等号で比較実装の、`tump::comparing_type`を利用した`tump::comparing_value_member`も定義されています。
 
 ## 三方比較のメタ関数
 

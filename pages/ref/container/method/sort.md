@@ -6,7 +6,7 @@ title: sort - TumpCpp リファレンス
 namespace tump {
     namespace fn {
         // 大元のメタ関数定義
-        template <TypeList List, class Comparing = comparing_size>
+        template <TypeListOrValueList List, class Comparing = comparing_size>
         struct sort {};
     }
 
@@ -15,14 +15,14 @@ namespace tump {
     using sort_size = partial_apply<flip, sort, comparing_size>;
 
     // メンバ型 type 呼び出し省略のエイリアステンプレート
-    template <TypeList List, class Comparing = comparing_size>
-    using sort_t = typename fn::sort<List>::type;
+    template <TypeListOrValueList List, class Comparing = comparing_size>
+    using sort_t = typename fn::sort<List, Comparing>::type;
 }
 ```
 
 ### パラメータ
 
-- List - [{`tump::TypeList`|ref/container/method/is_type_list}]で真と判定される型のリスト
+- List - [{`tump::TypeListOrValueList`|ref/container/method/is_t_or_v_list}]で真と判定される型
 - Comparing - [{`tump::comparing_type`|ref/metafunction/comparing_type}]で作成した、型の比較クラス
 
 ## 概要
@@ -40,6 +40,7 @@ namespace tump {
 #include <tump.hpp>
 
 using list1 = tump::list<std::int16_t, std::int64_t, std::int8_t, std::int32_t>;
+using list2 = tump::vlist<int(1), std::uint16_t(5), char(-3), std::int64_t(-2)>;
 
 // デフォルトの比較基準によるリストの並び替え
 static_assert(std::is_same_v<
@@ -50,6 +51,11 @@ static_assert(tump::eval<
     tump::sort_size, list1,
     tump::_eq,
     tump::list<std::int8_t, std::int16_t, std::int32_t, std::int64_t>
+>::value == true);
+static_assert(tump::eval<
+    tump::sort, list2, tump::comparing_value_member,
+    tump::_eq,
+    tump::vlist<char(-3), std::int64_t(-2), int(1), std::uint16_t(5)>
 >::value == true);
 
 // ユーザー指定の評価基準を指定する例
@@ -89,7 +95,9 @@ int main() {}
 ## 関連リンク
 
 - [{`tump::eval`|ref/expression/exp}]
-- [{`tump::TypeList`|ref/container/method/is_type_list}]
+- [{`tump::TypeListOrValueList`|ref/container/method/is_t_or_v_list}]
 - [{`tump::list`|ref/container/list}]
+- [{`tump::vlist`|ref/container/vlist}]
 - [{`tump::comparing_type`|ref/metafunction/comparing_type}]
+- [{`tump::comparing_value_member`|ref/metafunction/comparing_type}]
 - [{`tump::_eq`|ref/operator/compare}]

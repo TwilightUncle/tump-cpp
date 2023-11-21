@@ -94,6 +94,7 @@ int main() {}
 - [{`tump::vwrap`|ref/metafunction/vwrap}]
 - [{`tump::comparing_type`|ref/metafunction/comparing_type}]
 - [{`tump::comparing_size`|ref/metafunction/comparing_type}]
+- [{`tump::comparing_value_member`|ref/metafunction/comparing_type}]
 - [{`tump::len`|ref/container/method/len}]
 - [{`tump::list`|ref/container/list}]
 - [{`tump::vlist`|ref/container/vlist}]

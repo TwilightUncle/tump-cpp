@@ -215,9 +215,12 @@
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/make_empty.html">make_empty</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/fill.html">fill</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/concat.html">concat</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/pop_front.html">pop_front</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/pop_back.html">pop_back</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/reverse.html">reverse</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/slice.html">slice</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/unique.html">unique</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/sort.html">sort</a></li>
 </ul></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/btree.html">バイナリツリー</a>
 
@@ -262,7 +265,12 @@
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/block_if.html">block_if</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/vwrap.html">vwrap</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/comparing_type.html">comparing_type</a>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/comparing_type.html">comparing_size</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/comparing_type.html">comparing_value_member</a>
 <!-- - [マクロ](https://twilightuncle.github.io/tump-cpp/ref/macro.html) --></li>
+</ul></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -275,7 +283,7 @@
                 <pre><code class="language-cpp">namespace tump {
     namespace fn {
         // 大元のメタ関数定義
-        template &lt;TypeList List, class Comparing = comparing_size&gt;
+        template &lt;TypeListOrValueList List, class Comparing = comparing_size&gt;
         struct sort {};
     }
 
@@ -284,15 +292,15 @@
     using sort_size = partial_apply&lt;flip, sort, comparing_size&gt;;
 
     // メンバ型 type 呼び出し省略のエイリアステンプレート
-    template &lt;TypeList List, class Comparing = comparing_size&gt;
-    using sort_t = typename fn::sort&lt;List&gt;::type;
+    template &lt;TypeListOrValueList List, class Comparing = comparing_size&gt;
+    using sort_t = typename fn::sort&lt;List, Comparing&gt;::type;
 }
 </code></pre>
 
 <h3 id="パラメータ">パラメータ</h3>
 
 <ul>
-<li>List - <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::TypeList</code></a>で真と判定される型のリスト</li>
+<li>List - <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_t_or_v_list.html"><code>tump::TypeListOrValueList</code></a>で真と判定される型</li>
 <li>Comparing - <a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/comparing_type.html"><code>tump::comparing_type</code></a>で作成した、型の比較クラス</li>
 </ul>
 
@@ -310,6 +318,7 @@
 #include &lt;tump.hpp&gt;
 
 using list1 = tump::list&lt;std::int16_t, std::int64_t, std::int8_t, std::int32_t&gt;;
+using list2 = tump::vlist&lt;int(1), std::uint16_t(5), char(-3), std::int64_t(-2)&gt;;
 
 // デフォルトの比較基準によるリストの並び替え
 static_assert(std::is_same_v&lt;
@@ -320,6 +329,11 @@ static_assert(tump::eval&lt;
     tump::sort_size, list1,
     tump::_eq,
     tump::list&lt;std::int8_t, std::int16_t, std::int32_t, std::int64_t&gt;
+&gt;::value == true);
+static_assert(tump::eval&lt;
+    tump::sort, list2, tump::comparing_value_member,
+    tump::_eq,
+    tump::vlist&lt;char(-3), std::int64_t(-2), int(1), std::uint16_t(5)&gt;
 &gt;::value == true);
 
 // ユーザー指定の評価基準を指定する例
@@ -360,9 +374,11 @@ int main() {}
 
 <ul>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::TypeList</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_t_or_v_list.html"><code>tump::TypeListOrValueList</code></a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/vlist.html"><code>tump::vlist</code></a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/comparing_type.html"><code>tump::comparing_type</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/comparing_type.html"><code>tump::comparing_value_member</code></a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/compare.html"><code>tump::_eq</code></a></li>
 </ul>
 

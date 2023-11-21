@@ -104,9 +104,12 @@
             - [{make_empty|ref/container/method/make_empty}]
             - [{fill|ref/container/method/fill}]
             - [{concat|ref/container/method/concat}]
+            - [{pop_front|ref/container/method/pop_front}]
+            - [{pop_back|ref/container/method/pop_back}]
             - [{reverse|ref/container/method/reverse}]
             - [{slice|ref/container/method/slice}]
             - [{unique|ref/container/method/unique}]
+            - [{sort|ref/container/method/sort}]
         - [{バイナリツリー|ref/container/btree}]
             - 情報取得用メタ関数・概念
             - [{is_empty|ref/container/method/is_empty}]
@@ -144,4 +147,6 @@
         - [{block_if|ref/metafunction/block_if}]
         - [{vwrap|ref/metafunction/vwrap}]
         - [{comparing_type|ref/metafunction/comparing_type}]
+            - [{comparing_size|ref/metafunction/comparing_type}]
+            - [{comparing_value_member|ref/metafunction/comparing_type}]
     <!-- - [{マクロ|ref/macro}] -->

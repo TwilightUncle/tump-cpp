@@ -206,9 +206,12 @@
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/make_empty.html">make_empty</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/fill.html">fill</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/concat.html">concat</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/pop_front.html">pop_front</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/pop_back.html">pop_back</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/reverse.html">reverse</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/slice.html">slice</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/unique.html">unique</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/sort.html">sort</a></li>
 </ul></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/btree.html">バイナリツリー</a>
 
@@ -253,7 +256,12 @@
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/block_if.html">block_if</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/vwrap.html">vwrap</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/comparing_type.html">comparing_type</a>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/comparing_type.html">comparing_size</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/comparing_type.html">comparing_value_member</a>
 <!-- - [マクロ](https://twilightuncle.github.io/tump-cpp/ref/macro.html) --></li>
+</ul></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -319,6 +327,9 @@
     
     // sizeof の結果による型の比較を行う
     using comparing_size = comparing_type&lt;...&gt;;
+
+    // 型の持つ value メンバを不等号で比較
+    using comparing_value_member = comparing_type&lt;...&gt;;
 }
 </code></pre>
 
@@ -388,7 +399,8 @@
 </tbody>
 </table>
 
-<p>なお、<code>sizeof</code>による型の大きさの比較用に、<code>tump::comparing_type</code>を利用した<code>tump::comparing_size</code>が定義済みです。</p>
+<p>なお、<code>sizeof</code>による型の大きさの比較用に、<code>tump::comparing_type</code>を利用した<code>tump::comparing_size</code>が定義済みです。<br />
+さらに、比較可能な値の型同士のみとなりますが、<code>value</code>メンバを不等号で比較実装の、<code>tump::comparing_type</code>を利用した<code>tump::comparing_value_member</code>も定義されています。</p>
 
 <h2 id="三方比較のメタ関数">三方比較のメタ関数</h2>
 

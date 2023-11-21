@@ -51,6 +51,9 @@ namespace tump {
 | [{`tump::make_empty`|ref/container/method/make_empty}] | 空のリストを作成します。 |
 | [{`tump::fill`|ref/container/method/fill}] | 全て同じ要素で埋めた状態の、新しいリストを作成します。 |
 | [{`tump::concat`|ref/container/method/concat}] | 複数のリストを結合します。 |
+| [{`tump::pop_front`|ref/container/method/pop_front}] | リストの先頭の要素を削除します。 |
+| [{`tump::pop_back`|ref/container/method/pop_back}] | リストの最後尾の要素を削除します。 |
 | [{`tump::reverse`|ref/container/method/reverse}] | リストの要素の並びを反転します。 |
 | [{`tump::slice`|ref/container/method/slice}] | リストの指定の範囲を切り出します。 |
 | [{`tump::unique`|ref/container/method/unique}] | リストの重複している要素を削除します。 |
+| [{`tump::sort`|ref/container/method/sort}] | 型のリストを昇順に並び替えます。 |
