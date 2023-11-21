@@ -11,7 +11,7 @@ namespace tump
          * 昇順でソート。
          * 実装はヒープソートもどき。
         */
-        template <TypeList List, TumpComparing Comparing = comparing_size>
+        template <TypeListOrValueList List, TumpComparing Comparing = comparing_size>
         struct sort : public invoke<
             compose_t<
                 partial_apply<::tump::unnorm_li, List>,
@@ -23,6 +23,15 @@ namespace tump
                 >
             >,
             List
+        > {};
+
+        template <template <auto...> class Outer, auto... Values, TumpComparing Comparing>
+        struct sort<Outer<Values...>, Comparing> : public unnorm_li<
+            Outer<Values...>,
+            typename sort<
+                to_norm_li_t<Outer<Values...>>,
+                Comparing
+            >::type
         > {};
     }
 
@@ -41,7 +50,7 @@ namespace tump
      * 昇順でソート。
      * 実装はヒープソートもどき。
     */
-    template <TypeList List, TumpComparing Comparing = comparing_size>
+    template <TypeListOrValueList List, TumpComparing Comparing = comparing_size>
     using sort_t = typename fn::sort<List, Comparing>::type;
 }
 

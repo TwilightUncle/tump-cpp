@@ -633,11 +633,17 @@ TEST(TumpAlgorithmTest, MpMaxMinTest)
 TEST(TumpAlgorithmTest, SortTest)
 {
     using list1 = tump::list<std::int32_t, std::uint64_t, std::int8_t, std::uint16_t, std::uint8_t, std::int64_t>;
+    using list2 = tump::vlist<int(1), std::uint16_t(5), char(-3), std::int64_t(-2)>;
 
     constexpr auto case1 = std::is_same_v<
         tump::sort_t<list1>,
         tump::list<std::uint8_t, std::int8_t, std::uint16_t, std::int32_t, std::int64_t, std::uint64_t>
     >;
+    constexpr auto case2 = std::is_same_v<
+        tump::sort_t<list2, tump::comparing_value_member>,
+        tump::vlist<char(-3), std::int64_t(-2), int(1), std::uint16_t(5)>
+    >;
 
     ASSERT_TRUE(case1);
+    ASSERT_TRUE(case2);
 }
