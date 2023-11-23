@@ -16,7 +16,7 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/style.css">
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/vendor/prism.css">
-        <title>list - TumpCpp リファレンス</title>
+        <title>バイナリツリー - TumpCpp リファレンス</title>
     </head>
     <body>
         <header id="header">
@@ -125,11 +125,11 @@
 
 <ul>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/concat.html">_cons</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/concat.html">_concat</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/concat.html">_concat</a>
+<!-- - _fmap -->
+<!-- - _ap -->
+<!-- - _bind --></li>
 </ul></li>
-<li>_fmap</li>
-<li>_ap</li>
-<li>_bind</li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/operator/op.html">演算子を定義する</a></li>
 </ul></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container.html">コンテナ</a>
@@ -180,13 +180,13 @@
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/unique.html">unique</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/zip.html">zip</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/to_btree.html">to_btree</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/sort.html">sort</a></li>
-<li>その他のメタ関数</li>
-<li>fmap</li>
-<li>pure</li>
-<li>ap</li>
-<li>ret</li>
-<li>bind</li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/sort.html">sort</a>
+<!-- - その他のメタ関数 -->
+<!-- - fmap -->
+<!-- - pure -->
+<!-- - ap -->
+<!-- - ret -->
+<!-- - bind --></li>
 </ul></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/vlist.html">vlist</a>
 
@@ -216,34 +216,24 @@
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/btree.html">バイナリツリー</a>
 
 <ul>
+<li>生成</li>
+<li>empty_btree</li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/to_btree.html">to_btree</a></li>
 <li>情報取得用メタ関数・概念</li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_empty.html">is_empty</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html">is_type_list</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html">TypeList</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_t_or_v_list.html">TypeListOrValueList</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/len.html">len</a></li>
+<li>is_btree</li>
+<li>BinaryTree</li>
 <li>要素アクセス用メタ関数</li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/count_if.html">count_if</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/exists.html">exists</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/find_if.html">find_if</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/get.html">get</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/get_front.html">get_front</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/get_back.html">get_back</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/index_of.html">index_of</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/index_of_if.html">index_of_if</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_unique.html">is_unique</a></li>
 <li>get_min</li>
 <li>get_max</li>
 <li>操作用メタ関数</li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/make_empty.html">make_empty</a></li>
 <li>push</li>
 <li>pop_min</li>
 <li>pop_max</li>
-<li>flatten</li>
+<li>flatten
+<!-- - ファンクタ -->
+<!-- - アプリカティブファンクタ -->
+<!-- - モナド --></li>
 </ul></li>
-<li>ファンクタ</li>
-<li>アプリカティブファンクタ</li>
-<li>モナド</li>
 </ul></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction.html">定義済みメタ関数</a>
 
@@ -259,25 +249,187 @@
 
 <ul>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/comparing_type.html">comparing_size</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/comparing_type.html">comparing_value_member</a>
-<!-- - [マクロ](https://twilightuncle.github.io/tump-cpp/ref/macro.html) --></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/comparing_type.html">comparing_value_member</a></li>
 </ul></li>
+<li>add_optional</li>
+<li>remove_optional
+<!-- - [マクロ](https://twilightuncle.github.io/tump-cpp/ref/macro.html) --></li>
 </ul></li>
 </ul></li>
 </ul>
 
             </aside>
             <article>
-                <h1>list - TumpCpp リファレンス</h1>
+                <h1>バイナリツリー - TumpCpp リファレンス</h1>
                 <p></p>
 
-                <pre><code class="language-cpp">namespace tump {
-    template &lt;class Node, class Comparing = comparing_size&gt;
-    struct btree {};
-}
-</code></pre>
+                <p>TumpCpp における<strong>バイナリツリー</strong>は、<a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a>と同じように、任意数の型パラメータを保持するテンプレートクラスです。</p>
 
 <h2 id="概要">概要</h2>
+
+<p>バイナリツリーが持つパラメータは、<a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/comparing_type.html"><code>tump::comparing_type</code></a>により指定されたルールに従った大小関係を、常に保持する性質を持ちます。</p>
+
+<p>また、バイナリツリーは<a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::TypeList</code></a>および、<a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_t_or_v_list.html"><code>tump::TypeListOrValueList</code></a>の制約において真と判定され、<a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a>で使用可能なメタ関数をすべて使用することができます。</p>
+
+<p><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a>と共有しているメタ関数については、<a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a>のリファレンスを参照ください。</p>
+
+<h2 id="listのメタ関数を利用する際の留意点">listのメタ関数を利用する際の留意点</h2>
+
+<p>バイナリツリーが持つ型パラメータは常に大小関係が維持されています。<br />
+そのため、パラメータの並びによって結果が異なるメタ関数は、想定と異なる動作となる場合がありますので注意が必要です。<br />
+例えば、影響の大きいメタ関数の一部として下記表のようなものがあります。</p>
+
+<table>
+<thead>
+<tr>
+<th>メタ関数</th>
+<th>バイナリツリーに適用した時の動作</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/push_front.html"><code>tump::push_front</code></a></td>
+<td>本来、リストの先頭にパラメータを追加する機能を持ちます。しかし、バイナリツリーに適用した場合は大小関係の判定に従ってパラメータが挿入され、関数名と実際の動作が異なってしまいます。</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/pop_back.html"><code>tump::pop_back</code></a></td>
+<td>バイナリツリーが持つ型パラメータは常に大小関係が保持されており、一番大きいと判定された型が最後尾に並びます。そのため、<code>pop_back</code>をバイナリツリーに適用した際は最大と判定される型が削除されます。</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/index_of.html"><code>tump::index_of</code></a></td>
+<td>バイナリツリーが持つ型パラメータは大小関係に従って並んでいるため、得られる結果は、大小関係の順位となります。<br>※小さいと判定された型ほど<code>0</code>に近い値が返却されます。</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/reverse.html"><code>tump::reverse</code></a></td>
+<td>バイナリツリーに対して適用しても特に意味はありません。コンパイル時に余計な計算資源を消費することが考えられますので、基本的には使用しないほうが良いです。</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/replace.html"><code>tump::replace</code></a></td>
+<td>バイナリツリーに適用した際、置き換え前後の型と、他パラメータの大小関係の判定が異なる場合、置き換え後の型を挿入する位置が、置き換え前の型があった位置と異なります。</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="バイナリツリー用メタ関数・概念">バイナリツリー用メタ関数・概念</h2>
+
+<p>バイナリツリーに関するメタ関数や概念の一覧です。</p>
+
+<h3 id="メタ関数の生成">メタ関数の生成</h3>
+
+<p>下記の 2 通りの生成方法があります。</p>
+
+<table>
+<thead>
+<tr>
+<th>メタ関数・概念の名称</th>
+<th>説明</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>tump::empty_btree</code></td>
+<td>空のバイナリツリーです。</td>
+</tr>
+
+<tr>
+<td><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/to_btree.html"><code>tump::to_btree</code></a></td>
+<td>型のリストからバイナリツリーを作成します。</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="情報取得">情報取得</h3>
+
+<table>
+<thead>
+<tr>
+<th>メタ関数・概念の名称</th>
+<th>説明</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>tump::is_btree</code></td>
+<td>バイナリツリーかどうか判定します。</td>
+</tr>
+
+<tr>
+<td><code>tump::BinaryTree</code></td>
+<td>バイナリツリーかどうか判定する制約です。</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="要素アクセス用メタ関数">要素アクセス用メタ関数</h3>
+
+<table>
+<thead>
+<tr>
+<th>メタ関数の名称</th>
+<th>説明</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>tump::get_min</code></td>
+<td>バイナリツリーが保持する要素のうち、最大と判定されるものを取得します。</td>
+</tr>
+
+<tr>
+<td><code>tump::get_max</code></td>
+<td>バイナリツリーが保持する要素のうち、最小と判定されるものを取得します。</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="操作用メタ関数">操作用メタ関数</h3>
+
+<table>
+<thead>
+<tr>
+<th>メタ関数の名称</th>
+<th>説明</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>tump::push</code></td>
+<td>バイナリツリーに要素を挿入します。大小関係を比較し、適切な位置に要素が配置されます。</td>
+</tr>
+
+<tr>
+<td><code>tump::pop_min</code></td>
+<td>バイナリツリーから最小と判定される要素を取り除きます。</td>
+</tr>
+
+<tr>
+<td><code>tump::pop_max</code></td>
+<td>バイナリツリーから最大と判定される要素を取り除きます。</td>
+</tr>
+
+<tr>
+<td><code>tump::flatten</code></td>
+<td>バイナリツリーを<a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a>に変換します。結果のリストが持つ要素の並びは、バイナリツリーの要素の大小関係に準じています。</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="関連リンク">関連リンク</h2>
+
+<ul>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::TypeList</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_t_or_v_list.html"><code>tump::TypeListOrValueList</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a></li>
+</ul>
 
             </article>
             <aside id="table_of_contents" class="table-of-contents">
@@ -285,8 +437,26 @@
                 <ul>
                     
                         <li>
-                            <a href="#%e6%a6%82%e8%a6%81">
-                                概要
+                            <a href="#%e6%a6%82%e8%a6%81%0d">
+                                概要
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#list%e3%81%ae%e3%83%a1%e3%82%bf%e9%96%a2%e6%95%b0%e3%82%92%e5%88%a9%e7%94%a8%e3%81%99%e3%82%8b%e9%9a%9b%e3%81%ae%e7%95%99%e6%84%8f%e7%82%b9%0d">
+                                listのメタ関数を利用する際の留意点
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#%e3%83%90%e3%82%a4%e3%83%8a%e3%83%aa%e3%83%84%e3%83%aa%e3%83%bc%e7%94%a8%e3%83%a1%e3%82%bf%e9%96%a2%e6%95%b0%e3%83%bb%e6%a6%82%e5%bf%b5%0d">
+                                バイナリツリー用メタ関数・概念
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#%e9%96%a2%e9%80%a3%e3%83%aa%e3%83%b3%e3%82%af%0d">
+                                関連リンク
                             </a>
                         </li>
                     

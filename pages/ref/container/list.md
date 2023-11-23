@@ -81,15 +81,15 @@ TumpCpp では、`tump::list`を主な対象とした、いくつかのリスト
 | [{`tump::to_btree`|ref/container/method/to_btree}] | 型のリストを型のバイナリツリーに変換します。 |
 | [{`tump::sort`|ref/container/method/sort}] | 型のリストを昇順に並び替えます。 |
 
-### その他
+<!-- ### その他 -->
 
-| メタ関数の名称 | 説明 |
-| --- | --- |
-| [{`tump::fmap`|ref/container/method/fmap}] | リストがファンクタとして振舞うためのメタ関数です。機能は[{`tump::map`|ref/container/method/map}]とまったく同じです。 |
-| [{`tump::pure`|ref/container/method/pure}] | メタ関数を、アプリカティブファンクタに適用可能な形に持ち上げます。 |
-| [{`tump::ap`|ref/container/method/ap}] | リストがアプリカティブファンクタとして振舞うためのメタ関数です。アプリカティブファンクタに持ち上げられたメタ関数を、アプリカティブファンクタに適用します。 |
-| [{`tump::ret`|ref/container/method/ret}] | メタ関数を、モナドに適用可能な形に持ち上げます。[{`tump::pure`|ref/container/method/pure}]の別名です。 |
-| [{`tump::bind`|ref/container/method/bind}] | モナドから値を取り出し、モナドを返却するメタ関数に食わせます。 |
+<!-- | メタ関数の名称 | 説明 | -->
+<!-- | --- | --- | -->
+<!-- | [{`tump::fmap`|ref/container/method/fmap}] | リストがファンクタとして振舞うためのメタ関数です。機能は[{`tump::map`|ref/container/method/map}]とまったく同じです。 | -->
+<!-- | [{`tump::pure`|ref/container/method/pure}] | メタ関数を、アプリカティブファンクタに適用可能な形に持ち上げます。 | -->
+<!-- | [{`tump::ap`|ref/container/method/ap}] | リストがアプリカティブファンクタとして振舞うためのメタ関数です。アプリカティブファンクタに持ち上げられたメタ関数を、アプリカティブファンクタに適用します。 | -->
+<!-- | [{`tump::ret`|ref/container/method/ret}] | メタ関数を、モナドに適用可能な形に持ち上げます。[{`tump::pure`|ref/container/method/pure}]の別名です。 | -->
+<!-- | [{`tump::bind`|ref/container/method/bind}] | モナドから値を取り出し、モナドを返却するメタ関数に食わせます。 | -->
 
 ## 例
 

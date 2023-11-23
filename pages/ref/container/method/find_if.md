@@ -63,7 +63,7 @@ int main() {}
 - [{`tump::TypeList`|ref/container/method/is_type_list}]
 - [{`tump::is_type_list`|ref/container/method/is_type_list}]
 - [{`tump::list`|ref/container/list}]
-- [{`tump::btree`|ref/container/btree}]
+- [{バイナリツリー|ref/container/btree}]
 - [{`tump::make_empty`|ref/container/method/make_empty}]
 - [{`tump::to_btree`|ref/container/method/to_btree}]
 - [{`tump::to_true`|ref/metafunction/to_true}]

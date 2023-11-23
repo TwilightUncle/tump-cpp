@@ -82,7 +82,7 @@ int main() {}
 - [{`tump::eval`|ref/expression/exp}]
 - [{`tump::list`|ref/container/list}]
 - [{`tump::vlist`|ref/container/vlist}]
-- [{`tump::btree`|ref/container/btree}]
+- [{バイナリツリー|ref/container/btree}]
 - [{`tump::empty_btree`|ref/container/btree}]
 - [{`tump::make_empty`|ref/container/method/make_empty}]
 - [{`tump::to_btree`|ref/container/method/to_btree}]

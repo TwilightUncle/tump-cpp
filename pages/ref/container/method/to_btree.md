@@ -27,7 +27,7 @@ namespace tump {
 
 ## 概要
 
-`tump::to_btree`は、テンプレートパラメータ`List`をバイナリツリー[{`tump::btree`|ref/container/btree}]に変換するメタ関数です。  
+`tump::to_btree`は、テンプレートパラメータ`List`を[{バイナリツリー構造|ref/container/btree}]に変換するメタ関数です。  
 バイナリツリーの構築は、パラメータ`Comparing`によって定められた大小の基準で行われ、デフォルトでは`sizeof`による比較が行われます。
 
 詳しくは**[{btree|ref/container/btree}]**を参照ください。
@@ -35,5 +35,5 @@ namespace tump {
 ## 関連リンク
 
 - [{`tump::TypeList`|ref/container/method/is_type_list}]
-- [{`tump::btree`|ref/container/btree}]
+- [{バイナリツリー|ref/container/btree}]
 - [{`tump::comparing_type`|ref/metafunction/comparing_type}]

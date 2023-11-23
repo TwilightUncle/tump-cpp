@@ -66,6 +66,6 @@ int main() {}
 - [{`tump::TypeListOrValueList`|ref/container/method/is_t_or_v_list}]
 - [{`tump::list`|ref/container/list}]
 - [{`tump::vlist`|ref/container/vlist}]
-- [{`tump::btree`|ref/container/btree}]
+- [{バイナリツリー|ref/container/btree}]
 - [{`tump::make_empty`|ref/container/method/make_empty}]
 - [{`tump::to_btree`|ref/container/method/to_btree}]
