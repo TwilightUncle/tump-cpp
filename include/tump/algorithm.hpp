@@ -18,5 +18,6 @@
 #include TUMP_COMMON_INCLUDE(algorithm/fill.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/mp_max_min.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/sort.hpp)
+#include TUMP_COMMON_INCLUDE(algorithm/add_optional.hpp)
 
 #endif

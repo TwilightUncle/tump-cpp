@@ -647,3 +647,25 @@ TEST(TumpAlgorithmTest, SortTest)
     ASSERT_TRUE(case1);
     ASSERT_TRUE(case2);
 }
+
+TEST(TumpAlgorithmTest, AddOptionalTest)
+{
+    constexpr auto case1 = std::is_same_v<
+        tump::add_optional_t<int>, std::optional<int>
+    >;
+    constexpr auto case2 = std::is_same_v<
+        tump::add_optional_t<std::optional<int>>, std::optional<int>
+    >;
+
+    constexpr auto case3 = std::is_same_v<
+        tump::remove_optional_t<int>, int
+    >;
+    constexpr auto case4 = std::is_same_v<
+        tump::remove_optional_t<std::optional<int>>, int
+    >;
+    
+    ASSERT_TRUE(case1);
+    ASSERT_TRUE(case2);
+    ASSERT_TRUE(case3);
+    ASSERT_TRUE(case4);
+}
