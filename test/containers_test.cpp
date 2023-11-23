@@ -20,6 +20,16 @@ TEST(TumpContainersTest, BtreeTest)
     ASSERT_TRUE(case1);
     ASSERT_TRUE(case2);
     ASSERT_TRUE(case3);
+
+    constexpr auto case4 = tump::is_btree_v<int>;
+    constexpr auto case5 = tump::is_btree_v<tree1>;
+    constexpr auto case6 = tump::BynaryTree<list1>;
+    constexpr auto case7 = tump::BynaryTree<tree1>;
+
+    ASSERT_FALSE(case4);
+    ASSERT_TRUE(case5);
+    ASSERT_FALSE(case6);
+    ASSERT_TRUE(case7);
 }
 
 TEST(TumpContainersTest, FunctorTest)

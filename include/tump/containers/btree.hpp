@@ -30,6 +30,32 @@ namespace tump
 
     namespace fn
     {
+        /**
+         * バイナリツリーかどうか判定
+        */
+        template <class T>
+        struct is_btree : public std::false_type {};
+
+        template <class T, TumpComparing Comparing>
+        struct is_btree<btree<T, Comparing>> : public std::true_type {};
+    }
+
+    /**
+     * バイナリツリーかどうか判定
+    */
+    using is_btree = cbk<fn::is_btree, 1>;
+
+    /**
+     * バイナリツリーかどうか判定
+    */
+    template <class T>
+    constexpr auto is_btree_v = fn::is_btree<T>::value;
+
+    template <class T>
+    concept BynaryTree = is_btree_v<T>;
+
+    namespace fn
+    {
         namespace impl
         {
             // push の実装
@@ -115,7 +141,7 @@ namespace tump
         /**
          * バイナリツリーに要素を挿入
         */
-        template <class Btree, class New>
+        template <BynaryTree T, class New>
         struct push;
 
         template <class T, class New, TumpComparing Comparing>
@@ -129,7 +155,7 @@ namespace tump
         /**
          * バイナリツリーの一番小さい値を取得
         */
-        template <class Btree>
+        template <BynaryTree T>
         struct get_min;
 
         template <class T, TumpComparing Comparing>
@@ -138,7 +164,7 @@ namespace tump
         /**
          * バイナリツリーの一番大きい値を取得
         */
-        template <class Btree>
+        template <BynaryTree T>
         struct get_max;
 
         template <class T, TumpComparing Comparing>
@@ -147,7 +173,7 @@ namespace tump
         /**
          * バイナリツリーの一番小さい値を削除
         */
-        template <class Btree>
+        template <BynaryTree T>
         struct pop_min;
 
         template <class T, TumpComparing Comparing>
@@ -161,7 +187,7 @@ namespace tump
         /**
          * バイナリツリーの一番大きい値を削除
         */
-        template <class Btree>
+        template <BynaryTree T>
         struct pop_max;
 
         template <class T, TumpComparing Comparing>
@@ -181,8 +207,8 @@ namespace tump
     /**
      * バイナリツリーに要素を挿入
     */
-    template <class Btree, class New>
-    using push_t = typename fn::push<Btree, New>::type;
+    template <BynaryTree T, class New>
+    using push_t = typename fn::push<T, New>::type;
 
     
     /**
@@ -193,8 +219,8 @@ namespace tump
     /**
      * バイナリツリーの一番小さい値を取得
     */
-    template <class Btree>
-    using get_min_t = typename fn::get_min<Btree>::type;
+    template <BynaryTree T>
+    using get_min_t = typename fn::get_min<T>::type;
 
     /**
      * バイナリツリーの一番大きい値を取得
@@ -204,8 +230,8 @@ namespace tump
     /**
      * バイナリツリーの一番大きい値を取得
     */
-    template <class Btree>
-    using get_max_t = typename fn::get_max<Btree>::type;
+    template <BynaryTree T>
+    using get_max_t = typename fn::get_max<T>::type;
 
     /**
      * バイナリツリーの一番小さい値を削除
@@ -215,8 +241,8 @@ namespace tump
     /**
      * バイナリツリーの一番小さい値を削除
     */
-    template <class Btree>
-    using pop_min_t = typename fn::pop_min<Btree>::type;
+    template <BynaryTree T>
+    using pop_min_t = typename fn::pop_min<T>::type;
 
     /**
      * バイナリツリーの一番大きい値を削除
@@ -226,8 +252,8 @@ namespace tump
     /**
      * バイナリツリーの一番大きい値を削除
     */
-    template <class Btree>
-    using pop_max_t = typename fn::pop_max<Btree>::type;
+    template <BynaryTree T>
+    using pop_max_t = typename fn::pop_max<T>::type;
 
     namespace fn
     {
@@ -246,7 +272,7 @@ namespace tump
 
         namespace impl
         {
-            template <TypeList List, class Btree>
+            template <TypeList List, BynaryTree Btree>
             struct flatten_impl : public std::conditional_t<
                 is_empty_v<Btree>,
                 std::type_identity<List>,
@@ -261,8 +287,8 @@ namespace tump
         /**
          * バイナリツリーを一次元のリストに変換する
         */
-        template <class Btree>
-        using flatten = impl::flatten_impl<list<>, Btree>;
+        template <BynaryTree T>
+        using flatten = impl::flatten_impl<list<>, T>;
     }
 
     /**
@@ -289,8 +315,8 @@ namespace tump
     /**
      * バイナリツリーを一次元のリストに変換する
     */
-    template <class Btree>
-    using flatten_t = typename fn::flatten<Btree>::type;
+    template <BynaryTree T>
+    using flatten_t = typename fn::flatten<T>::type;
 
     // ---------------------------------------------------------
     // 下記メソッドの実装定義
