@@ -141,15 +141,22 @@ namespace tump
         /**
          * バイナリツリーに要素を挿入
         */
-        template <BynaryTree T, class New>
+        template <BynaryTree T, class... Types>
         struct push;
 
-        template <class T, class New, TumpComparing Comparing>
-        struct push<btree<T, Comparing>, New> : public std::type_identity<
+        template <class T, class Type, TumpComparing Comparing>
+        struct push<btree<T, Comparing>, Type> : public std::type_identity<
             btree<
-                typename impl::push_impl<T, New, Comparing>::type,
+                typename impl::push_impl<T, Type, Comparing>::type,
                 Comparing
             >
+        > {};
+
+        template <class T, class... Types, TumpComparing Comparing>
+        struct push<btree<T, Comparing>, Types...> : public foldl<
+            cbk<push, 2>,
+            btree<T, Comparing>,
+            list<Types...>
         > {};
 
         /**
@@ -202,13 +209,15 @@ namespace tump
     /**
      * バイナリツリーに要素を挿入
     */
-    using push = cbk<fn::push, 2>;
+    template <unsigned int ArgsSize = 2>
+    requires (ArgsSize > 0)
+    using push = cbk<fn::push, ArgsSize>;
 
     /**
      * バイナリツリーに要素を挿入
     */
-    template <BynaryTree T, class New>
-    using push_t = typename fn::push<T, New>::type;
+    template <BynaryTree T, class... Types>
+    using push_t = typename fn::push<T, Types...>::type;
 
     
     /**
@@ -262,7 +271,7 @@ namespace tump
         */
         template <TypeList List, TumpComparing Comparing = comparing_size>
         struct to_btree : public foldl<
-            ::tump::push,
+            ::tump::push<>,
             empty_btree<Comparing>,
             List
         > {};

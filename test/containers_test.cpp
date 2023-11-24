@@ -30,6 +30,21 @@ TEST(TumpContainersTest, BtreeTest)
     ASSERT_TRUE(case5);
     ASSERT_FALSE(case6);
     ASSERT_TRUE(case7);
+
+    using tree2 = tump::push_t<tump::empty_btree<>, std::int32_t>;
+    using tree3 = tump::push_t<tree2, std::uint64_t, std::int8_t, std::uint16_t>;
+
+    constexpr auto case8 = std::is_same_v<
+        tump::flatten_t<tree2>,
+        tump::list<std::int32_t>
+    >;
+    constexpr auto case9 = std::is_same_v<
+        tump::flatten_t<tree3>,
+        tump::list<std::int8_t, std::uint16_t, std::int32_t, std::uint64_t>
+    >;
+
+    ASSERT_TRUE(case8);
+    ASSERT_TRUE(case9);
 }
 
 TEST(TumpContainersTest, FunctorTest)
