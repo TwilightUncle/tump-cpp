@@ -57,7 +57,7 @@ TumpCpp における**バイナリツリー**は、[{`tump::list`|ref/container/
 
 | メタ関数の名称 | 説明 |
 | --- | --- |
-| [{`tump::push`|ref/container/method/push}] | バイナリツリーに要素を挿入します。大小関係を比較し、適切な位置に要素が配置されます。 |
+| [{`tump::push`|ref/container/method/btree_push}] | バイナリツリーに要素を挿入します。大小関係を比較し、適切な位置に要素が配置されます。 |
 | [{`tump::pop_min`|ref/container/method/pop_min}] | バイナリツリーから最小と判定される要素を取り除きます。 |
 | [{`tump::pop_max`|ref/container/method/pop_max}] | バイナリツリーから最大と判定される要素を取り除きます。 |
 | [{`tump::flatten`|ref/container/method/flatten}] | バイナリツリーを[{`tump::list`|ref/container/list}]に変換します。結果のリストが持つ要素の並びは、バイナリツリーの要素の大小関係に準じています。 |
