@@ -1,7 +1,7 @@
 #ifndef TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_SORT_HPP
 #define TUMP_INCLUDE_GUARD_TUMP_ALGORITHM_SORT_HPP
 
-#include TUMP_COMMON_INCLUDE(containers/btree.hpp)
+#include TUMP_COMMON_INCLUDE(containers/bintree.hpp)
 
 namespace tump
 {
@@ -18,7 +18,7 @@ namespace tump
                 ::tump::flatten,
                 partial_apply<
                     ::tump::flip,
-                    ::tump::to_btree,
+                    ::tump::to_bintree,
                     Comparing
                 >
             >,

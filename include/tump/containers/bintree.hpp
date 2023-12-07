@@ -20,13 +20,13 @@ namespace tump
      * Comparing には比較を行うクラスを指定
     */
     template <class T, TumpComparing Comparing = comparing_size>
-    struct btree : public _::base_list {};
+    struct bintree : public _::base_list {};
 
     /**
      * 空のバイナリツリーを取得
     */
     template <TumpComparing Comparing = comparing_size>
-    using empty_btree = btree<mp_null_t, Comparing>;
+    using empty_bintree = bintree<mp_null_t, Comparing>;
 
     namespace fn
     {
@@ -34,25 +34,25 @@ namespace tump
          * バイナリツリーかどうか判定
         */
         template <class T>
-        struct is_btree : public std::false_type {};
+        struct is_bintree : public std::false_type {};
 
         template <class T, TumpComparing Comparing>
-        struct is_btree<btree<T, Comparing>> : public std::true_type {};
+        struct is_bintree<bintree<T, Comparing>> : public std::true_type {};
     }
 
     /**
      * バイナリツリーかどうか判定
     */
-    using is_btree = cbk<fn::is_btree, 1>;
+    using is_bintree = cbk<fn::is_bintree, 1>;
 
     /**
      * バイナリツリーかどうか判定
     */
     template <class T>
-    constexpr auto is_btree_v = fn::is_btree<T>::value;
+    constexpr auto is_bintree_v = fn::is_bintree<T>::value;
 
     template <class T>
-    concept BynaryTree = is_btree_v<T>;
+    concept BynaryTree = is_bintree_v<T>;
 
     namespace fn
     {
@@ -145,17 +145,17 @@ namespace tump
         struct push;
 
         template <class T, class Type, TumpComparing Comparing>
-        struct push<btree<T, Comparing>, Type> : public std::type_identity<
-            btree<
+        struct push<bintree<T, Comparing>, Type> : public std::type_identity<
+            bintree<
                 typename impl::push_impl<T, Type, Comparing>::type,
                 Comparing
             >
         > {};
 
         template <class T, class... Types, TumpComparing Comparing>
-        struct push<btree<T, Comparing>, Types...> : public foldl<
+        struct push<bintree<T, Comparing>, Types...> : public foldl<
             cbk<push, 2>,
-            btree<T, Comparing>,
+            bintree<T, Comparing>,
             list<Types...>
         > {};
 
@@ -166,7 +166,7 @@ namespace tump
         struct get_min;
 
         template <class T, TumpComparing Comparing>
-        struct get_min<btree<T, Comparing>> : public impl::get_min_impl<T, Comparing> {};
+        struct get_min<bintree<T, Comparing>> : public impl::get_min_impl<T, Comparing> {};
 
         /**
          * バイナリツリーの一番大きい値を取得
@@ -175,7 +175,7 @@ namespace tump
         struct get_max;
 
         template <class T, TumpComparing Comparing>
-        struct get_max<btree<T, Comparing>> : public impl::get_max_impl<T, Comparing> {};
+        struct get_max<bintree<T, Comparing>> : public impl::get_max_impl<T, Comparing> {};
 
         /**
          * バイナリツリーの一番小さい値を削除
@@ -184,8 +184,8 @@ namespace tump
         struct pop_min;
 
         template <class T, TumpComparing Comparing>
-        struct pop_min<btree<T, Comparing>> : public std::type_identity<
-            btree<
+        struct pop_min<bintree<T, Comparing>> : public std::type_identity<
+            bintree<
                 typename impl::pop_min_impl<T, Comparing>::type,
                 Comparing
             >
@@ -198,8 +198,8 @@ namespace tump
         struct pop_max;
 
         template <class T, TumpComparing Comparing>
-        struct pop_max<btree<T, Comparing>> : public std::type_identity<
-            btree<
+        struct pop_max<bintree<T, Comparing>> : public std::type_identity<
+            bintree<
                 typename impl::pop_max_impl<T, Comparing>::type,
                 Comparing
             >
@@ -270,14 +270,14 @@ namespace tump
          * リストをバイナリツリーに変換
         */
         template <TypeList List, TumpComparing Comparing = comparing_size>
-        struct to_btree : public foldl<
+        struct to_bintree : public foldl<
             ::tump::push<>,
-            empty_btree<Comparing>,
+            empty_bintree<Comparing>,
             List
         > {};
 
         template <class T, TumpComparing Comparing, TumpComparing _NotUse>
-        struct to_btree<btree<T, Comparing>, _NotUse> : public std::type_identity<btree<T, Comparing>> {};
+        struct to_bintree<bintree<T, Comparing>, _NotUse> : public std::type_identity<bintree<T, Comparing>> {};
 
         namespace impl
         {
@@ -303,18 +303,18 @@ namespace tump
     /**
      * リストをバイナリツリーに変換
     */
-    using to_btree = cbk<fn::to_btree, 2>;
+    using to_bintree = cbk<fn::to_bintree, 2>;
 
     /**
      * sizeof した時の値を基準としたバイナリツリーにリストを変換する
     */
-    using to_size_btree = partial_apply<flip, to_btree, comparing_size>;
+    using to_size_bintree = partial_apply<flip, to_bintree, comparing_size>;
 
     /**
      * リストをバイナリツリーに変換
     */
     template <TypeList List, TumpComparing Comparing = comparing_size>
-    using to_btree_t = typename fn::to_btree<List, Comparing>::type;
+    using to_bintree_t = typename fn::to_bintree<List, Comparing>::type;
 
     /**
      * バイナリツリーを一次元のリストに変換する
@@ -335,16 +335,16 @@ namespace tump
     namespace fn
     {
         template <class T, TumpComparing Comparing>
-        struct to_norm_li<btree<T, Comparing>> : public flatten<btree<T, Comparing>> {};
+        struct to_norm_li<bintree<T, Comparing>> : public flatten<bintree<T, Comparing>> {};
 
         template <class Old, TumpComparing Comparing, class... Types>
-        struct unnorm_li<btree<Old, Comparing>, list<Types...>> : public to_btree<list<Types...>, Comparing> {};
+        struct unnorm_li<bintree<Old, Comparing>, list<Types...>> : public to_bintree<list<Types...>, Comparing> {};
 
         template <class T, TumpComparing Comparing>
-        struct make_empty<btree<T, Comparing>> : public std::type_identity<empty_btree<Comparing>> {};
+        struct make_empty<bintree<T, Comparing>> : public std::type_identity<empty_bintree<Comparing>> {};
 
         template <TumpComparing Comparing>
-        struct is_empty<empty_btree<Comparing>> : public std::true_type {};
+        struct is_empty<empty_bintree<Comparing>> : public std::true_type {};
     }
 }
 

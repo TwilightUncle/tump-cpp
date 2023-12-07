@@ -5,13 +5,13 @@
 TEST(TumpContainersTest, BtreeTest)
 {
     using list1 = tump::list<std::int32_t, std::uint64_t, std::int8_t, std::uint16_t>;
-    using tree1 = tump::to_btree_t<list1>;
+    using tree1 = tump::to_bintree_t<list1>;
 
     constexpr auto case1 = std::is_same_v<
         tree1,
-        tump::btree<tump::bnode<std::int32_t, std::uint64_t, tump::bnode<std::int8_t, std::uint16_t, tump::mp_null_t>>>
+        tump::bintree<tump::bnode<std::int32_t, std::uint64_t, tump::bnode<std::int8_t, std::uint16_t, tump::mp_null_t>>>
     >;
-    constexpr auto case2 = std::is_same_v<tump::to_btree_t<tree1>, tree1>;
+    constexpr auto case2 = std::is_same_v<tump::to_bintree_t<tree1>, tree1>;
     constexpr auto case3 = std::is_same_v<
         tump::flatten_t<tree1>,
         tump::list<std::int8_t, std::uint16_t, std::int32_t, std::uint64_t>
@@ -21,8 +21,8 @@ TEST(TumpContainersTest, BtreeTest)
     ASSERT_TRUE(case2);
     ASSERT_TRUE(case3);
 
-    constexpr auto case4 = tump::is_btree_v<int>;
-    constexpr auto case5 = tump::is_btree_v<tree1>;
+    constexpr auto case4 = tump::is_bintree_v<int>;
+    constexpr auto case5 = tump::is_bintree_v<tree1>;
     constexpr auto case6 = tump::BynaryTree<list1>;
     constexpr auto case7 = tump::BynaryTree<tree1>;
 
@@ -31,7 +31,7 @@ TEST(TumpContainersTest, BtreeTest)
     ASSERT_FALSE(case6);
     ASSERT_TRUE(case7);
 
-    using tree2 = tump::push_t<tump::empty_btree<>, std::int32_t>;
+    using tree2 = tump::push_t<tump::empty_bintree<>, std::int32_t>;
     using tree3 = tump::push_t<tree2, std::uint64_t, std::int8_t, std::uint16_t>;
 
     constexpr auto case8 = std::is_same_v<
