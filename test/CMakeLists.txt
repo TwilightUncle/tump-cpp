@@ -19,7 +19,7 @@ if (CMAKE_PROJECT_NAME STREQUAL "tump")
     # -----------------------------------------------
     # テストのビルド
     # -----------------------------------------------
-    add_executable(tumptest ${TUMP_TESTS})
+    add_executable(tumptest)
     
     # ソース列挙
     target_sources(tumptest PRIVATE
