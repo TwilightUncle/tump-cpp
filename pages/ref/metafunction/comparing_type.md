@@ -160,7 +160,7 @@ using comparing_list_size = tump::comparing_type<
 using list1 = tump::list<>;
 using list2 = tump::list<int>;
 using list3 = std::tuple<int, void>;
-using list4 = tump::to_btree_t<tump::list<int, void, float>>;
+using list4 = tump::to_bintree_t<tump::list<int, void, float>>;
 using list5 = tump::list<int, void>;
 
 static_assert(comparing_list_size::lt_v<list1, list2> == true);
@@ -192,7 +192,7 @@ int main() {}
 - [{`tump::to_true`|ref/metafunction/to_true}]
 - [{`tump::vwrap`|ref/metafunction/vwrap}]
 - [{`tump::list`|ref/container/list}]
-- [{バイナリツリー|ref/container/btree}]
+- [{バイナリツリー|ref/container/bintree}]
 - [{`tump::is_type_list`|ref/container/method/is_type_list}]
 - [{`tump::len`|ref/container/method/len}]
-- [{`tump::to_btree`|ref/container/method/to_btree}]
+- [{`tump::to_bintree`|ref/container/method/to_bintree}]

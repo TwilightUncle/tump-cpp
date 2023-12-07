@@ -53,8 +53,8 @@ static_assert(tump::TypeListOrValueList<tump::vlist<>> == true);
 static_assert(tump::TypeListOrValueList<D<int, float>> == true);
 static_assert(tump::TypeListOrValueList<std::vector<int>> == true);
 static_assert(tump::TypeListOrValueList<tump::make_empty_t<std::tuple<int, float>>> == true);
-static_assert(tump::TypeListOrValueList<tump::empty_btree<>> == true);
-static_assert(tump::TypeListOrValueList<tump::to_btree_t<std::tuple<int, float>>> == true);
+static_assert(tump::TypeListOrValueList<tump::empty_bintree<>> == true);
+static_assert(tump::TypeListOrValueList<tump::to_bintree_t<std::tuple<int, float>>> == true);
 
 // コンセプト TypeList によるテンプレートパラメータの制約
 template <tump::TypeListOrValueList List>
@@ -82,7 +82,7 @@ int main() {}
 - [{`tump::eval`|ref/expression/exp}]
 - [{`tump::list`|ref/container/list}]
 - [{`tump::vlist`|ref/container/vlist}]
-- [{バイナリツリー|ref/container/btree}]
-- [{`tump::empty_btree`|ref/container/btree}]
+- [{バイナリツリー|ref/container/bintree}]
+- [{`tump::empty_bintree`|ref/container/bintree}]
 - [{`tump::make_empty`|ref/container/method/make_empty}]
-- [{`tump::to_btree`|ref/container/method/to_btree}]
+- [{`tump::to_bintree`|ref/container/method/to_bintree}]

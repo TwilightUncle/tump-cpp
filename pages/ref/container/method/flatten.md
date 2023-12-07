@@ -22,7 +22,7 @@ namespace tump {
 
 ### パラメータ
 
-- T - [{`tump::BynaryTree`|ref/invocable/is_btree}]で真と判定されるバイナリツリー
+- T - [{`tump::BynaryTree`|ref/invocable/is_bintree}]で真と判定されるバイナリツリー
 
 ## 概要
 
@@ -36,10 +36,10 @@ TumpCppにおけるバイナリツリーは、同じ比較基準で同じ要素�
 ```cpp
 #include <tump.hpp>
 
-using size_btree = tump::push_t<tump::empty_btree<>, std::int32_t, std::uint8_t, std::int64_t>;
+using size_bintree = tump::push_t<tump::empty_bintree<>, std::int32_t, std::uint8_t, std::int64_t>;
 
 static_assert(std::is_same_v<
-    tump::flatten_t<size_btree>,
+    tump::flatten_t<size_bintree>,
     tump::list<std::uint8_t, std::int32_t, std::int64_t>
 > == true);
 
@@ -57,7 +57,7 @@ using sorted_list = tump::eval<
     tump::flatten,
     tump::_apply,
     tump::push<5>,
-    tump::empty_btree<comparing_list_size>,
+    tump::empty_bintree<comparing_list_size>,
     tump::list<int, float>,
     tump::list<>,
     std::tuple<int, float, char>,
@@ -81,11 +81,11 @@ int main() {}
 
 - [{`tump::eval`|ref/expression/exp}]
 - [{`tump::list`|ref/container/list}]
-- [{`tump::BynaryTree`|ref/container/method/is_btree}]
+- [{`tump::BynaryTree`|ref/container/method/is_bintree}]
 - [{`tump::is_type_list`|ref/container/method/is_type_list}]
 - [{`tump::len`|ref/container/method/len}]
-- [{`tump::empty_btree`|ref/container/method/empty_btree}]
-- [{`tump::push`|ref/container/method/btree_push}]
+- [{`tump::empty_bintree`|ref/container/method/empty_bintree}]
+- [{`tump::push`|ref/container/method/bintree_push}]
 - [{`tump::vwrap`|ref/metafunction/vwrap}]
 - [{`tump::comparing_type`|ref/metafunction/comparing_type}]
 - [{`tump::_apply`|ref/operator/apply}]

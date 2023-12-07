@@ -80,7 +80,7 @@
             - [{slice|ref/container/method/slice}]
             - [{unique|ref/container/method/unique}]
             - [{zip|ref/container/method/zip}]
-            - [{to_btree|ref/container/method/to_btree}]
+            - [{to_bintree|ref/container/method/to_bintree}]
             - [{sort|ref/container/method/sort}]
             <!-- - その他のメタ関数 -->
             <!-- - [{fmap|ref/container/method/fmap}] -->
@@ -110,18 +110,18 @@
             - [{slice|ref/container/method/slice}]
             - [{unique|ref/container/method/unique}]
             - [{sort|ref/container/method/sort}]
-        - [{バイナリツリー|ref/container/btree}]
+        - [{バイナリツリー|ref/container/bintree}]
             - 生成
-            - [{empty_btree|ref/container/method/empty_btree}]
-            - [{to_btree|ref/container/method/to_btree}]
+            - [{empty_bintree|ref/container/method/empty_bintree}]
+            - [{to_bintree|ref/container/method/to_bintree}]
             - 情報取得用メタ関数・概念
-            - [{is_btree|ref/container/method/is_btree}]
-            - [{BinaryTree|ref/container/method/is_btree}]
+            - [{is_bintree|ref/container/method/is_bintree}]
+            - [{BinaryTree|ref/container/method/is_bintree}]
             - 要素アクセス用メタ関数
             - [{get_min|ref/container/method/get_min}]
             - [{get_max|ref/container/method/get_max}]
             - 操作用メタ関数
-            - [{push|ref/container/method/btree_push}]
+            - [{push|ref/container/method/bintree_push}]
             - [{pop_min|ref/container/method/pop_min}]
             - [{pop_max|ref/container/method/pop_max}]
             - [{flatten|ref/container/method/flatten}]

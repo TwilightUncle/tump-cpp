@@ -78,7 +78,7 @@ TumpCpp では、`tump::list`を主な対象とした、いくつかのリスト
 | [{`tump::slice`|ref/container/method/slice}] | リストの指定の範囲を切り出します。 |
 | [{`tump::unique`|ref/container/method/unique}] | リストの重複している要素を削除します。 |
 | [{`tump::zip`|ref/container/method/zip}] | 2 つのリストから要素を 1 つずつ取り出した組のリストを生成します。 |
-| [{`tump::to_btree`|ref/container/method/to_btree}] | 型のリストを型のバイナリツリーに変換します。 |
+| [{`tump::to_bintree`|ref/container/method/to_bintree}] | 型のリストを型のバイナリツリーに変換します。 |
 | [{`tump::sort`|ref/container/method/sort}] | 型のリストを昇順に並び替えます。 |
 
 <!-- ### その他 -->

@@ -1,5 +1,5 @@
 ---
-title: is_btree・BynaryTree - TumpCpp リファレンス
+title: is_bintree・BynaryTree - TumpCpp リファレンス
 ---
 
 ```cpp
@@ -7,19 +7,19 @@ namespace tump {
     namespace fn {
         // 大元のメタ関数定義
         template <class T>
-        struct is_btree {};
+        struct is_bintree {};
     }
 
     // 第一級関数化
-    using is_btree = cbk<fn::is_btree, 1>;
+    using is_bintree = cbk<fn::is_bintree, 1>;
 
     // 定数メンバ value 呼び出し省略のエイリアステンプレート
     template <class T>
-    constexpr auto is_btree_v = fn::is_btree<T>::value;
+    constexpr auto is_bintree_v = fn::is_bintree<T>::value;
 
     // 制約
     template <class T>
-    concept BynaryTree = is_btree_v<T>;
+    concept BynaryTree = is_bintree_v<T>;
 }
 ```
 
@@ -33,15 +33,15 @@ namespace tump {
 
 下記のような型がバイナリツリーと判定されます。
 
-- [{`tump::empty_btree`|ref/container/method/empty_btree}]で生成された型
-- [{`tump::to_btree`|ref/container/method/to_btree}]で生成された型
+- [{`tump::empty_bintree`|ref/container/method/empty_bintree}]で生成された型
+- [{`tump::to_bintree`|ref/container/method/to_bintree}]で生成された型
 
 ## 例
 
 ```cpp
 #include <tump.hpp>
 
-using size_btree = tump::push_t<tump::empty_btree<>, std::int32_t, std::uint8_t, std::int64_t>;
+using size_bintree = tump::push_t<tump::empty_bintree<>, std::int32_t, std::uint8_t, std::int64_t>;
 
 template <class L, class R>
 struct compare_list_size : public tump::vwrap<
@@ -54,7 +54,7 @@ using comparing_list_size = tump::comparing_type<
 >;
 
 using sorted_list = tump::eval<
-    tump::flip, tump::to_btree,
+    tump::flip, tump::to_bintree,
     comparing_list_size,
     tump::list<
         tump::list<int, float>,
@@ -64,10 +64,10 @@ using sorted_list = tump::eval<
     >
 >;
 
-static_assert(tump::is_btree_v<tump::empty_btree<>> == true);
-static_assert(tump::is_btree_v<int> == false);
-static_assert(tump::eval<tump::is_btree, size_btree>::value == true);
-static_assert(tump::eval<tump::is_btree, tump::list<>>::value == false);
+static_assert(tump::is_bintree_v<tump::empty_bintree<>> == true);
+static_assert(tump::is_bintree_v<int> == false);
+static_assert(tump::eval<tump::is_bintree, size_bintree>::value == true);
+static_assert(tump::eval<tump::is_bintree, tump::list<>>::value == false);
 static_assert(tump::BynaryTree<sorted_list> == true);
 static_assert(tump::BynaryTree<std::tuple<int, float>> == false);
 
@@ -80,9 +80,9 @@ int main() {}
 - [{`tump::list`|ref/container/list}]
 - [{`tump::is_type_list`|ref/container/method/is_type_list}]
 - [{`tump::len`|ref/container/method/len}]
-- [{`tump::push`|ref/container/method/btree_push}]
-- [{`tump::empty_btree`|ref/container/method/empty_btree}]
-- [{`tump::to_btree`|ref/container/method/to_btree}]
+- [{`tump::push`|ref/container/method/bintree_push}]
+- [{`tump::empty_bintree`|ref/container/method/empty_bintree}]
+- [{`tump::to_bintree`|ref/container/method/to_bintree}]
 - [{`tump::flip`|ref/invocable/flip}]
 - [{`tump::vwrap`|ref/metafunction/vwrap}]
 - [{`tump::comparing_type`|ref/metafunction/comparing_type}]

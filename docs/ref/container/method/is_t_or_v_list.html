@@ -188,7 +188,7 @@
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/slice.html">slice</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/unique.html">unique</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/zip.html">zip</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/to_btree.html">to_btree</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/to_bintree.html">to_bintree</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/sort.html">sort</a>
 <!-- - その他のメタ関数 -->
 <!-- - fmap -->
@@ -222,20 +222,20 @@
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/unique.html">unique</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/sort.html">sort</a></li>
 </ul></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/btree.html">バイナリツリー</a>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/bintree.html">バイナリツリー</a>
 
 <ul>
 <li>生成</li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/empty_btree.html">empty_btree</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/to_btree.html">to_btree</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/empty_bintree.html">empty_bintree</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/to_bintree.html">to_bintree</a></li>
 <li>情報取得用メタ関数・概念</li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_btree.html">is_btree</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_btree.html">BinaryTree</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_bintree.html">is_bintree</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_bintree.html">BinaryTree</a></li>
 <li>要素アクセス用メタ関数</li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/get_min.html">get_min</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/get_max.html">get_max</a></li>
 <li>操作用メタ関数</li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/btree_push.html">push</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/bintree_push.html">push</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/pop_min.html">pop_min</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/pop_max.html">pop_max</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/flatten.html">flatten</a>
@@ -323,8 +323,8 @@ static_assert(tump::TypeListOrValueList&lt;tump::vlist&lt;&gt;&gt; == true);
 static_assert(tump::TypeListOrValueList&lt;D&lt;int, float&gt;&gt; == true);
 static_assert(tump::TypeListOrValueList&lt;std::vector&lt;int&gt;&gt; == true);
 static_assert(tump::TypeListOrValueList&lt;tump::make_empty_t&lt;std::tuple&lt;int, float&gt;&gt;&gt; == true);
-static_assert(tump::TypeListOrValueList&lt;tump::empty_btree&lt;&gt;&gt; == true);
-static_assert(tump::TypeListOrValueList&lt;tump::to_btree_t&lt;std::tuple&lt;int, float&gt;&gt;&gt; == true);
+static_assert(tump::TypeListOrValueList&lt;tump::empty_bintree&lt;&gt;&gt; == true);
+static_assert(tump::TypeListOrValueList&lt;tump::to_bintree_t&lt;std::tuple&lt;int, float&gt;&gt;&gt; == true);
 
 // コンセプト TypeList によるテンプレートパラメータの制約
 template &lt;tump::TypeListOrValueList List&gt;
@@ -353,10 +353,10 @@ int main() {}
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/vlist.html"><code>tump::vlist</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/btree.html">バイナリツリー</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/btree.html"><code>tump::empty_btree</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/bintree.html">バイナリツリー</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/bintree.html"><code>tump::empty_bintree</code></a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/make_empty.html"><code>tump::make_empty</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/to_btree.html"><code>tump::to_btree</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/to_bintree.html"><code>tump::to_bintree</code></a></li>
 </ul>
 
             </article>

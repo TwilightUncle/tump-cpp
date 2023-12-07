@@ -37,7 +37,7 @@ namespace tump {
 using list1 = tump::list<int, float, char>;
 using list2 = std::tuple<int, float, char>;
 using list3 = tump::vlist<int(1), char(2), std::size_t(3)>;
-using list4 = tump::to_btree_t<list1>;
+using list4 = tump::to_bintree_t<list1>;
 
 static_assert(tump::is_empty_v<tump::make_empty_t<list1>> == true);
 static_assert(tump::is_empty_v<tump::make_empty_t<list2>> == true);
@@ -53,7 +53,7 @@ int main() {}
 - [{`tump::TypeListOrValueList`|ref/container/method/is_t_or_v_list}]
 - [{`tump::list`|ref/container/list}]
 - [{`tump::vlist`|ref/container/vlist}]
-- [{バイナリツリー|ref/container/btree}]
+- [{バイナリツリー|ref/container/bintree}]
 - [{`tump::is_empty`|ref/container/method/is_empty}]
-- [{`tump::to_btree`|ref/container/method/to_btree}]
+- [{`tump::to_bintree`|ref/container/method/to_bintree}]
 - [{`tump::_apply`|ref/operator/apply}]

@@ -36,15 +36,15 @@ TumpCpp における**バイナリツリー**は、[{`tump::list`|ref/container/
 
 | メタ関数・概念の名称 | 説明 |
 | --- | --- |
-| [{`tump::empty_btree`|ref/container/method/empty_btree}] | 空のバイナリツリーです。 |
-| [{`tump::to_btree`|ref/container/method/to_btree}] | 型のリストからバイナリツリーを作成します。 |
+| [{`tump::empty_bintree`|ref/container/method/empty_bintree}] | 空のバイナリツリーです。 |
+| [{`tump::to_bintree`|ref/container/method/to_bintree}] | 型のリストからバイナリツリーを作成します。 |
 
 ### 情報取得
 
 | メタ関数・概念の名称 | 説明 |
 | --- | --- |
-| [{`tump::is_btree`|ref/container/method/is_btree}] | バイナリツリーかどうか判定します。 |
-| [{`tump::BinaryTree`|ref/container/method/is_btree}] | バイナリツリーかどうか判定する制約です。 |
+| [{`tump::is_bintree`|ref/container/method/is_bintree}] | バイナリツリーかどうか判定します。 |
+| [{`tump::BinaryTree`|ref/container/method/is_bintree}] | バイナリツリーかどうか判定する制約です。 |
 
 ### 要素アクセス用メタ関数
 
@@ -57,7 +57,7 @@ TumpCpp における**バイナリツリー**は、[{`tump::list`|ref/container/
 
 | メタ関数の名称 | 説明 |
 | --- | --- |
-| [{`tump::push`|ref/container/method/btree_push}] | バイナリツリーに要素を挿入します。大小関係を比較し、適切な位置に要素が配置されます。 |
+| [{`tump::push`|ref/container/method/bintree_push}] | バイナリツリーに要素を挿入します。大小関係を比較し、適切な位置に要素が配置されます。 |
 | [{`tump::pop_min`|ref/container/method/pop_min}] | バイナリツリーから最小と判定される要素を取り除きます。 |
 | [{`tump::pop_max`|ref/container/method/pop_max}] | バイナリツリーから最大と判定される要素を取り除きます。 |
 | [{`tump::flatten`|ref/container/method/flatten}] | バイナリツリーを[{`tump::list`|ref/container/list}]に変換します。結果のリストが持つ要素の並びは、バイナリツリーの要素の大小関係に準じています。 |

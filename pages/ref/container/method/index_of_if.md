@@ -44,7 +44,7 @@ class A {};
 using list1 = tump::list<int, float, void, std::vector<int>, char>;
 using list2 = std::tuple<int, float, A, std::vector<int>, const double>;
 using list3 = tump::make_empty_t<std::tuple<int>>;
-using list4 = tump::to_btree_t<list1>;
+using list4 = tump::to_bintree_t<list1>;
 
 static_assert(tump::index_of_if_v<tump::is_integral, list1> == 0);
 static_assert(tump::index_of_if_v<tump::is_type_list, list1> == 3);
@@ -66,9 +66,9 @@ int main() {}
 - [{`tump::TypeList`|ref/container/method/is_type_list}]
 - [{`tump::is_type_list`|ref/container/method/is_type_list}]
 - [{`tump::list`|ref/container/list}]
-- [{バイナリツリー|ref/container/btree}]
+- [{バイナリツリー|ref/container/bintree}]
 - [{`tump::make_empty`|ref/container/method/make_empty}]
-- [{`tump::to_btree`|ref/container/method/to_btree}]
+- [{`tump::to_bintree`|ref/container/method/to_bintree}]
 - [{`tump::to_true`|ref/metafunction/to_true}]
 - [{`tump::is_integral`|ref/metafunction/std}]
 - [{`tump::is_floating_point`|ref/metafunction/std}]

@@ -42,7 +42,7 @@ class A {};
 using list1 = tump::list<int, float, void, std::vector<int>, char>;
 using list2 = std::tuple<int, float, A, std::vector<int>, double>;
 using list3 = tump::make_empty_t<std::tuple<int>>;
-using list4 = tump::to_btree_t<list1>;
+using list4 = tump::to_bintree_t<list1>;
 
 static_assert(tump::index_of_v<float, list1> == 1);
 static_assert(tump::index_of_v<double, list1> == -1);
@@ -61,6 +61,6 @@ int main() {}
 - [{`tump::eval`|ref/expression/exp}]
 - [{`tump::TypeList`|ref/container/method/is_type_list}]
 - [{`tump::list`|ref/container/list}]
-- [{バイナリツリー|ref/container/btree}]
+- [{バイナリツリー|ref/container/bintree}]
 - [{`tump::make_empty`|ref/container/method/make_empty}]
-- [{`tump::to_btree`|ref/container/method/to_btree}]
+- [{`tump::to_bintree`|ref/container/method/to_bintree}]

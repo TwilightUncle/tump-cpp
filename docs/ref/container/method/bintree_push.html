@@ -16,7 +16,7 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/style.css">
         <link rel="stylesheet" href="https://twilightuncle.github.io/tump-cpp/assets/css/vendor/prism.css">
-        <title>empty_btree - TumpCpp リファレンス</title>
+        <title>push - TumpCpp リファレンス</title>
     </head>
     <body>
         <header id="header">
@@ -61,8 +61,8 @@
                     
                     <li class="delimiter">></li>
                     <li>
-                        <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/empty_btree.html">
-                            empty_btree
+                        <a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/bintree_push.html">
+                            bintree_push
                         </a>
                     </li>
                     
@@ -188,7 +188,7 @@
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/slice.html">slice</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/unique.html">unique</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/zip.html">zip</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/to_btree.html">to_btree</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/to_bintree.html">to_bintree</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/sort.html">sort</a>
 <!-- - その他のメタ関数 -->
 <!-- - fmap -->
@@ -222,20 +222,20 @@
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/unique.html">unique</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/sort.html">sort</a></li>
 </ul></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/btree.html">バイナリツリー</a>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/bintree.html">バイナリツリー</a>
 
 <ul>
 <li>生成</li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/empty_btree.html">empty_btree</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/to_btree.html">to_btree</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/empty_bintree.html">empty_bintree</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/to_bintree.html">to_bintree</a></li>
 <li>情報取得用メタ関数・概念</li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_btree.html">is_btree</a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_btree.html">BinaryTree</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_bintree.html">is_bintree</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_bintree.html">BinaryTree</a></li>
 <li>要素アクセス用メタ関数</li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/get_min.html">get_min</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/get_max.html">get_max</a></li>
 <li>操作用メタ関数</li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/btree_push.html">push</a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/bintree_push.html">push</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/pop_min.html">pop_min</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/pop_max.html">pop_max</a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/flatten.html">flatten</a>
@@ -269,33 +269,48 @@
 
             </aside>
             <article>
-                <h1>empty_btree - TumpCpp リファレンス</h1>
+                <h1>push - TumpCpp リファレンス</h1>
                 <p></p>
 
                 <pre><code class="language-cpp">namespace tump {
-    template &lt;class Comparing = comparing_size&gt;
-    using empty_btree = ...;
+    namespace fn
+    {
+        // 大元のメタ関数定義
+        template &lt;BynaryTree T, class... Types&gt;
+        struct push {};
+    }
+
+    // 第一級関数化
+    template &lt;unsigned int ArgsSize = 2&gt;
+    requires (ArgsSize &gt; 0)
+    using push = cbk&lt;fn::push, ArgsSize&gt;;
+
+    // 定数メンバ type 呼び出し省略のエイリアステンプレート
+    template &lt;BynaryTree T, class... Types&gt;
+    using push_t = typename fn::push&lt;T, Types...&gt;::type;
 }
 </code></pre>
 
 <h3 id="パラメータ">パラメータ</h3>
 
 <ul>
-<li>Comparing - <a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/comparing_type.html"><code>tump::comparing_type</code></a>で作成した、型の比較クラス</li>
+<li>T - <code>tump::BynaryTree</code>で真と判定されるバイナリツリー</li>
+<li>Types - バイナリツリー<code>T</code>へ格納可能な型のパラメータパック</li>
 </ul>
 
 <h2 id="概要">概要</h2>
 
-<p><code>tump::empty_btree</code>は、任意の基準によって、要素の大小関係を維持する空のバイナリツリーを作成します。</p>
+<p><code>tump::push</code>は、バイナリツリー<code>T</code>へ、任意数の型<code>Types</code>を挿入するメタ関数です。<br />
+挿入された型は、バイナリツリーが保持する要素の大小関係に準じた、適切な位置へ配置されます。</p>
 
 <h2 id="例">例</h2>
 
 <pre><code class="language-cpp">#include &lt;tump.hpp&gt;
 
-using size_btree = tump::push_t&lt;tump::empty_btree&lt;&gt;, std::int32_t, std::uint8_t, std::int64_t&gt;;
+using size_bintree = tump::push_t&lt;tump::empty_bintree&lt;&gt;, std::int32_t, std::uint8_t, std::int64_t&gt;;
 
 static_assert(std::is_same_v&lt;
-    tump::flatten_t&lt;size_btree&gt;,
+    tump::flatten_t&lt;size_bintree&gt;,
     tump::list&lt;std::uint8_t, std::int32_t, std::int64_t&gt;
 &gt; == true);
 
@@ -313,7 +328,7 @@ using sorted_list = tump::eval&lt;
     tump::flatten,
     tump::_apply,
     tump::push&lt;5&gt;,
-    tump::empty_btree&lt;comparing_list_size&gt;,
+    tump::empty_bintree&lt;comparing_list_size&gt;,
     tump::list&lt;int, float&gt;,
     tump::list&lt;&gt;,
     std::tuple&lt;int, float, char&gt;,
@@ -338,9 +353,10 @@ int main() {}
 <ul>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/expression/exp.html"><code>tump::eval</code></a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/list.html"><code>tump::list</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_bintree.html"><code>tump::BynaryTree</code></a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/is_type_list.html"><code>tump::is_type_list</code></a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/len.html"><code>tump::len</code></a></li>
-<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/btree_push.html"><code>tump::push</code></a></li>
+<li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/bintree_push.html"><code>tump::push</code></a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/container/method/flatten.html"><code>tump::flatten</code></a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/vwrap.html"><code>tump::vwrap</code></a></li>
 <li><a href="https://twilightuncle.github.io/tump-cpp/ref/metafunction/comparing_type.html"><code>tump::comparing_type</code></a></li>

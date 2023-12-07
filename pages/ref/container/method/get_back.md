@@ -50,7 +50,7 @@ using list2 = std::tuple<int, float, A, std::vector<int>, double>;
 using list3 = tump::vlist<int(1), long(2), char(3)>;
 using list4 = tump::make_empty_t<std::tuple<int>>;
 using list5 = tump::vlist<>;
-using list6 = tump::to_btree_t<list1>;
+using list6 = tump::to_bintree_t<list1>;
 
 static_assert(std::is_same_v<tump::get_back_t<list1>, char> == true);
 static_assert(tump::get_back_v<list3> == char(3));
@@ -72,7 +72,7 @@ int main() {}
 - [{`tump::TypeListOrValueList`|ref/container/method/is_t_or_v_list}]
 - [{`tump::list`|ref/container/list}]
 - [{`tump::vlist`|ref/container/vlist}]
-- [{バイナリツリー|ref/container/btree}]
+- [{バイナリツリー|ref/container/bintree}]
 - [{`tump::make_empty`|ref/container/method/make_empty}]
-- [{`tump::to_btree`|ref/container/method/to_btree}]
+- [{`tump::to_bintree`|ref/container/method/to_bintree}]
 - [{`tump::_eq`|ref/operator/compare}]
