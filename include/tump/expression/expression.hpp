@@ -8,7 +8,7 @@
 #include TUMP_COMMON_INCLUDE(algorithm/unique.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/sort.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     namespace fn
     {
@@ -36,8 +36,8 @@ namespace tump
                 pop_front_t<Result>,
                 std::conditional_t<
                     is_infixr_v<Priority>,
-                    ::tump::sec<T, get_front_t<Result>>,
-                    ::tump::sec<get_front_t<Result>, T>
+                    ::tump_1_0_0::sec<T, get_front_t<Result>>,
+                    ::tump_1_0_0::sec<get_front_t<Result>, T>
                 >
             > {};
 
@@ -63,18 +63,18 @@ namespace tump
             using exp_n = std::conditional_t<
                 is_infixr_v<Priority>,
                 compose_t<
-                    ::tump::get_front,
+                    ::tump_1_0_0::get_front,
                     partial_apply<
-                        ::tump::foldr,
+                        ::tump_1_0_0::foldr,
                         cbk<exp_n_impl, 2>,
                         list<list<>, Priority>
                     >
                 >,
                 compose_t<
-                    ::tump::reverse,
-                    ::tump::get_front,
+                    ::tump_1_0_0::reverse,
+                    ::tump_1_0_0::get_front,
                     partial_apply<
-                        ::tump::foldl,
+                        ::tump_1_0_0::foldl,
                         cbk<exp_n_impl, 2>,
                         list<list<>, Priority>
                     >
@@ -90,7 +90,7 @@ namespace tump
             template <TypeList List, class... Priorities, e_op_priority FirstPriority>
             struct exp_impl<List, list<Priorities...>, FirstPriority> : public invoke<
                 typename compose<
-                    ::tump::get_front,
+                    ::tump_1_0_0::get_front,
                     exp_n<Priorities>...,
                     exp_n<vwrap<FirstPriority>>
                 >::type,
@@ -102,13 +102,13 @@ namespace tump
             struct extract_sorted_op_priority : public invoke<
                 compose_t<
                     partial_apply<
-                        ::tump::flip,
-                        ::tump::sort,
+                        ::tump_1_0_0::flip,
+                        ::tump_1_0_0::sort,
                         comparing_op_priority
                     >,
-                    ::tump::unique,
-                    tump::partial_apply<::tump::map, cbk<get_op_priority, 1>>,
-                    tump::partial_apply<::tump::filter, cbk<is_operator, 1>>
+                    ::tump_1_0_0::unique,
+                    tump::partial_apply<::tump_1_0_0::map, cbk<get_op_priority, 1>>,
+                    tump::partial_apply<::tump_1_0_0::filter, cbk<is_operator, 1>>
                 >,
                 List
             > {};

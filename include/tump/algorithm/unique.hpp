@@ -4,7 +4,7 @@
 #include TUMP_COMMON_INCLUDE(algorithm/filter.hpp)
 #include TUMP_COMMON_INCLUDE(metafunction/compose.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     namespace fn
     {
@@ -14,7 +14,7 @@ namespace tump
             using unique = push_back_if<
                 compose_t<
                     negation,
-                    partial_apply<::tump::flip, ::tump::exists, Acc>
+                    partial_apply<::tump_1_0_0::flip, ::tump_1_0_0::exists, Acc>
                 >,
                 Acc,
                 Cur

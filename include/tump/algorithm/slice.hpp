@@ -3,7 +3,7 @@
 
 #include TUMP_COMMON_INCLUDE(algorithm/pop.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     template <std::size_t... Sizes>
     struct size_args {};
@@ -20,7 +20,7 @@ namespace tump
             struct slice<List, Result, Start, Size, Stride> : public slice<
                 pop_front_t<List>,
                 invoke_t<
-                    std::conditional_t<Start != 0, ::tump::left, ::tump::push_back<>>,
+                    std::conditional_t<Start != 0, ::tump_1_0_0::left, ::tump_1_0_0::push_back<>>,
                     Result,
                     get_front_t<List>
                 >,

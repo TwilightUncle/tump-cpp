@@ -6,7 +6,7 @@
 #include TUMP_COMMON_INCLUDE(algorithm/compare.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/push.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     /**
      * バイナリツリーの節
@@ -63,8 +63,8 @@ namespace tump
             struct push_impl : public std::type_identity<
                 bnode<
                     T,
-                    invoke_t<::tump::through_if, partial_apply<typename Comparing::lt, T>, New, mp_null_t>,
-                    invoke_t<::tump::through_if, partial_apply<typename Comparing::ge, T>, New, mp_null_t>
+                    invoke_t<::tump_1_0_0::through_if, partial_apply<typename Comparing::lt, T>, New, mp_null_t>,
+                    invoke_t<::tump_1_0_0::through_if, partial_apply<typename Comparing::ge, T>, New, mp_null_t>
                 >
             > {};
 
@@ -271,7 +271,7 @@ namespace tump
         */
         template <TypeList List, TumpComparing Comparing = comparing_size>
         struct to_bintree : public foldl<
-            ::tump::push<>,
+            ::tump_1_0_0::push<>,
             empty_bintree<Comparing>,
             List
         > {};

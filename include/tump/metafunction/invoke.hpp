@@ -3,7 +3,7 @@
 
 #include TUMP_COMMON_INCLUDE(metafunction/partial_apply.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     template <class F>
     concept VFunctional = requires {

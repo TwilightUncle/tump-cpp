@@ -5,13 +5,13 @@
 #include TUMP_COMMON_INCLUDE(algorithm/to_true.hpp)
 #include TUMP_COMMON_INCLUDE(metafunction/invoke.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     namespace fn
     {
         // 2 引数メタ関数と、制約による比較関数生成クラス
         // Compare は メンバ定数 value で 符号付き整数 を返却しなければいけない
-        template <InvocableArgN<2> Compare, InvocableArgN<1> Constraint = ::tump::to_true>
+        template <InvocableArgN<2> Compare, InvocableArgN<1> Constraint = ::tump_1_0_0::to_true>
         struct comparing_type;
 
         template <class Ord, class L, class R>
@@ -111,7 +111,7 @@ namespace tump
         struct is_comparing_type : public std::false_type {};
 
         template <InvocableArgN<2> Compare, InvocableArgN<1> Constraint>
-        struct is_comparing_type<::tump::comparing_type<Compare, Constraint>> : public std::true_type {};
+        struct is_comparing_type<::tump_1_0_0::comparing_type<Compare, Constraint>> : public std::true_type {};
 
         /**
          * size_of の 結果による比較
@@ -181,7 +181,7 @@ namespace tump
     /**
      * value メンバを持つもの同士での比較
     */
-    using comparing_value_member = comparing_type<compare_value_member, tump::is_vfunctional>;
+    using comparing_value_member = comparing_type<compare_value_member, is_vfunctional>;
 }
 
 #endif

@@ -5,7 +5,7 @@
 #include TUMP_COMMON_INCLUDE(metafunction/apply.hpp)
 #include TUMP_COMMON_INCLUDE(metafunction/flip.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     namespace fn
     {
@@ -15,10 +15,10 @@ namespace tump
         template <Invocable F, Invocable... Funcs>
         struct compose : public std::type_identity<
             partial_apply<
-                ::tump::flip,
+                ::tump_1_0_0::flip,
                 partial_apply<
-                    ::tump::foldr,
-                    ::tump::apply<>
+                    ::tump_1_0_0::foldr,
+                    ::tump_1_0_0::apply<>
                 >,
                 list<F, Funcs...>
             >

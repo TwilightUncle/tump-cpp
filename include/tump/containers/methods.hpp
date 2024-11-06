@@ -5,7 +5,7 @@
 #include TUMP_COMMON_INCLUDE(empty.hpp)
 #include TUMP_COMMON_INCLUDE(metafunction/invoke.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     namespace fn
     {

@@ -6,7 +6,7 @@
 #include TUMP_COMMON_INCLUDE(algorithm/replace_if.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/zip.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     /**
      * ラムダ式の仮引数登録用
@@ -47,7 +47,7 @@ namespace tump
                 get_front_t<ArgPaire>,
                 get_back_t<ArgPaire>,
                 map_if_t<
-                    ::tump::is_type_list,
+                    ::tump_1_0_0::is_type_list,
                     partial_apply<cbk<lambda_impl, 2>, ArgPaire>,
                     Expression
                 >

@@ -3,7 +3,7 @@
 
 #include TUMP_COMMON_INCLUDE(algorithm/push.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     namespace fn
     {
@@ -12,7 +12,7 @@ namespace tump
         */
         template <TypeListOrValueList List>
         struct reverse : public fn::unnorm_li<List, foldl_t<
-            ::tump::push_front<>,
+            ::tump_1_0_0::push_front<>,
             list<>,
             to_norm_li_t<List>
         >> {};

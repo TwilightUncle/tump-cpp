@@ -7,7 +7,7 @@
 #include TUMP_COMMON_INCLUDE(algorithm/left_right.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/make_type_list.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     namespace fn
     {
@@ -32,7 +32,7 @@ namespace tump
         // pure とアプリカティブクラスの実装
         template <Invocable F, class Applicative>
         struct ap<pure<F>, Applicative> : public fmap<
-            partial_apply<::tump::apply<>, F>, Applicative
+            partial_apply<::tump_1_0_0::apply<>, F>, Applicative
         > {};
 
         // リストの実装
@@ -51,7 +51,7 @@ namespace tump
         template <Invocable... Funcs, class... Types>
         struct ap<list<Funcs...>, list<Types...>> : public fn::concat<
             fmap_t<
-                partial_apply<::tump::apply<>, Funcs>,
+                partial_apply<::tump_1_0_0::apply<>, Funcs>,
                 list<Types...>
             >...
         > {};

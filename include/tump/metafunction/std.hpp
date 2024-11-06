@@ -5,7 +5,7 @@
 #include TUMP_COMMON_INCLUDE(version.hpp)
 #include TUMP_COMMON_INCLUDE(metafunction/callback.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     // -------------------------------------------------------------------
     // バージョンに左右されるが常にほしいものやちょっといじったものをあらかじめ定義

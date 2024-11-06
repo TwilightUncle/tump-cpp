@@ -6,7 +6,7 @@
 #include TUMP_COMMON_INCLUDE(algorithm/compare.hpp)
 #include TUMP_COMMON_INCLUDE(containers/monad.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     /**
      * 演算子の優先度定義。
@@ -197,7 +197,7 @@ namespace tump
         struct sec<T, _op<F, Priority>> : public apply<F, T> {};
 
         template <InvocableArgN<2> F, e_op_priority Priority, class T>
-        struct sec<_op<F, Priority>, T> : public apply<::tump::flip, F, T> {};
+        struct sec<_op<F, Priority>, T> : public apply<::tump_1_0_0::flip, F, T> {};
     }
 
     /**

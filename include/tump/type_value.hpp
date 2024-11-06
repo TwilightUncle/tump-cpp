@@ -3,7 +3,7 @@
 
 #include <type_traits>
 
-namespace tump
+namespace tump_1_0_0
 {
     /**
      * 受け取った型と値をそのままメンバとして保持する

@@ -3,7 +3,7 @@
 
 #include TUMP_COMMON_INCLUDE(metafunction/callback.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     /**
      * 定数式評価可能な値を型に持ち上げる

@@ -4,7 +4,7 @@
 #include TUMP_COMMON_INCLUDE(algorithm/pop.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/compare.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     namespace fn
     {

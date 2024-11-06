@@ -4,7 +4,7 @@
 #include <optional>
 #include TUMP_COMMON_INCLUDE(metafunction/callback.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     namespace fn
     {

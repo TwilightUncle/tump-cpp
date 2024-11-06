@@ -4,7 +4,7 @@
 #include TUMP_COMMON_INCLUDE(type_value.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/make_type_list.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     /**
      * fill の引数

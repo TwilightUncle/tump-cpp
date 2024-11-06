@@ -4,7 +4,7 @@
 #include TUMP_COMMON_INCLUDE(algorithm/find_if.hpp)
 #include TUMP_COMMON_INCLUDE(expression/expression.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     /**
      * ガードにおける条件分岐節
@@ -42,20 +42,20 @@ namespace tump
         struct guard : public invoke<
             compose_t<
                 cbk<eval_exp, 1>,
-                ::tump::get_back,
+                ::tump_1_0_0::get_back,
                 partial_apply<
-                    ::tump::flip,
-                    ::tump::find_if,
+                    ::tump_1_0_0::flip,
+                    ::tump_1_0_0::find_if,
                     list<Clauses...>
                 >
             >,
             compose_t<
                 partial_apply<
-                    ::tump::is_base_of,
+                    ::tump_1_0_0::is_base_of,
                     std::true_type
                 >,
                 cbk<eval_exp, 1>,
-                ::tump::get_front
+                ::tump_1_0_0::get_front
             >
         > {};
     }

@@ -6,7 +6,7 @@
 #include TUMP_COMMON_INCLUDE(algorithm/concat.hpp)
 #include TUMP_COMMON_INCLUDE(metafunction/flip.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     namespace fn
     {
@@ -65,8 +65,8 @@ namespace tump
         struct push_back_if<F, List, T> : public invoke<
             std::conditional_t<
                 invoke_v<F, T>,
-                ::tump::push_back<>,
-                ::tump::left
+                ::tump_1_0_0::push_back<>,
+                ::tump_1_0_0::left
             >,
             List,
             T
@@ -79,7 +79,7 @@ namespace tump
         template <InvocableArgN<1> F, TypeList List, class... Types>
         struct push_front_if : public foldr<
             partial_apply<
-                ::tump::flip,
+                ::tump_1_0_0::flip,
                 partial_apply<cbk<push_front_if, 3>, F>
             >,
             List,
@@ -90,8 +90,8 @@ namespace tump
         struct push_front_if<F, List, T> : public invoke<
             std::conditional_t<
                 invoke_v<F, T>,
-                ::tump::push_front<>,
-                ::tump::left
+                ::tump_1_0_0::push_front<>,
+                ::tump_1_0_0::left
             >,
             List,
             T

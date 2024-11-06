@@ -4,7 +4,7 @@
 #include TUMP_COMMON_INCLUDE(type_value.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/pop.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     namespace fn {
         namespace impl

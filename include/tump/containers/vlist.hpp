@@ -4,7 +4,7 @@
 #include TUMP_COMMON_INCLUDE(vwrap.hpp)
 #include TUMP_COMMON_INCLUDE(containers/list.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     /**
      * 非型テンプレートパラメータパックを保持する

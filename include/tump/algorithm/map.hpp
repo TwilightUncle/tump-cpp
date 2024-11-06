@@ -4,7 +4,7 @@
 #include TUMP_COMMON_INCLUDE(algorithm/get.hpp)
 #include TUMP_COMMON_INCLUDE(metafunction/apply.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     namespace fn
     {
@@ -43,7 +43,7 @@ namespace tump
                 std::conditional_t<
                     invoke_v<Pred, Types>,
                     F,
-                    ::tump::type_identity
+                    ::tump_1_0_0::type_identity
                 >,
                 Types
             >...

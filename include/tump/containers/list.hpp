@@ -3,7 +3,7 @@
 
 #include TUMP_COMMON_INCLUDE(containers/methods.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     namespace _
     {
@@ -42,7 +42,7 @@ namespace tump
         struct make_empty<list<Types...>> : public std::type_identity<list<>> {};
 
         template <template <class...> class Outer, class... Types>
-        requires (!std::is_base_of_v<::tump::_::base_list, Outer<Types...>>)
+        requires (!std::is_base_of_v<::tump_1_0_0::_::base_list, Outer<Types...>>)
         struct make_empty<Outer<Types...>> : public std::type_identity<empty<Outer>> {};
 
         template <template <class...> class Outer>

@@ -4,7 +4,7 @@
 #include <type_traits>
 #include <concepts>
 
-namespace tump
+namespace tump_1_0_0
 {
     namespace fn
     {

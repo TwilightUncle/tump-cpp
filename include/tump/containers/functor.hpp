@@ -4,7 +4,7 @@
 #include TUMP_COMMON_INCLUDE(metafunction/compose.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/map.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     namespace fn
     {

@@ -4,7 +4,7 @@
 #include TUMP_COMMON_INCLUDE(algorithm/get.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/push.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     namespace fn
     {

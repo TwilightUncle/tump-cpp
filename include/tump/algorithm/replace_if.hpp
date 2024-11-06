@@ -4,7 +4,7 @@
 #include TUMP_COMMON_INCLUDE(algorithm/map.hpp)
 #include TUMP_COMMON_INCLUDE(algorithm/left_right.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     namespace fn
     {
@@ -12,13 +12,13 @@ namespace tump
          * 条件に一意する要素を NewType に置き換える
         */
         template <InvocableArgN<1> Pred, class NewType, TypeList List>
-        using replace_if = fn::map_if<Pred, partial_apply<::tump::left, NewType>, List>;
+        using replace_if = fn::map_if<Pred, partial_apply<::tump_1_0_0::left, NewType>, List>;
 
         /**
          * リストに存在する OldType をすべて NewType に置き換える
         */
         template <class OldType, class NewType, TypeList List>
-        using replace = replace_if<partial_apply<::tump::is_same, OldType>, NewType, List>;
+        using replace = replace_if<partial_apply<::tump_1_0_0::is_same, OldType>, NewType, List>;
     }
 
     /**

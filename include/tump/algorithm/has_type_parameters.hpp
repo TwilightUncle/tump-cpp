@@ -4,7 +4,7 @@
 #include TUMP_COMMON_INCLUDE(containers/vlist.hpp)
 #include TUMP_COMMON_INCLUDE(metafunction/std.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     namespace fn
     {

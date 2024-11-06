@@ -3,7 +3,7 @@
 
 #include TUMP_COMMON_INCLUDE(containers/bintree.hpp)
 
-namespace tump
+namespace tump_1_0_0
 {
     namespace fn
     {
@@ -14,11 +14,11 @@ namespace tump
         template <TypeListOrValueList List, TumpComparing Comparing = comparing_size>
         struct sort : public invoke<
             compose_t<
-                partial_apply<::tump::unnorm_li, List>,
-                ::tump::flatten,
+                partial_apply<::tump_1_0_0::unnorm_li, List>,
+                ::tump_1_0_0::flatten,
                 partial_apply<
-                    ::tump::flip,
-                    ::tump::to_bintree,
+                    ::tump_1_0_0::flip,
+                    ::tump_1_0_0::to_bintree,
                     Comparing
                 >
             >,
