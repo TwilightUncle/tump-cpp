@@ -1,8 +1,8 @@
 #ifndef TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_CONTAINERS_FUNCTOR_HPP
 #define TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_CONTAINERS_FUNCTOR_HPP
 
-#include TUMP_COMMON_INCLUDE(metafunction/compose.hpp)
-#include TUMP_COMMON_INCLUDE(algorithm/map.hpp)
+#include TUMP_V_1_0_0_COMMON_INCLUDE(metafunction/compose.hpp)
+#include TUMP_V_1_0_0_COMMON_INCLUDE(algorithm/map.hpp)
 
 namespace tump_1_0_0
 {

@@ -1,10 +1,10 @@
 #ifndef TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_ALGORITHM_PUSH_HPP
 #define TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_ALGORITHM_PUSH_HPP
 
-#include TUMP_COMMON_INCLUDE(algorithm/make_type_list.hpp)
-#include TUMP_COMMON_INCLUDE(algorithm/left_right.hpp)
-#include TUMP_COMMON_INCLUDE(algorithm/concat.hpp)
-#include TUMP_COMMON_INCLUDE(metafunction/flip.hpp)
+#include TUMP_V_1_0_0_COMMON_INCLUDE(algorithm/make_type_list.hpp)
+#include TUMP_V_1_0_0_COMMON_INCLUDE(algorithm/left_right.hpp)
+#include TUMP_V_1_0_0_COMMON_INCLUDE(algorithm/concat.hpp)
+#include TUMP_V_1_0_0_COMMON_INCLUDE(metafunction/flip.hpp)
 
 namespace tump_1_0_0
 {

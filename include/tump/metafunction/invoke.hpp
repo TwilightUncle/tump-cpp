@@ -1,7 +1,7 @@
 #ifndef TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_METAFUNCTION_INVOKE_HPP
 #define TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_METAFUNCTION_INVOKE_HPP
 
-#include TUMP_COMMON_INCLUDE(metafunction/partial_apply.hpp)
+#include TUMP_V_1_0_0_COMMON_INCLUDE(metafunction/partial_apply.hpp)
 
 namespace tump_1_0_0
 {

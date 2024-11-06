@@ -1,9 +1,9 @@
 #ifndef TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_METAFUNCTION_RELAY_HPP
 #define TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_METAFUNCTION_RELAY_HPP
 
-#include TUMP_COMMON_INCLUDE(algorithm/fold.hpp)
-#include TUMP_COMMON_INCLUDE(metafunction/apply.hpp)
-#include TUMP_COMMON_INCLUDE(metafunction/flip.hpp)
+#include TUMP_V_1_0_0_COMMON_INCLUDE(algorithm/fold.hpp)
+#include TUMP_V_1_0_0_COMMON_INCLUDE(metafunction/apply.hpp)
+#include TUMP_V_1_0_0_COMMON_INCLUDE(metafunction/flip.hpp)
 
 namespace tump_1_0_0
 {

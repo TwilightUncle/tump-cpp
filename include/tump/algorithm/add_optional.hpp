@@ -2,7 +2,7 @@
 #define TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_ALGORITHM_ADD_OPTIONAL_HPP
 
 #include <optional>
-#include TUMP_COMMON_INCLUDE(metafunction/callback.hpp)
+#include TUMP_V_1_0_0_COMMON_INCLUDE(metafunction/callback.hpp)
 
 namespace tump_1_0_0
 {

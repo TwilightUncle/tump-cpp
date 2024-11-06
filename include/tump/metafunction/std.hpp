@@ -2,8 +2,8 @@
 #define TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_METAFUNCTION_STD_HPP
 
 #include <concepts>
-#include TUMP_COMMON_INCLUDE(version.hpp)
-#include TUMP_COMMON_INCLUDE(metafunction/callback.hpp)
+#include TUMP_V_1_0_0_COMMON_INCLUDE(version.hpp)
+#include TUMP_V_1_0_0_COMMON_INCLUDE(metafunction/callback.hpp)
 
 namespace tump_1_0_0
 {
