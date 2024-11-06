@@ -7,7 +7,6 @@
 
 #define TUMP_VERSION_1_0_0 100'000'0000
 #define TUMP_VERSION_1_0_0_NAME "1.0.0"
-#define TUMP_VERSION_1_0_0_NAMESPACE_PREFIX tump_1_0_0
 
 #if !defined(TUMP_VERSION_1) || TUMP_VERSION_1 < TUMP_VERSION_1_0_0
     // 未定義または下位互換しか読み込まれていなかったら再定義
@@ -28,26 +27,14 @@
 
 // c++20対応テスト
 #ifndef TUMP_ENABLE_CPP20
-    #if __cplusplus == 202002L
+    #if __cplusplus == 202002L || defined(_MSVC_LANG) && _MSVC_LANG == 202002L
         #define TUMP_ENABLE_CPP20
-    #else // __cplusplus > 202002L
-        #ifdef _MSVC_LANG
-            #if _MSVC_LANG == 202002L
-                #define TUMP_ENABLE_CPP20
-            #endif // _MSVC_LANG > 202002L
-        #endif // _MSVC_LANG
-    #endif // __cplusplus > 202002L
+    #endif
 #endif
 
 // c++23対応テスト
 #ifndef TUMP_ENABLE_CPP23
-    #if __cplusplus > 202002L
+    #if __cplusplus > 202002L || defined(_MSVC_LANG) && _MSVC_LANG > 202002L
         #define TUMP_ENABLE_CPP23
-    #else // __cplusplus > 202002L
-        #ifdef _MSVC_LANG
-            #if _MSVC_LANG > 202002L
-                #define TUMP_ENABLE_CPP23
-            #endif // _MSVC_LANG > 202002L
-        #endif // _MSVC_LANG
-    #endif // __cplusplus > 202002L
+    #endif
 #endif
