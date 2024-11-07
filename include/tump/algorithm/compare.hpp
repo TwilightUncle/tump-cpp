@@ -1,7 +1,6 @@
 #ifndef TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_ALGORITHM_COMPARE_HPP
 #define TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_ALGORITHM_COMPARE_HPP
 
-#include TUMP_V_1_0_0_COMMON_INCLUDE(vwrap.hpp)
 #include TUMP_V_1_0_0_COMMON_INCLUDE(algorithm/to_true.hpp)
 #include TUMP_V_1_0_0_COMMON_INCLUDE(metafunction/invoke.hpp)
 

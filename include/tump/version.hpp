@@ -8,12 +8,6 @@
 #define TUMP_VERSION_1_0_0 100'000'0000
 #define TUMP_VERSION_1_0_0_NAME "1.0.0"
 
-#if !defined(TUMP_VERSION_1) || TUMP_VERSION_1 < TUMP_VERSION_1_0_0
-    // 未定義または下位互換しか読み込まれていなかったら再定義
-    #define TUMP_VERSION_1 TUMP_VERSION_1_0_0
-    #define TUMP_VERSION_1_NAME TUMP_VERSION_1_0_0_NAME
-#endif
-
 // 最初に読み込まれたTUMPあるいは、あらかじめバージョン指定されていた場合、
 // デフォルトでは当該ソースを読み込むようにする
 #if !defined(TUMP_VERSION) || TUMP_VERSION == TUMP_VERSION_1_0_0
