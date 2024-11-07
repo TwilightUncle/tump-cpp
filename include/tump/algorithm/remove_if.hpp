@@ -1,10 +1,10 @@
-#ifndef TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_ALGORITHM_REMOVE_IF_HPP
-#define TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_ALGORITHM_REMOVE_IF_HPP
+#ifndef TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_ALGORITHM_REMOVE_IF_HPP
+#define TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_ALGORITHM_REMOVE_IF_HPP
 
-#include TUMP_V_1_0_0_COMMON_INCLUDE(algorithm/filter.hpp)
-#include TUMP_V_1_0_0_COMMON_INCLUDE(metafunction/compose.hpp)
+#include TUMP_V_0_1_0_COMMON_INCLUDE(algorithm/filter.hpp)
+#include TUMP_V_0_1_0_COMMON_INCLUDE(metafunction/compose.hpp)
 
-namespace tump_1_0_0
+namespace tump_0_1_0
 {
     namespace fn
     {
@@ -23,7 +23,7 @@ namespace tump_1_0_0
         template <class Search, TypeList List>
         using remove = unnorm_li<
             List,
-            typename remove_if<partial_apply<::tump_1_0_0::is_same, Search>, to_norm_li_t<List>>::type
+            typename remove_if<partial_apply<::tump_0_1_0::is_same, Search>, to_norm_li_t<List>>::type
         >;
     }
 

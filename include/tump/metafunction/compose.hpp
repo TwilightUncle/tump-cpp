@@ -1,11 +1,11 @@
-#ifndef TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_METAFUNCTION_RELAY_HPP
-#define TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_METAFUNCTION_RELAY_HPP
+#ifndef TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_METAFUNCTION_RELAY_HPP
+#define TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_METAFUNCTION_RELAY_HPP
 
-#include TUMP_V_1_0_0_COMMON_INCLUDE(algorithm/fold.hpp)
-#include TUMP_V_1_0_0_COMMON_INCLUDE(metafunction/apply.hpp)
-#include TUMP_V_1_0_0_COMMON_INCLUDE(metafunction/flip.hpp)
+#include TUMP_V_0_1_0_COMMON_INCLUDE(algorithm/fold.hpp)
+#include TUMP_V_0_1_0_COMMON_INCLUDE(metafunction/apply.hpp)
+#include TUMP_V_0_1_0_COMMON_INCLUDE(metafunction/flip.hpp)
 
-namespace tump_1_0_0
+namespace tump_0_1_0
 {
     namespace fn
     {
@@ -15,10 +15,10 @@ namespace tump_1_0_0
         template <Invocable F, Invocable... Funcs>
         struct compose : public std::type_identity<
             partial_apply<
-                ::tump_1_0_0::flip,
+                ::tump_0_1_0::flip,
                 partial_apply<
-                    ::tump_1_0_0::foldr,
-                    ::tump_1_0_0::apply<>
+                    ::tump_0_1_0::foldr,
+                    ::tump_0_1_0::apply<>
                 >,
                 list<F, Funcs...>
             >

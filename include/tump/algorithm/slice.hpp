@@ -1,9 +1,9 @@
-#ifndef TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_ALGORITHM_SLICE_HPP
-#define TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_ALGORITHM_SLICE_HPP
+#ifndef TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_ALGORITHM_SLICE_HPP
+#define TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_ALGORITHM_SLICE_HPP
 
-#include TUMP_V_1_0_0_COMMON_INCLUDE(algorithm/pop.hpp)
+#include TUMP_V_0_1_0_COMMON_INCLUDE(algorithm/pop.hpp)
 
-namespace tump_1_0_0
+namespace tump_0_1_0
 {
     template <std::size_t... Sizes>
     struct size_args {};
@@ -20,7 +20,7 @@ namespace tump_1_0_0
             struct slice<List, Result, Start, Size, Stride> : public slice<
                 pop_front_t<List>,
                 invoke_t<
-                    std::conditional_t<Start != 0, ::tump_1_0_0::left, ::tump_1_0_0::push_back<>>,
+                    std::conditional_t<Start != 0, ::tump_0_1_0::left, ::tump_0_1_0::push_back<>>,
                     Result,
                     get_front_t<List>
                 >,

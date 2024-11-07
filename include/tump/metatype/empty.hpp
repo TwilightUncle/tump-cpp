@@ -1,9 +1,9 @@
-#ifndef TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_METATYPE_EMPTY_HPP
-#define TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_METATYPE_EMPTY_HPP
+#ifndef TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_METATYPE_EMPTY_HPP
+#define TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_METATYPE_EMPTY_HPP
 
 #include <type_traits>
 
-namespace tump_1_0_0
+namespace tump_0_1_0
 {
     /**
      * 空のリスト

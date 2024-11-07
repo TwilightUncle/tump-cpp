@@ -1,9 +1,9 @@
-#ifndef TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_METATYPE_VWRAP_HPP
-#define TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_METATYPE_VWRAP_HPP
+#ifndef TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_METATYPE_VWRAP_HPP
+#define TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_METATYPE_VWRAP_HPP
 
-#include TUMP_V_1_0_0_COMMON_INCLUDE(metafunction/callback.hpp)
+#include TUMP_V_0_1_0_COMMON_INCLUDE(metafunction/callback.hpp)
 
-namespace tump_1_0_0
+namespace tump_0_1_0
 {
     /**
      * 定数式評価可能な値を型に持ち上げる

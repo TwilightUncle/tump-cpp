@@ -1,9 +1,9 @@
-#ifndef TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_ALGORITHM_REVERSE_HPP
-#define TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_ALGORITHM_REVERSE_HPP
+#ifndef TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_ALGORITHM_REVERSE_HPP
+#define TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_ALGORITHM_REVERSE_HPP
 
-#include TUMP_V_1_0_0_COMMON_INCLUDE(algorithm/push.hpp)
+#include TUMP_V_0_1_0_COMMON_INCLUDE(algorithm/push.hpp)
 
-namespace tump_1_0_0
+namespace tump_0_1_0
 {
     namespace fn
     {
@@ -12,7 +12,7 @@ namespace tump_1_0_0
         */
         template <TypeListOrValueList List>
         struct reverse : public fn::unnorm_li<List, foldl_t<
-            ::tump_1_0_0::push_front<>,
+            ::tump_0_1_0::push_front<>,
             list<>,
             to_norm_li_t<List>
         >> {};

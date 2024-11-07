@@ -1,12 +1,12 @@
-#ifndef TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_EXPRESSION_LAMBDA_HPP
-#define TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_EXPRESSION_LAMBDA_HPP
+#ifndef TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_EXPRESSION_LAMBDA_HPP
+#define TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_EXPRESSION_LAMBDA_HPP
 
-#include TUMP_V_1_0_0_COMMON_INCLUDE(expression/expression.hpp)
-#include TUMP_V_1_0_0_COMMON_INCLUDE(algorithm/unique.hpp)
-#include TUMP_V_1_0_0_COMMON_INCLUDE(algorithm/replace_if.hpp)
-#include TUMP_V_1_0_0_COMMON_INCLUDE(algorithm/zip.hpp)
+#include TUMP_V_0_1_0_COMMON_INCLUDE(expression/expression.hpp)
+#include TUMP_V_0_1_0_COMMON_INCLUDE(algorithm/unique.hpp)
+#include TUMP_V_0_1_0_COMMON_INCLUDE(algorithm/replace_if.hpp)
+#include TUMP_V_0_1_0_COMMON_INCLUDE(algorithm/zip.hpp)
 
-namespace tump_1_0_0
+namespace tump_0_1_0
 {
     /**
      * ラムダ式の仮引数登録用
@@ -47,7 +47,7 @@ namespace tump_1_0_0
                 get_front_t<ArgPaire>,
                 get_back_t<ArgPaire>,
                 map_if_t<
-                    ::tump_1_0_0::is_type_list,
+                    ::tump_0_1_0::is_type_list,
                     partial_apply<cbk<lambda_impl, 2>, ArgPaire>,
                     Expression
                 >

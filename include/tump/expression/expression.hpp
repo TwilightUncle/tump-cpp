@@ -1,14 +1,14 @@
-#ifndef TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_EXPRESSION_EXPRESSION_HPP
-#define TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_EXPRESSION_EXPRESSION_HPP
+#ifndef TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_EXPRESSION_EXPRESSION_HPP
+#define TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_EXPRESSION_EXPRESSION_HPP
 
 #include <utility>
-#include TUMP_V_1_0_0_COMMON_INCLUDE(expression/operator.hpp)
-#include TUMP_V_1_0_0_COMMON_INCLUDE(algorithm/pop.hpp)
-#include TUMP_V_1_0_0_COMMON_INCLUDE(algorithm/reverse.hpp)
-#include TUMP_V_1_0_0_COMMON_INCLUDE(algorithm/unique.hpp)
-#include TUMP_V_1_0_0_COMMON_INCLUDE(algorithm/sort.hpp)
+#include TUMP_V_0_1_0_COMMON_INCLUDE(expression/operator.hpp)
+#include TUMP_V_0_1_0_COMMON_INCLUDE(algorithm/pop.hpp)
+#include TUMP_V_0_1_0_COMMON_INCLUDE(algorithm/reverse.hpp)
+#include TUMP_V_0_1_0_COMMON_INCLUDE(algorithm/unique.hpp)
+#include TUMP_V_0_1_0_COMMON_INCLUDE(algorithm/sort.hpp)
 
-namespace tump_1_0_0
+namespace tump_0_1_0
 {
     namespace fn
     {
@@ -36,8 +36,8 @@ namespace tump_1_0_0
                 pop_front_t<Result>,
                 std::conditional_t<
                     is_infixr_v<Priority>,
-                    ::tump_1_0_0::sec<T, get_front_t<Result>>,
-                    ::tump_1_0_0::sec<get_front_t<Result>, T>
+                    ::tump_0_1_0::sec<T, get_front_t<Result>>,
+                    ::tump_0_1_0::sec<get_front_t<Result>, T>
                 >
             > {};
 
@@ -63,18 +63,18 @@ namespace tump_1_0_0
             using exp_n = std::conditional_t<
                 is_infixr_v<Priority>,
                 compose_t<
-                    ::tump_1_0_0::get_front,
+                    ::tump_0_1_0::get_front,
                     partial_apply<
-                        ::tump_1_0_0::foldr,
+                        ::tump_0_1_0::foldr,
                         cbk<exp_n_impl, 2>,
                         list<list<>, Priority>
                     >
                 >,
                 compose_t<
-                    ::tump_1_0_0::reverse,
-                    ::tump_1_0_0::get_front,
+                    ::tump_0_1_0::reverse,
+                    ::tump_0_1_0::get_front,
                     partial_apply<
-                        ::tump_1_0_0::foldl,
+                        ::tump_0_1_0::foldl,
                         cbk<exp_n_impl, 2>,
                         list<list<>, Priority>
                     >
@@ -90,7 +90,7 @@ namespace tump_1_0_0
             template <TypeList List, class... Priorities, e_op_priority FirstPriority>
             struct exp_impl<List, list<Priorities...>, FirstPriority> : public invoke<
                 typename compose<
-                    ::tump_1_0_0::get_front,
+                    ::tump_0_1_0::get_front,
                     exp_n<Priorities>...,
                     exp_n<vwrap<FirstPriority>>
                 >::type,
@@ -102,13 +102,13 @@ namespace tump_1_0_0
             struct extract_sorted_op_priority : public invoke<
                 compose_t<
                     partial_apply<
-                        ::tump_1_0_0::flip,
-                        ::tump_1_0_0::sort,
+                        ::tump_0_1_0::flip,
+                        ::tump_0_1_0::sort,
                         comparing_op_priority
                     >,
-                    ::tump_1_0_0::unique,
-                    tump::partial_apply<::tump_1_0_0::map, cbk<get_op_priority, 1>>,
-                    tump::partial_apply<::tump_1_0_0::filter, cbk<is_operator, 1>>
+                    ::tump_0_1_0::unique,
+                    tump::partial_apply<::tump_0_1_0::map, cbk<get_op_priority, 1>>,
+                    tump::partial_apply<::tump_0_1_0::filter, cbk<is_operator, 1>>
                 >,
                 List
             > {};

@@ -1,9 +1,9 @@
-#ifndef TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_CONTAINERS_VLIST_HPP
-#define TUMP_V_1_0_0_INCLUDE_GUARD_TUMP_CONTAINERS_VLIST_HPP
+#ifndef TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_CONTAINERS_VLIST_HPP
+#define TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_CONTAINERS_VLIST_HPP
 
-#include TUMP_V_1_0_0_COMMON_INCLUDE(containers/list.hpp)
+#include TUMP_V_0_1_0_COMMON_INCLUDE(containers/list.hpp)
 
-namespace tump_1_0_0
+namespace tump_0_1_0
 {
     /**
      * 非型テンプレートパラメータパックを保持する
