@@ -1,13 +1,13 @@
-#ifndef TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_CONTAINERS_APPLICATIVE_HPP
-#define TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_CONTAINERS_APPLICATIVE_HPP
+#ifndef TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_CONTAINERS_APPLICATIVE_HPP
+#define TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_CONTAINERS_APPLICATIVE_HPP
 
-#include TUMP_V_0_1_0_COMMON_INCLUDE(containers/functor.hpp)
-#include TUMP_V_0_1_0_COMMON_INCLUDE(metafunction/apply.hpp)
-#include TUMP_V_0_1_0_COMMON_INCLUDE(algorithm/concat.hpp)
-#include TUMP_V_0_1_0_COMMON_INCLUDE(algorithm/left_right.hpp)
-#include TUMP_V_0_1_0_COMMON_INCLUDE(algorithm/make_type_list.hpp)
+#include TUMP_V_0_1_1_COMMON_INCLUDE(containers/functor.hpp)
+#include TUMP_V_0_1_1_COMMON_INCLUDE(metafunction/apply.hpp)
+#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/concat.hpp)
+#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/left_right.hpp)
+#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/make_type_list.hpp)
 
-namespace tump_0_1_0
+namespace tump_0_1_1
 {
     namespace fn
     {
@@ -32,7 +32,7 @@ namespace tump_0_1_0
         // pure とアプリカティブクラスの実装
         template <Invocable F, class Applicative>
         struct ap<pure<F>, Applicative> : public fmap<
-            partial_apply<::tump_0_1_0::apply<>, F>, Applicative
+            partial_apply<::tump_0_1_1::apply<>, F>, Applicative
         > {};
 
         // リストの実装
@@ -51,7 +51,7 @@ namespace tump_0_1_0
         template <Invocable... Funcs, class... Types>
         struct ap<list<Funcs...>, list<Types...>> : public fn::concat<
             fmap_t<
-                partial_apply<::tump_0_1_0::apply<>, Funcs>,
+                partial_apply<::tump_0_1_1::apply<>, Funcs>,
                 list<Types...>
             >...
         > {};

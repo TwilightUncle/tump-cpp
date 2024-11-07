@@ -1,9 +1,9 @@
-#ifndef TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_ALGORITHM_MAKE_TYPE_LIST_HPP
-#define TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_ALGORITHM_MAKE_TYPE_LIST_HPP
+#ifndef TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_MAKE_TYPE_LIST_HPP
+#define TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_MAKE_TYPE_LIST_HPP
 
-#include TUMP_V_0_1_0_COMMON_INCLUDE(algorithm/has_type_parameters.hpp)
+#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/has_type_parameters.hpp)
 
-namespace tump_0_1_0
+namespace tump_0_1_1
 {
     namespace fn
     {

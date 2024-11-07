@@ -1,10 +1,10 @@
-#ifndef TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_ALGORITHM_LEFT_RIGHT_HPP
-#define TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_ALGORITHM_LEFT_RIGHT_HPP
+#ifndef TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_LEFT_RIGHT_HPP
+#define TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_LEFT_RIGHT_HPP
 
-#include TUMP_V_0_1_0_COMMON_INCLUDE(algorithm/len.hpp)
-#include TUMP_V_0_1_0_COMMON_INCLUDE(algorithm/exists.hpp)
+#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/len.hpp)
+#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/exists.hpp)
 
-namespace tump_0_1_0
+namespace tump_0_1_1
 {
     namespace fn
     {

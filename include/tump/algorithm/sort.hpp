@@ -1,9 +1,9 @@
-#ifndef TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_ALGORITHM_SORT_HPP
-#define TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_ALGORITHM_SORT_HPP
+#ifndef TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_SORT_HPP
+#define TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_SORT_HPP
 
-#include TUMP_V_0_1_0_COMMON_INCLUDE(containers/bintree.hpp)
+#include TUMP_V_0_1_1_COMMON_INCLUDE(containers/bintree.hpp)
 
-namespace tump_0_1_0
+namespace tump_0_1_1
 {
     namespace fn
     {
@@ -14,11 +14,11 @@ namespace tump_0_1_0
         template <TypeListOrValueList List, TumpComparing Comparing = comparing_size>
         struct sort : public invoke<
             compose_t<
-                partial_apply<::tump_0_1_0::unnorm_li, List>,
-                ::tump_0_1_0::flatten,
+                partial_apply<::tump_0_1_1::unnorm_li, List>,
+                ::tump_0_1_1::flatten,
                 partial_apply<
-                    ::tump_0_1_0::flip,
-                    ::tump_0_1_0::to_bintree,
+                    ::tump_0_1_1::flip,
+                    ::tump_0_1_1::to_bintree,
                     Comparing
                 >
             >,

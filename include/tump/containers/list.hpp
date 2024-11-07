@@ -1,9 +1,9 @@
-#ifndef TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_CONTAINERS_LIST_HPP
-#define TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_CONTAINERS_LIST_HPP
+#ifndef TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_CONTAINERS_LIST_HPP
+#define TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_CONTAINERS_LIST_HPP
 
-#include TUMP_V_0_1_0_COMMON_INCLUDE(containers/methods.hpp)
+#include TUMP_V_0_1_1_COMMON_INCLUDE(containers/methods.hpp)
 
-namespace tump_0_1_0
+namespace tump_0_1_1
 {
     namespace _
     {
@@ -42,7 +42,7 @@ namespace tump_0_1_0
         struct make_empty<list<Types...>> : public std::type_identity<list<>> {};
 
         template <template <class...> class Outer, class... Types>
-        requires (!std::is_base_of_v<::tump_0_1_0::_::base_list, Outer<Types...>>)
+        requires (!std::is_base_of_v<::tump_0_1_1::_::base_list, Outer<Types...>>)
         struct make_empty<Outer<Types...>> : public std::type_identity<empty<Outer>> {};
 
         template <template <class...> class Outer>

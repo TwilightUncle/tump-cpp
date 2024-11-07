@@ -1,11 +1,11 @@
-#ifndef TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_EXPRESSION_OPERATOR_HPP
-#define TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_EXPRESSION_OPERATOR_HPP
+#ifndef TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_EXPRESSION_OPERATOR_HPP
+#define TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_EXPRESSION_OPERATOR_HPP
 
-#include TUMP_V_0_1_0_COMMON_INCLUDE(algorithm/push.hpp)
-#include TUMP_V_0_1_0_COMMON_INCLUDE(algorithm/compare.hpp)
-#include TUMP_V_0_1_0_COMMON_INCLUDE(containers/monad.hpp)
+#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/push.hpp)
+#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/compare.hpp)
+#include TUMP_V_0_1_1_COMMON_INCLUDE(containers/monad.hpp)
 
-namespace tump_0_1_0
+namespace tump_0_1_1
 {
     /**
      * 演算子の優先度定義。
@@ -196,7 +196,7 @@ namespace tump_0_1_0
         struct sec<T, _op<F, Priority>> : public apply<F, T> {};
 
         template <InvocableArgN<2> F, e_op_priority Priority, class T>
-        struct sec<_op<F, Priority>, T> : public apply<::tump_0_1_0::flip, F, T> {};
+        struct sec<_op<F, Priority>, T> : public apply<::tump_0_1_1::flip, F, T> {};
     }
 
     /**

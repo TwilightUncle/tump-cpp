@@ -1,9 +1,9 @@
-#ifndef TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_ALGORITHM_CONCAT_HPP
-#define TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_ALGORITHM_CONCAT_HPP
+#ifndef TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_CONCAT_HPP
+#define TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_CONCAT_HPP
 
-#include TUMP_V_0_1_0_COMMON_INCLUDE(algorithm/fold.hpp)
+#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/fold.hpp)
 
-namespace tump_0_1_0
+namespace tump_0_1_1
 {
     namespace fn
     {

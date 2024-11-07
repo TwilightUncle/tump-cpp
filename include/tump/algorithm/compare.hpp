@@ -1,16 +1,16 @@
-#ifndef TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_ALGORITHM_COMPARE_HPP
-#define TUMP_V_0_1_0_INCLUDE_GUARD_TUMP_ALGORITHM_COMPARE_HPP
+#ifndef TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_COMPARE_HPP
+#define TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_COMPARE_HPP
 
-#include TUMP_V_0_1_0_COMMON_INCLUDE(algorithm/to_true.hpp)
-#include TUMP_V_0_1_0_COMMON_INCLUDE(metafunction/invoke.hpp)
+#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/to_true.hpp)
+#include TUMP_V_0_1_1_COMMON_INCLUDE(metafunction/invoke.hpp)
 
-namespace tump_0_1_0
+namespace tump_0_1_1
 {
     namespace fn
     {
         // 2 引数メタ関数と、制約による比較関数生成クラス
         // Compare は メンバ定数 value で 符号付き整数 を返却しなければいけない
-        template <InvocableArgN<2> Compare, InvocableArgN<1> Constraint = ::tump_0_1_0::to_true>
+        template <InvocableArgN<2> Compare, InvocableArgN<1> Constraint = ::tump_0_1_1::to_true>
         struct comparing_type;
 
         template <class Ord, class L, class R>
@@ -110,7 +110,7 @@ namespace tump_0_1_0
         struct is_comparing_type : public std::false_type {};
 
         template <InvocableArgN<2> Compare, InvocableArgN<1> Constraint>
-        struct is_comparing_type<::tump_0_1_0::comparing_type<Compare, Constraint>> : public std::true_type {};
+        struct is_comparing_type<::tump_0_1_1::comparing_type<Compare, Constraint>> : public std::true_type {};
 
         /**
          * size_of の 結果による比較
