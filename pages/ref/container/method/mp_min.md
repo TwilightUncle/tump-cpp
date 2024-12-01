@@ -7,7 +7,7 @@ namespace tump {
     namespace fn {
         // 大元のメタ関数定義
         template <TypeListOrValueList List, class Comparing = comparing_size>
-        requires (len_v<List> > 1)
+        requires (len_v<List> > 0)
         struct mp_min {};
     }
 
@@ -40,7 +40,7 @@ namespace tump {
 デフォルトでは、パラメータ`Comparing`に`tump::comparing_size`が指定されており、パラメータ`List`のみでも`tump::mp_min`を使用することができます。  
 パラメータ`Comparing`に`tump::comparing_size`が指定されている場合は、該当の型を`sizeof`した結果の大小により比較を行います。
 
-なお、`List`に指定した型は、2 つ以上の要素を持っていない場合、制約によりコンパイルエラーとなります。
+なお、`List`に指定した型は、1 つ以上の要素を持っていない場合、制約によりコンパイルエラーとなります。
 
 ## 例
 
