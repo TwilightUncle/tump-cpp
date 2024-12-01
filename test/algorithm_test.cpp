@@ -612,6 +612,7 @@ TEST(TumpAlgorithmTest, MpMaxMinTest)
 {
     using list1 = tump::list<std::int32_t, std::uint64_t, std::int8_t, std::uint16_t>;
     using list2 = tump::vlist<int(1), std::uint16_t(5), char(-3), std::int64_t(-2)>;
+    using list3 = tump::list<int>;
 
     constexpr auto case1 = std::is_same_v<
         tump::mp_max_t<list1>,
@@ -623,11 +624,18 @@ TEST(TumpAlgorithmTest, MpMaxMinTest)
         std::int8_t
     >;
     constexpr auto case4 = tump::mp_min_v<list2, tump::comparing_value_member>;
+    constexpr auto case5 = std::is_same_v<
+        tump::mp_max_t<list3>,
+        tump::mp_min_t<list3>
+    >;
+    constexpr auto case6 = std::is_same_v<tump::mp_max_t<list3>, int>;
 
     ASSERT_TRUE(case1);
     ASSERT_EQ(case2, std::uint16_t(5));
     ASSERT_TRUE(case3);
     ASSERT_EQ(case4, char(-3));
+    ASSERT_TRUE(case5);
+    ASSERT_TRUE(case6);
 }
 
 TEST(TumpAlgorithmTest, SortTest)

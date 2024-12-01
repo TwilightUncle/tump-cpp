@@ -11,8 +11,8 @@ namespace tump_0_1_1
         /**
          * 最大と判定される型を取得する
         */
-        template <TypeListOrValueList List, TumpComparing Comparing = comparing_size>
-        requires (len_v<List> > 1)
+        template <TypeListOrValueList List, TumpComparing Comparing>
+        requires (len_v<List> > 0)
         struct mp_max : public foldl<
             typename Comparing::get_grater,
             get_front_t<List>,
@@ -25,8 +25,8 @@ namespace tump_0_1_1
         /**
          * 最小と判定される型を取得する
         */
-        template <TypeListOrValueList List, TumpComparing Comparing = comparing_size>
-        requires (len_v<List> > 1)
+        template <TypeListOrValueList List, TumpComparing Comparing>
+        requires (len_v<List> > 0)
         struct mp_min : public foldl<
             typename Comparing::get_less,
             get_front_t<List>,
