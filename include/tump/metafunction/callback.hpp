@@ -1,10 +1,10 @@
-#ifndef TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_METAFUNCTION_CALLBACK_HPP
-#define TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_METAFUNCTION_CALLBACK_HPP
+#ifndef TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_METAFUNCTION_CALLBACK_HPP
+#define TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_METAFUNCTION_CALLBACK_HPP
 
 #include <type_traits>
 #include <concepts>
 
-namespace tump_0_1_1
+namespace tump_0_1_2
 {
     namespace fn
     {

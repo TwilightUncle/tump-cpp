@@ -1,12 +1,12 @@
-#ifndef TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_PUSH_HPP
-#define TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_PUSH_HPP
+#ifndef TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_ALGORITHM_PUSH_HPP
+#define TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_ALGORITHM_PUSH_HPP
 
-#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/make_type_list.hpp)
-#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/left_right.hpp)
-#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/concat.hpp)
-#include TUMP_V_0_1_1_COMMON_INCLUDE(metafunction/flip.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(algorithm/make_type_list.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(algorithm/left_right.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(algorithm/concat.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(metafunction/flip.hpp)
 
-namespace tump_0_1_1
+namespace tump_0_1_2
 {
     namespace fn
     {
@@ -65,8 +65,8 @@ namespace tump_0_1_1
         struct push_back_if<F, List, T> : public invoke<
             std::conditional_t<
                 invoke_v<F, T>,
-                ::tump_0_1_1::push_back<>,
-                ::tump_0_1_1::left
+                ::tump_0_1_2::push_back<>,
+                ::tump_0_1_2::left
             >,
             List,
             T
@@ -79,7 +79,7 @@ namespace tump_0_1_1
         template <InvocableArgN<1> F, TypeList List, class... Types>
         struct push_front_if : public foldr<
             partial_apply<
-                ::tump_0_1_1::flip,
+                ::tump_0_1_2::flip,
                 partial_apply<cbk<push_front_if, 3>, F>
             >,
             List,
@@ -90,8 +90,8 @@ namespace tump_0_1_1
         struct push_front_if<F, List, T> : public invoke<
             std::conditional_t<
                 invoke_v<F, T>,
-                ::tump_0_1_1::push_front<>,
-                ::tump_0_1_1::left
+                ::tump_0_1_2::push_front<>,
+                ::tump_0_1_2::left
             >,
             List,
             T

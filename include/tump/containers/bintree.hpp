@@ -1,12 +1,12 @@
-#ifndef TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_CONTAINERS_BTREE_HPP
-#define TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_CONTAINERS_BTREE_HPP
+#ifndef TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_CONTAINERS_BTREE_HPP
+#define TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_CONTAINERS_BTREE_HPP
 
-#include TUMP_V_0_1_1_COMMON_INCLUDE(containers/list.hpp)
-#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/through_if.hpp)
-#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/compare.hpp)
-#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/push.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(containers/list.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(algorithm/through_if.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(algorithm/compare.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(algorithm/push.hpp)
 
-namespace tump_0_1_1
+namespace tump_0_1_2
 {
     /**
      * バイナリツリーの節
@@ -63,8 +63,8 @@ namespace tump_0_1_1
             struct push_impl : public std::type_identity<
                 bnode<
                     T,
-                    invoke_t<::tump_0_1_1::through_if, partial_apply<typename Comparing::lt, T>, New, mp_null_t>,
-                    invoke_t<::tump_0_1_1::through_if, partial_apply<typename Comparing::ge, T>, New, mp_null_t>
+                    invoke_t<::tump_0_1_2::through_if, partial_apply<typename Comparing::lt, T>, New, mp_null_t>,
+                    invoke_t<::tump_0_1_2::through_if, partial_apply<typename Comparing::ge, T>, New, mp_null_t>
                 >
             > {};
 
@@ -271,7 +271,7 @@ namespace tump_0_1_1
         */
         template <TypeList List, TumpComparing Comparing = comparing_size>
         struct to_bintree : public foldl<
-            ::tump_0_1_1::push<>,
+            ::tump_0_1_2::push<>,
             empty_bintree<Comparing>,
             List
         > {};

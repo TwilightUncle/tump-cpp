@@ -1,10 +1,10 @@
-#ifndef TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_UNIQUE_HPP
-#define TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_UNIQUE_HPP
+#ifndef TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_ALGORITHM_UNIQUE_HPP
+#define TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_ALGORITHM_UNIQUE_HPP
 
-#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/filter.hpp)
-#include TUMP_V_0_1_1_COMMON_INCLUDE(metafunction/compose.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(algorithm/filter.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(metafunction/compose.hpp)
 
-namespace tump_0_1_1
+namespace tump_0_1_2
 {
     namespace fn
     {
@@ -14,7 +14,7 @@ namespace tump_0_1_1
             using unique = push_back_if<
                 compose_t<
                     negation,
-                    partial_apply<::tump_0_1_1::flip, ::tump_0_1_1::exists, Acc>
+                    partial_apply<::tump_0_1_2::flip, ::tump_0_1_2::exists, Acc>
                 >,
                 Acc,
                 Cur

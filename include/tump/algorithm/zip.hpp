@@ -1,9 +1,9 @@
-#ifndef TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_ZIP_HPP
-#define TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_ZIP_HPP
+#ifndef TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_ALGORITHM_ZIP_HPP
+#define TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_ALGORITHM_ZIP_HPP
 
-#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/pop.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(algorithm/pop.hpp)
 
-namespace tump_0_1_1
+namespace tump_0_1_2
 {
     namespace fn
     {
