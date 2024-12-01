@@ -1,10 +1,10 @@
-#ifndef TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_COPY_HPP
-#define TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_COPY_HPP
+#ifndef TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_ALGORITHM_COPY_HPP
+#define TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_ALGORITHM_COPY_HPP
 
-#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/make_type_list.hpp)
-#include TUMP_V_0_1_1_COMMON_INCLUDE(metafunction/invoke_list.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(algorithm/make_type_list.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(metafunction/invoke_list.hpp)
 
-namespace tump_0_1_1
+namespace tump_0_1_2
 {
     namespace fn
     {

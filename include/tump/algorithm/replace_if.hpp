@@ -1,10 +1,10 @@
-#ifndef TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_REPLACE_IF_HPP
-#define TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_REPLACE_IF_HPP
+#ifndef TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_ALGORITHM_REPLACE_IF_HPP
+#define TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_ALGORITHM_REPLACE_IF_HPP
 
-#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/map.hpp)
-#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/left_right.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(algorithm/map.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(algorithm/left_right.hpp)
 
-namespace tump_0_1_1
+namespace tump_0_1_2
 {
     namespace fn
     {
@@ -12,13 +12,13 @@ namespace tump_0_1_1
          * 条件に一意する要素を NewType に置き換える
         */
         template <InvocableArgN<1> Pred, class NewType, TypeList List>
-        using replace_if = fn::map_if<Pred, partial_apply<::tump_0_1_1::left, NewType>, List>;
+        using replace_if = fn::map_if<Pred, partial_apply<::tump_0_1_2::left, NewType>, List>;
 
         /**
          * リストに存在する OldType をすべて NewType に置き換える
         */
         template <class OldType, class NewType, TypeList List>
-        using replace = replace_if<partial_apply<::tump_0_1_1::is_same, OldType>, NewType, List>;
+        using replace = replace_if<partial_apply<::tump_0_1_2::is_same, OldType>, NewType, List>;
     }
 
     /**

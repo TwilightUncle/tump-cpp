@@ -1,10 +1,10 @@
-#ifndef TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_HAS_TYPE_PARAMETERS_HPP
-#define TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_HAS_TYPE_PARAMETERS_HPP
+#ifndef TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_ALGORITHM_HAS_TYPE_PARAMETERS_HPP
+#define TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_ALGORITHM_HAS_TYPE_PARAMETERS_HPP
 
-#include TUMP_V_0_1_1_COMMON_INCLUDE(containers/vlist.hpp)
-#include TUMP_V_0_1_1_COMMON_INCLUDE(metafunction/std.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(containers/vlist.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(metafunction/std.hpp)
 
-namespace tump_0_1_1
+namespace tump_0_1_2
 {
     namespace fn
     {

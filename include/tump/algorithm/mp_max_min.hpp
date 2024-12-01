@@ -1,18 +1,18 @@
-#ifndef TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_MP_MAXMIN_HPP
-#define TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_MP_MAXMIN_HPP
+#ifndef TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_ALGORITHM_MP_MAXMIN_HPP
+#define TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_ALGORITHM_MP_MAXMIN_HPP
 
-#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/pop.hpp)
-#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/compare.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(algorithm/pop.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(algorithm/compare.hpp)
 
-namespace tump_0_1_1
+namespace tump_0_1_2
 {
     namespace fn
     {
         /**
          * 最大と判定される型を取得する
         */
-        template <TypeListOrValueList List, TumpComparing Comparing = comparing_size>
-        requires (len_v<List> > 1)
+        template <TypeListOrValueList List, TumpComparing Comparing>
+        requires (len_v<List> > 0)
         struct mp_max : public foldl<
             typename Comparing::get_grater,
             get_front_t<List>,
@@ -25,8 +25,8 @@ namespace tump_0_1_1
         /**
          * 最小と判定される型を取得する
         */
-        template <TypeListOrValueList List, TumpComparing Comparing = comparing_size>
-        requires (len_v<List> > 1)
+        template <TypeListOrValueList List, TumpComparing Comparing>
+        requires (len_v<List> > 0)
         struct mp_min : public foldl<
             typename Comparing::get_less,
             get_front_t<List>,

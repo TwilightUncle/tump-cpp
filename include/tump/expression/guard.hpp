@@ -1,10 +1,10 @@
-#ifndef TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_EXPRESSION_GUARD_HPP
-#define TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_EXPRESSION_GUARD_HPP
+#ifndef TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_EXPRESSION_GUARD_HPP
+#define TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_EXPRESSION_GUARD_HPP
 
-#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/find_if.hpp)
-#include TUMP_V_0_1_1_COMMON_INCLUDE(expression/expression.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(algorithm/find_if.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(expression/expression.hpp)
 
-namespace tump_0_1_1
+namespace tump_0_1_2
 {
     /**
      * ガードにおける条件分岐節
@@ -42,20 +42,20 @@ namespace tump_0_1_1
         struct guard : public invoke<
             compose_t<
                 cbk<eval_exp, 1>,
-                ::tump_0_1_1::get_back,
+                ::tump_0_1_2::get_back,
                 partial_apply<
-                    ::tump_0_1_1::flip,
-                    ::tump_0_1_1::find_if,
+                    ::tump_0_1_2::flip,
+                    ::tump_0_1_2::find_if,
                     list<Clauses...>
                 >
             >,
             compose_t<
                 partial_apply<
-                    ::tump_0_1_1::is_base_of,
+                    ::tump_0_1_2::is_base_of,
                     std::true_type
                 >,
                 cbk<eval_exp, 1>,
-                ::tump_0_1_1::get_front
+                ::tump_0_1_2::get_front
             >
         > {};
     }

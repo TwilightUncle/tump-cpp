@@ -1,9 +1,9 @@
-#ifndef TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_METATYPE_TYPE_VALUE_HPP
-#define TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_METATYPE_TYPE_VALUE_HPP
+#ifndef TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_METATYPE_TYPE_VALUE_HPP
+#define TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_METATYPE_TYPE_VALUE_HPP
 
 #include <type_traits>
 
-namespace tump_0_1_1
+namespace tump_0_1_2
 {
     /**
      * 受け取った型と値をそのままメンバとして保持する

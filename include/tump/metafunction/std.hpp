@@ -1,11 +1,11 @@
-#ifndef TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_METAFUNCTION_STD_HPP
-#define TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_METAFUNCTION_STD_HPP
+#ifndef TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_METAFUNCTION_STD_HPP
+#define TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_METAFUNCTION_STD_HPP
 
 #include <concepts>
-#include TUMP_V_0_1_1_COMMON_INCLUDE(version.hpp)
-#include TUMP_V_0_1_1_COMMON_INCLUDE(metafunction/callback.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(version.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(metafunction/callback.hpp)
 
-namespace tump_0_1_1
+namespace tump_0_1_2
 {
     // -------------------------------------------------------------------
     // バージョンに左右されるが常にほしいものやちょっといじったものをあらかじめ定義

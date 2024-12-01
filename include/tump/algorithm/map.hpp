@@ -1,10 +1,10 @@
-#ifndef TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_MAP_HPP
-#define TUMP_V_0_1_1_INCLUDE_GUARD_TUMP_ALGORITHM_MAP_HPP
+#ifndef TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_ALGORITHM_MAP_HPP
+#define TUMP_V_0_1_2_INCLUDE_GUARD_TUMP_ALGORITHM_MAP_HPP
 
-#include TUMP_V_0_1_1_COMMON_INCLUDE(algorithm/get.hpp)
-#include TUMP_V_0_1_1_COMMON_INCLUDE(metafunction/apply.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(algorithm/get.hpp)
+#include TUMP_V_0_1_2_COMMON_INCLUDE(metafunction/apply.hpp)
 
-namespace tump_0_1_1
+namespace tump_0_1_2
 {
     namespace fn
     {
@@ -43,7 +43,7 @@ namespace tump_0_1_1
                 std::conditional_t<
                     invoke_v<Pred, Types>,
                     F,
-                    ::tump_0_1_1::type_identity
+                    ::tump_0_1_2::type_identity
                 >,
                 Types
             >...

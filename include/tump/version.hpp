@@ -10,19 +10,19 @@
 // - マイナーバージョン: 2 桁
 // - パッチバージョン: 3 桁
 // - プレスリリース(a, b ... をプレスリリースとし、fを安定板と考える): 1 桁
-#define TUMP_VERSION_0_1_1 0x00'01'001'fUL
-#define TUMP_VERSION_0_1_1_NAME "0.1.1"
+#define TUMP_VERSION_0_1_2 0x00'01'002'fUL
+#define TUMP_VERSION_0_1_2_NAME "0.1.2"
 // #define TUMP_VERSION_1_0_0_ALPHA 0x01'00'000'aUL
 // #define TUMP_VERSION_1_0_0_ALPHA_NAME "1.0.0-alpha"
 
 // 最初に読み込まれたTUMPあるいは、あらかじめバージョン指定されていた場合、
 // デフォルトでは当該ソースを読み込むようにする
-#if !defined(TUMP_VERSION) || TUMP_VERSION == TUMP_VERSION_0_1_1
-    #define TUMP_VERSION TUMP_VERSION_0_1_1
-    #define TUMP_VERSION_NAME TUMP_VERSION_0_1_1_NAME
+#if !defined(TUMP_VERSION) || TUMP_VERSION == TUMP_VERSION_0_1_2
+    #define TUMP_VERSION TUMP_VERSION_0_1_2
+    #define TUMP_VERSION_NAME TUMP_VERSION_0_1_2_NAME
     #ifndef _TUMP_SET_USING_NAMESPACE
         #define _TUMP_SET_USING_NAMESPACE
-        namespace tump = tump_0_1_1;
+        namespace tump = tump_0_1_2;
     #endif
 #endif
 
