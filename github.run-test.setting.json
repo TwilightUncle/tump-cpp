@@ -2,7 +2,7 @@
     "projects": [
         {
             "name": "tump-cpp",
-            "target_dir_path": "../",
+            "target_dir_path": "/home/runner/work/tump-cpp/tump-cpp",
             "compilers": [
                 {
                     "name": "gcc",
