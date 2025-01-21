@@ -32,4 +32,4 @@ jobs:
           workdir: cpp-test-ci
           verb: run
           args: go run main.go
-          version: "0.8"
+          version: "0.8.3"
