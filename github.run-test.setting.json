@@ -1,0 +1,18 @@
+{
+    "projects": [
+        {
+            "name": "tump-cpp",
+            "target_dir_path": "/home/runner/work/tump-cpp/tump-cpp",
+            "compilers": [
+                {
+                    "name": "gcc",
+                    "version_list": ["10", "11", "12"]
+                },
+                {
+                    "name": "clang",
+                    "version_list": ["12", "13", "14"]
+                }
+            ]
+        }
+    ]
+}
