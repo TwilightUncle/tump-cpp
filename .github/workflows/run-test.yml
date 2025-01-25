@@ -1,9 +1,9 @@
 name: run-test
 
 on:
-  push:
+  pull_request:
     branches:
-      - feat/test-ci
+      - main
 
 jobs:
   tump_test:
